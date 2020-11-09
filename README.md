@@ -31,3 +31,13 @@ For details you can refer here : https://techtalk.comodo.com/2020/09/19/open-edr
 * Community Forums: https://community.openedr.com/
 * Join to Slack [![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://openedr.com/register/)
 * Registration [![Email](https://img.shields.io/badge/email-join-blue.svg)](mailto:register@openedr.com)
+
+# Build Instructions
+
+
+# Installation
+
+# Builds
+
+# Releases
+
