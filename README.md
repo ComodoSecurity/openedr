@@ -1,4 +1,5 @@
 # OpenEDR 
+[![OpenEDR](https://techtalk.comodo.com/wp-content/uploads/2020/09/logo_small.jpg)](https://openedr.com/)
 [![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://openedr.com/register/) [![Email](https://img.shields.io/badge/email-join-blue.svg)](mailto:register@openedr.com)
 
 We at OpenEDR believe in creating an open source cybersecurity platform where products and services can be provisioned and managed together. EDR is our starting point.
