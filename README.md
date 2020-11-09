@@ -1,4 +1,6 @@
 # OpenEDR 
+[![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://openedr.com/register/) [![Email](https://img.shields.io/badge/email-join-blue.svg)](mailto:register@openedr.com)
+
 We at OpenEDR believe in creating an open source cybersecurity platform where products and services can be provisioned and managed together. EDR is our starting point.
 OpenEDR is a full blown EDR capability. It is one of the most sophisticated, effective EDR code base in the world and with the community’s help it will become even better.
 
