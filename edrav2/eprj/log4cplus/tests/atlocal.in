@@ -1,0 +1,10 @@
+CPPFLAGS="-I$abs_top_builddir/include -I$abs_top_srcdir/include @CPPFLAGS@"
+
+: ${CC='@CC@'}
+: ${CXX='@CXX@'}
+: ${CXXFLAGS='@CXXFLAGS@'}
+: ${GREP='@GREP@'}
+: ${AWK='@AWK@'}
+: ${SED='@SED@'}
+: ${ENABLE_THREADS='@ENABLE_THREADS@'}
+: ${BUILD_WITH_WCHAR_T_SUPPORT='@BUILD_WITH_WCHAR_T_SUPPORT@'}

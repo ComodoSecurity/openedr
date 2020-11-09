@@ -1,0 +1,155 @@
+//
+// Scenario enriches LLE for fast policy processing
+//
+// Input queue: enrich_mle
+// Output queues: app.config.script.enrich_lle.outputQueue
+//							  get_fls_verdict
+//
+{
+	"version": "1.0",
+	"code": {
+
+		//
+		// Entrypoint
+		//
+		"main": [
+			// Get event from source queue
+			{
+				"processor": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.queueManager",
+					"command": "getQueue",
+					"params": { "name": "enrich_lle" }
+				},
+				"command": "get",
+				"$dst": "event"
+			},
+			// Set next process to check
+			{
+				"$set": {
+					"$path": "event.process",
+					"$default": {}
+				},
+				"$dst": "process"
+			},
+			// Goto result processing
+			{
+				"$goto": "checkProcess"
+			}
+		],
+
+		//
+		// Check the current process for having 'imageFile'
+		//
+		"checkProcess": [
+			// Check if process field has imageFile
+			{
+				"$goto": "putToEnrichedLLE",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "!has",
+					"path": "imageFile",
+					"args": [ { "$path": "process" } ]
+				}
+			},
+			// Check if 'process.imageFile.flsVerdict' is calculated
+			{
+				"$goto": "putToGetFlsVerdict",
+				"$if": {
+					// or(not(has("verdict")), greater("tickTime", "verdictExpireTime"))
+					"$$proxy": "cachedObj", 
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "or",
+					"args": [
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "!has",
+							"path": "verdict",
+							"args": [ { "$path": "process.imageFile" } ]
+						},
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "greater",
+							"args": [
+								{ "$path": "event.tickTime", "$default": 0 },
+								{ "$path": "process.imageFile.verdictExpireTime", "$default": 0 }
+							]
+						}
+					]
+				}
+			},
+			// Set next process to check
+			{
+				"$set": {
+					"$path": "process.parent",
+					"$default": {}
+				},
+				"$dst": "process"
+			},
+			// Goto loop for processing next process
+			{
+				"$goto": "checkProcess"
+			}
+		],
+
+		//
+		// Put event to result queue
+		//
+		"putToEnrichedLLE": [
+			// Put data to queue for file hash calculation
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": {
+							"name": {
+								"$$proxy": "cachedCmd",
+								"processor": "objects.application",
+								"command": "getCatalogData",
+								"params": {
+									"path": "app.config.script.enrich_lle.outputQueue"
+								}
+							}
+						}
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		],
+
+		//
+		// Put event to the queue for flsVerdict calculation
+		//
+		"putToGetFlsVerdict": [
+			// Put data to queue for flsVerdict calculation
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": { "name": "get_fls_verdict" }
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		]
+	}
+}

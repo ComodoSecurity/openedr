@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="utils">
+      <UniqueIdentifier>{367a3b31-78aa-40f6-9593-0c4c31ec723d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="communication">
+      <UniqueIdentifier>{ff65bc68-28ec-433f-8214-59e3eb045a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernelcmnlib">
+      <UniqueIdentifier>{bc81cfa7-e24d-4b5f-a74d-e33e3f21cbed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernelcmnlib\kernelstl">
+      <UniqueIdentifier>{b457ef52-19e9-4cd5-a8e1-5ffccdad5232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="monitors">
+      <UniqueIdentifier>{d47e47b6-d50a-4b70-bac1-bb16dcc755c0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\filemon.cpp">
+      <Filter>monitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\objmon.cpp">
+      <Filter>monitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\procmon.cpp">
+      <Filter>monitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\regmon.cpp">
+      <Filter>monitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\diskutils.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\log.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\procutils.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\edrdrv.cpp" />
+    <ClCompile Include="..\..\src\fltport.cpp">
+      <Filter>communication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ioctl.cpp">
+      <Filter>communication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\osutils.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\config.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dllinj.cpp">
+      <Filter>monitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kernelcmnlib\kernelstl\new.cpp">
+      <Filter>kernelcmnlib\kernelstl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\devdisp.cpp">
+      <Filter>communication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\netmon.cpp">
+      <Filter>monitors</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\filemon.h">
+      <Filter>monitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\objmon.h">
+      <Filter>monitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\procmon.h">
+      <Filter>monitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\regmon.h">
+      <Filter>monitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\diskutils.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\log.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\osutils.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\procutils.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\stringutils.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\fltport.h">
+      <Filter>communication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ioctl.h">
+      <Filter>communication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\workerthread.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sysapi.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\config.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dllinj.h">
+      <Filter>monitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelcmnlib.hpp">
+      <Filter>kernelcmnlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\std.hpp">
+      <Filter>kernelcmnlib\kernelstl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\synchronization.hpp">
+      <Filter>kernelcmnlib\kernelstl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\string.hpp">
+      <Filter>kernelcmnlib\kernelstl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\list.hpp">
+      <Filter>kernelcmnlib\kernelstl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\hashmap.hpp">
+      <Filter>kernelcmnlib\kernelstl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\atomic.hpp">
+      <Filter>kernelcmnlib\kernelstl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\misc.hpp">
+      <Filter>kernelcmnlib\kernelstl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl.hpp">
+      <Filter>kernelcmnlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\new.h">
+      <Filter>kernelcmnlib\kernelstl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\lbvsext.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\devdisp.h">
+      <Filter>communication</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\netmon.h">
+      <Filter>monitors</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\edrdrv.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Inf Include="..\..\src\edrdrv.inf" />
+  </ItemGroup>
+</Project>

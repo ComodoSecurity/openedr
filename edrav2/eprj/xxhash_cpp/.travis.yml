@@ -1,0 +1,32 @@
+language: cpp
+os: linux
+dist: trusty
+sudo: required
+
+matrix:
+  include:
+    - compiler: gcc
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ['g++-7']
+      env: COMPILER=g++-7 CPPVERFLAG=-std=c++17 EXTRAARGS=" -O3 -march=native -Wall -Wpedantic -Wextra " LIBS=""
+
+    - compiler: gcc
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ['g++-8']
+      env: COMPILER=g++-8 CPPVERFLAG=-std=c++17 EXTRAARGS=" -O3 -march=native -Wall -Wpedantic -Wextra " LIBS=""
+
+    - compiler: clang
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-trusty-7']
+          packages: ['clang-7', 'g++-8']
+      env: COMPILER=clang++-7 CPPVERFLAG=-std=c++17 EXTRAARGS=" -O3 -march=native -Wall -Wpedantic -Wextra " LIBS=""
+
+script:
+- cd ./xxhash
+- make CXX=$COMPILER 
+- ./test

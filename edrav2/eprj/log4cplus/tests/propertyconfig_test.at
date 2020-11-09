@@ -1,0 +1,16 @@
+AT_SETUP([propertyconfig_test])
+AT_KEYWORDS([appenders])
+
+AT_CHECK([cp -f "${abs_builddir}/propertyconfig_test/log4cplus.properties" .])
+AT_CHECK([cp -f "${abs_builddir}/propertyconfig_test/log4cplus.tail.properties" .])
+AT_CHECK([ENV_VAR=test "${abs_top_builddir}/propertyconfig_test"], [0], [stdout], [stderr])
+AT_CHECK([! $GREP "Please initialize the log4cplus system properly"< stderr])
+AT_CHECK([test -f "output_test.log"])
+ATX_WCHAR_T_TEST([
+  AT_CHECK([rm -f "output_test.log"])
+  AT_CHECK([ENV_VAR=test "${abs_top_builddir}/propertyconfig_testU"], [0], [stdout], [stderr])
+  AT_CHECK([! $GREP "Please initialize the log4cplus system properly"< stderr])
+  AT_CHECK([test -f "output_test.log"])
+])
+
+AT_CLEANUP

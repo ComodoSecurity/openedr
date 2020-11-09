@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+    <MhdRoot>$(SolutionDir)..\..\</MhdRoot>
+    <MhdSrc>$(SolutionDir)..\..\src\</MhdSrc>
+    <MhdW32Dir>$(SolutionDir)..\</MhdW32Dir>
+    <MhdW32Common>$(MhdW32Dir)common\</MhdW32Common>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,10 @@
+AT_SETUP([thread_test])
+AT_KEYWORDS([appenders])
+
+AT_SKIP_IF([test "x$ENABLE_THREADS" != "xyes"])
+AT_CHECK(["${abs_top_builddir}/thread_test"], [0], [stdout], [stderr])
+ATX_WCHAR_T_TEST([
+  AT_CHECK(["${abs_top_builddir}/thread_testU"], [0], [stdout], [stderr])
+])
+
+AT_CLEANUP

@@ -1,0 +1,6 @@
+[submodule "threadpool"]
+	path = threadpool
+	url = https://github.com/log4cplus/ThreadPool.git
+[submodule "catch"]
+	path = catch
+	url = https://github.com/philsquared/Catch.git

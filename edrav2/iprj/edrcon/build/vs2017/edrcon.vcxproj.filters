@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\edrcon.cpp" />
+    <ClCompile Include="..\..\src\pch.cpp" />
+    <ClCompile Include="..\..\src\mode_debug.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mode_default.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mode_dump.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mode_empty.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mode_process.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mode_rpcserver.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mode_run.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mode_wait.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mode_file.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mode_unprot.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\mode_compile.cpp">
+      <Filter>modes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="scripts">
+      <UniqueIdentifier>{57729e82-b3ff-4c3e-b325-a0876b970808}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="configs">
+      <UniqueIdentifier>{ed27dc17-7684-46b7-89ae-9dddc69cc57e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="modes">
+      <UniqueIdentifier>{d502e163-9445-48de-889a-a5cbfabf49da}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\..\data\edrcon.cfg">
+      <Filter>configs</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\from_sysmon.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\do_batch.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\do_check_valkyrie.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\do_copy.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\do_enrich_lle.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\do_enrich_mle.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\do_filter.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\do_policy.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\do_submit_valkyrie.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\do_transform.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\from_dir.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\init_gen.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\test.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\to_aws.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\to_dir.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\to_file.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\to_gcp.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\to_null.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\data\scripts\to_out.sc">
+      <Filter>scripts</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\edrcon.rc" />
+  </ItemGroup>
+</Project>

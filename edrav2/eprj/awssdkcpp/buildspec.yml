@@ -1,0 +1,28 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - echo Nothing to do in the install phase...
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
+  build:
+    commands:
+      - echo Build started on `date`
+      - apt-get update -y
+      - apt-get install -y software-properties-common 
+      - add-apt-repository ppa:george-edison55/cmake-3.x
+      - apt-get update -y
+      - apt-get install -y cmake
+      - git clone https://github.com/aws/aws-sdk-cpp.git
+      - mkdir aws-sdk-cpp/build
+      - cmake -B./aws-sdk-cpp/build -H./aws-sdk-cpp 
+      - make -j3 -C aws-sdk-cpp/build
+      - tar -c ./aws-sdk-cpp/build > aws-sdk-cpp.tar
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - aws-sdk-cpp.tar

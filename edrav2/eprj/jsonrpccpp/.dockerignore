@@ -1,0 +1,54 @@
+# osx noise
+.DS_Store
+profile
+
+# xcode noise
+build/*
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+*.xcworkspace
+xcuserdata
+
+# svn & cvs
+.svn
+CVS
+reports/*
+doc/html
+CMakeLists.txt.user*
+src/examples/gen/*
+*~
+
+# IntelliJ
+.idea
+
+*.tar.gz
+*.asc
+
+# CMake
+CMakeFiles
+CMakeCache.txt
+
+
+# Visual Studio files
+/.vscode
+*.sln
+*.vcxproj
+*.suo
+*.sdf
+*.opensdf
+*.obj
+*.log
+*.tlog
+*.filters
+Win32
+
+# misc
+bin
+lib
+gen
+win32-deps
+**/*.dir/*

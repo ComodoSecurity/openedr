@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MhdSrc)microhttpd\base64.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\basicauth.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\connection.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\daemon.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\digestauth.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\internal.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\md5.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\sha256.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\memorypool.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\mhd_mono_clock.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\postprocessor.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\reason_phrase.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\response.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\tsearch.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\sysfdsetsize.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\mhd_str.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\mhd_threads.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\mhd_sockets.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\mhd_itc.c" />
+    <ClCompile Include="$(MhdSrc)microhttpd\mhd_compat.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MhdSrc)include\autoinit_funcs.h" />
+    <ClInclude Include="$(MhdSrc)include\microhttpd.h" />
+    <ClInclude Include="$(MhdSrc)include\mhd_options.h" />
+    <ClInclude Include="$(MhdSrc)include\platform.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\base64.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\connection.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\internal.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\md5.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\sha256.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\memorypool.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_assert.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_bithelpers.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_byteorder.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_limits.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_mono_clock.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\response.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\tsearch.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\sysfdsetsize.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_str.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_threads.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_locks.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_sockets.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_itc.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_itc_types.h" />
+    <ClInclude Include="$(MhdSrc)microhttpd\mhd_compat.h" />
+    <ClInclude Include="$(MhdW32Common)MHD_config.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="$(MhdW32Common)microhttpd_dll_res_vc.rc">
+      <ExcludedFromBuild Condition="'$(ConfigurationType)'=='StaticLibrary'">true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="$(MhdW32Common)microhttpd_dll_res_vc.rc.in">
+      <ExcludedFromBuild Condition="'$(ConfigurationType)'=='StaticLibrary'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(ConfigurationType)'=='DynamicLibrary'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <Command>PowerShell.exe -Version 3.0 -NonInteractive -NoProfile -ExecutionPolicy Bypass -File "$(MhdW32Common)gen_dll_res.ps1" -BasePath "$(MhdW32Common)\"</Command>
+      <Message>Generating .dll description resource</Message>
+      <Outputs>$(MhdW32Common)microhttpd_dll_res_vc.rc</Outputs>
+      <AdditionalInputs>$(MhdW32Common)gen_dll_res.ps1;$(MhdRoot)configure.ac</AdditionalInputs>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

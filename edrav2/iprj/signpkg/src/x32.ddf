@@ -1,0 +1,22 @@
+.OPTION EXPLICIT     ; Generate errors
+.Set CabinetFileCountThreshold=0
+.Set FolderFileCountThreshold=0
+.Set FolderSizeThreshold=0
+.Set MaxCabinetSize=0
+.Set MaxDiskFileCount=0
+.Set MaxDiskSize=0
+.Set CompressionType=MSZIP
+.Set Cabinet=on
+.Set Compress=on
+
+; Put all files in current dir
+.Set DiskDirectoryTemplate=
+
+;Specify file name for new cab file
+.Set CabinetNameTemplate=edrdrv_x32.cab
+
+;Specify files to be included in cab file
+;
+.Set DestinationDir=edrdrv
+files\x32\edrdrv.sys
+files\x32\edrdrv.inf

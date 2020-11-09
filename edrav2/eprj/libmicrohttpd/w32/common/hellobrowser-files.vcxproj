@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MhdRoot)doc\examples\hellobrowser.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="libmicrohttpd.vcxproj">
+      <Project>{9cfb0342-a9e7-483e-bee5-a1de22584c5a}</Project>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

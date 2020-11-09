@@ -1,0 +1,87 @@
+# IDE Artifacts
+.metadata
+.build
+.idea
+*.d
+Debug
+Release
+*~
+*#
+*.iml
+tags
+
+#vim swap file
+*.swp
+
+#compiled python files
+*.pyc
+
+#Vagrant stuff
+Vagrantfile
+.vagrant
+
+#Mac stuff
+.DS_Store
+
+#doxygen
+doxygen/html/
+doxygen/latex/
+
+
+#cmake artifacts
+dependencies
+_build
+build
+_build_*
+/build-*
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+#*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Android Junk
+AndroidTestOutput.txt
+curl
+external
+openssl
+zlib
+credentials
+toolchains/android/
+
+# codegen
+code-generation/generator/target/
+
+#config output
+#aws-cpp-sdk-core/include/aws/core/SDKConfig.h
+
+#nuget
+*.nupkg
+
+#Aws common runtime libs
+.aws-common-runtime-libs-build/
+.aws-common-runtime-libs-install/

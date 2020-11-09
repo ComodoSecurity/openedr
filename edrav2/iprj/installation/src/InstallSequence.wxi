@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include>
+
+  <!-- If DISABLE=1, it means token is absent and edr is being installed in "local mode".-->
+  <!--Enroll-stage shoud be skipped if DISABLE=1-->
+  <Property Id="DISABLE" Value="0" />
+  
+  <!-- If UPDATE=1, Install should skip Enroll-stage -->
+  <Property Id="UPDATE" Value="0" />
+	
+  <InstallExecuteSequence>
+		<Custom Action="SetReinstallMode" Before="OfferRepairing">Installed AND REINSTALL</Custom>
+		<Custom Action="OfferRepairing" Before="OnStartAdminInstallation">Installed AND NOT REMOVE AND NOT REINSTALL</Custom>
+		<Custom Action="OnStartAdminInstallation" Before="FindRelatedProducts">NOT Installed AND NOT REMOVE</Custom>
+		<Custom Action="SetActualInstallDir" Before="InstallInitialize"></Custom>
+			
+		<Custom Action="SetOnStartInstallationData" Before="OnStartInstallation"></Custom>
+		<Custom Action="OnStartInstallation" After="OnErrorInstallation">(NOT Installed AND NOT REMOVE) OR REINSTALL</Custom>
+		<Custom Action="SetOnErrorInstallationData" Before="OnErrorInstallation" />
+		<Custom Action="OnErrorInstallation" After="InstallInitialize">NOT REINSTALL</Custom>
+		<!--only on install-->
+		<Custom Action="GetSvcInstallCmdLine" Before="InstallValidate">NOT Installed AND NOT REMOVE</Custom>
+			
+		<Custom Action="RemoveExistingEdrProducts" After="InstallFiles">(NOT Installed AND NOT REMOVE) OR REINSTALL</Custom>
+		<Custom Action="SetRemoveExistingEdrProductsData" Before="RemoveExistingEdrProducts">(NOT Installed AND NOT REMOVE) OR REINSTALL</Custom>
+			
+		<Custom Action="SetRollbackInstalledEdrServiceData" Before="RollbackInstalledEdrService">(NOT Installed) AND (NOT REMOVE)</Custom>
+		<Custom Action="RollbackInstalledEdrService" Before="StartEdrService">(NOT Installed) AND (NOT REMOVE)</Custom>
+			
+		<Custom Action="SetInstallEdrServiceData" Before="InstallEdrService">(NOT Installed OR REINSTALL) AND (NOT REMOVE)</Custom>
+		<Custom Action="InstallEdrService" After="RollbackInstalledEdrService">(NOT Installed OR REINSTALL) AND (NOT REMOVE)</Custom>
+
+		<Custom Action="SetEnrollEdrServiceData" Before="EnrollEdrService">(NOT Installed OR REINSTALL) AND (NOT REMOVE) AND NOT (DISABLE=1) AND NOT (UPDATE=1)</Custom>
+		<Custom Action="EnrollEdrService" After="InstallEdrService">(NOT Installed OR REINSTALL) AND (NOT REMOVE) AND NOT (DISABLE=1) AND NOT (UPDATE=1)</Custom>
+
+		<Custom Action="SetStartEdrServiceData" Before="StartEdrService">(NOT Installed OR REINSTALL) AND (NOT REMOVE)</Custom>
+		<Custom Action="StartEdrService" Before="OnSuccessInstallation">(NOT Installed OR REINSTALL) AND (NOT REMOVE)</Custom>
+
+		<Custom Action="SetOnSuccessInstallationData" Before="OnSuccessInstallation">NOT INTERRUPT_AND_RESTART</Custom>
+		<Custom Action="OnSuccessInstallation" Before="InstallFinalize">NOT INTERRUPT_AND_RESTART</Custom>
+			
+		<!--only on uninstall-->
+		<Custom Action="SetStopEdrServiceData" Before="StopEdrService">(Installed AND (REMOVE="ALL")) OR REINSTALL</Custom>
+		<Custom Action="StopEdrService" After="InstallInitialize">(Installed AND (REMOVE="ALL")) OR REINSTALL</Custom>
+
+		<Custom Action="SetUninstallEdrServiceData" Before="UninstallEdrService">(Installed AND (REMOVE="ALL")) OR REINSTALL</Custom>
+		<Custom Action="UninstallEdrService" After="StopEdrService">(Installed AND (REMOVE="ALL")) OR REINSTALL</Custom>
+			
+		<Custom Action="CheckUninstall" After="UninstallEdrService">(NOT UPGRADINGPRODUCTCODE) AND (REMOVE="ALL")</Custom>
+
+		<Custom Action="SetDeleteEdrServiceArtefactsData" Before="DeleteEdrServiceArtefacts">(NOT UPGRADINGPRODUCTCODE) AND (REMOVE="ALL")</Custom>
+		<Custom Action="DeleteEdrServiceArtefacts" After="CheckUninstall">(NOT UPGRADINGPRODUCTCODE) AND (REMOVE="ALL")</Custom>
+
+		<Custom Action="SetCleanInstallDirectoryData" Before="DeleteEdrServiceArtefacts">(NOT UPGRADINGPRODUCTCODE) AND (REMOVE="ALL")</Custom>
+		<Custom Action="CleanInstallDirectory" After="DeleteEdrServiceArtefacts">(NOT UPGRADINGPRODUCTCODE) AND (REMOVE="ALL")</Custom>
+	</InstallExecuteSequence>
+
+	<CustomAction Id="SetActualInstallDir" Property="ACTUALINSTALLDIR" Value="[INSTALLDIR]" />
+
+	<Binary Id="UtilJs" SourceFile="util.js" />
+	<CustomAction Id="SetReinstallMode" Property="REINSTALLMODE" Value="amusv" />
+	<CustomAction Id="OfferRepairing" BinaryKey="UtilJs" JScriptCall="OfferRepairing" Return="check" Execute="immediate" />
+
+	<CustomAction Id="OnStartAdminInstallation" BinaryKey="UtilJs" JScriptCall="OnStartAdminInstallation" Return="ignore" Execute="immediate" />
+
+	<CustomAction Id="GetSvcInstallCmdLine" BinaryKey="UtilJs" JScriptCall="GetInstallCmdLine" Return="check" />
+		
+	<CustomAction Id="SetRemoveExistingEdrProductsData" Property="RemoveExistingEdrProducts" Value="[WIX_UPGRADE_DETECTED]*[UILevel]*[OriginalDatabase]*[REINSTALL]*[DISABLE]*[UPDATE]*[TOKEN]*[ROOT_URL]" />
+	<CustomAction Id="RemoveExistingEdrProducts" BinaryKey="UtilJs" JScriptCall="RemoveExistingProducts" Execute="deferred" Impersonate="no" Return="check" />
+
+	<CustomAction Id="CheckUninstall" BinaryKey="UtilJs" JScriptCall="CheckUninstall" Execute="deferred" Return="check" />
+		
+	<CustomAction Id="OnStartInstallation" BinaryKey="UtilJs" JScriptCall="OnStartInstallation" Return="check" Impersonate="no" Execute="deferred" />
+	<CustomAction Id="SetOnSuccessInstallationData" Property="OnSuccessInstallation" Value="[UILevel]*[USER_REPAIR]" />
+	<CustomAction Id="OnSuccessInstallation" BinaryKey="UtilJs" JScriptCall="OnSuccessInstallation" Return="check" Execute="deferred" Impersonate="no" />
+		
+	<CustomAction Id="SetOnErrorInstallationData" Property="OnErrorInstallation" Value="[UILevel]*[USER_REPAIR]" />
+	<CustomAction Id="OnErrorInstallation" BinaryKey="UtilJs" JScriptCall="OnErrorInstallation" Return="ignore" Execute="rollback" Impersonate="no" />
+	<CustomAction Id="OnBeforeReboot" BinaryKey="UtilJs" JScriptCall="OnBeforeReboot" Return="check" Execute="deferred" Impersonate="no" />
+		
+	<!--<CustomAction Id="OnEndSuspendInstallation" BinaryKey="UtilJs" JScriptCall="OnEndSuspendInstallation" Return="check" Execute="deferred" />-->
+	<!--<CustomAction Id="OnEndCancelInstallation" BinaryKey="UtilJs" JScriptCall="OnEndCancelInstallation" Return="check" />-->
+	<CustomAction Id="SetOnStartInstallationData" Property="OnStartInstallation" Value="[OriginalDatabase]*[REINSTALL]*[REINSTALLMODE]*[DISABLE]*[UPDATE]*[UILevel]*[TOKEN]*[ROOT_URL]" />
+		
+	<CustomAction Id="InterruptAndRestartAfterReboot" BinaryKey="UtilJs" JScriptCall="InterruptAndRestartAfterReboot" Return="check" Execute="deferred" Impersonate="no" />
+	<CustomAction Id="SetInterruptAndRestartAfterRebootData" Property="InterruptAndRestartAfterReboot" Value="[OriginalDatabase]" />
+
+	<!-- InstallEdrService -->
+	<CustomAction Id="SetInstallEdrServiceData" Property="InstallEdrService" Value='"[ACTUALINSTALLDIR]edrsvc.exe" install' />
+	<CustomAction Id="InstallEdrService" BinaryKey="UtilJs" JScriptCall="InstallEdrService" Return="check" Impersonate="no" Execute="deferred" />
+  <!-- EnrollEdrService -->
+  <CustomAction Id="SetEnrollEdrServiceData" Property="EnrollEdrService" Value='[REINSTALL]*"[ACTUALINSTALLDIR]edrsvc.exe" enroll [SvcInstallCommandLine]' />
+  <CustomAction Id="EnrollEdrService" BinaryKey="UtilJs" JScriptCall="EnrollEdrService" Return="check" Impersonate="no" Execute="deferred" />
+		
+	<!-- RollbackInstalledEdrService -->
+	<CustomAction Id="SetRollbackInstalledEdrServiceData" Property="RollbackInstalledEdrService" Value='"[ACTUALINSTALLDIR]edrsvc.exe" uninstall' />
+	<CustomAction Id="RollbackInstalledEdrService" BinaryKey="UtilJs" JScriptCall="RollbackInstalledEdrService" Return="check" Impersonate="no" Execute="rollback" />
+		
+	<!-- StartEdrService -->
+	<CustomAction Id="SetStartEdrServiceData" Property="StartEdrService" Value='[REINSTALL]*"[ACTUALINSTALLDIR]edrsvc.exe" start' />
+	<CustomAction Id="StartEdrService" BinaryKey="UtilJs" JScriptCall="StartEdrService" Return="check" Impersonate="no" Execute="deferred" />
+
+	<!-- UninstallEdrService -->
+	<CustomAction Id="SetUninstallEdrServiceData" Property="UninstallEdrService" Value='"[ACTUALINSTALLDIR]edrsvc.exe" uninstall' />
+	<CustomAction Id="UninstallEdrService" BinaryKey="UtilJs" JScriptCall="UninstallEdrService" Return="ignore" Impersonate="no" Execute="deferred" />
+		
+	<!-- StopEdrService -->
+	<CustomAction Id="SetStopEdrServiceData" Property="StopEdrService" Value='"[ACTUALINSTALLDIR]edrsvc.exe" stop' />
+	<CustomAction Id="StopEdrService" BinaryKey="UtilJs" JScriptCall="StopEdrService" Return="ignore" Impersonate="no" Execute="deferred" />
+		
+	<!-- DeleteEdrServiceArtefacts -->
+	<CustomAction Id="SetDeleteEdrServiceArtefactsData" Property="DeleteEdrServiceArtefacts" Value='[CommonAppDataFolder]edrsvc' />
+	<CustomAction Id="DeleteEdrServiceArtefacts" BinaryKey="UtilJs" JScriptCall="DeleteEdrServiceArtefacts" Return="ignore" Impersonate="no" Execute="deferred" />
+
+	<!-- CleanInstallDirectory -->
+	<CustomAction Id="SetCleanInstallDirectoryData" Property="CleanInstallDirectory" Value='[ACTUALINSTALLDIR]' />
+	<CustomAction Id="CleanInstallDirectory" BinaryKey="UtilJs" JScriptCall="CleanInstallDirectory" Return="ignore" Impersonate="no" Execute="deferred" />
+		
+	<!--<Property Id='CmdExe'>cmd.exe</Property>
+	<CustomAction Id="DeleteEdrServiceArtefacts" Property="CmdExe" ExeCommand='/c rmdir /s /q "[CommonAppDataFolder]edrsvc"' Execute="deferred" Impersonate='no' Return='ignore' />-->
+		
+</Include>

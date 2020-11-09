@@ -1,0 +1,25 @@
+
+log4cplus.rootLogger=INFO, STDOUT, R
+log4cplus.logger.test=WARN
+log4cplus.logger.test.log_1=FATAL
+log4cplus.logger.test.log_2=FATAL
+log4cplus.logger.test.log_3=WARN, R3
+
+log4cplus.appender.STDOUT=log4cplus::ConsoleAppender
+log4cplus.appender.STDOUT.layout=log4cplus::PatternLayout
+log4cplus.appender.STDOUT.layout.ConversionPattern=%d{%m/%d/%y %H:%M:%S} [%t] %-5p %c{2} %%%x%% - %m [%l]%n
+
+log4cplus.appender.R=log4cplus::RollingFileAppender
+log4cplus.appender.R.File=output.log
+#log4cplus.appender.R.MaxFileSize=5MB
+log4cplus.appender.R.MaxFileSize=500KB
+log4cplus.appender.R.MaxBackupIndex=5
+log4cplus.appender.R.layout=log4cplus::TTCCLayout
+
+log4cplus.appender.R3=log4cplus::RollingFileAppender
+log4cplus.appender.R3.File=log_3.log
+log4cplus.appender.R3.MaxFileSize=500KB
+log4cplus.appender.R3.MaxBackupIndex=5
+#log4cplus.appender.R3.layout=log4cplus::TTCCLayout
+log4cplus.appender.R3.layout=log4cplus::PatternLayout
+log4cplus.appender.R3.layout.ConversionPattern=%d{%m/%d/%y %H:%M:%S,%Q} [%t] %-5p %c{2} - %m%n

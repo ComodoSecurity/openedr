@@ -1,0 +1,329 @@
+//
+// Scenario checks events and extracts files to be submitted to Valkyrie
+//
+// Input queue: check_for_valkyrie
+// Output queue: app.config.script.check_for_valkyrie.outputQueue
+//               app.config.script.check_for_valkyrie.submitQueue
+//
+{
+	"version": "1.0",
+	"code": {
+
+		//
+		// Entrypoint
+		//
+		"main": [
+			// Get data from source queue
+			{
+				"processor": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.queueManager",
+					"command": "getQueue",
+					"params": { "name": "check_for_valkyrie" }
+				},
+				"command": "get",
+				"$dst": "event"
+			},
+			// Set next process to check
+			{
+				"$set": {
+					"$path": "event.process",
+					"$default": {}
+				},
+				"$dst": "curProcess"
+			},
+			// Goto result processing
+			{ "$goto": "checkProcess" }
+		],
+
+		//
+		// Check the current process for having calculated 'imageFile.hash'
+		//
+		"checkProcess": [
+			// Check end-of-loop condition
+			{
+				"$goto": "putResult",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "equal",
+					"args": [
+						{ "$path": "curProcess" },
+						{}
+					]
+				}
+			},
+
+			// Goto the next process if curProcess.imageFile is not exist
+			{
+				"$goto": "checkNextProcess",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "!has",
+					"path": "imageFile",
+					"args": [ { "$path": "curProcess" } ]
+				}
+			},
+
+			// Check if a custom check command is defined
+			{
+				"$goto": "doCustomCheck",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "!equal",
+					"args": [
+						{
+							"$val": {
+								"$$proxy": "cachedCmd",
+								"processor": "objects.application",
+								"command": "getCatalogData",
+								"params": {
+									"default": null,
+									"path": "app.config.script.check_for_valkyrie.checkCmd"
+								}
+							}
+						},
+						null
+					]
+				}
+			},
+			// Check if the file is matched for submission to the Valkyrie
+			{
+				"$goto": "putToSubmitToValkyrie",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "and",
+					"args": [
+						// Check if curProcess.imageFile.verdict is exist
+						// (a workaround for "Invalid dictionary index" error)
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "has",
+							"path": "imageFile.verdict",
+							"args": [ { "$path": "curProcess" } ]
+						},
+						// Check file's FLS verdict
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "contain",
+							"item": { "$path": "curProcess.imageFile.verdict" },
+							"args": [
+								{
+									"$$proxy": "cachedCmd",
+									"processor": "objects.application",
+									"command": "getCatalogData",
+									"params": { "path": "app.config.script.check_for_valkyrie.flsVerdict" }
+								}
+							]
+						},
+						// Check if the file has been already processed earlier
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "not",
+							"args": [
+								{
+									"$$proxy": "cachedObj",
+									"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+									"operation": "and",
+									"args": [
+										{
+											"$$proxy": "cachedCmd",
+											"processor": "objects.application",
+											"command": "getCatalogData",
+											"params": {
+												"default": true,
+												"path": "app.config.script.check_for_valkyrie.enableCache"
+											}
+										},
+										{
+											"$$proxy": "cachedObj",
+											"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+											"command": {
+												"$$proxy": "cachedObj",
+												"clsid": "0xACE892B6", // CLSID_Command
+												"processor": "app.config.script.check_for_valkyrie.cache",
+												"command": "contains"
+											},
+											"ctxParams": {
+												"data": { "$path": "curProcess.imageFile.hash" }
+											}
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			},
+			// Goto to a next process
+			{ "$goto": "checkNextProcess" }
+		],
+
+		//
+		// Run an external custom check command
+		//
+		"doCustomCheck": [
+			// Call an external check command
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.application",
+					"command": "getConfigValue",
+					"params": {
+						"paths": "app.config.script.check_for_valkyrie.checkCmd",
+						"skipNull": true,
+						"default": {
+							"$$proxy": "cachedObj",
+							"clsid": "0x61A30254", // CLSID_Scenario
+							"code": [ { "$ret": null } ]
+						}
+					}
+				},
+				"ctxParams": {
+					"file": {
+						"$path": "curProcess.imageFile",
+						"$default": ""
+					}
+				},
+				"$dst": "checkResult"
+			},
+			// Check a command's result
+			{
+				"$goto": "putToSubmitToValkyrie",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "equal",
+					"args": [
+						{
+							"$path": "checkResult",
+							"$default": false
+						},
+						true
+					]
+				}
+			},
+			// Goto to a next process
+			{ "$goto": "checkNextProcess" }
+		],
+
+		//
+		// Put a matched file descriptor into the queue for its further
+		// submission to the Valkyrie
+		//
+		"putToSubmitToValkyrie": [
+			// Put the file to queue
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": {
+							"name": {
+								"$$proxy": "cachedCmd",
+								"processor": "objects.application",
+								"command": "getCatalogData",
+								"params": {
+									"path": "app.config.script.check_for_valkyrie.submitQueue"
+								}
+							}
+						}
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": {
+						"$$proxy": "cachedObj",
+						"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+						"operation": "clone",
+						"resolve": true,
+						"args": [ { "$path": "curProcess.imageFile" } ]
+					}
+				}
+			},
+			// Add the file's hash to the cache
+			{
+				"$if": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.application",
+					"command": "getCatalogData",
+					"params": {
+						"default": true,
+						"path": "app.config.script.check_for_valkyrie.enableCache"
+					}
+				},
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": "app.config.script.check_for_valkyrie.cache",
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "curProcess.imageFile.hash" }
+				}
+			},
+			// Goto to the next process
+			{ "$goto": "checkNextProcess" }
+		],
+
+		//
+		// Check the next process
+		//
+		"checkNextProcess": [
+			// Set next process to check
+			{
+				"$set": {
+					"$path": "curProcess.parent",
+					"$default": {}
+				},
+				"$dst": "curProcess"
+			},
+			// Go to the next loop
+			{ "$goto": "checkProcess" }
+		],
+
+		//
+		// Put event to destination queue
+		//
+		"putResult": [
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": {
+							"name": {
+								"$$proxy": "cachedCmd",
+								"processor": "objects.application",
+								"command": "getCatalogData",
+								"params": {
+									"path": "app.config.script.check_for_valkyrie.outputQueue"
+								}
+							}
+						}
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		]
+	}
+}

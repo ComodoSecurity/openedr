@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\test\main.cpp" />
+    <ClCompile Include="..\..\test\pch.cpp" />
+    <ClCompile Include="..\..\test\test_aws.cpp">
+      <Filter>aws</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_fls.cpp">
+      <Filter>fls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_httpclient.cpp">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_valkyrie.cpp">
+      <Filter>valkyrie</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_cloudsvc.cpp">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_gcp.cpp">
+      <Filter>gcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\init.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\test\config.h" />
+    <ClInclude Include="..\..\test\pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="aws">
+      <UniqueIdentifier>{a3c3416e-de9a-427a-9a5e-1609a1f0089c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fls">
+      <UniqueIdentifier>{ecf8bbc3-25fc-4e6f-b7cb-8b607fe1e30c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="http">
+      <UniqueIdentifier>{ef35fc8b-6ff5-430e-aaf7-33f0fd35d14f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="valkyrie">
+      <UniqueIdentifier>{0382e695-f14c-4db5-a557-4746cef41cec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gcp">
+      <UniqueIdentifier>{fa2ac138-d5ba-4afb-a8b5-fc49ba3e9460}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

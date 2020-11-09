@@ -1,0 +1,126 @@
+//
+// Scenario filters LLE events before policy filtering
+//
+// Input queue: filter_lle
+// Output queue: app.config.script.filter_lle.outputQueue
+//
+{
+	"version": "1.0",
+	"code": {
+
+		//
+		// Entrypoint
+		//
+		"main": [
+			// Get event from source queue
+			{
+				"processor": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.queueManager",
+					"command": "getQueue",
+					"params": { "name": "filter_lle" }
+				},
+				"command": "get",
+				"$dst": "event"
+			},
+			// Filter events by 'event.baseType'
+			{
+				"$ret": {},
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "and",
+					"args": [
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "!equal",
+							"args": [
+								{ "$path": "event.baseType" },
+								{
+									"$gpath": "app.config.script.filter_lle.type",
+									"$default": 0
+								}
+							]
+						},
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "!equal",
+							"args": [
+								0,
+								{
+									"$gpath": "app.config.script.filter_lle.type",
+									"$default": 0
+								}
+							]
+						}
+					]
+				}
+			},
+			// Filter events by event.pid
+			{
+				"$ret": {},
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "and",
+					"args": [
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "!equal",
+							"args": [
+								{	"$path": "event.process.pid" },
+								{
+									"$gpath": "app.config.script.filter_lle.pid",
+									"$default": 2
+								}
+							]
+						},
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "!equal",
+							// "$debug": true,
+							"args": [
+								2,
+								{
+									"$gpath": "app.config.script.filter_lle.pid",
+									"$default": 2
+								}
+							]
+						}
+					]
+				}
+			},
+			// Save event to destination queue
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": {
+							"name": {
+								"$$proxy": "cachedCmd",
+								"processor": "objects.application",
+								"command": "getCatalogData",
+								"params": {
+									"path": "app.config.script.filter_lle.outputQueue"
+								}
+							}
+						}
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		]
+	}
+}

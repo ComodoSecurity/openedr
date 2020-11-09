@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libsyswin.cpp" />
+    <ClCompile Include="..\..\src\pch.cpp" />
+    <ClCompile Include="..\..\src\utilities.cpp" />
+    <ClCompile Include="..\..\src\winsvcctrl.cpp" />
+    <ClCompile Include="..\..\src\filedataprovider.cpp">
+      <Filter>providers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\procdataprovider.cpp">
+      <Filter>providers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\userdataprovider.cpp">
+      <Filter>providers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\signdataprovider.cpp">
+      <Filter>providers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\inc\extheaders.h" />
+    <ClInclude Include="..\..\inc\libsyswin.h" />
+    <ClInclude Include="..\..\inc\objects.h" />
+    <ClInclude Include="..\..\inc\utilities.hpp" />
+    <ClInclude Include="..\..\src\pch.h" />
+    <ClInclude Include="..\..\src\winsvcctrl.h" />
+    <ClInclude Include="..\..\src\filedataprovider.h">
+      <Filter>providers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\procdataprovider.h">
+      <Filter>providers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\userdataprovider.h">
+      <Filter>providers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\dataproviders.hpp">
+      <Filter>providers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\signdataprovider.h">
+      <Filter>providers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="providers">
+      <UniqueIdentifier>{dc55741d-8456-46a8-936b-29d0ea9e12cb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

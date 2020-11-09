@@ -1,0 +1,35 @@
+/* W32 resources for .dll */
+
+#include <winresrc.h>
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+VS_VERSION_INFO VERSIONINFO
+  FILEVERSION @PACKAGE_VERSION_MAJOR@,@PACKAGE_VERSION_MINOR@,@PACKAGE_VERSION_SUBMINOR@,0
+  PRODUCTVERSION @PACKAGE_VERSION_MAJOR@,@PACKAGE_VERSION_MINOR@,@PACKAGE_VERSION_SUBMINOR@,0
+  FILEFLAGSMASK  VS_FFI_FILEFLAGSMASK
+  FILEFLAGS      0
+  FILEOS         VOS_NT_WINDOWS32
+  FILETYPE       VFT_DLL
+  FILESUBTYPE    VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "04090000"  /* Lang = US English, Charset = ASCII */
+        BEGIN
+            VALUE "ProductName", "GNU libmicrohttpd\0"
+            VALUE "ProductVersion", "@PACKAGE_VERSION@\0"
+            VALUE "FileVersion", "@PACKAGE_VERSION@\0"
+            VALUE "FileDescription", "GNU libmicrohttpd DLL for Windows (MinGW build)\0"
+            VALUE "InternalName", "libmicrohttpd\0"
+            VALUE "OriginalFilename", "libmicrohttpd-@MHD_W32_DLL_SUFF@.dll\0"
+            VALUE "CompanyName", "Free Software Foundation\0"
+            VALUE "LegalCopyright",  "Copyright (C) 2007-2017 Christian Grothoff and project contributors\0"
+            VALUE "Comments", "http://www.gnu.org/software/libmicrohttpd/\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0  /* US English, ASCII */
+    END
+END
+

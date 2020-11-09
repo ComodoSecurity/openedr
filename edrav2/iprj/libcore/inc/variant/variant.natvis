@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="openEdr::variant::Variant">
+    <!-- null -->
+    <DisplayString Condition="m_Value.m_Variant.which_ == 0">null: null</DisplayString>
+    <!-- bool -->
+    <DisplayString Condition="m_Value.m_Variant.which_ == 1">bool: {*(bool*)m_Value.m_Variant.storage_.data_.buf}</DisplayString>
+    <!-- int -->
+    <DisplayString Condition="m_Value.m_Variant.which_ == 2">int: {*(openEdr::variant::detail::IntValue*)m_Value.m_Variant.storage_.data_.buf}</DisplayString>
+    <!-- string -->
+    <DisplayString Condition="m_Value.m_Variant.which_ == 3">
+      str: {*((std::shared_ptr&lt;openEdr::variant::detail::StringValue&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr}</DisplayString>
+    <!-- object -->
+    <DisplayString Condition="m_Value.m_Variant.which_ == 4">obj: {((std::shared_ptr&lt;openEdr::IObject&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr,na}</DisplayString>
+    <!-- dictionary -->
+    <DisplayString Condition="m_Value.m_Variant.which_ == 5">
+      dict: {(*((std::shared_ptr&lt;openEdr::variant::detail::BasicDictionary&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr)}
+    </DisplayString>
+    <!-- sequence -->
+    <DisplayString Condition="m_Value.m_Variant.which_ == 6">
+      seq: {(*((std::shared_ptr&lt;openEdr::variant::detail::BasicSequence&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr)}
+    </DisplayString>
+    <!-- dataproxy -->
+    <DisplayString Condition="m_Value.m_Variant.which_ == 7">
+      {*((std::shared_ptr&lt;openEdr::variant::detail::IDataProxy&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr}
+    </DisplayString>
+
+    <!-- string -->
+    <StringView Condition="m_Value.m_Variant.which_ == 3 &amp;&amp; 
+                (((std::shared_ptr&lt;openEdr::variant::detail::StringValue&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr)->m_sUtf8Value.size() != 0"
+                >
+      (((std::shared_ptr&lt;openEdr::variant::detail::StringValue&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr)->m_sUtf8Value,s8
+    </StringView>
+    <!-- string -->
+    <StringView Condition="m_Value.m_Variant.which_ == 3">
+      (((std::shared_ptr&lt;openEdr::variant::detail::StringValue&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr)->m_sWCharValue,su
+    </StringView>
+
+    <Expand>
+      <!-- object -->
+      <ExpandedItem Condition="m_Value.m_Variant.which_ == 4">(((std::shared_ptr&lt;openEdr::IObject&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr)</ExpandedItem>
+      <!-- dictionary -->
+      <ExpandedItem Condition="m_Value.m_Variant.which_ == 5">(((std::shared_ptr&lt;openEdr::variant::detail::BasicDictionary&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr)</ExpandedItem>
+      <!-- sequence -->
+      <ExpandedItem Condition="m_Value.m_Variant.which_ == 6">(((std::shared_ptr&lt;openEdr::variant::detail::BasicSequence&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr)</ExpandedItem>
+      <!-- dataproxy -->
+      <ExpandedItem Condition="m_Value.m_Variant.which_ == 7">(((std::shared_ptr&lt;openEdr::variant::detail::IDataProxy&gt;*)m_Value.m_Variant.storage_.data_.buf)->_Ptr)</ExpandedItem>
+      <!-- <Item Name="[type]">openEdr::variant::ValueType(m_Value.m_Variant.which_)</Item> -->
+      <!-- all -->
+      <Synthetic Name="-----------" Condition="m_Value.m_Variant.which_ == 5 || m_Value.m_Variant.which_ == 6" ExcludeView="simple"><DisplayString>---------------------------------------</DisplayString></Synthetic>
+      <Item Name="[raw_value]" Condition="m_Value.m_Variant.which_ == 0" ExcludeView="simple">(openEdr::variant::detail::Value::NullValue*)m_Value.m_Variant.storage_.data_.buf</Item>
+      <Item Name="[raw_value]" Condition="m_Value.m_Variant.which_ == 1" ExcludeView="simple">(bool*)m_Value.m_Variant.storage_.data_.buf</Item>
+      <Item Name="[raw_value]" Condition="m_Value.m_Variant.which_ == 2" ExcludeView="simple">(openEdr::variant::detail::IntValue*)m_Value.m_Variant.storage_.data_.buf</Item>
+      <Item Name="[raw_value]" Condition="m_Value.m_Variant.which_ == 3" ExcludeView="simple">(std::shared_ptr&lt;openEdr::variant::detail::StringValue&gt;*)m_Value.m_Variant.storage_.data_.buf</Item>
+      <Item Name="[raw_value]" Condition="m_Value.m_Variant.which_ == 4" ExcludeView="simple">(std::shared_ptr&lt;openEdr::IObject&gt;*)m_Value.m_Variant.storage_.data_.buf</Item>
+      <Item Name="[raw_value]" Condition="m_Value.m_Variant.which_ == 5" ExcludeView="simple">(std::shared_ptr&lt;openEdr::variant::detail::BasicDictionary&gt;*)m_Value.m_Variant.storage_.data_.buf</Item>
+      <Item Name="[raw_value]" Condition="m_Value.m_Variant.which_ == 6" ExcludeView="simple">(std::shared_ptr&lt;openEdr::variant::detail::BasicSequence&gt;*)m_Value.m_Variant.storage_.data_.buf</Item>
+      <Item Name="[raw_value]" Condition="m_Value.m_Variant.which_ == 7" ExcludeView="simple">(std::shared_ptr&lt;openEdr::variant::detail::IDataProxy&gt;*)m_Value.m_Variant.storage_.data_.buf</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="openEdr::variant::detail::IntValue">
+    <DisplayString Condition="m_fIsSigned">{m_value.nSigned,d} ({m_value.nSigned,X}) (signed)</DisplayString>
+    <DisplayString>{m_value.nUnsigned,d} {m_value.nUnsigned,X} (unsigned)</DisplayString>
+    <Expand/>
+  </Type>
+
+  <Type Name="openEdr::variant::detail::StringValue">
+    <DisplayString Condition="m_sUtf8Value.size() != 0 &amp;&amp; m_sWCharValue.size() != 0">{m_sUtf8Value,s8} (utf8+ utf16+)</DisplayString>
+    <DisplayString Condition="m_sUtf8Value.size() != 0">{m_sUtf8Value,s8} (utf8+ utf16-)</DisplayString>
+    <DisplayString Condition="m_sWCharValue.size() != 0">{m_sWCharValue,su} (utf8- utf16+)</DisplayString>
+    <DisplayString>"" (utf8+ utf16+)</DisplayString>
+    <StringView Condition="m_sUtf8Value.size() != 0">m_sUtf8Value,s8</StringView>
+    <StringView>m_sWCharValue,su</StringView>
+    <Expand/>
+  </Type>
+
+  <Type Name="openEdr::variant::detail::BasicDictionary">
+    <DisplayString Condition="m_pStorage == 0">{{ size=0 }}</DisplayString>
+    <DisplayString>{m_pStorage._Mypair._Myval2,na}</DisplayString>
+    <Expand>
+      <ExpandedItem Condition="m_pStorage != 0">m_pStorage._Mypair._Myval2,view(simple)</ExpandedItem>
+    </Expand>
+  </Type>
+
+  <Type Name="openEdr::variant::detail::ArrayDictStorage&lt;*&gt;">
+    <DisplayString>{{ size={m_nSize} }}</DisplayString>
+    <Expand>
+      <LinkedListItems>
+        <Size>m_nSize</Size>
+        <HeadPointer>m_array</HeadPointer>
+        <NextPointer>this+1</NextPointer>
+        <ValueNode Name="[{key}]">val</ValueNode>
+      </LinkedListItems>
+    </Expand>
+  </Type>
+
+  <Type Name="openEdr::variant::detail::UnorderedMapDictStorage">
+    <DisplayString>{m_map}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_map,view(simple)</ExpandedItem>
+    </Expand>
+  </Type>
+
+  <Type Name="openEdr::variant::detail::DictKey">
+    <DisplayString Condition="m_sStr[7] == 0">{m_sStr,na}</DisplayString>
+    <DisplayString>{{ strhash={m_nHash} }}</DisplayString>
+    <Expand></Expand>
+  </Type>
+
+  <Type Name="openEdr::variant::detail::BasicSequence">
+    <DisplayString>{m_Vector}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_Vector,view(simple)</ExpandedItem>
+    </Expand>
+  </Type>
+
+  <Type Name="openEdr::variant::detail::NonCachedDataProxy">
+    <DisplayString>proxy non-cached: </DisplayString>
+    <Expand>
+      <ExpandedItem ExcludeView="simple">m_fnCalculate,view(simple)</ExpandedItem>
+    </Expand>
+  </Type>
+
+  <Type Name="openEdr::variant::detail::CachedDataProxy">
+    <DisplayString Condition="m_pSharedData._Ptr->fCalculated">proxy cached: {m_pSharedData._Ptr->vCache}</DisplayString>
+    <DisplayString Condition="!m_pSharedData._Ptr->fCalculated">proxy cached: not calculated</DisplayString>
+    <Expand>
+      <Item Name="[cache]" Condition="m_pSharedData._Ptr->fCalculated">m_pSharedData._Ptr->vCache</Item>
+      <Synthetic Name="[cache]" Condition="!(m_pSharedData._Ptr->fCalculated)">
+        <DisplayString>not calculated</DisplayString>
+      </Synthetic>
+      <ExpandedItem ExcludeView="simple">m_pSharedData._Ptr->fnCalculate,view(simple)</ExpandedItem>
+    </Expand>
+  </Type>
+
+  <Type Name="openEdr::variant::Sequence">
+    <DisplayString>{m_vValue}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_vValue</ExpandedItem>
+    </Expand>
+  </Type>
+
+  <Type Name="openEdr::variant::Dictionary">
+    <DisplayString>{m_vValue}</DisplayString>
+    <Expand>
+      <ExpandedItem>m_vValue</ExpandedItem>
+    </Expand>
+  </Type>
+  
+</AutoVisualizer>

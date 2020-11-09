@@ -1,0 +1,39 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<title>Title of the document</title>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+<!--
+    This file needs to be generated using jsonrpcstub:
+    cd build
+    ./bin/jsonrpcstub ../src/examples/spec.json --js-client=StubClient --js-client-file=../src/examples/stubclient.js
+-->
+<script src="stubclient.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+    function showResult(id, result) {
+        alert("ID: " + id + " Result: " + result);
+    }
+
+    function showError(code, message) {
+        alert("Error: " + code + " -> " + message);
+    }
+
+    var client = new StubClient("http://localhost:8383");
+
+    client.sayHello("Peter", showResult, showError);
+    client.addNumbers(3,4,showResult, showError);
+    client.isEqual("3","3",showResult,showError);
+    client.isEqual("3",4,showResult,showError);     //invalid params error
+    client.notifyServer();
+});
+function displayResult(result) {
+    alert(JSON.stringify(result));
+}
+</script>
+</head>
+<body>
+</body>
+</html> 

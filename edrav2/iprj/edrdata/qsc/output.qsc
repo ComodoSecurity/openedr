@@ -1,0 +1,224 @@
+//
+// Scenario outputs events to log and cloud
+//
+// Input queue: output
+// Output queues: output_batch (optional)
+//
+{
+	"version": "1.0",
+	// "threadPoolTag": "OutputPool",
+
+	"code": {
+
+		//
+		// Entrypoint
+		//
+		"main": [
+			// Get event from source queue
+			{
+				"processor": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.queueManager",
+					"command": "getQueue",
+					"params": { "name": "output" }
+				},
+				"command": "get",
+				"$dst": "event"
+			},
+
+			// Put event to the log receiver
+			{
+				"$if": {
+					"$gpath": "app.config.script.output.enableLogReceiver",
+					"$default": false
+				},
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": "app.config.script.output.logReceiver",
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			},
+
+			// Put event to the dir receiver
+			{
+				"$if": {
+					"$gpath": "app.config.script.output.enableDirReceiver",
+					"$default": false
+				},
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": "app.config.script.output.dirReceiver",
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			},
+
+			// Put event to the local mode receiver
+			{
+				"$if": {
+					"$gpath": "app.config.script.output.enableLocalModeReceiver",
+					"$default": false
+				},
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": "app.config.script.output.localModeReceiver",
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			},
+
+			// Put event to the debug receiver
+			{
+				"$if": {
+					"$gpath": "app.config.script.output.enableDebugReceiver",
+					"$default": false
+				},
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": "app.config.script.output.debugReceiver",
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			},
+
+			// Put event to the batch queue
+			{
+				"$goto": "putToBatchQueue",
+				"$if": {
+					"$gpath": "app.config.script.output.enableMainReceiverBatchMode",
+					"$default": false
+				}
+			},
+
+			// Put event to the main receiver
+			{
+				"$goto": "putToMainReceiver",
+				"$if": {
+					"$gpath": "app.config.script.output.enableMainReceiver",
+					"$default": false
+				}
+			}
+		],
+
+		//
+		// Put event to the batch queue
+		//
+		"putToBatchQueue": [
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": {
+							"name": {
+								"$$proxy": "cachedCmd",
+								"processor": "objects.application",
+								"command": "getCatalogData",
+								"params": {
+									"path": "app.config.script.output.batchQueue"
+								}
+							}
+						}
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		],
+
+		//
+		// Put event to the main receiver
+		//
+		"putToMainReceiver": [
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": "app.config.script.output.mainReceiver",
+					"command": "submit"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" },
+					"default": false
+				},
+				"$dst": "submitResult"
+			},
+			// Return the event back to the queue if submission wasn't successful
+			{
+				"$goto": "putBackToQueue",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "equal",
+					"args": [
+						{ "$path": "submitResult" },
+						false
+					]
+				}
+			}
+		],
+
+		// Put data back to queue
+		"putBackToQueue": [
+			// Put data to queue
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": { "name": "output" }
+					},
+					"command": "rollback"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			},
+			// Sleep before next submission
+			{
+				"processor": "objects.application",
+				"command": "sleep",
+				"params": {
+					"msec": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.application",
+						"command": "getCatalogData",
+						"params": {
+							"default": 10000,
+							"path": "app.config.script.output.mainReceiverRetryDelay"
+						}
+					}
+				},
+				"$catch": null // Skip exception on terminate
+			}
+		]
+	}
+}

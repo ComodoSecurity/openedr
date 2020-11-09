@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+    <CmdRootDir>$(ProjectDir)..\..\..\..</CmdRootDir>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros">
+    <CmdOutDirName>win-$(Configuration)-$(PlatformName)</CmdOutDirName>
+  </PropertyGroup>
+
+  <PropertyGroup Label="UserMacros">
+    <CmdEPrjDir>$(CmdRootDir)\eprj</CmdEPrjDir>
+    <CmdIPrjDir>$(CmdRootDir)\iprj</CmdIPrjDir>
+    <CmdPropsDir>$(CmdRootDir)\iprj\build\vs2019</CmdPropsDir>
+    <CmdILibDir>$(CmdRootDir)\out\lib\$(CmdOutDirName)</CmdILibDir>
+    <CmdAtsScenarios>$(CmdRootDir)\iprj\ats\scenarios</CmdAtsScenarios>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <BuildMacro Include="CmdRootDir">
+      <Value>$(CmdRootDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CmdEPrjDir">
+      <Value>$(CmdEPrjDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CmdIPrjDir">
+      <Value>$(CmdIPrjDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CmdPropsDir">
+      <Value>$(CmdPropsDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CmdILibDir">
+      <Value>$(CmdILibDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CmdAtsScenarios">
+      <Value>$(CmdAtsScenarios)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
+

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\edrext.cpp" />
+    <ClCompile Include="..\..\src\pch.cpp" />
+    <ClCompile Include="..\..\src\cmd\sys\sys_win.cpp">
+      <Filter>cmd\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cmd\sys\net\net_win.cpp">
+      <Filter>cmd\sys\net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\pch_win.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\pch.h" />
+    <ClInclude Include="..\..\inc\cmd\sys.hpp">
+      <Filter>cmd\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\cmd\sys\net.hpp">
+      <Filter>cmd\sys\net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\pch_win.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="cmd">
+      <UniqueIdentifier>{75c16ed9-fdb3-4dc5-b291-1ce5a478e852}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cmd\sys">
+      <UniqueIdentifier>{c0896e9d-ba74-4466-b1a9-beab5e655991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cmd\sys\net">
+      <UniqueIdentifier>{3d9f7005-efb8-4052-9d69-7efdb9c07852}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

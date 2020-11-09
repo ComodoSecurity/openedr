@@ -1,0 +1,123 @@
+<project name="log4cplus" default="build" basedir=".">
+  <description>
+    log4cplus Jenkins build
+  </description>
+
+  <property name="objdir" location="../objdir" />
+  <property name="srcdir" location=".." />
+
+  <!-- Prepare conditional properties that will trigger the right build. -->
+
+  <condition property="openbsd" value="true">
+    <equals arg1="openbsd" arg2="${LOG4CPLUS_BUILD_OS}" casesensitive="false"
+            trim="trim" />
+  </condition>
+
+  <condition property="netbsd" value="true">
+    <equals arg1="netbsd" arg2="${LOG4CPLUS_BUILD_OS}" casesensitive="false"
+            trim="trim" />
+  </condition>
+
+  <condition property="freebsd" value="true">
+    <equals arg1="freebsd" arg2="${LOG4CPLUS_BUILD_OS}" casesensitive="false"
+            trim="trim" />
+  </condition>
+
+  <condition property="dragonflybsd" value="true">
+    <equals arg1="dragonflybsd" arg2="${LOG4CPLUS_BUILD_OS}" casesensitive="false"
+            trim="trim" />
+  </condition>
+
+  <condition property="linux" value="true">
+    <equals arg1="linux" arg2="${LOG4CPLUS_BUILD_OS}" casesensitive="false"
+            trim="trim" />
+  </condition>
+
+  <!-- Targets  -->
+
+  <target name="adjust-time-stamps">
+    <exec dir="${srcdir}" executable="sh" failonerror="true">
+      <arg value="./scripts/fix-timestamps.sh" />
+    </exec>
+  </target>
+
+  <target name="prep-objdir">
+    <delete dir="${objdir}" failonerror="true" />
+    <mkdir dir="${objdir}" />
+  </target>
+
+  <target name="build" depends="adjust-time-stamps, prep-objdir,
+                                openbsd, netbsd, freebsd, dragonflybsd">
+
+  </target>
+
+  <!-- OpenBSD -->
+
+  <target name="openbsd" if="openbsd">
+    <exec dir="${objdir}" executable="sh" failonerror="true">
+      <arg value="../configure" />
+      <arg value="--with-working-c-locale" />
+      <arg value="--with-python" />
+      <arg value="CXX=x86_64-unknown-openbsd6.1-eg++" />
+      <arg value="CC=x86_64-unknown-openbsd6.1-egcc" />
+      <arg value="NM=x86_64-unknown-openbsd6.1-egcc-nm" />
+    </exec>
+
+    <exec dir="${objdir}" executable="gmake" failonerror="true" />
+
+    <exec dir="${objdir}" executable="gmake" failonerror="true">
+      <arg value="check" />
+    </exec>
+  </target>
+
+  <!-- NetBSD -->
+
+  <target name="netbsd" if="netbsd">
+    <exec dir="${objdir}" executable="sh" failonerror="true">
+      <arg value="../configure" />
+      <arg value="--with-working-c-locale" />
+    </exec>
+
+    <exec dir="${objdir}" executable="gmake" failonerror="true" />
+
+    <exec dir="${objdir}" executable="gmake" failonerror="true">
+      <arg value="check" />
+    </exec>
+  </target>
+
+  <!-- FreeBSD -->
+
+  <target name="freebsd" if="freebsd">
+    <exec dir="${objdir}" executable="sh" failonerror="true">
+      <arg value="../configure" />
+      <arg value="--with-working-c-locale" />
+    </exec>
+
+    <exec dir="${objdir}" executable="gmake" failonerror="true" />
+
+    <exec dir="${objdir}" executable="gmake" failonerror="true">
+      <arg value="check" />
+    </exec>
+  </target>
+
+  <!-- DragonflyBSD -->
+
+  <target name="dragonflybsd" if="dragonflybsd">
+    <exec dir="${objdir}" executable="sh" failonerror="true">
+      <arg value="../configure" />
+      <arg value="--with-working-c-locale" />
+    </exec>
+
+    <exec dir="${objdir}" executable="gmake" failonerror="true" />
+
+    <exec dir="${objdir}" executable="gmake" failonerror="true">
+      <arg value="check" />
+    </exec>
+  </target>
+
+  <!-- Linux -->
+
+  <target name="linux" if="linux">
+  </target>
+
+</project>

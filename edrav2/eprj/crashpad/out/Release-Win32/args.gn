@@ -1,0 +1,6 @@
+# Build arguments go here.
+# See "gn args <out_dir> --list" for available build arguments.
+
+is_debug=false
+target_cpu="x86"
+extra_cflags=["/MT", "/GL-"]

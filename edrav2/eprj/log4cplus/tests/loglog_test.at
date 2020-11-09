@@ -1,0 +1,11 @@
+AT_SETUP([loglog_test])
+AT_KEYWORDS([appenders])
+
+AT_CHECK([cp -f "${abs_srcdir}/loglog_test/expout" .])
+AT_CHECK([cp -f "${abs_srcdir}/loglog_test/experr" .])
+AT_CHECK(["${abs_top_builddir}/loglog_test"], [0], [expout], [experr])
+ATX_WCHAR_T_TEST([
+  AT_CHECK(["${abs_top_builddir}/loglog_test"], [0], [expout], [experr])
+])
+
+AT_CLEANUP

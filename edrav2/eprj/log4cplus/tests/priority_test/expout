@@ -1,0 +1,26 @@
+Entering main()...
+Getting root logger...DONE
+FATAL - root: DEBUG
+FATAL - test: DEBUG
+FATAL - test.subtest: DEBUG
+FATAL - 
+Setting test.subtest to WARN
+FATAL - root: DEBUG
+FATAL - test: DEBUG
+FATAL - test.subtest: WARN
+FATAL - 
+Setting test to ERROR
+FATAL - root: DEBUG
+FATAL - test: ERROR
+FATAL - test.subtest: WARN
+FATAL - 
+Setting test.subtest to NOT_SET_LOG_LEVEL
+FATAL - root: DEBUG
+FATAL - test: ERROR
+FATAL - test.subtest: ERROR
+
+FATAL - Entering writeLogMessage()...
+FATAL - writeLogMessage()- This is a message from a different file
+FATAL - Exiting writeLogMessage()...
+Returned from writeLogMessage()...
+REALLY exiting main()...

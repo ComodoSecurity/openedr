@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:fire="http://schemas.microsoft.com/wix/FirewallExtension" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+	<?include Define.wxi ?>
+	<?include BuildInfo.wxi ?>
+	<Product Id="$(var.strproductid)" Name="$(var.strproduct)" Language="1033" Version="$(var.strversion)" Manufacturer="OpenEdr" UpgradeCode="$(var.upgradecode)">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." IgnoreRemoveFailure="yes" AllowSameVersionUpgrades="yes"></MajorUpgrade>
+		<!--
+		To launch update: msiexec /i install.msi REINSTALL=ALL REINSTALLMODE=vomus
+		-->
+		<Upgrade Id="$(var.upgradecode)">
+			<UpgradeVersion Maximum="2.0.0.0" OnlyDetect="yes" Property="OLDAGENT1INSTALLED" IgnoreRemoveFailure="yes"></UpgradeVersion>
+			<!--<UpgradeVersion Maximum="$(var.strversion)" IncludeMaximum="yes" OnlyDetect="no" Property="OLDAGENT2INSTALLED" IgnoreRemoveFailure="no"></UpgradeVersion>-->
+		</Upgrade>
+
+		<Condition Message="Current Windows version is not supported.">
+			<![CDATA[(VersionNT >= 601)]]>
+		</Condition>
+
+		<Media Cabinet="edr_agent.cab" Id="1" EmbedCab="yes" CompressionLevel="high" />
+
+    <Property Id="MsiLogging" Value="vx" />
+
+    <Property Id="MSIUSEREALADMINDETECTION" Value="1" />
+		<!--<Property Id="ARPNOMODIFY" Value="1" />-->
+		<Property Id="ARPURLINFOABOUT" Value="%INFOABOUT_LINK_PLACEHOLDER%" />
+		<Property Id="ARPHELPLINK" Value="%HELP_LINK_PLACEHOLDER%" />
+		<Property Id="ARPURLUPDATEINFO" Value="%UPDATE_INFO_LINK_PLACEHOLDER%" />
+		<Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable" />
+		
+		<?include InstallSequence.wxi ?>
+
+		<InstallExecuteSequence>
+			<Custom Action="SetActualInstallDirX86" After="SetActualInstallDir">NOT VersionNT64</Custom>
+			<Custom Action="SetActualInstallDirX64" After="SetActualInstallDir">VersionNT64</Custom>
+		</InstallExecuteSequence>
+
+		<CustomAction Id="SetActualInstallDirX86" Property="ACTUALINSTALLDIR" Value="[INSTALLDIRX86]" />
+		<CustomAction Id="SetActualInstallDirX64" Property="ACTUALINSTALLDIR" Value="[INSTALLDIRX64]" />
+		
+		<Feature Id="BinaryFeatureX64" Level="0" Absent="disallow" AllowAdvertise="no" TypicalDefault="install" InstallDefault="local">
+			<Condition Level="1">VersionNT64</Condition>
+			<ComponentGroupRef Id="ProductComponentsX64" />
+		</Feature>
+
+		<Feature Id="BinaryFeatureX86" Level="0" Absent="disallow" AllowAdvertise="no" TypicalDefault="install" InstallDefault="local">
+			<Condition Level="1">NOT VersionNT64</Condition>
+			<ComponentGroupRef Id="ProductComponentsX86" />
+		</Feature>
+	
+		<Icon Id="icon.ico" SourceFile="icon.ico"/>
+		<Property Id="ARPPRODUCTICON" Value="icon.ico" />
+
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="$(var.AppsDir)">
+				<Directory Id="COMPANYNAMEGROUP" Name="OpenEdr">
+					<Directory Id="INSTALLDIR" Name="EdrAgentV2">
+						<Directory Id="INSTALLDIRX64" Name="x64"></Directory>
+						<Directory Id="INSTALLDIRX86" Name="x86"></Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+			<Directory Id="$(var.SysFolder)">
+				<Directory Id="DRIVERSDIR" Name="drivers">
+				</Directory>
+				<!-- declare system32\config\...\edrsvc to cleanup on uninstall -->
+				<Directory Id="SysConfigDir" Name="config">
+					<Directory Id="SysProfileDir" Name="systemprofile">
+						<Directory Id="SysAppDataDir" Name="AppData">
+							<Directory Id="SysLocalDir" Name="Local">
+								<Directory Id="SysEdrsvcDir" Name="edrsvc">
+								</Directory>
+							</Directory>
+						</Directory>
+					</Directory>
+				</Directory>
+			</Directory>
+			<Directory Id="SOURCEDIR"></Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponentsX86" Directory="INSTALLDIRX86">
+			<Component Id="PreparingX86" Guid="{01DBBA23-4B02-48AF-99BC-5DF1922AD981}">
+				<!-- Copy config files to INSTALLDIR -->
+				<CopyFile Id="CopyingDefaultCfgX86" SourceDirectory="SOURCEDIR" SourceName="*.cfg" DestinationDirectory="INSTALLDIRX86" />
+				<!-- Copy cacert.pem to INSTALLDIR -->
+				<CopyFile Id="CopyingCacertPemX86" SourceDirectory="SOURCEDIR" SourceName="cacert.pem" DestinationDirectory="INSTALLDIRX86" />
+
+				<fire:FirewallException Id="SvcFirewallRulesX86" Program="[INSTALLDIRX86]edrsvc.exe" Name="$(var.strproduct)" Scope="any" />
+				<ServiceControl Id="StopEdrSvcX86" Name="edrsvc" Stop="uninstall" />
+				<RemoveFile Id="RemovingDriverX86" Directory="DRIVERSDIR" Name="edrdrv.sys" On="uninstall" />
+			</Component>
+
+			<ComponentGroupRef Id="BinaryFilesWin32"/>
+		</ComponentGroup>
+
+		<ComponentGroup Id="ProductComponentsX64" Directory="INSTALLDIRX64">
+			<Component Id="PreparingX64" Guid="{4BEB1048-A6EB-4021-ADAA-74A75EDA5EAE}">
+				<!-- Copy config files to INSTALLDIR -->
+				<CopyFile Id="CopyingDefaultCfgX64" SourceDirectory="SOURCEDIR" SourceName="*.cfg" DestinationDirectory="INSTALLDIRX64" />
+				<!-- Copy cacert.pem to INSTALLDIR -->
+				<CopyFile Id="CopyingCacertPemX64" SourceDirectory="SOURCEDIR" SourceName="cacert.pem" DestinationDirectory="INSTALLDIRX64" />
+
+				<fire:FirewallException Id="SvcFirewallRulesX64" Program="[INSTALLDIRX64]edrsvc.exe" Name="$(var.strproduct)" Scope="any" />
+				<ServiceControl Id="StopEdrSvcX64" Name="edrsvc" Stop="uninstall" />
+				<RemoveFile Id="RemovingDriverX64" Directory="DRIVERSDIR" Name="edrdrv.sys" On="uninstall" />
+			</Component>
+
+			<ComponentGroupRef Id="BinaryFilesX64"/>
+		</ComponentGroup>
+		
+		
+	</Fragment>
+</Wix>

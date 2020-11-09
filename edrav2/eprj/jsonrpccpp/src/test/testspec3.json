@@ -1,0 +1,8 @@
+[
+    [
+        "foo", {
+            "name": "Peter"
+        },
+        "Hello Peter"
+    ]
+]

@@ -1,0 +1,125 @@
+.\" Manpage for jsonrpcstub.
+.\" Contact psk@autistici.org to correct errors or typos.
+.TH man 1 "22 April 2017" "@MAJOR_VERSION@.@MINOR_VERSION@.@PATCH_VERSION@" "jsonrpcstub man page"
+.SH NAME
+jsonrpcstub \- genearate stubs for the libjson\-rpc\-cpp framework.
+.SH SYNOPSIS
+.B
+jsonrpcstub specfile.json [\-\-cpp\-server=namespace::ClassName]
+ [\-\-cpp\-server\-file=classqname.h]  [\-\-cpp\-client=namespace::ClassName]
+[\-\-cpp\-client-file=classname.h] [\-\-js\-client=ClassName]
+[\-\-js-client-file=classname.js]  [\-\-py\-client=ClassName]
+[\-\-py\-client\-file=classname.py] [\-h] [\-v] [\-\-version]
+.PP
+
+.SH DESCRIPTION
+.PP
+jsonrpcstub is a tool to generate C++, JavaScript, and Python classes from a procedure specification file.
+.SS SPECIFICATION SYNTAX
+.PP
+The specifictaion file is a JSON file containing all available JSON\-RPC methods and notifications
+with their corresponding parameters and return values contained in a top\-level JSON array.
+.PP
+.nf
+[
+	{
+		"name": "method_with_positional_params",
+		"params": [3,4],
+		"returns": 7
+	},
+	{
+		"name": "method_with_named_params",
+		"params": {"param1": 3, "param2": 4},
+		"returns": 7
+	},
+	{
+		"name": "notification_without_parmas"
+	}
+]
+.fi
+
+.PP
+The literal in each \fB"params"\fP and  \fB"returns"\fP section defines the corresponding type.
+If the \fb"params"\fP contains an array, the parameters are accepted by position,
+if it contains an object, they are accepted by name.
+
+.SH OPTIONS
+.IP \-h
+Print usage information.
+.IP \-v
+Print verbose information during generation.
+.IP \-\-version
+Print version info and exit.
+.IP \-\-cpp\-server=ClassName
+Creates a Abstract Server class. Namespaces can be provided using the :: notation
+(e.g. ns1::ns2::Classname).
+.IP \-\-cpp\-server\-file=filename.h
+Defines the filename to use when generating the C++ Abstract Server class.
+If this is not provided, the lowercase classname is used.
+.IP \-\-cpp\-client=ClassName
+Creates a C++ client class. Namespaces can be provided using the :: notation
+(e.g. ns1::ns2::Classname).
+.IP \-\-cpp\-client\-file=filename.h
+Defines the filename to use when generating the C++ client class.
+If this is not provided, the lowercase classname is used.
+.IP \-\-js\-client=ClassName
+Creates a JavaScript client class. No namespaces are supported in this option.
+.IP \-\-js\-client-file=filename.js
+Defines the filename to use when generating the JavaScript client class.
+.IP \-\-py\-client=ClassName
+Creates a Python client class. No namespaces are supported in this option.
+.IP \-\-py\-client\-file=filename.py
+Defines the filename to use when generating the Python client class.
+If this is not provided, the lowercase classname is used.
+
+.SH EXAMPLES
+.PP
+Generate C++ Stubs for Server and Client, the classes will be named AbstractStubServer and StubClient:
+.IP
+.B
+\&jsonrpcstub spec.json \-\-cpp\-server=AbstractStubServer \-\-cpp\-client=StubClient
+.B
+.PP
+Generate JavaScript Client class MyRpcClient into file someclient.js:
+.IP
+.B
+\&jsonrpcstub spec.json \-\-js\-client=MyRpcClient \-\-js\-client\-file=someclient.js
+.B
+.PP
+Generate Python client class StubClient, which will be saved into stubclient.py
+.IP
+.B
+\&jsonrpcstub spec.json \-\-py\-client=StubClient
+.B
+.PP
+
+.SH EXIT STATUS
+This command returns 0 if no error occurred. In any other case, it returns 1.
+.SH SEE ALSO
+https://github.com/cinemast/libjson\-rpc\-cpp
+.SH BUGS
+No known bugs. Please report found bugs as an issue on github or send me an email.
+
+.SH COPYRIGHT
+
+Copyright (C) 2011\-2017 Peter Spiess\-Knafl
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in the
+Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
+
+.SH AUTHOR
+Peter Spiess\-Knafl (dev@spiessknafl.at)

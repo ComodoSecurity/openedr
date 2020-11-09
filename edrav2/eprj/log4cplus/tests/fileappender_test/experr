@@ -1,0 +1,3 @@
+log4cplus:WARN RollingFileAppender: MaxFileSize property value is too small. Resetting to 204800.
+log4cplus:ERROR Invalid filename
+log4cplus:ERROR Unable to open file: nonexistent/Test.log

@@ -1,0 +1,117 @@
+;;;
+;;; edrdrv ini file.
+;;;
+
+
+[Version]
+Signature   = "$Windows NT$"
+Provider    = %ManufacturerName%
+DriverVer   = 07/15/2019,2.0.0.1 ;mm/dd/yy
+Class       = "ActivityMonitor"                         ;This is determined by the work this filter driver does
+ClassGuid   = {b86dff51-a31e-4bac-b3cf-e8cfe75c9fc2}    ;This value is determined by the Class
+CatalogFile = edrdrv.cat
+
+
+;
+; Copy Files
+;
+
+[SourceDisksFiles]
+edrdrv.sys = 1,,
+
+[SourceDisksNames]
+1 = %DiskId1%,,,
+
+
+[DestinationDirs]
+DefaultDestDir                = 12
+MiniFilter.CopyDriverFiles    = 12          ;%windir%\system32\drivers
+MiniFilter.DeleteDriverFiles  = 12          ;%windir%\system32\drivers
+
+
+[MiniFilter.CopyDriverFiles]
+%DriverName%.sys
+
+[MiniFilter.DeleteDriverFiles]
+%DriverName%.sys
+
+;;
+;; Default install sections
+;;
+
+
+[DefaultInstall.ntamd64]
+OptionDesc          = %ServiceDescription%
+CopyFiles           = MiniFilter.CopyDriverFiles
+
+[DefaultInstall.ntamd64.Services]
+AddService          = %ServiceName%,,MiniFilter.Service
+
+
+[DefaultInstall.NTx86]
+OptionDesc          = %ServiceDescription%
+CopyFiles           = MiniFilter.CopyDriverFiles
+
+[DefaultInstall.NTx86.Services]
+AddService          = %ServiceName%,,MiniFilter.Service
+
+;;
+;; Default uninstall sections
+;;
+
+[DefaultUninstall.ntamd64]
+DelFiles   = MiniFilter.DeleteDriverFiles
+
+[DefaultUninstall.ntamd64.Services]
+DelService = %ServiceName%,0x200      ;Ensure service is stopped before deleting
+
+[DefaultUninstall.NTx86]
+DelFiles   = MiniFilter.DeleteDriverFiles
+
+[DefaultUninstall.NTx86.Services]
+DelService = %ServiceName%,0x200      ;Ensure service is stopped before deleting
+
+
+
+;
+; Services Section
+;
+
+[MiniFilter.Service]
+DisplayName      = %ServiceName%
+Description      = %ServiceDescription%
+ServiceBinary    = %12%\%DriverName%.sys        ;%windir%\system32\drivers\
+Dependencies     = "FltMgr"
+ServiceType      = 2                            ;SERVICE_FILE_SYSTEM_DRIVER
+StartType        = 1                            ;SERVICE_SYSTEM_START
+ErrorControl     = 1                            ;SERVICE_ERROR_NORMAL
+LoadOrderGroup   = "FSFilter Activity Monitor"
+AddReg           = MiniFilter.AddRegistry
+
+;
+; Registry Modifications
+;
+
+[MiniFilter.AddRegistry]
+HKR,,"SupportedFeatures",0x00010001,0x3
+HKR,"Instances","DefaultInstance",0x00000000,%DefaultInstance%
+HKR,"Instances\"%Instance1.Name%,"Altitude",0x00000000,%Instance1.Altitude%
+HKR,"Instances\"%Instance1.Name%,"Flags",0x00010001,%Instance1.Flags%
+
+
+
+
+[Strings]
+ManufacturerName        = "Nurd Yazılım A.S."
+ServiceDescription      = "OpenEdr filter driver"
+ServiceName             = "edrdrv"
+DriverName              = "edrdrv"
+DiskId1                 = "OpenEdr Installation"
+
+;Instances specific information.
+DefaultInstance         = "edrdrv Instance"
+Instance1.Name          = "edrdrv Instance"
+Instance1.Altitude      = "368325"
+Instance1.Flags         = 0x0              ; Allow all attachments
+
+

@@ -1,0 +1,10 @@
+AT_SETUP([hierarchy_test])
+AT_KEYWORDS([appenders])
+
+AT_CHECK([cp -f "${abs_srcdir}/hierarchy_test/expout" .])
+AT_CHECK(["${abs_top_builddir}/hierarchy_test"], [0], [expout], [stderr])
+ATX_WCHAR_T_TEST([
+  AT_CHECK(["${abs_top_builddir}/hierarchy_test"], [0], [expout], [stderr])
+])
+
+AT_CLEANUP

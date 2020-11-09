@@ -1,0 +1,42 @@
+log4cplus.rootLogger=TRACE, STDOUT
+log4cplus.logger.testlogger=TRACE, TEST
+log4cplus.additivity.testlogger=FALSE
+
+log4cplus.appender.STDOUT=log4cplus::ConsoleAppender
+log4cplus.appender.STDOUT.layout=log4cplus::PatternLayout
+log4cplus.appender.STDOUT.layout.ConversionPattern=%d{%m/%d/%y %H:%M:%S} [%t] %-5p %c - %m %n
+
+#log4cplus.appender.TEST=log4cplus::NullAppender
+log4cplus.appender.TEST=log4cplus::FileAppender
+log4cplus.appender.TEST.File=test_output.log
+log4cplus.appender.TEST.BufferSize=16384
+
+# For AsyncAppender testing.
+#log4cplus.appender.TEST=log4cplus::AsyncAppender
+#log4cplus.appender.TEST.Appender=log4cplus::FileAppender
+#log4cplus.appender.TEST.Appender.File=test_output.log
+#log4cplus.appender.TEST.Appender.layout=log4cplus::PatternLayout
+#log4cplus.appender.TEST.Appender.layout.ConversionPattern=%d{%y-%m-%d %H:%M:%S,%q} [%t] %-5p %c <%x> - %m%n
+
+#log4cplus.appender.TEST.layout=log4cplus::TTCCLayout
+log4cplus.appender.TEST.layout=log4cplus::PatternLayout
+log4cplus.appender.TEST.layout.ConversionPattern=%d{%y-%m-%d %H:%M:%S,%q} [%t] %-5p %c <%x> - %m%n
+#log4cplus.appender.TEST.layout.ConversionPattern=%d{%y-%m-%d %H:%M:%S,%q} %-5p %c <%x> - %m%n
+#log4cplus.appender.TEST.layout.ConversionPattern=%p - %m%n
+#log4cplus.appender.TEST.layout.ConversionPattern=%-5p - %m%n
+#log4cplus.appender.TEST.layout.ConversionPattern=%l - %m%n
+#log4cplus.appender.TEST.layout.ConversionPattern=%C.%M.%L - %m%n
+
+# For remote SyslogAppender testing.
+#log4cplus.appender.TEST=log4cplus::SysLogAppender
+#log4cplus.appender.TEST.host=localhost
+#log4cplus.appender.TEST.ident=log4cplus
+#log4cplus.appender.TEST.port=514
+#log4cplus.appender.TEST.udp=true
+#log4cplus.appender.TEST.IPv6=true
+
+# For Log4jUdpAppender testing.
+#log4cplus.appender.TEST=log4cplus::Log4jUdpAppender
+#log4cplus.appender.TEST.host=localhost
+#log4cplus.appender.TEST.port=5000
+#log4cplus.appender.TEST.IPv6=true

@@ -1,0 +1,34 @@
+# Release Procedure
+
+This describes log4cplus release procedure:
+
+ #. Update `ChangeLog` file with worthy changes.
+
+ #. Make sure that version information in `version.h` and `configure.ac` is up
+to date. Run `scripts/propagate-version.sh` followed by
+`scripts/doautoreconf.sh`. _Do not forget to commit the changes._
+
+ #. Run `scripts/prepare_dist_from_git.sh` to prepare tarballs. _Do not tag the
+revision, yet._
+
+ #. [Upload tarballs][4] to SourceForge.
+
+ #. Send announcement to <log4cplus-devel@lists.sourceforge.net>.
+
+ #. Tag revision on branch.
+
+ #. Write [news entry][2] to SourceForge.
+
+ #. Use Pandoc with parameters `--standalone -f markdown+smart -t
+markdown_strict+hard_line_breaks+fenced_code_blocks+fenced_code_attributes-intraword_underscores`
+to generate a version of README file with Markdown compatible with
+SourceForge's wiki. Upload resulting file to project's SourceForge wiki page
+using the `scripts/upload_to_wiki.pl` script.
+
+ #. Post release information to [G+ log4cplus page][1] and share it with the
+[log4cplus community][3].
+
+[1]: https://plus.google.com/u/0/b/111599007078013023156/
+[2]: https://sourceforge.net/p/log4cplus/news/new
+[3]: https://plus.google.com/u/0/b/111599007078013023156/communities/117815353450765593933
+[4]: https://sourceforge.net/projects/log4cplus/files/

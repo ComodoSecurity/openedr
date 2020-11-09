@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libmicrohttpd
+Description: A library for creating an embedded HTTP server
+Version: @VERSION@
+Requires:
+Requires.private: @MHD_REQ_PRIVATE@
+Conflicts:
+Libs: -L${libdir} -lmicrohttpd
+Libs.private: @MHD_LIBDEPS_PKGCFG@
+Cflags: -I${includedir}

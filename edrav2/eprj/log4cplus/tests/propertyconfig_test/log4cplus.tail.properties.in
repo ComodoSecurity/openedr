@@ -1,0 +1,6 @@
+log4cplus.appender.R=log4cplus::RollingFileAppender
+log4cplus.appender.R.File=output_${ENV_VAR}.log
+#log4cplus.appender.R.MaxFileSize=5MB
+log4cplus.appender.R.MaxFileSize=500KB
+log4cplus.appender.R.MaxBackupIndex=5
+log4cplus.appender.R.layout=log4cplus::TTCCLayout

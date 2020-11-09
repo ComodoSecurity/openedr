@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- Configurations that affect the Test Framework -->
+  <RunConfiguration>
+    <MaxCpuCount>4</MaxCpuCount>
+  </RunConfiguration>
+
+  <!-- Adapter Specific sections -->
+
+  <!-- Catch2 adapter -->
+  <Catch2Adapter disabled="false">
+    <DebugBreak>on</DebugBreak><!-- Introduced in v1.1.0 -->
+    <DiscoverCommandLine>--discover *</DiscoverCommandLine>
+    <DiscoverTimeout>5000</DiscoverTimeout><!-- Milliseconds -->
+    <FilenameFilter>^ut_</FilenameFilter><!-- Regex filter -->
+    <IncludeHidden>false</IncludeHidden>
+    <Logging>verbose</Logging>
+    <MessageFormat>StatsOnly</MessageFormat>
+    <StackTraceFormat>ShortInfo</StackTraceFormat>
+    <StackTracePointReplacement>,</StackTracePointReplacement><!-- Introduced in v1.3.0 -->
+    <TestCaseTimeout>60000</TestCaseTimeout><!-- Milliseconds -->
+    <WorkingDirectory>../../iprj/ats/scenarios/ut_libcore/data</WorkingDirectory>
+    <WorkingDirectoryRoot>Solution</WorkingDirectoryRoot>
+  </Catch2Adapter>
+
+</RunSettings>

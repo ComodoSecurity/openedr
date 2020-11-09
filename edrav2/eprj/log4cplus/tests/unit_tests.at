@@ -1,0 +1,9 @@
+AT_SETUP([unit_tests])
+AT_KEYWORDS([unit-tests])
+
+AT_CHECK(["${abs_top_builddir}/unit_tests"], [0], [stdout], [stderr])
+ATX_WCHAR_T_TEST([
+  AT_CHECK(["${abs_top_builddir}/unit_testsU"], [0], [stdout], [stderr])
+])
+
+AT_CLEANUP

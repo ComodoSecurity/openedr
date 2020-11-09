@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\config.cpp" />
+    <ClCompile Include="..\..\src\devdisp.cpp" />
+    <ClCompile Include="..\..\src\diskutils.cpp" />
+    <ClCompile Include="..\..\src\dllinj.cpp" />
+    <ClCompile Include="..\..\src\edrdrv.cpp" />
+    <ClCompile Include="..\..\src\filemon.cpp" />
+    <ClCompile Include="..\..\src\fltport.cpp" />
+    <ClCompile Include="..\..\src\ioctl.cpp" />
+    <ClCompile Include="..\..\src\kernelcmnlib\kernelstl\new.cpp" />
+    <ClCompile Include="..\..\src\log.cpp" />
+    <ClCompile Include="..\..\src\netmon.cpp" />
+    <ClCompile Include="..\..\src\objmon.cpp" />
+    <ClCompile Include="..\..\src\osutils.cpp" />
+    <ClCompile Include="..\..\src\procmon.cpp" />
+    <ClCompile Include="..\..\src\procutils.cpp" />
+    <ClCompile Include="..\..\src\regmon.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\common.h" />
+    <ClInclude Include="..\..\src\config.h" />
+    <ClInclude Include="..\..\src\devdisp.h" />
+    <ClInclude Include="..\..\src\diskutils.h" />
+    <ClInclude Include="..\..\src\dllinj.h" />
+    <ClInclude Include="..\..\src\filemon.h" />
+    <ClInclude Include="..\..\src\fltport.h" />
+    <ClInclude Include="..\..\src\ioctl.h" />
+    <ClInclude Include="..\..\src\kernelcmnlib.hpp" />
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl.hpp" />
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\atomic.hpp" />
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\hashmap.hpp" />
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\list.hpp" />
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\misc.hpp" />
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\new.h" />
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\std.hpp" />
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\string.hpp" />
+    <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\synchronization.hpp" />
+    <ClInclude Include="..\..\src\lbvsext.h" />
+    <ClInclude Include="..\..\src\log.h" />
+    <ClInclude Include="..\..\src\netmon.h" />
+    <ClInclude Include="..\..\src\objmon.h" />
+    <ClInclude Include="..\..\src\osutils.h" />
+    <ClInclude Include="..\..\src\procmon.h" />
+    <ClInclude Include="..\..\src\procutils.h" />
+    <ClInclude Include="..\..\src\regmon.h" />
+    <ClInclude Include="..\..\src\stringutils.h" />
+    <ClInclude Include="..\..\src\sysapi.h" />
+    <ClInclude Include="..\..\src\workerthread.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\edrdrv.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Inf Include="..\..\src\edrdrv.inf">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Inf>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F2D12EFE-8A6E-4D02-9276-29A16E628BE7}</ProjectGuid>
+    <TemplateGuid>{f2f62967-0815-4fd7-9b86-6eedcac766eb}</TemplateGuid>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <RootNamespace>edrflt</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="..\..\..\build\vs2019\consts.props" />
+  <Import Project="$(CmdPropsDir)\sys_gen.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <_NT_TARGET_VERSION>0x0601</_NT_TARGET_VERSION>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <_NT_TARGET_VERSION>0x0601</_NT_TARGET_VERSION>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <_NT_TARGET_VERSION>0x0601</_NT_TARGET_VERSION>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <_NT_TARGET_VERSION>0x0601</_NT_TARGET_VERSION>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(CmdPropsDir)\sys.props" />
+  <!-- Copy unsigned files -->
+  <Target Name="CopyUnsigned" BeforeTargets="DriverTestSign;DriverProductionSign">
+    <Message Text="Copy unsigned files" Importance="high" />
+    <MakeDir Directories="$(TargetDir)\unsigned" ContinueOnError="true" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(TargetDir)\unsigned" OverwriteReadOnlyFiles="true" />
+    <Message Text="$(TargetPath) -&gt; $(TargetDir)\unsigned" Importance="high" />
+  </Target>
+  <Target Name="CleanUnsigned" BeforeTargets="Clean">
+    <RemoveDir Directories="$(TargetDir)\unsigned" />
+    <Message Importance="high" Text="Clean unsigned files..." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;madchookdrv.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;madchookdrv.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;madchookdrv.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;madchookdrv.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

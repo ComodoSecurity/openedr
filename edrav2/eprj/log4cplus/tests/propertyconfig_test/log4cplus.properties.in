@@ -1,0 +1,12 @@
+
+log4cplus.threadPoolSize = 2
+log4cplus.rootLogger=INFO, STDOUT, R
+log4cplus.logger.test.a.b.c=WARN
+log4cplus.logger.filelogger=WARN, R
+log4cplus.additivity.filelogger=FALSE
+
+log4cplus.appender.STDOUT=log4cplus::ConsoleAppender
+log4cplus.appender.STDOUT.layout=log4cplus::PatternLayout
+log4cplus.appender.STDOUT.layout.ConversionPattern=%d{%m/%d/%y %H:%M:%S} [%t] %-5p %c{2} %%%x%% - %m [%l]%n
+
+include log4cplus.tail.properties

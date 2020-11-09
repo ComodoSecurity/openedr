@@ -1,0 +1,41 @@
+﻿{
+  "f_str": "default0",
+  "f_int": 0,
+  "f_seq": [],
+  "f_calc_id": {
+    "$$proxy": "cachedCmd",
+    "processor": "objects.rnd01",
+    "command": "getNext",
+    "params": {}
+  },
+  "f_calc_int": {
+    "$$proxy": "cachedCmd",
+    "processor": "objects.rnd01",
+    "command": "generate",
+    "params": {}
+  },
+  "f_calc_str": {
+    "$$proxy": "cachedCmd",
+    "processor": "objects.rnd01",
+    "command": "generate",
+    "params": { "size": 8 } // Size of generated string
+  },
+  "f_calc_datetime": {
+    "$$proxy": "cachedCmd",
+    "processor": "objects.rnd01",
+    "command": "getIsoDateTime",
+    "params": { "shift": 0 } // Shift from current time in milliseconds (0 by default)
+  },
+  "f_calc_device_name": {
+    "$$proxy": "cachedCmd",
+    "processor": "objects.application",
+    "command": "getCatalogData",
+    "params": { "path": "objects.const01.deviceName" }
+  },
+  "f_calc_zero_time": {
+    "$$proxy": "cachedCmd",
+    "processor": "objects.application",
+    "command": "getCatalogData",
+    "params": { "path": "objects.const01.zeroTime" }
+  }
+}

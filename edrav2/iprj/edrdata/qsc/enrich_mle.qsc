@@ -1,0 +1,235 @@
+//
+// Scenario enriches MLE for sending to the cloud
+//
+// Input queue: enrich_mle
+// Output queues: app.config.script.enrich_mle.outputQueue
+//							  calc_file_hash
+//
+{
+	"version": "1.0",
+	"code": {
+
+		//
+		// Entrypoint
+		//
+		"main": [
+			// Get event from source queue
+			{
+				"processor": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.queueManager",
+					"command": "getQueue",
+					"params": { "name": "enrich_mle" }
+				},
+				"command": "get",
+				"$dst": "event"
+			},
+			// Check if 'file' field exists
+			{
+				"$goto": "checkFile",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "has",
+					"path": "file",
+					"args": [ { "$path": "event" } ]
+				}
+			},
+			// Check copy-file events
+			{
+				"$goto": "checkCopyFile",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "contain",
+					"item": {
+						"$path": "event.baseType",
+						"$default": 0
+					},
+					"args": [ [ 1000001 ] ] // MLE_FILE_COPY
+				}
+			},
+			// Set next process to check
+			{
+				"$set": {
+					"$path": "event.process",
+					"$default": {}
+				},
+				"$dst": "process"
+			},
+			// Goto result processing
+			{
+				"$goto": "checkProcess"
+			}
+		],
+
+		//
+		// Check if 'file' field has
+		//
+		"checkFile": [
+			// Put data to file hash calculation queue if it is not present
+			{
+				"$goto": "putToCalcFileHash",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "!has",
+					"path": "hash",
+					"args": [ { "$path": "event.file" } ]
+				}
+			},
+			// Set next process to check
+			{
+				"$set": {
+					"$path": "event.process",
+					"$default": {}
+				},
+				"$dst": "process"
+			},
+			// Goto result processing
+			{
+				"$goto": "checkProcess"
+			}
+		],
+
+		//
+		// Check copy-file events
+		//
+		"checkCopyFile": [
+			// Put data to file hash calculation queue if it is not present
+			{
+				"$goto": "putToCalcFileHash",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "or",
+					"args": [
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "!has",
+							"path": "hash",
+							"args": [ { "$path": "event.destination" } ]
+						},
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "!has",
+							"path": "hash",
+							"args": [ { "$path": "event.source" } ]
+						}
+					]
+				}
+			},
+			// Set next process to check
+			{
+				"$set": {
+					"$path": "event.process",
+					"$default": {}
+				},
+				"$dst": "process"
+			},
+			// Goto result processing
+			{
+				"$goto": "checkProcess"
+			}
+		],
+
+		//
+		// Check the current process for having calculated 'imageFile.hash'
+		//
+		"checkProcess": [
+			// Check if process field has imageFile
+			{
+				"$goto": "putToEnrichedMLE",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "!has",
+					"path": "imageFile",
+					"args": [ { "$path": "process" } ]
+				}
+			},
+			// Check if 'process.imageFile' has calculated hash
+			{
+				"$goto": "putToCalcFileHash",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "!has",
+					"path": "hash",
+					"args": [ { "$path": "process.imageFile" } ]
+				}
+			},
+			// Set next process to check
+			{
+				"$set": {
+					"$path": "process.parent",
+					"$default": {}
+				},
+				"$dst": "process"
+			},
+			// Goto loop for processing next process
+			{
+				"$goto": "checkProcess"
+			}
+		],
+
+		//
+		// Put event to result queue
+		//
+		"putToEnrichedMLE": [
+			// Put data to queue for file hash calculation
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": {
+							"name": {
+								"$$proxy": "cachedCmd",
+								"processor": "objects.application",
+								"command": "getCatalogData",
+								"params": {
+									"path": "app.config.script.enrich_mle.outputQueue"
+								}
+							}
+						}
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		],
+
+		//
+		// Put event to the queue for hash calculation
+		//
+		"putToCalcFileHash": [
+			// Put data to queue for file hash calculation
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": { "name": "calc_file_hash" }
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		]
+	}
+}

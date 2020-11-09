@@ -1,0 +1,27 @@
+#
+# Copyright (c) 2018 Damian Jarek (damian dot jarek93 at gmail dot com)
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+
+import common ;
+
+rule init ( saxonhe_jar ? : java_exe ? )
+{
+    .java_exe = [ common.get-invocation-command saxonhe : java : $(java_exe) :  ] ;
+    if $(saxonhe_jar)
+    {
+        .saxonhe_jar = $(saxonhe_jar) ;
+    }
+    else
+    {
+        local jar = [ GLOB "/usr/share/java/saxon/" "/usr/share/java/" : Saxon-HE.jar ] ;
+        .saxonhe_jar = $(jar[1]) ;
+    }
+}
+
+actions saxonhe
+{
+    "$(.java_exe)" -jar "$(.saxonhe_jar)" -o:"$(<)" -s:"$(>[1])" -xsl:"$(>[2])"
+}

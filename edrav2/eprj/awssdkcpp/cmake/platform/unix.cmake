@@ -1,0 +1,5 @@
+if(BUILD_SHARED_LIBS)
+    SET(SUFFIX so)
+else()
+    SET(SUFFIX a)
+endif()

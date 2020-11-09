@@ -1,0 +1,28 @@
+# Copyright (c) 2018 Mateusz Loskot <mateusz@loskot.net>
+# Copyright Klemens David Morgenstern, Hans P. Dembinski 2016-2017
+#
+# Use, modification and distribution is subject to the Boost Software License,
+# Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
+import testing ;
+
+project
+    : requirements
+    <include>$(BOOST_ROOT)
+    <include>.
+    <variant>release
+    ;
+
+alias run-speed-test :
+    [ run speed_boost.cpp ]
+    ;
+
+alias run-google-benchmarks :
+    [ run axis_index.cpp ]
+    [ run histogram_iteration.cpp ]
+    [ run histogram_parallel_filling.cpp ]
+    ;
+
+explicit run-speed-test ;
+explicit run-google-benchmarks ;

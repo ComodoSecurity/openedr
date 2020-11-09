@@ -1,0 +1,8 @@
+
+for (( i=0; i<100; i=i+1 ))
+do
+   ./socket_test test-$i &
+done;
+
+
+

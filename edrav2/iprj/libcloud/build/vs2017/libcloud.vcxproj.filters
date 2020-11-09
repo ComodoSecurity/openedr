@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\..\src\pch.h" />
+    <ClInclude Include="..\..\inc\extheaders.h" />
+    <ClInclude Include="..\..\inc\objects.h" />
+    <ClInclude Include="..\..\inc\libcloud.h" />
+    <ClInclude Include="..\..\src\aws.h">
+      <Filter>aws</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\fls.h">
+      <Filter>fls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\flscommon.h">
+      <Filter>fls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\flsproto4.h">
+      <Filter>fls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\net.hpp">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\valkyrie.h">
+      <Filter>valkyrie</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\valkyrie.hpp">
+      <Filter>valkyrie</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\cloudsvc.h">
+      <Filter>services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\cloudsvc_legacy.h">
+      <Filter>services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\fls.hpp">
+      <Filter>fls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\gcp.h">
+      <Filter>gcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\flsproto7.h">
+      <Filter>fls</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\pch.cpp" />
+    <ClCompile Include="..\..\src\libcloud.cpp" />
+    <ClCompile Include="..\..\src\aws.cpp">
+      <Filter>aws</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\fls.cpp">
+      <Filter>fls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\flsproto4.cpp">
+      <Filter>fls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\httpclient.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net_win.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\valkyrie.cpp">
+      <Filter>valkyrie</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\net.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cloudsvc.cpp">
+      <Filter>services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cloudsvc_legacy.cpp">
+      <Filter>services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\eprj\googleapis\src\pubsub.grpc.pb.cc">
+      <Filter>gcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\eprj\googleapis\src\pubsub.pb.cc">
+      <Filter>gcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\eprj\googleapis\src\annotations.pb.cc">
+      <Filter>gcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\eprj\googleapis\src\resource.pb.cc">
+      <Filter>gcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\eprj\googleapis\src\http.pb.cc">
+      <Filter>gcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\gcp.cpp">
+      <Filter>gcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\flsproto7.cpp">
+      <Filter>fls</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="aws">
+      <UniqueIdentifier>{b5751a94-9ddf-4d56-87c5-7270f2fe06dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fls">
+      <UniqueIdentifier>{3d171728-d533-4eec-8d80-078dc657e6a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net">
+      <UniqueIdentifier>{99a3d5a9-8cc9-4331-82dd-98c5f124814d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="services">
+      <UniqueIdentifier>{121007a4-7a85-4ee7-9f76-6b64f4a20347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="valkyrie">
+      <UniqueIdentifier>{da759d56-38c2-466b-956a-b58392556c17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gcp">
+      <UniqueIdentifier>{e281a372-fcda-4505-89a5-8cc9407490cb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

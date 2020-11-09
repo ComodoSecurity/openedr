@@ -1,0 +1,11 @@
+AT_SETUP([customloglevel_test])
+AT_KEYWORDS([appenders])
+
+AT_CHECK([cp -f "${abs_srcdir}/customloglevel_test/expout" .])
+AT_CHECK(["${abs_top_builddir}/customloglevel_test"], [0], [expout], [ignore])
+ATX_WCHAR_T_TEST([
+  AT_CHECK(["${abs_top_builddir}/customloglevel_testU"], [0], [expout],
+    [ignore])
+])
+
+AT_CLEANUP

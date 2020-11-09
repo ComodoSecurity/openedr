@@ -1,0 +1,20 @@
+AT_SETUP([patternlayout_test])
+AT_KEYWORDS([appenders])
+
+m4_define([PATTERNLAYOUT_TEST_AWK],
+[[$AWK '
+BEGIN {count = 0}
+/^Entering main/ && ++count;
+/(DEBUG|INFO|WARN|ERROR|FATAL)[ ]+c\.logger %[^%]*% - MDC value - This is the (FIRST|SECOND|THIRD|FOURTH|FIFTH) log message\.\.\. \[.*main\.cxx:[0-9]+\]/ && ++count;
+/^Exiting main/ && ++count;
+END {exit count}' <stdout >/dev/null]])
+
+AT_CHECK(["${abs_top_builddir}/patternlayout_test"], [0], [stdout], [stderr])
+AT_CHECK([PATTERNLAYOUT_TEST_AWK], [7])
+
+ATX_WCHAR_T_TEST([
+  AT_CHECK(["${abs_top_builddir}/patternlayout_testU"], [0], [stdout], [stderr])
+  AT_CHECK([PATTERNLAYOUT_TEST_AWK], [7])
+])
+
+AT_CLEANUP

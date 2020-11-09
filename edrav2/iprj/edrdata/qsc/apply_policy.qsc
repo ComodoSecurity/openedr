@@ -1,0 +1,190 @@
+//
+// Scenario applies the policy filtering for each type of event
+//
+// Input queue: apply_policy
+// Output queue: app.config.script.apply_policy.outputQueue
+//
+{
+	"version": "1.0",
+	"threadPoolTag": "ApplyPolicyPool",
+	"code": {
+
+		//
+		// Entrypoint
+		//
+		"main": [
+			// Register commands to be called from the inner policy
+			{
+				"$dst": "eventHandler.call",
+				"$set": {
+					"createEvent": {
+						"$$proxy": "cachedObj",
+						"clsid": "0x61A30254", // CLSID_Scenario
+						"addParams": true,
+						"name": "createEvent",
+						"code": [
+							{
+								"$if": {
+									"$$proxy": "cachedObj",
+									"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+									"operation": "contain",
+									"item": { "$path": "params.destination" },
+									"args": [ [ "IN", "IN_OUT" ] ]
+								},
+								"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+								"command": {
+									"$$proxy": "cachedObj",
+									"clsid": "0xACE892B6", // CLSID_Command
+									"processor": {
+										"$$proxy": "cachedCmd",
+										"processor": "objects.queueManager",
+										"command": "getQueue",
+										"params": { "name": "match_patterns" }
+									},
+									"command": "put"
+								},
+								"ctxParams": {
+									"data": { "$path": "params.data" }
+								}
+							},
+							{
+								"$if": {
+									"$$proxy": "cachedObj",
+									"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+									"operation": "contain",
+									"item": { "$path": "params.destination" },
+									"args": [ [ "OUT", "IN_OUT" ] ]
+								},
+								"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+								"command": {
+									"$$proxy": "cachedObj",
+									"clsid": "0xACE892B6", // CLSID_Command
+									"processor": {
+										"$$proxy": "cachedCmd",
+										"processor": "objects.queueManager",
+										"command": "getQueue",
+										"params": {
+											"name": {
+												"$$proxy": "cachedCmd",
+												"processor": "objects.application",
+												"command": "getCatalogData",
+												"params": {
+													"path": "app.config.script.apply_policy.outputQueue"
+												}
+											}
+										}
+									},
+									"command": "put"
+								},
+								"ctxParams": {
+									"data": { "$path": "params.data" }
+								}
+							}
+						]
+					}
+				}
+			},
+			// Get event from source queue
+			{
+				"$dst": "event",
+				"processor": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.queueManager",
+					"command": "getQueue",
+					"params": { "name": "apply_policy" }
+				},
+				"command": "get"
+			},
+			// Process lleRecieverCmd
+			{
+				"$goto": "processLleReciever",
+				"$if": {
+					// Get, cache and check lleRecieverCmd
+					"$val": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.application",
+						"command": "getConfigValue",
+						"params": {
+							"default": null,
+							"paths": "app.config.script.apply_policy.lleRecieverCmd"
+						}
+					}
+				}
+			},
+
+			// Call policy body scenario
+			{
+				"$dst": "eventHandler.policyResult",
+				"$exec": {
+					"$$proxy": "cmd",
+					"processor": "objects.application",
+					"command": "getCatalogData",
+					"params": {
+						"path": "app.config.policy.groups.eventsMatching.scenario"
+					}
+				}
+			},
+			// Check if we have policy result (policy matched)
+			{
+				"$goto": "discardEvent",
+				"$if": {
+					"$path": "eventHandler.policyResult.discard",
+					"$default": true
+				}
+			}
+			//{ "$goto": "processEvent" }
+		],
+
+		//
+		// Discard current event
+		//
+		"discardEvent": [
+			// Save event to discarded log
+			{
+				"$if": { "$gpath": "app.config.script.apply_policy.enableDiscardedLog" },
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": "app.config.script.apply_policy.discardedLog",
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		],
+
+		//
+		// Call lleRecieverCmd
+		// with param:
+		//  * data - event
+		// 
+		// It's possible direct usage the "put" command of IDataReciever objects
+		//
+		"processLleReciever": [
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.application",
+					"command": "getConfigValue",
+					"params": {
+						"skipNull": true,
+						"paths": "app.config.script.apply_policy.lleRecieverCmd",
+						// Empty scenario for correct scenario compilation
+						"default": {
+							"$$proxy": "cachedObj",
+							"clsid": "0x61A30254", // CLSID_Scenario
+							"code": []
+						}
+					}
+				},
+				"ctx": {}, // don't pass context lleRecieverCmd is IContextCommand
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		]
+	}
+}

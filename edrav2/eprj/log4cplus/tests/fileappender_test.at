@@ -1,0 +1,13 @@
+AT_SETUP([fileappender_test])
+AT_KEYWORDS([appenders])
+
+AT_CHECK([cp -f "${abs_srcdir}/fileappender_test/experr" .])
+AT_CHECK(["${abs_top_builddir}/fileappender_test"], [0], [stdout], [experr])
+AT_CHECK([test -f "a/b/c/d/Test.log"], [0])
+ATX_WCHAR_T_TEST([
+  AT_CHECK([rm -rf "a"])
+  AT_CHECK(["${abs_top_builddir}/fileappender_testU"], [0], [stdout], [experr])
+  AT_CHECK([test -f "a/b/c/d/Test.log"], [0])
+])
+
+AT_CLEANUP

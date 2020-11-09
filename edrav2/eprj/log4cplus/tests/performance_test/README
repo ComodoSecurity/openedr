@@ -1,0 +1,6 @@
+This test is used to get a basic idea how log4cplus will perform in "your" environment.
+Customize the log4cplus.properties file to match your desired configuration.
+
+Note:
+Set the "logger.testlogger" logger to FATAL to test the performace of the "no logging"
+scenario.

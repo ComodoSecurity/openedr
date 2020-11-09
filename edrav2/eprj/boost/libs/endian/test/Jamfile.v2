@@ -1,0 +1,51 @@
+# Boost Endian Library test Jamfile
+
+# Copyright Beman Dawes 2006, 2013
+# Copyright 2018 Peter Dimov
+
+# Distributed under the Boost Software License, Version 1.0.
+# See http://www.boost.org/LICENSE_1_0.txt
+
+# See library home page at http://www.boost.org/libs/endian
+
+import testing ;
+
+project
+  : default-build
+
+    <warnings>all
+
+  : requirements
+
+    <toolset>msvc:<warnings-as-errors>on
+
+    <toolset>gcc:<cxxflags>-Wno-long-long
+    <toolset>gcc:<warnings-as-errors>on
+
+    <toolset>clang:<cxxflags>-Wno-long-long
+    <toolset>clang:<warnings-as-errors>on
+  ;
+
+run buffer_test.cpp ;
+run buffer_test.cpp : : : <define>BOOST_ENDIAN_NO_INTRINSICS : buffer_test_ni ;
+
+run endian_test.cpp ;
+run endian_test.cpp : : : <define>BOOST_ENDIAN_NO_INTRINSICS : endian_test_ni ;
+
+run endian_operations_test.cpp ;
+run endian_operations_test.cpp : : : <define>BOOST_ENDIAN_NO_INTRINSICS : endian_operations_test_ni ;
+
+run endian_in_union_test.cpp ;
+
+run conversion_test.cpp ;
+run conversion_test.cpp : : : <define>BOOST_ENDIAN_NO_INTRINSICS : conversion_test_ni ;
+
+run intrinsic_test.cpp ;
+
+run quick.cpp ;
+
+compile spirit_conflict_test.cpp
+  : "-<toolset>msvc:<warnings-as-errors>on"
+    "-<toolset>gcc:<warnings-as-errors>on"
+    "-<toolset>clang:<warnings-as-errors>on"
+  ;

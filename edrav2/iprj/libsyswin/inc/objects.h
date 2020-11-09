@@ -1,0 +1,16 @@
+#pragma once
+
+//
+// ClassId's declarations
+//
+namespace openEdr {
+
+CMD_DECLARE_LIBRARY_CLSID(CLSID_WinServiceController, 0xA77B4433);
+CMD_DECLARE_LIBRARY_CLSID(CLSID_ProcessDataProvider, 0x92FA1819);
+CMD_DECLARE_LIBRARY_CLSID(CLSID_UserDataProvider, 0x7C249FE7);
+CMD_DECLARE_LIBRARY_CLSID(CLSID_FileDataProvider, 0x2256416D);
+CMD_DECLARE_LIBRARY_CLSID(CLSID_SignDataProvider, 0x2588A006);
+CMD_DECLARE_LIBRARY_CLSID(CLSID_PathConverter, 0xB8901152);
+CMD_DECLARE_LIBRARY_CLSID(CLSID_Token, 0x6C87B081);
+
+} // namespace openEdr

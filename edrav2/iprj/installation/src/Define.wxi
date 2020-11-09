@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define strproduct = "EDR Agent v2" ?>
+  <?define upgradecode = "2237ece0-b8e3-218d-7446-841de131c6b3" ?>
+  <?if $(var.Platform) = "x64" ?>
+    <?define AppsDir = "ProgramFiles64Folder" ?>
+    <?define SysFolder = "System64Folder" ?>
+	<?define IsWin64 = "yes" ?>
+  <?else?>
+    <?define AppsDir = "ProgramFilesFolder" ?>
+    <?define SysFolder = "SystemFolder" ?>
+	<?define IsWin64 = "no" ?>
+  <?endif?>
+</Include>

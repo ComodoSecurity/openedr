@@ -1,0 +1,3 @@
+AutoGen definitions Makefile.am.tpl;
+
+src-dirs = { name = log4cplus; };

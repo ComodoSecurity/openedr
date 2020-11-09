@@ -1,0 +1,175 @@
+//
+// Local policy definition for PatternsMatching
+//
+{
+	"version": 2,
+	"name": "ptmLocal",
+	"group": "patternsMatching",
+	"dependencies": [ "common" ],
+
+	"constants": {
+		"basket": {
+			"fileReadWrite": "FILE_COPY_READ_WRITE",
+			"fileWriteRead": "FILE_COPY_WRITE_READ"
+		}
+	},
+
+	"variables": {
+		"copyFileKey": [ "@event.process.id", "@event.file.rawHash" ]
+	},
+
+	"patterns": {
+
+		//
+		// Pattern for copy-file READ-WRITE scenario
+		//
+		"FILE_COPY_READ_WRITE": [
+
+			// Detect full read and create signature context. No conditions
+			{
+				"eventType": "LLE_FILE_DATA_READ_FULL",
+				"rule": {
+					"saveContext": {
+						"basket": "@const.basket.fileReadWrite",
+						"key": "@var.copyFileKey",
+						"group": "@event.process.id",
+						"lifetime": 60000,
+						"data": { "file": "@event.file" }
+					}
+				}
+			},
+
+			// Detect full write, check signature context and generate new event
+			{
+				"eventType": "LLE_FILE_DATA_WRITE_FULL",
+				"rule": {
+					"loadContext": {
+						"basket": "@const.basket.fileReadWrite",
+						"key": "@var.copyFileKey"
+					},
+					"createEvent": {
+						"eventType": "MLE_FILE_COPY",
+						"destination": "IN",
+						"clone": false,
+						"data": [
+							{
+								"name": "baseType",
+								"value": "@const.eventBaseType.MLE_FILE_COPY"
+							},
+							{
+								"name": "process",
+								"value": "@event.process"
+							},
+							{
+								"name": "destination",
+								"value": "@event.file"
+							},
+							{
+								"name": "source",
+								"value": "@context.file"
+							},
+							{
+								"name": "time",
+								"value": "@event.time"
+							},
+							{
+								"name": "tickTime",
+								"value": "@event.tickTime"
+							}
+						]
+					}
+				}
+			},
+
+			// Detect process termination and free signature related contexts
+			{
+				"eventType": "LLE_PROCESS_DELETE",
+				"rule": {
+					"deleteContext": {
+						"basket": "@const.basket.fileReadWrite",
+						"group": "@event.process.id"
+					}
+				}
+			}
+		], // FILE_COPY_READ_WRITE
+
+		//
+		// Pattern for copy-file WRITE-READ scenario
+		//
+		"FILE_COPY_WRITE_READ": [
+
+			// Detect full write and create signature context. No conditions
+			{
+				"eventType": "LLE_FILE_DATA_WRITE_FULL",
+				"rule": {
+					"saveContext": {
+						"basket": "@const.basket.fileWriteRead",
+						"key": "@var.copyFileKey",
+						"group": "@event.process.id",
+						"lifetime": 60000,
+						"maxCopyCount": 100,
+						"data": {
+							"file": "@event.file",
+							"time": "@event.time",
+							"tickTime": "@event.tickTime"
+						}
+					}
+				}
+			},
+
+			// Detect full write, check signature context and generate new event
+			{
+				"eventType": "LLE_FILE_DATA_READ_FULL",
+				"rule": {
+					"loadContext": {
+						"basket": "@const.basket.fileWriteRead",
+						"key": "@var.copyFileKey",
+						"delete": true
+					},
+					"createEvent": {
+						"eventType": "MLE_FILE_COPY",
+						"destination": "IN",
+						"clone": false,
+						"data": [
+							{
+								"name": "baseType",
+								"value": "@const.eventBaseType.MLE_FILE_COPY"
+							},
+							{
+								"name": "process",
+								"value": "@event.process"
+							},
+							{
+								"name": "destination",
+								"value": "@context.file"
+							},
+							{
+								"name": "source",
+								"value": "@event.file"
+							},
+							{
+								"name": "time",
+								"value": "@context.time"
+							},
+							{
+								"name": "tickTime",
+								"value": "@context.tickTime"
+							}
+						]
+					}
+				}
+			},
+
+			// Detect process termination and free signature related contexts
+			{
+				"eventType": "LLE_PROCESS_DELETE",
+				"rule": {
+					"deleteContext": {
+						"basket": "@const.basket.fileWriteRead",
+						"group": "@event.process.id"
+					}
+				}
+			}
+		] // FILE_COPY_WRITE_READ
+	}
+}

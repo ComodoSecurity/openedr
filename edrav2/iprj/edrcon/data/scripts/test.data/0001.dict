@@ -1,0 +1,29 @@
+﻿{
+  "f_str": "default1",
+  "f_int": 1,
+  "f_seq": [1],
+  "f_calc_id": {
+    "$$proxy": "cachedCmd",
+    "processor": "objects.rnd01",
+    "command": "getNext",
+    "params": {}
+  },
+  "f_calc_int": {
+    "$$proxy": "cachedCmd",
+    "processor": "objects.rnd01",
+    "command": "generate",
+    "params": {}
+  },
+  "f_calc_str": {
+    "$$proxy": "cachedCmd",
+    "processor": "objects.rnd01",
+    "command": "generate",
+    "params": { "size": 8 }
+  },
+  "f_calc_datetime": {
+    "$$proxy": "cachedCmd",
+    "processor": "objects.rnd01",
+    "command": "getIsoDateTime",
+    "params": { "shift": 3000 } // Shift from current time in milliseconds (0 by default)
+  }
+}

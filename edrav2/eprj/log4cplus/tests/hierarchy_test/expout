@@ -1,0 +1,14 @@
+Logger name: test Parent = root
+Logger name: test2 Parent = root
+Logger name: test.subtest.a.b.c Parent = test
+Logger name: test.subtest.a Parent = test
+Logger name: test.subtest Parent = test
+Logger name: test.subtest.a Parent = test.subtest
+Logger name: test.subtest.a.b.c Parent = test.subtest.a
+Logger name: test.subtest.a.b.c.d Parent = test.subtest.a.b.c
+Logger name: test.subtest.a.b.c Parent = test.subtest.a
+Logger name: test.subtest.a Parent = test.subtest
+Logger name: test.subtest Parent = test
+ERROR - WARN log level and below are disabled and that is fine
+FATAL - ERROR log level and below are disabled and this should still be printed
+Exiting main()...

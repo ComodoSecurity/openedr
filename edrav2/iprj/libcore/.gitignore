@@ -1,0 +1,5 @@
+*.vcxproj.user
+.vs
+*.orig
+
+/out

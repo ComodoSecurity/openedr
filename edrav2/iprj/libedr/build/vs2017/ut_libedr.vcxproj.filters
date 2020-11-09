@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\test\main.cpp" />
+    <ClCompile Include="..\..\test\pch.cpp" />
+    <ClInclude Include="..\..\test\config.h" />
+    <ClInclude Include="..\..\test\pch.h" />
+    <ClCompile Include="..\..\test\test_policy_v1.cpp" />
+    <ClCompile Include="..\..\test\test_signctx.cpp" />
+    <ClCompile Include="..\..\test\test_eventfilter.cpp" />
+    <ClCompile Include="..\..\test\init.cpp" />
+    <ClCompile Include="..\..\test\test_policy_v2.cpp" />
+  </ItemGroup>
+</Project>

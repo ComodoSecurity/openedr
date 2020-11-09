@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\test\pch.cpp" />
+    <ClCompile Include="..\..\test\test_variant.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_variant_serialization.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_dictstreamview.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_jsonrpcserver.cpp">
+      <Filter>ipc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_jsonrpcclient.cpp">
+      <Filter>ipc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_error.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_lbvs.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_stringstream.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_variantproxy.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_command.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_core.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_services.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_logging.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_crypt_xxh.cpp">
+      <Filter>crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_crypt_sha1.cpp">
+      <Filter>crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_crypt_md5.cpp">
+      <Filter>crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_crypt_crc64.cpp">
+      <Filter>crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_crypt_crc32.cpp">
+      <Filter>crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_base64.cpp">
+      <Filter>crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_streamcache.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_stream.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_filestream.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_memstream.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_dump.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_string.cpp">
+      <Filter>basic_types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_common.cpp">
+      <Filter>basic_types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_dataproxy.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_variant_intvalue.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_variant_operation.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_variant_convert.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_queue.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_threadpool.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_queuemgr.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_scenario.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_scenariomgr.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_dictionarymixer.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_stringmatcher.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_ctxcmds.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_datagenerator.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_fsdatastorage.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_randomdatagenerator.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\main.cpp" />
+    <ClCompile Include="..\..\test\init.cpp" />
+    <ClCompile Include="..\..\test\test_cache.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_variant_dictkey.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_cryptstream.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\test\pch.h" />
+    <ClInclude Include="..\..\test\test_stream.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\test\common.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="crypt">
+      <UniqueIdentifier>{e18115f9-a374-4897-a920-f88bbebd901a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ipc">
+      <UniqueIdentifier>{fc7edf34-e3c0-4053-8635-508c24231366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="io">
+      <UniqueIdentifier>{a086d193-9c6c-44f5-9e27-0525fe460b6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="variant">
+      <UniqueIdentifier>{b983419f-d53d-4ce1-a09b-8392d256688e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{8dfa7c74-6743-47e8-8720-88cf1f6a3949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="basic_types">
+      <UniqueIdentifier>{c5469c18-8faa-402f-9fa6-bd169683e2c1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

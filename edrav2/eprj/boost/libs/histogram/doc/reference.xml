@@ -1,0 +1,2096 @@
+<?xml version="1.0" standalone="yes"?>
+<library-reference><header name="boost/histogram/accumulators/mean.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="accumulators">
+<class name="mean"><template>
+      <template-type-parameter name="RealType"/>
+    </template><purpose>Calculates mean and variance of sample. </purpose><description><para>Uses Welfords's incremental algorithm to improve the numerical stability of mean and variance computation. </para></description><method-group name="public member functions">
+<method name="operator()"><type>void</type><parameter name="x"><paramtype>const RealType &amp;</paramtype></parameter></method>
+<method name="operator+="><type><classname>mean</classname> &amp;</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const <classname>mean</classname>&lt; T &gt; &amp;</paramtype></parameter></method>
+<method name="operator *="><type><classname>mean</classname> &amp;</type><parameter name="s"><paramtype>const RealType &amp;</paramtype></parameter></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const <classname>mean</classname>&lt; T &gt; &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const <classname>mean</classname>&lt; T &gt; &amp;</paramtype></parameter></method>
+<method name="count" cv="const noexcept"><type>std::size_t</type></method>
+<method name="value" cv="const noexcept"><type>const RealType &amp;</type></method>
+<method name="variance" cv="const"><type>RealType</type></method>
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name=""><paramtype>Archive &amp;</paramtype></parameter><parameter name=""><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<constructor cv="= default"/>
+<constructor><parameter name="n"><paramtype>const std::size_t</paramtype></parameter><parameter name="mean"><paramtype>const RealType &amp;</paramtype></parameter><parameter name="variance"><paramtype>const RealType &amp;</paramtype></parameter></constructor>
+</class></namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/accumulators/sum.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="accumulators">
+<class name="sum"><template>
+      <template-type-parameter name="RealType"/>
+    </template><purpose>Uses Neumaier algorithm to compute accurate sums. </purpose><description><para>The algorithm uses memory for two floats and is three to five times slower compared to a simple floating point number used to accumulate a sum, but the relative error of the sum is at the level of the machine precision, independent of the number of samples.</para><para>A. Neumaier, Zeitschrift fuer Angewandte Mathematik und Mechanik 54 (1974) 39-51. </para></description><method-group name="public member functions">
+<method name="operator++"><type><classname>sum</classname> &amp;</type><purpose>Increment sum by one. </purpose></method>
+<method name="operator+="><type><classname>sum</classname> &amp;</type><parameter name="value"><paramtype>const RealType &amp;</paramtype></parameter><purpose>Increment sum by value. </purpose></method>
+<method name="operator *="><type><classname>sum</classname> &amp;</type><parameter name="value"><paramtype>const RealType &amp;</paramtype></parameter><purpose>Scale by value. </purpose></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const <classname>sum</classname>&lt; T &gt; &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const T &amp;</paramtype></parameter></method>
+<method name="large" cv="const"><type>const RealType &amp;</type><purpose>Return large part of the sum. </purpose></method>
+<method name="small" cv="const"><type>const RealType &amp;</type><purpose>Return small part of the sum. </purpose></method>
+<method name="conversion-operator" cv="const"><type>RealType</type></method>
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name=""><paramtype>Archive &amp;</paramtype></parameter><parameter name=""><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<constructor cv="= default"/>
+<constructor specifiers="explicit" cv="noexcept"><parameter name="value"><paramtype>const RealType &amp;</paramtype></parameter><purpose>Initialize sum to value. </purpose></constructor>
+<copy-assignment cv="noexcept"><type><classname>sum</classname> &amp;</type><parameter name="value"><paramtype>const RealType &amp;</paramtype></parameter><purpose>Set sum to value. </purpose></copy-assignment>
+</class></namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/algorithm/sum.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="algorithm">
+<function name="sum"><type>auto</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="h"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><purpose>Compute the sum over all histogram cells, including underflow/overflow bins. </purpose><description><para>If the value type of the histogram is an integral or floating point type, boost::accumulators::sum&lt;double&gt; is used to compute the sum, else the original value type is used. Compilation fails, if the value type does not support operator+=.</para><para>Return type is double if the value type of the histogram is integral or floating point, and the original value type otherwise. </para></description></function>
+
+
+
+
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/accumulators/weighted_mean.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="accumulators">
+<class name="weighted_mean"><template>
+      <template-type-parameter name="RealType"/>
+    </template><purpose>Calculates mean and variance of weighted sample. </purpose><description><para>Uses West's incremental algorithm to improve numerical stability of mean and variance computation. </para></description><method-group name="public member functions">
+<method name="operator()"><type>void</type><parameter name="x"><paramtype>const RealType &amp;</paramtype></parameter></method>
+<method name="operator()"><type>void</type><parameter name="w"><paramtype>const RealType &amp;</paramtype></parameter><parameter name="x"><paramtype>const RealType &amp;</paramtype></parameter></method>
+<method name="operator+="><type><classname>weighted_mean</classname> &amp;</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const <classname>weighted_mean</classname>&lt; T &gt; &amp;</paramtype></parameter></method>
+<method name="operator *="><type><classname>weighted_mean</classname> &amp;</type><parameter name="s"><paramtype>const RealType &amp;</paramtype></parameter></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const <classname>weighted_mean</classname>&lt; T &gt; &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const T &amp;</paramtype></parameter></method>
+<method name="sum_of_weights" cv="const noexcept"><type>const RealType &amp;</type></method>
+<method name="value" cv="const noexcept"><type>const RealType &amp;</type></method>
+<method name="variance" cv="const"><type>RealType</type></method>
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name=""><paramtype>Archive &amp;</paramtype></parameter><parameter name=""><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<constructor cv="= default"/>
+<constructor><parameter name="wsum"><paramtype>const RealType &amp;</paramtype></parameter><parameter name="wsum2"><paramtype>const RealType &amp;</paramtype></parameter><parameter name="mean"><paramtype>const RealType &amp;</paramtype></parameter><parameter name="variance"><paramtype>const RealType &amp;</paramtype></parameter></constructor>
+</class></namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/accumulators/weighted_sum.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="accumulators">
+<class name="weighted_sum"><template>
+      <template-type-parameter name="RealType"/>
+    </template><purpose>Holds sum of weights and its variance estimate. </purpose><method-group name="public member functions">
+<method name="operator++"><type><classname>weighted_sum</classname> &amp;</type><purpose>Increment by one. </purpose></method>
+<method name="operator+="><type><classname>weighted_sum</classname> &amp;</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="value"><paramtype>const T &amp;</paramtype></parameter><purpose>Increment by value. </purpose></method>
+<method name="operator+="><type><classname>weighted_sum</classname> &amp;</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const <classname>weighted_sum</classname>&lt; T &gt; &amp;</paramtype></parameter><purpose>Added another weighted sum. </purpose></method>
+<method name="operator *="><type><classname>weighted_sum</classname> &amp;</type><parameter name="x"><paramtype>const RealType &amp;</paramtype></parameter><purpose>Scale by value. </purpose></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><parameter name="rhs"><paramtype>const RealType &amp;</paramtype></parameter></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const <classname>weighted_sum</classname>&lt; T &gt; &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="rhs"><paramtype>const T &amp;</paramtype></parameter></method>
+<method name="value" cv="const noexcept"><type>const RealType &amp;</type><purpose>Return value of the sum. </purpose></method>
+<method name="variance" cv="const noexcept"><type>const RealType &amp;</type><purpose>Return estimated variance of the sum. </purpose></method>
+<method name="conversion-operator" cv="const" specifiers="explicit"><type>T</type><template>
+          <template-type-parameter name="T"/>
+        </template></method>
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name=""><paramtype>Archive &amp;</paramtype></parameter><parameter name=""><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<constructor cv="= default"/>
+<constructor specifiers="explicit" cv="noexcept"><parameter name="value"><paramtype>const RealType &amp;</paramtype></parameter></constructor>
+<constructor cv="noexcept"><parameter name="value"><paramtype>const RealType &amp;</paramtype></parameter><parameter name="variance"><paramtype>const RealType &amp;</paramtype></parameter></constructor>
+</class></namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/algorithm/project.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="algorithm">
+
+
+
+
+
+
+
+
+
+<function name="project"><type>auto</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+          <template-nontype-parameter name="N"><type>unsigned</type></template-nontype-parameter>
+          <template-nontype-parameter name="Ns"><type>typename...</type></template-nontype-parameter>
+        </template><parameter name="h"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><parameter name=""><paramtype>std::integral_constant&lt; unsigned, N &gt;</paramtype></parameter><parameter name=""><paramtype>Ns...</paramtype></parameter><purpose>Returns a lower-dimensional histogram, summing over removed axes. </purpose><description><para>Arguments are the source histogram and compile-time numbers, the remaining indices of the axes. Returns a new histogram which only contains the subset of axes. The source histogram is summed over the removed axes. </para></description></function>
+<function name="project"><type>auto</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+          <template-type-parameter name="Iterable"/>
+          <template-type-parameter name=""><default>detail::requires_iterable&lt;Iterable&gt;</default></template-type-parameter>
+        </template><parameter name="h"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><parameter name="c"><paramtype>const Iterable &amp;</paramtype></parameter><purpose>Returns a lower-dimensional histogram, summing over removed axes. </purpose><description><para>This version accepts a source histogram and an iterable range containing the remaining indices. </para></description></function>
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/algorithm/reduce.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="algorithm">
+<struct name="reduce_option"><purpose>Option type returned by the helper functions shrink_and_rebin(), shrink(), rebin(). </purpose></struct>
+<function name="shrink_and_rebin"><type>auto</type><parameter name="iaxis"><paramtype>unsigned</paramtype><description><para>which axis to operate on. </para></description></parameter><parameter name="lower"><paramtype>double</paramtype><description><para>lowest bound that should be kept. </para></description></parameter><parameter name="upper"><paramtype>double</paramtype><description><para>highest bound that should be kept. If upper is inside bin interval, the whole interval is removed. </para></description></parameter><parameter name="merge"><paramtype>unsigned</paramtype><description><para>how many adjacent bins to merge into one. </para></description></parameter><purpose>Shrink and rebin option. </purpose><description><para>
+</para></description></function>
+<function name="shrink"><type>auto</type><parameter name="iaxis"><paramtype>unsigned</paramtype><description><para>which axis to operate on. </para></description></parameter><parameter name="lower"><paramtype>double</paramtype><description><para>lowest bound that should be kept. </para></description></parameter><parameter name="upper"><paramtype>double</paramtype><description><para>highest bound that should be kept. If upper is inside bin interval, the whole interval is removed. </para></description></parameter><purpose>Shrink option. </purpose><description><para>
+</para></description></function>
+<function name="rebin"><type>auto</type><parameter name="iaxis"><paramtype>unsigned</paramtype><description><para>which axis to operate on. </para></description></parameter><parameter name="merge"><paramtype>unsigned</paramtype><description><para>how many adjacent bins to merge into one. </para></description></parameter><purpose>Rebin option. </purpose><description><para>
+</para></description></function>
+<function name="shrink_and_rebin"><type>auto</type><parameter name="lower"><paramtype>double</paramtype><description><para>lowest bound that should be kept. </para></description></parameter><parameter name="upper"><paramtype>double</paramtype><description><para>highest bound that should be kept. If upper is inside bin interval, the whole interval is removed. </para></description></parameter><parameter name="merge"><paramtype>unsigned</paramtype><description><para>how many adjacent bins to merge into one. </para></description></parameter><purpose>Convenience overload for single axis. </purpose><description><para>
+</para></description></function>
+<function name="shrink"><type>auto</type><parameter name="lower"><paramtype>double</paramtype><description><para>lowest bound that should be kept. </para></description></parameter><parameter name="upper"><paramtype>double</paramtype><description><para>highest bound that should be kept. If upper is inside bin interval, the whole interval is removed. </para></description></parameter><purpose>Convenience overload for single axis. </purpose><description><para>
+</para></description></function>
+<function name="rebin"><type>auto</type><parameter name="merge"><paramtype>unsigned</paramtype><description><para>how many adjacent bins to merge into one. </para></description></parameter><purpose>Convenience overload for single axis. </purpose><description><para>
+</para></description></function>
+<function name="reduce"><type>decltype(auto)</type><template>
+          <template-type-parameter name="Histogram"/>
+          <template-type-parameter name="Iterable"/>
+        </template><parameter name="hist"><paramtype>const Histogram &amp;</paramtype><description><para>original histogram. </para></description></parameter><parameter name="options"><paramtype>const Iterable &amp;</paramtype><description><para>iterable sequence of reduce_options, generated by shrink_and_rebin(), shrink(), and rebin(). </para></description></parameter><purpose>Shrink and/or rebin axes of a histogram. </purpose><description><para>Returns the reduced copy of the histogram.</para><para>
+</para></description></function>
+<function name="reduce"><type>decltype(auto)</type><template>
+          <template-type-parameter name="Histogram"/>
+          <template-nontype-parameter name="Ts"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="hist"><paramtype>const Histogram &amp;</paramtype><description><para>original histogram. </para></description></parameter><parameter name="opt"><paramtype>const <classname>reduce_option</classname> &amp;</paramtype><description><para>reduce option generated by shrink_and_rebin(), shrink(), and rebin(). </para></description></parameter><parameter name="opts"><paramtype>Ts &amp;&amp;...</paramtype><description><para>more reduce_options. </para></description></parameter><purpose>Shrink and/or rebin axes of a histogram. </purpose><description><para>Returns the modified copy.</para><para>
+</para></description></function>
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/axis.hpp">
+</header>
+<header name="boost/histogram/axis/category.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<class name="category"><template>
+      <template-type-parameter name="Value"><purpose><para>input value type, must be equal-comparable. </para></purpose></template-type-parameter>
+      <template-type-parameter name="MetaData"><purpose><para>type to store meta data. </para></purpose></template-type-parameter>
+      <template-type-parameter name="Options"><purpose><para>see boost::histogram::axis::option. </para></purpose></template-type-parameter>
+      <template-type-parameter name="Allocator"><purpose><para>allocator to use for dynamic memory management.</para></purpose></template-type-parameter>
+    </template><inherit access="public">boost::histogram::axis::iterator_mixin&lt; category&lt; Value, MetaData, Options, Allocator &gt; &gt;</inherit><purpose>Maps at a set of unique values to bin indices. </purpose><description><para>The axis maps a set of values to bins, following the order of arguments in the constructor. The optional overflow bin for this axis counts input values that are not part of the set. Binning has O(N) complexity, but with a very small factor. For small N (the typical use case) it beats other kinds of lookup.</para><para>
+The options <computeroutput>underflow</computeroutput> and <computeroutput>circular</computeroutput> are not allowed. The options <computeroutput>growth</computeroutput> and <computeroutput>overflow</computeroutput> are mutually exclusive. </para></description><method-group name="public member functions">
+<method name="index" cv="const noexcept"><type>index_type</type><parameter name="x"><paramtype>const value_type &amp;</paramtype></parameter><purpose>Return index for value argument. </purpose></method>
+<method name="update"><type>auto</type><parameter name="x"><paramtype>const value_type &amp;</paramtype></parameter><purpose>Returns index and shift (if axis has grown) for the passed argument. </purpose></method>
+<method name="value" cv="const"><type>decltype(auto)</type><parameter name="idx"><paramtype>index_type</paramtype></parameter><purpose>Return value for index argument. </purpose><description><para>Throws <computeroutput>std::out_of_range</computeroutput> if the index is out of bounds. </para></description></method>
+<method name="bin" cv="const noexcept"><type>decltype(auto)</type><parameter name="idx"><paramtype>index_type</paramtype></parameter><purpose>Return value for index argument. </purpose></method>
+<method name="size" cv="const noexcept"><type>index_type</type><purpose>Returns the number of bins, without over- or underflow. </purpose></method>
+<method name="metadata" cv="noexcept"><type>metadata_type &amp;</type><purpose>Returns reference to metadata. </purpose></method>
+<method name="metadata" cv="const noexcept"><type>const metadata_type &amp;</type><purpose>Returns reference to const metadata. </purpose></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="V"/>
+          <template-type-parameter name="M"/>
+          <template-type-parameter name="O"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="o"><paramtype>const <classname>category</classname>&lt; V, M, O, A &gt; &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="V"/>
+          <template-type-parameter name="M"/>
+          <template-type-parameter name="O"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="o"><paramtype>const <classname>category</classname>&lt; V, M, O, A &gt; &amp;</paramtype></parameter></method>
+<method name="get_allocator" cv="const"><type>auto</type></method>
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name=""><paramtype>Archive &amp;</paramtype></parameter><parameter name=""><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<constructor specifiers="explicit"><parameter name="alloc"><paramtype>allocator_type</paramtype><default>{}</default></parameter></constructor>
+<constructor><template>
+          <template-type-parameter name="It"/>
+          <template-type-parameter name=""><default>detail::requires_iterator&lt;It&gt;</default></template-type-parameter>
+        </template><parameter name="begin"><paramtype>It</paramtype><description><para>begin of category range of unique values. </para></description></parameter><parameter name="end"><paramtype>It</paramtype><description><para>end of category range of unique values. </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis. </para></description></parameter><parameter name="alloc"><paramtype>allocator_type</paramtype><default>{}</default><description><para>allocator instance to use. </para></description></parameter><purpose>Construct from iterator range of unique values. </purpose><description><para>
+</para></description></constructor>
+<constructor><template>
+          <template-type-parameter name="C"/>
+          <template-type-parameter name=""><default>detail::requires_iterable&lt;C&gt;</default></template-type-parameter>
+        </template><parameter name="iterable"><paramtype>const C &amp;</paramtype><description><para>sequence of unique values. </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis. </para></description></parameter><parameter name="alloc"><paramtype>allocator_type</paramtype><default>{}</default><description><para>allocator instance to use. </para></description></parameter><purpose>Construct axis from iterable sequence of unique values. </purpose><description><para>
+</para></description></constructor>
+<constructor><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="list"><paramtype>std::initializer_list&lt; U &gt;</paramtype><description><para><computeroutput>std::initializer_list</computeroutput> of unique values. </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis. </para></description></parameter><parameter name="alloc"><paramtype>allocator_type</paramtype><default>{}</default><description><para>allocator instance to use. </para></description></parameter><purpose>Construct axis from an initializer list of unique values. </purpose><description><para>
+</para></description></constructor>
+<constructor><parameter name="src"><paramtype>const <classname>category</classname> &amp;</paramtype></parameter><parameter name="begin"><paramtype>index_type</paramtype></parameter><parameter name="end"><paramtype>index_type</paramtype></parameter><parameter name="merge"><paramtype>unsigned</paramtype></parameter><purpose>Constructor used by algorithm::reduce to shrink and rebin. </purpose></constructor>
+<method-group name="public static functions">
+<method name="options" cv="noexcept" specifiers="static"><type>constexpr unsigned</type><purpose>Returns the options. </purpose></method>
+</method-group>
+</class>
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/axis/integer.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<class name="integer"><template>
+      <template-type-parameter name="Value"><purpose><para>input value type. Must be integer or floating point. </para></purpose></template-type-parameter>
+      <template-type-parameter name="MetaData"><purpose><para>type to store meta data. </para></purpose></template-type-parameter>
+      <template-type-parameter name="Options"><purpose><para>see boost::histogram::axis::option (all values allowed). </para></purpose></template-type-parameter>
+    </template><inherit access="public">boost::histogram::axis::iterator_mixin&lt; integer&lt; Value, MetaData, Options &gt; &gt;</inherit><purpose>Axis for an interval of integer values with unit steps. </purpose><description><para>Binning is a O(1) operation. This axis bins faster than a regular axis.</para><para>
+</para></description><method-group name="public member functions">
+<method name="index" cv="const noexcept"><type>index_type</type><parameter name="x"><paramtype>value_type</paramtype></parameter><purpose>Return index for value argument. </purpose></method>
+<method name="update" cv="noexcept"><type>auto</type><parameter name="x"><paramtype>value_type</paramtype></parameter><purpose>Returns index and shift (if axis has grown) for the passed argument. </purpose></method>
+<method name="value" cv="const noexcept"><type>value_type</type><parameter name="i"><paramtype>local_index_type</paramtype></parameter><purpose>Return value for index argument. </purpose></method>
+<method name="bin" cv="const noexcept"><type>decltype(auto)</type><parameter name="idx"><paramtype>index_type</paramtype></parameter><purpose>Return bin for index argument. </purpose></method>
+<method name="size" cv="const noexcept"><type>index_type</type><purpose>Returns the number of bins, without over- or underflow. </purpose></method>
+<method name="metadata" cv="noexcept"><type>metadata_type &amp;</type><purpose>Returns reference to metadata. </purpose></method>
+<method name="metadata" cv="const noexcept"><type>const metadata_type &amp;</type><purpose>Returns reference to const metadata. </purpose></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="V"/>
+          <template-type-parameter name="M"/>
+          <template-type-parameter name="O"/>
+        </template><parameter name="o"><paramtype>const <classname>integer</classname>&lt; V, M, O &gt; &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="V"/>
+          <template-type-parameter name="M"/>
+          <template-type-parameter name="O"/>
+        </template><parameter name="o"><paramtype>const <classname>integer</classname>&lt; V, M, O &gt; &amp;</paramtype></parameter></method>
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name=""><paramtype>Archive &amp;</paramtype></parameter><parameter name=""><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<constructor cv="= default"/>
+<constructor><parameter name="start"><paramtype>value_type</paramtype><description><para>first integer of covered range. </para></description></parameter><parameter name="stop"><paramtype>value_type</paramtype><description><para>one past last integer of covered range. </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis. </para></description></parameter><purpose>Construct over semi-open integer interval [start, stop). </purpose><description><para>
+</para></description></constructor>
+<constructor><parameter name="src"><paramtype>const <classname>integer</classname> &amp;</paramtype></parameter><parameter name="begin"><paramtype>index_type</paramtype></parameter><parameter name="end"><paramtype>index_type</paramtype></parameter><parameter name="merge"><paramtype>unsigned</paramtype></parameter><purpose>Constructor used by algorithm::reduce to shrink and rebin. </purpose></constructor>
+<method-group name="public static functions">
+<method name="options" cv="noexcept" specifiers="static"><type>constexpr unsigned</type><purpose>Returns the options. </purpose></method>
+</method-group>
+<method-group name="private member functions">
+<method name="index_impl" cv="const noexcept"><type>index_type</type><parameter name=""><paramtype>std::false_type</paramtype></parameter><parameter name="x"><paramtype>int</paramtype></parameter></method>
+<method name="index_impl" cv="const noexcept"><type>index_type</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name=""><paramtype>std::true_type</paramtype></parameter><parameter name="x"><paramtype>T</paramtype></parameter></method>
+</method-group>
+</class>
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/axis/interval_view.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<class name="interval_view"><template>
+      <template-type-parameter name="Axis"/>
+    </template><purpose>Lightweight bin view. </purpose><description><para>Represents the current bin interval. </para></description><method-group name="public member functions">
+<method name="lower" cv="const noexcept"><type>decltype(auto)</type><purpose>Return lower edge of bin. </purpose></method>
+<method name="upper" cv="const noexcept"><type>decltype(auto)</type><purpose>Return upper edge of bin. </purpose></method>
+<method name="center" cv="const noexcept"><type>decltype(auto)</type><purpose>Return center of bin. </purpose></method>
+<method name="width" cv="const noexcept"><type>decltype(auto)</type><purpose>Return width of bin. </purpose></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="BinType"/>
+        </template><parameter name="rhs"><paramtype>const BinType &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="BinType"/>
+        </template><parameter name="rhs"><paramtype>const BinType &amp;</paramtype></parameter></method>
+</method-group>
+<constructor><parameter name="axis"><paramtype>const Axis &amp;</paramtype></parameter><parameter name="idx"><paramtype>int</paramtype></parameter></constructor>
+<constructor cv="= delete"><parameter name="axis"><paramtype>Axis &amp;&amp;</paramtype></parameter><parameter name="idx"><paramtype>int</paramtype></parameter></constructor>
+</class>
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/axis/iterator.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<class name="iterator"><template>
+      <template-type-parameter name="Axis"/>
+    </template><inherit access="public">boost::iterator_adaptor&lt; iterator&lt; Axis &gt;, int, decltype(std::declval&lt; const Axis &amp; &gt;().bin(0)), std::random_access_iterator_tag, decltype(std::declval&lt; const Axis &amp; &gt;().bin(0)), int &gt;</inherit><method-group name="public member functions">
+</method-group>
+<constructor specifiers="explicit"><parameter name="axis"><paramtype>const Axis &amp;</paramtype></parameter><parameter name="idx"><paramtype>int</paramtype></parameter></constructor>
+<method-group name="protected member functions">
+<method name="equal" cv="const noexcept"><type>bool</type><parameter name="other"><paramtype>const <classname>iterator</classname> &amp;</paramtype></parameter></method>
+<method name="dereference" cv="const"><type>decltype(auto)</type></method>
+</method-group>
+</class><class name="iterator_mixin"><template>
+      <template-type-parameter name="Derived"/>
+    </template><purpose>Uses CRTP to inject iterator logic into Derived. </purpose><typedef name="const_iterator"><type><classname>iterator</classname>&lt; Derived &gt;</type></typedef>
+<typedef name="const_reverse_iterator"><type>boost::reverse_iterator&lt; const_iterator &gt;</type></typedef>
+<method-group name="public member functions">
+<method name="begin" cv="const noexcept"><type>const_iterator</type><purpose>Bin iterator to beginning of the axis (read-only). </purpose></method>
+<method name="end" cv="const noexcept"><type>const_iterator</type><purpose>Bin iterator to the end of the axis (read-only). </purpose></method>
+<method name="rbegin" cv="const noexcept"><type>const_reverse_iterator</type><purpose>Reverse bin iterator to the last entry of the axis (read-only). </purpose></method>
+<method name="rend" cv="const noexcept"><type>const_reverse_iterator</type><purpose>Reverse bin iterator to the end (read-only). </purpose></method>
+</method-group>
+</class>
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/axis/option.hpp">
+<para>Options for builtin axis types. </para><para>Options <computeroutput>circular</computeroutput> and <computeroutput>growth</computeroutput> are mutually exclusive. Options <computeroutput>circular</computeroutput> and <computeroutput>underflow</computeroutput> are mutually exclusive. </para><namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<namespace name="option">
+<struct name="bit"><template>
+      <template-nontype-parameter name="Pos"><type>unsigned</type><purpose><para>position of the bit in the set. </para></purpose></template-nontype-parameter>
+    </template><inherit access="public">boost::histogram::axis::option::bitset&lt;(1&lt;&lt; Pos)&gt;</inherit><purpose>Single option flag. </purpose><description><para>
+</para></description></struct><struct name="bitset"><template>
+      <template-nontype-parameter name="Bits"><type>unsigned</type></template-nontype-parameter>
+    </template><inherit access="public">std::integral_constant&lt; unsigned, Bits &gt;</inherit><purpose>Holder of axis options. </purpose><method-group name="public static functions">
+<method name="test" specifiers="static"><type>constexpr auto</type><template>
+          <template-nontype-parameter name="B"><type>unsigned</type></template-nontype-parameter>
+        </template><parameter name=""><paramtype><classname>bitset</classname>&lt; B &gt;</paramtype></parameter><purpose>Returns true if all option flags in the argument are set and false otherwise. </purpose></method>
+</method-group>
+</struct><typedef name="none_t"><purpose>All options off. </purpose><type><classname>bitset</classname>&lt; 0 &gt;</type></typedef>
+<typedef name="underflow_t"><purpose>Axis has an underflow bin. Mutually exclusive with <computeroutput>circular</computeroutput>. </purpose><type><classname>bit</classname>&lt; 0 &gt;</type></typedef>
+<typedef name="overflow_t"><purpose>Axis has overflow bin. </purpose><type><classname>bit</classname>&lt; 1 &gt;</type></typedef>
+<typedef name="circular_t"><purpose>Axis is circular. Mutually exclusive with <computeroutput>growth</computeroutput> and <computeroutput>underflow</computeroutput>. </purpose><type><classname>bit</classname>&lt; 2 &gt;</type></typedef>
+<typedef name="growth_t"><purpose>Axis can grow. Mutually exclusive with <computeroutput>circular</computeroutput>. </purpose><type><classname>bit</classname>&lt; 3 &gt;</type></typedef>
+<data-member name="none"><type>constexpr none_t</type><purpose>Instance of <computeroutput>none_t</computeroutput>. </purpose></data-member>
+<data-member name="underflow"><type>constexpr underflow_t</type><purpose>Instance of <computeroutput>underflow_t</computeroutput>. </purpose></data-member>
+<data-member name="overflow"><type>constexpr overflow_t</type><purpose>Instance of <computeroutput>overflow_t</computeroutput>. </purpose></data-member>
+<data-member name="circular"><type>constexpr circular_t</type><purpose>Instance of <computeroutput>circular_t</computeroutput>. </purpose></data-member>
+<data-member name="growth"><type>constexpr growth_t</type><purpose>Instance of <computeroutput>growth_t</computeroutput>. </purpose></data-member>
+<function name="operator|"><type>constexpr auto</type><template>
+          <template-nontype-parameter name="B1"><type>unsigned</type></template-nontype-parameter>
+          <template-nontype-parameter name="B2"><type>unsigned</type></template-nontype-parameter>
+        </template><parameter name=""><paramtype><classname>bitset</classname>&lt; B1 &gt;</paramtype></parameter><parameter name=""><paramtype><classname>bitset</classname>&lt; B2 &gt;</paramtype></parameter><purpose>Set union of the axis option arguments. </purpose></function>
+<function name="operator&amp;"><type>constexpr auto</type><template>
+          <template-nontype-parameter name="B1"><type>unsigned</type></template-nontype-parameter>
+          <template-nontype-parameter name="B2"><type>unsigned</type></template-nontype-parameter>
+        </template><parameter name=""><paramtype><classname>bitset</classname>&lt; B1 &gt;</paramtype></parameter><parameter name=""><paramtype><classname>bitset</classname>&lt; B2 &gt;</paramtype></parameter><purpose>Set intersection of the option arguments. </purpose></function>
+<function name="operator-"><type>constexpr auto</type><template>
+          <template-nontype-parameter name="B1"><type>unsigned</type></template-nontype-parameter>
+          <template-nontype-parameter name="B2"><type>unsigned</type></template-nontype-parameter>
+        </template><parameter name=""><paramtype><classname>bitset</classname>&lt; B1 &gt;</paramtype></parameter><parameter name=""><paramtype><classname>bitset</classname>&lt; B2 &gt;</paramtype></parameter><purpose>Set difference of the option arguments. </purpose></function>
+</namespace>
+
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/axis/polymorphic_bin.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<class name="polymorphic_bin"><template>
+      <template-type-parameter name="RealType"/>
+    </template><purpose>Holds the bin data of a <classname alt="boost::histogram::axis::variant">axis::variant</classname>. </purpose><description><para>The interface is a superset of the <computeroutput>value_bin_view</computeroutput> and <computeroutput>interval_bin_view</computeroutput> classes. The methods value() and lower() return the same number. For a value bin, upper() and lower() and center() return the same number, width() returns zero.</para><para>This is not a view like interval_bin_view or value_bin_view for two reasons.<itemizedlist>
+<listitem><para>Sequential calls to lower() and upper() would have to each loop through the variant types. This is likely to be slower than filling all the data in one loop.</para>
+</listitem><listitem><para><classname alt="boost::histogram::axis::polymorphic_bin">polymorphic_bin</classname> may be created from a temporary instance of <classname alt="boost::histogram::axis::variant">axis::variant</classname>, like in the call histogram::axis(0). Storing a reference to the axis would result in a dangling reference. Rather than specialing the code to handle this, it seems easier to just use a value instead of a view here. </para>
+</listitem></itemizedlist>
+</para></description><method-group name="public member functions">
+<method name="conversion-operator" cv="const noexcept"><type>const value_type &amp;</type><purpose>Implicitly convert to bin value (for axis with discrete values). </purpose></method>
+<method name="lower" cv="const noexcept"><type>value_type</type><purpose>Return lower edge of bin. </purpose></method>
+<method name="upper" cv="const noexcept"><type>value_type</type><purpose>Return upper edge of bin. </purpose></method>
+<method name="center" cv="const noexcept"><type>value_type</type><purpose>Return center of bin. </purpose></method>
+<method name="width" cv="const noexcept"><type>value_type</type><purpose>Return width of bin. </purpose></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="BinType"/>
+        </template><parameter name="rhs"><paramtype>const BinType &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="BinType"/>
+        </template><parameter name="rhs"><paramtype>const BinType &amp;</paramtype></parameter></method>
+<method name="is_discrete" cv="const noexcept"><type>bool</type><purpose>Return true if bin is discrete. </purpose></method>
+</method-group>
+<constructor><parameter name="lower"><paramtype>value_type</paramtype></parameter><parameter name="upper"><paramtype>value_type</paramtype></parameter></constructor>
+<method-group name="private member functions">
+<method name="equal_impl" cv="const noexcept"><type>bool</type><parameter name=""><paramtype>std::true_type</paramtype></parameter><parameter name="rhs"><paramtype>const <classname>polymorphic_bin</classname> &amp;</paramtype></parameter></method>
+<method name="equal_impl" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="BinType"/>
+        </template><parameter name=""><paramtype>std::true_type</paramtype></parameter><parameter name="rhs"><paramtype>const BinType &amp;</paramtype></parameter></method>
+<method name="equal_impl" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="BinType"/>
+        </template><parameter name=""><paramtype>std::false_type</paramtype></parameter><parameter name="rhs"><paramtype>const BinType &amp;</paramtype></parameter></method>
+</method-group>
+</class>
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/axis/regular.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<class name="regular"><template>
+      <template-type-parameter name="Value"><purpose><para>input value type, must be floating point. </para></purpose></template-type-parameter>
+      <template-type-parameter name="Transform"><purpose><para>builtin or user-defined transform type. </para></purpose></template-type-parameter>
+      <template-type-parameter name="MetaData"><purpose><para>type to store meta data. </para></purpose></template-type-parameter>
+      <template-type-parameter name="Options"><purpose><para>see boost::histogram::axis::option (all values allowed). </para></purpose></template-type-parameter>
+    </template><inherit access="public">boost::histogram::axis::iterator_mixin&lt; regular&lt; Value, Transform, MetaData, Options &gt; &gt;</inherit><purpose>Axis for equidistant intervals on the real line. </purpose><description><para>The most common binning strategy. Very fast. Binning is a O(1) operation.</para><para>
+</para></description><method-group name="public member functions">
+<method name="transform" cv="const noexcept"><type>const transform_type &amp;</type><purpose>Return instance of the transform type. </purpose></method>
+<method name="index" cv="const noexcept"><type>index_type</type><parameter name="x"><paramtype>value_type</paramtype></parameter><purpose>Return index for value argument. </purpose></method>
+<method name="update" cv="noexcept"><type>auto</type><parameter name="x"><paramtype>value_type</paramtype></parameter><purpose>Returns index and shift (if axis has grown) for the passed argument. </purpose></method>
+<method name="value" cv="const noexcept"><type>value_type</type><parameter name="i"><paramtype>real_index_type</paramtype></parameter><purpose>Return value for fractional index argument. </purpose></method>
+<method name="bin" cv="const noexcept"><type>decltype(auto)</type><parameter name="idx"><paramtype>index_type</paramtype></parameter><purpose>Return bin for index argument. </purpose></method>
+<method name="size" cv="const noexcept"><type>index_type</type><purpose>Returns the number of bins, without over- or underflow. </purpose></method>
+<method name="metadata" cv="noexcept"><type>metadata_type &amp;</type><purpose>Returns reference to metadata. </purpose></method>
+<method name="metadata" cv="const noexcept"><type>const metadata_type &amp;</type><purpose>Returns reference to const metadata. </purpose></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="V"/>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="M"/>
+          <template-type-parameter name="O"/>
+        </template><parameter name="o"><paramtype>const <classname>regular</classname>&lt; V, T, M, O &gt; &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="V"/>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="M"/>
+          <template-type-parameter name="O"/>
+        </template><parameter name="o"><paramtype>const <classname>regular</classname>&lt; V, T, M, O &gt; &amp;</paramtype></parameter></method>
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name=""><paramtype>Archive &amp;</paramtype></parameter><parameter name=""><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<constructor cv="= default"/>
+<constructor><parameter name="trans"><paramtype>transform_type</paramtype><description><para>transform instance to use. </para></description></parameter><parameter name="n"><paramtype>unsigned</paramtype><description><para>number of bins. </para></description></parameter><parameter name="start"><paramtype>value_type</paramtype><description><para>low edge of first bin. </para></description></parameter><parameter name="stop"><paramtype>value_type</paramtype><description><para>high edge of last bin. </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis (optional). </para></description></parameter><purpose>Construct n bins over real transformed range [start, stop). </purpose><description><para>
+</para></description></constructor>
+<constructor><parameter name="n"><paramtype>unsigned</paramtype><description><para>number of bins. </para></description></parameter><parameter name="start"><paramtype>value_type</paramtype><description><para>low edge of first bin. </para></description></parameter><parameter name="stop"><paramtype>value_type</paramtype><description><para>high edge of last bin. </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis (optional). </para></description></parameter><purpose>Construct n bins over real range [start, stop). </purpose><description><para>
+</para></description></constructor>
+<constructor><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="trans"><paramtype>transform_type</paramtype><description><para>transform instance to use. </para></description></parameter><parameter name="step"><paramtype>const step_type&lt; T &gt; &amp;</paramtype><description><para>width of a single bin. </para></description></parameter><parameter name="start"><paramtype>value_type</paramtype><description><para>low edge of first bin. </para></description></parameter><parameter name="stop"><paramtype>value_type</paramtype><description><para>upper limit of high edge of last bin (see below). </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis (optional).</para></description></parameter><purpose>Construct bins with the given step size over real transformed range [start, stop). </purpose><description><para>
+The axis computes the number of bins as n = abs(stop - start) / step, rounded down. This means that stop is an upper limit to the actual value (start + n * step). </para></description></constructor>
+<constructor><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="step"><paramtype>const step_type&lt; T &gt; &amp;</paramtype><description><para>width of a single bin. </para></description></parameter><parameter name="start"><paramtype>value_type</paramtype><description><para>low edge of first bin. </para></description></parameter><parameter name="stop"><paramtype>value_type</paramtype><description><para>upper limit of high edge of last bin (see below). </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis (optional).</para></description></parameter><purpose>Construct bins with the given step size over real range [start, stop). </purpose><description><para>
+The axis computes the number of bins as n = abs(stop - start) / step, rounded down. This means that stop is an upper limit to the actual value (start + n * step). </para></description></constructor>
+<constructor><parameter name="src"><paramtype>const <classname>regular</classname> &amp;</paramtype></parameter><parameter name="begin"><paramtype>index_type</paramtype></parameter><parameter name="end"><paramtype>index_type</paramtype></parameter><parameter name="merge"><paramtype>unsigned</paramtype></parameter><purpose>Constructor used by algorithm::reduce to shrink and rebin (not for users). </purpose></constructor>
+<method-group name="public static functions">
+<method name="options" cv="noexcept" specifiers="static"><type>constexpr unsigned</type><purpose>Returns the options. </purpose></method>
+</method-group>
+</class><namespace name="transform">
+<struct name="id"><purpose>Identity transform for equidistant bins. </purpose><method-group name="public static functions">
+<method name="forward" cv="noexcept" specifiers="static"><type>T</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="x"><paramtype>T &amp;&amp;</paramtype></parameter><purpose>Pass-through. </purpose></method>
+<method name="inverse" cv="noexcept" specifiers="static"><type>T</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="x"><paramtype>T &amp;&amp;</paramtype></parameter><purpose>Pass-through. </purpose></method>
+</method-group>
+</struct><struct name="log"><purpose>Log transform for equidistant bins in log-space. </purpose><method-group name="public static functions">
+<method name="forward" specifiers="static"><type>T</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="x"><paramtype>T</paramtype></parameter><purpose>Returns log(x) of external value x. </purpose></method>
+<method name="inverse" specifiers="static"><type>T</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="x"><paramtype>T</paramtype></parameter><purpose>Returns exp(x) for internal value x. </purpose></method>
+</method-group>
+</struct><struct name="pow"><purpose>Pow transform for equidistant bins in pow-space. </purpose><data-member name="power"><type>double</type><purpose>power index </purpose></data-member>
+<method-group name="public member functions">
+<method name="forward" cv="const"><type>auto</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="x"><paramtype>T</paramtype></parameter><purpose>Returns pow(x, power) of external value x. </purpose></method>
+<method name="inverse" cv="const"><type>auto</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="x"><paramtype>T</paramtype></parameter><purpose>Returns pow(x, 1/power) of external value x. </purpose></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><parameter name="o"><paramtype>const <classname>pow</classname> &amp;</paramtype></parameter></method>
+</method-group>
+<constructor specifiers="explicit"><parameter name="p"><paramtype>double</paramtype></parameter><purpose>Make transform with index p. </purpose></constructor>
+<constructor cv="= default"/>
+</struct><struct name="sqrt"><purpose>Sqrt transform for equidistant bins in sqrt-space. </purpose><method-group name="public static functions">
+<method name="forward" specifiers="static"><type>T</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="x"><paramtype>T</paramtype></parameter><purpose>Returns sqrt(x) of external value x. </purpose></method>
+<method name="inverse" specifiers="static"><type>T</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="x"><paramtype>T</paramtype></parameter><purpose>Returns x^2 of internal value x. </purpose></method>
+</method-group>
+</struct></namespace>
+<typedef name="circular"><type><emphasis>unspecified</emphasis></type></typedef>
+
+
+
+
+
+
+<function name="step"><type>auto</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="t"><paramtype>T &amp;&amp;</paramtype></parameter><purpose>Helper function to mark argument as step size. </purpose></function>
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/axis/traits.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<namespace name="traits">
+<typedef name="static_options"><purpose>Generates static axis option type for axis type. </purpose><description><para>WARNING: Doxygen does not render the synopsis correctly. This is a templated using directive, which accepts axis type and returns <classname alt="boost::histogram::axis::option::bitset">boost::histogram::axis::option::bitset</classname>.</para><para>If Axis::options() is valid and constexpr, return the corresponding option type. Otherwise, return boost::histogram::axis::option::growth_t, if the axis has a method <computeroutput>update</computeroutput>, else return boost::histogram::axis::option::none_t.</para><para>
+</para></description><type><emphasis>unspecified</emphasis></type></typedef>
+<function name="metadata"><type>decltype(auto)</type><template>
+          <template-type-parameter name="Axis"/>
+        </template><parameter name="axis"><paramtype>Axis &amp;&amp;</paramtype><description><para>any axis instance </para></description></parameter><purpose>Returns reference to metadata of an axis. </purpose><description><para>If the expression x.metadata() for an axis instance <computeroutput>x</computeroutput> (maybe const) is valid, return the result. Otherwise, return a reference to a static instance of <classname alt="boost::histogram::axis::null_type">boost::histogram::axis::null_type</classname>.</para><para>
+</para></description></function>
+<function name="options"><type>constexpr unsigned</type><template>
+          <template-type-parameter name="Axis"/>
+        </template><parameter name="axis"><paramtype>const Axis &amp;</paramtype><description><para>any axis instance </para></description></parameter><purpose>Returns axis options as unsigned integer. </purpose><description><para>If axis.options() is valid, return the result. Otherwise, return boost::histogram::axis::traits::static_options&lt;decltype(axis)&gt;::value.</para><para>
+</para></description></function>
+<function name="extent"><type>constexpr index_type</type><template>
+          <template-type-parameter name="Axis"/>
+        </template><parameter name="axis"><paramtype>const Axis &amp;</paramtype><description><para>any axis instance </para></description></parameter><purpose>Returns axis size plus any extra bins for under- and overflow. </purpose><description><para>
+</para></description></function>
+<function name="value"><type>decltype(auto)</type><template>
+          <template-type-parameter name="Axis"/>
+        </template><parameter name="axis"><paramtype>const Axis &amp;</paramtype><description><para>any axis instance </para></description></parameter><parameter name="index"><paramtype>real_index_type</paramtype><description><para>floating point axis index </para></description></parameter><purpose>Returns axis value for index. </purpose><description><para>If the axis has no <computeroutput>value</computeroutput> method, throw std::runtime_error. If the method exists and accepts a floating point index, pass the index and return the result. If the method exists but accepts only integer indices, cast the floating point index to int, pass this index and return the result.</para><para>
+</para></description></function>
+<function name="value_as"><type>Result</type><template>
+          <template-type-parameter name="Result"><purpose><para>requested return type </para></purpose></template-type-parameter>
+          <template-type-parameter name="Axis"><purpose><para>axis type </para></purpose></template-type-parameter>
+        </template><parameter name="axis"><paramtype>const Axis &amp;</paramtype><description><para>any axis instance </para></description></parameter><parameter name="index"><paramtype>real_index_type</paramtype><description><para>floating point axis index </para></description></parameter><purpose>Returns axis value for index if it is convertible to target type or throws. </purpose><description><para>Like boost::histogram::axis::traits::value, but converts the result into the requested return type. If the conversion is not possible, throws std::runtime_error.</para><para>
+
+</para></description></function>
+<function name="index"><type>auto</type><template>
+          <template-type-parameter name="Axis"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name="axis"><paramtype>const Axis &amp;</paramtype><description><para>any axis instance </para></description></parameter><parameter name="value"><paramtype>const U &amp;</paramtype><description><para>argument to be passed to <computeroutput>index</computeroutput> method </para></description></parameter><purpose>Returns axis index for value. </purpose><description><para>Throws std::invalid_argument if the value argument is not implicitly convertible.</para><para>
+</para></description></function>
+<function name="index"><type>auto</type><template>
+          <template-nontype-parameter name="Ts"><type>class...</type></template-nontype-parameter>
+          <template-type-parameter name="U"/>
+        </template><parameter name="axis"><paramtype>const <classname>variant</classname>&lt; Ts... &gt; &amp;</paramtype><description><para>any axis instance </para></description></parameter><parameter name="value"><paramtype>const U &amp;</paramtype><description><para>argument to be passed to <computeroutput>index</computeroutput> method </para></description></parameter><purpose>Returns axis index for value. </purpose><description><para>Throws std::invalid_argument if the value argument is not implicitly convertible.</para><para>
+</para></description></function>
+<function name="update"><type>std::pair&lt; int, int &gt;</type><template>
+          <template-type-parameter name="Axis"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name="axis"><paramtype>Axis &amp;</paramtype><description><para>any axis instance </para></description></parameter><parameter name="value"><paramtype>const U &amp;</paramtype><description><para>argument to be passed to <computeroutput>update</computeroutput> or <computeroutput>index</computeroutput> method </para></description></parameter><purpose>Returns pair of axis index and shift for the value argument. </purpose><description><para>Throws <computeroutput>std::invalid_argument</computeroutput> if the value argument is not implicitly convertible to the argument expected by the <computeroutput>index</computeroutput> method. If the result of boost::histogram::axis::traits::static_options&lt;decltype(axis)&gt; has the growth flag set, call <computeroutput>update</computeroutput> method with the argument and return the result. Otherwise, call <computeroutput>index</computeroutput> and return the pair of the result and a zero shift.</para><para>
+</para></description></function>
+<function name="update"><type>auto</type><template>
+          <template-nontype-parameter name="Ts"><type>class...</type></template-nontype-parameter>
+          <template-type-parameter name="U"/>
+        </template><parameter name="axis"><paramtype><classname>variant</classname>&lt; Ts... &gt; &amp;</paramtype><description><para>any axis instance </para></description></parameter><parameter name="value"><paramtype>const U &amp;</paramtype><description><para>argument to be passed to <computeroutput>update</computeroutput> or <computeroutput>index</computeroutput> method </para></description></parameter><purpose>Returns pair of axis index and shift for the value argument. </purpose><description><para>Throws <computeroutput>std::invalid_argument</computeroutput> if the value argument is not implicitly convertible to the argument expected by the <computeroutput>index</computeroutput> method. If the result of boost::histogram::axis::traits::static_options&lt;decltype(axis)&gt; has the growth flag set, call <computeroutput>update</computeroutput> method with the argument and return the result. Otherwise, call <computeroutput>index</computeroutput> and return the pair of the result and a zero shift.</para><para>
+</para></description></function>
+<function name="width"><type>decltype(auto)</type><template>
+          <template-type-parameter name="Axis"/>
+        </template><parameter name="axis"><paramtype>const Axis &amp;</paramtype><description><para>any axis instance </para></description></parameter><parameter name="index"><paramtype>index_type</paramtype><description><para>bin index </para></description></parameter><purpose>Returns bin width at axis index. </purpose><description><para>If the axis has no <computeroutput>value</computeroutput> method, throw std::runtime_error. If the method exists and accepts a floating point index, return the result of <computeroutput>axis.value(index + 1) - axis.value(index)</computeroutput>. If the method exists but accepts only integer indices, return 0.</para><para>
+</para></description></function>
+<function name="width_as"><type>Result</type><template>
+          <template-type-parameter name="Result"/>
+          <template-type-parameter name="Axis"/>
+        </template><parameter name="axis"><paramtype>const Axis &amp;</paramtype><description><para>any axis instance </para></description></parameter><parameter name="index"><paramtype>index_type</paramtype><description><para>bin index </para></description></parameter><purpose>Returns bin width at axis index. </purpose><description><para>Like boost::histogram::axis::traits::width, but converts the result into the requested return type. If the conversion is not possible, throw std::runtime_error.</para><para>
+</para></description></function>
+</namespace>
+
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/axis/variable.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<class name="variable"><template>
+      <template-type-parameter name="Value"><purpose><para>input value type, must be floating point. </para></purpose></template-type-parameter>
+      <template-type-parameter name="MetaData"><purpose><para>type to store meta data. </para></purpose></template-type-parameter>
+      <template-type-parameter name="Options"><purpose><para>see boost::histogram::axis::option (all values allowed). </para></purpose></template-type-parameter>
+      <template-type-parameter name="Allocator"><purpose><para>allocator to use for dynamic memory management. </para></purpose></template-type-parameter>
+    </template><inherit access="public">boost::histogram::axis::iterator_mixin&lt; variable&lt; Value, MetaData, Options, Allocator &gt; &gt;</inherit><purpose>Axis for non-equidistant bins on the real line. </purpose><description><para>Binning is a O(log(N)) operation. If speed matters and the problem domain allows it, prefer a regular axis, possibly with a transform.</para><para>
+</para></description><method-group name="public member functions">
+<method name="index" cv="const noexcept"><type>index_type</type><parameter name="x"><paramtype>value_type</paramtype></parameter><purpose>Return index for value argument. </purpose></method>
+<method name="update" cv="noexcept"><type>auto</type><parameter name="x"><paramtype>value_type</paramtype></parameter></method>
+<method name="value" cv="const noexcept"><type>value_type</type><parameter name="i"><paramtype>real_index_type</paramtype></parameter><purpose>Return value for fractional index argument. </purpose></method>
+<method name="bin" cv="const noexcept"><type>auto</type><parameter name="idx"><paramtype>index_type</paramtype></parameter><purpose>Return bin for index argument. </purpose></method>
+<method name="size" cv="const noexcept"><type>index_type</type><purpose>Returns the number of bins, without over- or underflow. </purpose></method>
+<method name="metadata" cv="noexcept"><type>metadata_type &amp;</type><purpose>Returns reference to metadata. </purpose></method>
+<method name="metadata" cv="const noexcept"><type>const metadata_type &amp;</type><purpose>Returns reference to const metadata. </purpose></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="V"/>
+          <template-type-parameter name="M"/>
+          <template-type-parameter name="O"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="o"><paramtype>const <classname>variable</classname>&lt; V, M, O, A &gt; &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="V"/>
+          <template-type-parameter name="M"/>
+          <template-type-parameter name="O"/>
+          <template-type-parameter name="A"/>
+        </template><parameter name="o"><paramtype>const <classname>variable</classname>&lt; V, M, O, A &gt; &amp;</paramtype></parameter></method>
+<method name="get_allocator" cv="const"><type>auto</type><purpose>Return allocator instance. </purpose></method>
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name=""><paramtype>Archive &amp;</paramtype></parameter><parameter name=""><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<constructor specifiers="explicit"><parameter name="alloc"><paramtype>allocator_type</paramtype><default>{}</default></parameter></constructor>
+<constructor><template>
+          <template-type-parameter name="It"/>
+          <template-type-parameter name=""><default>detail::requires_iterator&lt;It&gt;</default></template-type-parameter>
+        </template><parameter name="begin"><paramtype>It</paramtype><description><para>begin of edge sequence. </para></description></parameter><parameter name="end"><paramtype>It</paramtype><description><para>end of edge sequence. </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis. </para></description></parameter><parameter name="alloc"><paramtype>allocator_type</paramtype><default>{}</default><description><para>allocator instance to use. </para></description></parameter><purpose>Construct from iterator range of bin edges. </purpose><description><para>
+</para></description></constructor>
+<constructor><template>
+          <template-type-parameter name="U"/>
+          <template-type-parameter name=""><default>detail::requires_iterable&lt;U&gt;</default></template-type-parameter>
+        </template><parameter name="iterable"><paramtype>const U &amp;</paramtype><description><para>iterable range of bin edges. </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis. </para></description></parameter><parameter name="alloc"><paramtype>allocator_type</paramtype><default>{}</default><description><para>allocator instance to use. </para></description></parameter><purpose>Construct variable axis from iterable range of bin edges. </purpose><description><para>
+</para></description></constructor>
+<constructor><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="list"><paramtype>std::initializer_list&lt; U &gt;</paramtype><description><para><computeroutput>std::initializer_list</computeroutput> of bin edges. </para></description></parameter><parameter name="meta"><paramtype>metadata_type</paramtype><default>{}</default><description><para>description of the axis. </para></description></parameter><parameter name="alloc"><paramtype>allocator_type</paramtype><default>{}</default><description><para>allocator instance to use. </para></description></parameter><purpose>Construct variable axis from initializer list of bin edges. </purpose><description><para>
+</para></description></constructor>
+<constructor><parameter name="src"><paramtype>const <classname>variable</classname> &amp;</paramtype></parameter><parameter name="begin"><paramtype>index_type</paramtype></parameter><parameter name="end"><paramtype>index_type</paramtype></parameter><parameter name="merge"><paramtype>unsigned</paramtype></parameter><purpose>Constructor used by algorithm::reduce to shrink and rebin (not for users). </purpose></constructor>
+<method-group name="public static functions">
+<method name="options" cv="noexcept" specifiers="static"><type>constexpr unsigned</type><purpose>Returns the options. </purpose></method>
+</method-group>
+</class>
+
+
+
+
+
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/axis/variant.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<class name="variant"><template>
+      <template-nontype-parameter name="Ts"><type>class...</type></template-nontype-parameter>
+    </template><inherit access="public">boost::histogram::axis::iterator_mixin&lt; variant&lt; Ts... &gt; &gt;</inherit><purpose>Polymorphic axis type. </purpose><method-group name="public member functions">
+<method name="size" cv="const"><type>index_type</type><purpose>Return size of axis. </purpose></method>
+<method name="options" cv="const"><type>unsigned</type><purpose>Return options of axis or option::none_t if axis has no options. </purpose></method>
+<method name="metadata" cv="const"><type>const metadata_type &amp;</type><purpose>Return reference to const metadata or instance of <classname alt="boost::histogram::axis::null_type">null_type</classname> if axis has no metadata. </purpose></method>
+<method name="metadata"><type>metadata_type &amp;</type><purpose>Return reference to metadata or instance of <classname alt="boost::histogram::axis::null_type">null_type</classname> if axis has no metadata. </purpose></method>
+<method name="index" cv="const"><type>index_type</type><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="u"><paramtype>const U &amp;</paramtype></parameter><purpose>Return index for value argument. </purpose><description><para>Throws std::invalid_argument if axis has incompatible call signature. </para></description></method>
+<method name="value" cv="const"><type>double</type><parameter name="idx"><paramtype>real_index_type</paramtype></parameter><purpose>Return value for index argument. </purpose><description><para>Only works for axes with value method that returns something convertible to double and will throw a runtime_error otherwise, see axis::traits::value(). </para></description></method>
+<method name="bin" cv="const"><type>auto</type><parameter name="idx"><paramtype>index_type</paramtype></parameter><purpose>Return bin for index argument. </purpose><description><para>Only works for axes with value method that returns something convertible to double and will throw a runtime_error otherwise, see axis::traits::value(). </para></description></method>
+<method name="operator==" cv="const"><type>bool</type><template>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="u"><paramtype>const <classname>variant</classname>&lt; Us... &gt; &amp;</paramtype></parameter></method>
+<method name="operator==" cv="const"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="t"><paramtype>const T &amp;</paramtype></parameter></method>
+<method name="operator!=" cv="const"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="t"><paramtype>const T &amp;</paramtype></parameter></method>
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name="ar"><paramtype>Archive &amp;</paramtype></parameter><parameter name=""><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<constructor cv="= default"/>
+<constructor cv="= default"><parameter name=""><paramtype>const <classname>variant</classname> &amp;</paramtype></parameter></constructor>
+<copy-assignment cv="= default"><type><classname>variant</classname> &amp;</type><parameter name=""><paramtype>const <classname>variant</classname> &amp;</paramtype></parameter></copy-assignment>
+<constructor cv="= default"><parameter name=""><paramtype><classname>variant</classname> &amp;&amp;</paramtype></parameter></constructor>
+<copy-assignment cv="= default"><type><classname>variant</classname> &amp;</type><parameter name=""><paramtype><classname>variant</classname> &amp;&amp;</paramtype></parameter></copy-assignment>
+<constructor><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name=""><default>requires_bounded_type&lt;T&gt;</default></template-type-parameter>
+        </template><parameter name="t"><paramtype>T &amp;&amp;</paramtype></parameter></constructor>
+<copy-assignment><type><classname>variant</classname> &amp;</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name=""><default>requires_bounded_type&lt;T&gt;</default></template-type-parameter>
+        </template><parameter name="t"><paramtype>T &amp;&amp;</paramtype></parameter></copy-assignment>
+<constructor><template>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="u"><paramtype>const <classname>variant</classname>&lt; Us... &gt; &amp;</paramtype></parameter></constructor>
+<copy-assignment><type><classname>variant</classname> &amp;</type><template>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="u"><paramtype>const <classname>variant</classname>&lt; Us... &gt; &amp;</paramtype></parameter></copy-assignment>
+<method-group name="friend functions">
+<method name="visit"><type>friend auto</type><template>
+          <template-type-parameter name="Visitor"/>
+          <template-type-parameter name="Variant"/>
+        </template><parameter name=""><paramtype>Visitor &amp;&amp;</paramtype></parameter><parameter name=""><paramtype>Variant &amp;&amp;</paramtype></parameter><purpose>Apply visitor to variant. </purpose></method>
+<method name="get"><type>friend T &amp;</type><template>
+          <template-type-parameter name="T"/>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="v"><paramtype><classname>variant</classname>&lt; Us... &gt; &amp;</paramtype></parameter><purpose>Return lvalue reference to T, throws unspecified exception if type does not match. </purpose></method>
+<method name="get"><type>friend const T &amp;</type><template>
+          <template-type-parameter name="T"/>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="v"><paramtype>const <classname>variant</classname>&lt; Us... &gt; &amp;</paramtype></parameter><purpose>Return const reference to T, throws unspecified exception if type does not match. </purpose></method>
+<method name="get"><type>friend T &amp;&amp;</type><template>
+          <template-type-parameter name="T"/>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="v"><paramtype><classname>variant</classname>&lt; Us... &gt; &amp;&amp;</paramtype></parameter><purpose>Return rvalue reference to T, throws unspecified exception if type does not match. </purpose></method>
+<method name="get_if"><type>friend T *</type><template>
+          <template-type-parameter name="T"/>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="v"><paramtype><classname>variant</classname>&lt; Us... &gt; *</paramtype></parameter><purpose>Returns pointer to T in variant or null pointer if type does not match. </purpose></method>
+<method name="get_if"><type>friend const T *</type><template>
+          <template-type-parameter name="T"/>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="v"><paramtype>const <classname>variant</classname>&lt; Us... &gt; *</paramtype></parameter><purpose>Returns pointer to const T in variant or null pointer if type does not match. </purpose></method>
+</method-group>
+</class><function name="get_if"><type>T *</type><template>
+          <template-type-parameter name="T"/>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="v"><paramtype><classname>variant</classname>&lt; Us... &gt; *</paramtype></parameter><purpose>Returns pointer to T in variant or null pointer if type does not match. </purpose></function>
+<function name="get_if"><type>const T *</type><template>
+          <template-type-parameter name="T"/>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="v"><paramtype>const <classname>variant</classname>&lt; Us... &gt; *</paramtype></parameter><purpose>Returns pointer to const T in variant or null pointer if type does not match. </purpose></function>
+<function name="visit"><type>auto</type><template>
+          <template-type-parameter name="Visitor"/>
+          <template-type-parameter name="Variant"/>
+        </template><parameter name="vis"><paramtype>Visitor &amp;&amp;</paramtype></parameter><parameter name="var"><paramtype>Variant &amp;&amp;</paramtype></parameter><purpose>Apply visitor to variant. </purpose></function>
+<function name="get"><type>T &amp;</type><template>
+          <template-type-parameter name="T"/>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="v"><paramtype><classname>variant</classname>&lt; Us... &gt; &amp;</paramtype></parameter><purpose>Return lvalue reference to T, throws unspecified exception if type does not match. </purpose></function>
+<function name="get"><type>T &amp;&amp;</type><template>
+          <template-type-parameter name="T"/>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="v"><paramtype><classname>variant</classname>&lt; Us... &gt; &amp;&amp;</paramtype></parameter><purpose>Return rvalue reference to T, throws unspecified exception if type does not match. </purpose></function>
+<function name="get"><type>const T &amp;</type><template>
+          <template-type-parameter name="T"/>
+          <template-nontype-parameter name="Us"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="v"><paramtype>const <classname>variant</classname>&lt; Us... &gt; &amp;</paramtype></parameter><purpose>Return const reference to T, throws unspecified exception if type does not match. </purpose></function>
+
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/fwd.hpp">
+<para>Forward declarations, tag types and type aliases. </para><namespace name="boost">
+<namespace name="histogram">
+<namespace name="axis">
+<struct name="null_type"><purpose>Empty metadata type. </purpose></struct><typedef name="index_type"><purpose>Integral type for axis indices. </purpose><type>int</type></typedef>
+<typedef name="real_index_type"><purpose>Real type for axis indices. </purpose><type>double</type></typedef>
+
+
+
+
+
+
+
+</namespace>
+<typedef name="dense_storage"><purpose>Vector-like storage for fast zero-overhead access to cells. </purpose><type><classname>storage_adaptor</classname>&lt; std::vector&lt; T, A &gt; &gt;</type></typedef>
+<typedef name="default_storage"><purpose>Default storage, optimized for unweighted histograms. </purpose><type><classname>unlimited_storage</classname>&lt;&gt;</type></typedef>
+<typedef name="weight_storage"><purpose>Dense storage which tracks sums of weights and a variance estimate. </purpose><type>dense_storage&lt; <classname>accumulators::weighted_sum</classname>&lt;&gt; &gt;</type></typedef>
+<typedef name="profile_storage"><purpose>Dense storage which tracks means of samples in each cell. </purpose><type>dense_storage&lt; <classname>accumulators::mean</classname>&lt;&gt; &gt;</type></typedef>
+<typedef name="weighted_profile_storage"><purpose>Dense storage which tracks means of weighted samples in each cell. </purpose><type>dense_storage&lt; <classname>accumulators::weighted_mean</classname>&lt;&gt; &gt;</type></typedef>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/histogram.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<class name="histogram"><template>
+      <template-type-parameter name="Axes"><purpose><para>std::tuple of axis types OR std::vector of an axis type or <classname alt="boost::histogram::axis::variant">axis::variant</classname> </para></purpose></template-type-parameter>
+      <template-type-parameter name="Storage"><purpose><para>class that implements the storage interface </para></purpose></template-type-parameter>
+    </template><purpose>Central class of the histogram library. </purpose><description><para>Histogram uses the call operator to insert data, like the <ulink url="https://www.boost.org/doc/libs/develop/doc/html/accumulators.html">Boost.Accumulators</ulink>.</para><para>Use factory functions (see <ulink url="histogram/reference.html#header.boost.histogram.make_histogram_hpp">make_histogram.hpp</ulink> and <ulink url="histogram/reference.html#header.boost.histogram.make_profile_hpp">make_profile.hpp</ulink>) to conveniently create histograms rather than calling the ctors directly.</para><para>Use the <ulink url="boost/histogram/indexed.html">indexed</ulink> range generator to iterate over filled histograms, which is convenient and faster than hand-written loops for multi-dimensional histograms.</para><para>
+</para></description><typedef name="axes_type"><type>Axes</type></typedef>
+<typedef name="storage_type"><type>Storage</type></typedef>
+<typedef name="value_type"><type>typename storage_type::value_type</type></typedef>
+<typedef name="iterator"><type>typename storage_type::iterator</type></typedef>
+<typedef name="const_iterator"><type>typename storage_type::const_iterator</type></typedef>
+<method-group name="public member functions">
+<method name="rank" cv="const noexcept"><type>constexpr unsigned</type><purpose>Number of axes (dimensions). </purpose></method>
+<method name="size" cv="const noexcept"><type>std::size_t</type><purpose>Total number of bins (including underflow/overflow). </purpose></method>
+<method name="reset"><type>void</type><purpose>Reset all bins to default initialized values. </purpose></method>
+<method name="axis" cv="const"><type>decltype(auto)</type><template>
+          <template-nontype-parameter name="N"><type>unsigned</type><default>0</default></template-nontype-parameter>
+        </template><parameter name=""><paramtype>std::integral_constant&lt; unsigned, N &gt;</paramtype><default>{}</default></parameter><purpose>Get N-th axis using a compile-time number. </purpose><description><para>This version is more efficient than the one accepting a run-time number. </para></description></method>
+<method name="axis" cv="const"><type>decltype(auto)</type><parameter name="i"><paramtype>unsigned</paramtype></parameter><purpose>Get N-th axis with run-time number. </purpose><description><para>Use version that accepts a compile-time number, if possible. </para></description></method>
+<method name="for_each_axis" cv="const"><type>auto</type><template>
+          <template-type-parameter name="Unary"/>
+        </template><parameter name="unary"><paramtype>Unary &amp;&amp;</paramtype></parameter><purpose>Apply unary functor/function to each axis. </purpose></method>
+<method name="operator()"><type>auto</type><template>
+          <template-nontype-parameter name="Ts"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="ts"><paramtype>const Ts &amp;...</paramtype></parameter><purpose>Fill histogram with values, an optional weight, and/or a sample. </purpose><description><para>Arguments are passed in order to the axis objects. Passing an argument type that is not convertible to the value type accepted by the axis or passing the wrong number of arguments causes a throw of <computeroutput>std::invalid_argument</computeroutput>.</para><para><emphasis role="bold">Axis with multiple arguments</emphasis></para><para>If the histogram contains an axis which accepts a <computeroutput>std::tuple</computeroutput> of arguments, the arguments for that axis need to passed as a <computeroutput>std::tuple</computeroutput>, for example, <computeroutput>std::make_tuple(1.2, 2.3)</computeroutput>. If the histogram contains only this axis and no other, the arguments can be passed directly.</para><para><emphasis role="bold">Optional weight</emphasis></para><para>An optional weight can be passed as the first or last argument with the <ulink url="boost/histogram/weight.html">weight</ulink> helper function. Compilation fails if the storage elements do not support weights.</para><para><emphasis role="bold">Samples</emphasis></para><para>If the storage elements accept samples, pass them with the sample helper function in addition to the axis arguments, which can be the first or last argument. The <ulink url="boost/histogram/sample.html">sample</ulink> helper function can pass one or more arguments to the storage element. If samples and weights are used together, they can be passed in any order at the beginning or end of the argument list. </para></description></method>
+<method name="operator()"><type>auto</type><template>
+          <template-nontype-parameter name="Ts"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="t"><paramtype>const std::tuple&lt; Ts... &gt; &amp;</paramtype></parameter><purpose>Fill histogram with values, an optional weight, and/or a sample from a <computeroutput>std::tuple</computeroutput>. </purpose></method>
+<method name="at"><type>decltype(auto)</type><template>
+          <template-nontype-parameter name="Ts"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="t"><paramtype>axis::index_type</paramtype></parameter><parameter name="ts"><paramtype>Ts...</paramtype></parameter><purpose>Access cell value at integral indices. </purpose><description><para>You can pass indices as individual arguments, as a std::tuple of integers, or as an interable range of integers. Passing the wrong number of arguments causes a throw of std::invalid_argument. Passing an index which is out of bounds causes a throw of std::out_of_range. </para></description></method>
+<method name="at" cv="const"><type>decltype(auto)</type><template>
+          <template-nontype-parameter name="Ts"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="t"><paramtype>axis::index_type</paramtype></parameter><parameter name="ts"><paramtype>Ts...</paramtype></parameter><purpose>Access cell value at integral indices (read-only). </purpose><description><para>Access cell value at integral indices. You can pass indices as individual arguments, as a std::tuple of integers, or as an interable range of integers. Passing the wrong number of arguments causes a throw of std::invalid_argument. Passing an index which is out of bounds causes a throw of std::out_of_range. </para></description></method>
+<method name="at"><type>decltype(auto)</type><template>
+          <template-nontype-parameter name="Ts"><type>typename...</type></template-nontype-parameter>
+        </template><parameter name="t"><paramtype>const std::tuple&lt; Ts... &gt; &amp;</paramtype></parameter><purpose>Access cell value at integral indices stored in <computeroutput>std::tuple</computeroutput>. </purpose><description><para>Access cell value at integral indices. You can pass indices as individual arguments, as a std::tuple of integers, or as an interable range of integers. Passing the wrong number of arguments causes a throw of std::invalid_argument. Passing an index which is out of bounds causes a throw of std::out_of_range. </para></description></method>
+<method name="at" cv="const"><type>decltype(auto)</type><template>
+          <template-nontype-parameter name="Ts"><type>typename...</type></template-nontype-parameter>
+        </template><parameter name="t"><paramtype>const std::tuple&lt; Ts... &gt; &amp;</paramtype></parameter><purpose>Access cell value at integral indices stored in <computeroutput>std::tuple</computeroutput> (read-only). </purpose><description><para>Access cell value at integral indices. You can pass indices as individual arguments, as a std::tuple of integers, or as an interable range of integers. Passing the wrong number of arguments causes a throw of std::invalid_argument. Passing an index which is out of bounds causes a throw of std::out_of_range. </para></description></method>
+<method name="at"><type>decltype(auto)</type><template>
+          <template-type-parameter name="Iterable"/>
+          <template-type-parameter name=""><default>detail::requires_iterable&lt;Iterable&gt;</default></template-type-parameter>
+        </template><parameter name="c"><paramtype>const Iterable &amp;</paramtype></parameter><purpose>Access cell value at integral indices stored in iterable. </purpose><description><para>Access cell value at integral indices. You can pass indices as individual arguments, as a std::tuple of integers, or as an interable range of integers. Passing the wrong number of arguments causes a throw of std::invalid_argument. Passing an index which is out of bounds causes a throw of std::out_of_range. </para></description></method>
+<method name="at" cv="const"><type>decltype(auto)</type><template>
+          <template-type-parameter name="Iterable"/>
+          <template-type-parameter name=""><default>detail::requires_iterable&lt;Iterable&gt;</default></template-type-parameter>
+        </template><parameter name="c"><paramtype>const Iterable &amp;</paramtype></parameter><purpose>Access cell value at integral indices stored in iterable (read-only). </purpose><description><para>Access cell value at integral indices. You can pass indices as individual arguments, as a std::tuple of integers, or as an interable range of integers. Passing the wrong number of arguments causes a throw of std::invalid_argument. Passing an index which is out of bounds causes a throw of std::out_of_range. </para></description></method>
+<method name="operator[]"><type>decltype(auto)</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="t"><paramtype>const T &amp;</paramtype></parameter><purpose>Access value at index (number for rank = 1, else <computeroutput>std::tuple</computeroutput> or iterable). </purpose></method>
+<method name="operator[]" cv="const"><type>decltype(auto)</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="t"><paramtype>const T &amp;</paramtype></parameter><purpose>Access value at index (number for rank = 1, else <computeroutput>std::tuple</computeroutput> or iterable). </purpose></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="rhs"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><purpose>Equality operator, tests equality for all axes and the storage. </purpose></method>
+<method name="operator!=" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="rhs"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><purpose>Negation of the equality operator. </purpose></method>
+<method name="operator+="><type><classname>histogram</classname> &amp;</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="rhs"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><purpose>Add values of another histogram. </purpose></method>
+<method name="operator-="><type><classname>histogram</classname> &amp;</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="rhs"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><purpose>Subtract values of another histogram. </purpose></method>
+<method name="operator *="><type><classname>histogram</classname> &amp;</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="rhs"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><purpose>Multiply by values of another histogram. </purpose></method>
+<method name="operator/="><type><classname>histogram</classname> &amp;</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="rhs"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><purpose>Divide by values of another histogram. </purpose></method>
+<method name="operator *="><type><classname>histogram</classname> &amp;</type><template>
+          <template-type-parameter name="V"><default>value_type</default></template-type-parameter>
+          <template-type-parameter name=""><default>std::enable_if_t&lt;detail::has_operator_rmul&lt;V, double&gt;::value&gt;</default></template-type-parameter>
+        </template><parameter name="x"><paramtype>const double</paramtype></parameter><purpose>Multiply all values with a scalar. </purpose></method>
+<method name="operator/="><type><classname>histogram</classname> &amp;</type><template>
+          <template-type-parameter name="V"><default>value_type</default></template-type-parameter>
+          <template-type-parameter name=""><default>std::enable_if_t&lt;detail::has_operator_rmul&lt;V, double&gt;::value&gt;</default></template-type-parameter>
+        </template><parameter name="x"><paramtype>const double</paramtype></parameter><purpose>Divide all values by a scalar. </purpose></method>
+<method name="begin" cv="noexcept"><type>iterator</type><purpose>Return value iterator to the beginning of the histogram. </purpose></method>
+<method name="end" cv="noexcept"><type>iterator</type><purpose>Return value iterator to the end in the histogram. </purpose></method>
+<method name="begin" cv="const noexcept"><type>const_iterator</type><purpose>Return value iterator to the beginning of the histogram (read-only). </purpose></method>
+<method name="end" cv="const noexcept"><type>const_iterator</type><purpose>Return value iterator to the end in the histogram (read-only). </purpose></method>
+<method name="cbegin" cv="const noexcept"><type>const_iterator</type><purpose>Return value iterator to the beginning of the histogram (read-only). </purpose></method>
+<method name="cend" cv="const noexcept"><type>const_iterator</type><purpose>Return value iterator to the end in the histogram (read-only). </purpose></method>
+</method-group>
+<constructor cv="= default"/>
+<constructor cv="= default"><parameter name="rhs"><paramtype>const <classname>histogram</classname> &amp;</paramtype></parameter></constructor>
+<constructor cv="= default"><parameter name="rhs"><paramtype><classname>histogram</classname> &amp;&amp;</paramtype></parameter></constructor>
+<copy-assignment cv="= default"><type><classname>histogram</classname> &amp;</type><parameter name="rhs"><paramtype>const <classname>histogram</classname> &amp;</paramtype></parameter></copy-assignment>
+<copy-assignment cv="= default"><type><classname>histogram</classname> &amp;</type><parameter name="rhs"><paramtype><classname>histogram</classname> &amp;&amp;</paramtype></parameter></copy-assignment>
+<constructor specifiers="explicit"><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="rhs"><paramtype><classname>histogram</classname>&lt; A, S &gt; &amp;&amp;</paramtype></parameter></constructor>
+<constructor specifiers="explicit"><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="rhs"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter></constructor>
+<copy-assignment><type><classname>histogram</classname> &amp;</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="rhs"><paramtype><classname>histogram</classname>&lt; A, S &gt; &amp;&amp;</paramtype></parameter></copy-assignment>
+<copy-assignment><type><classname>histogram</classname> &amp;</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="rhs"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter></copy-assignment>
+<constructor><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="a"><paramtype>A &amp;&amp;</paramtype></parameter><parameter name="s"><paramtype>S &amp;&amp;</paramtype></parameter></constructor>
+<constructor specifiers="explicit"><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name=""><default>detail::requires_axes&lt;A&gt;</default></template-type-parameter>
+        </template><parameter name="a"><paramtype>A &amp;&amp;</paramtype></parameter></constructor>
+</class>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<function name="operator+"><type>auto</type><template>
+          <template-type-parameter name="A1"/>
+          <template-type-parameter name="S1"/>
+          <template-type-parameter name="A2"/>
+          <template-type-parameter name="S2"/>
+        </template><parameter name="a"><paramtype>const <classname>histogram</classname>&lt; A1, S1 &gt; &amp;</paramtype></parameter><parameter name="b"><paramtype>const <classname>histogram</classname>&lt; A2, S2 &gt; &amp;</paramtype></parameter></function>
+<function name="operator*"><type>auto</type><template>
+          <template-type-parameter name="A1"/>
+          <template-type-parameter name="S1"/>
+          <template-type-parameter name="A2"/>
+          <template-type-parameter name="S2"/>
+        </template><parameter name="a"><paramtype>const <classname>histogram</classname>&lt; A1, S1 &gt; &amp;</paramtype></parameter><parameter name="b"><paramtype>const <classname>histogram</classname>&lt; A2, S2 &gt; &amp;</paramtype></parameter></function>
+<function name="operator-"><type>auto</type><template>
+          <template-type-parameter name="A1"/>
+          <template-type-parameter name="S1"/>
+          <template-type-parameter name="A2"/>
+          <template-type-parameter name="S2"/>
+        </template><parameter name="a"><paramtype>const <classname>histogram</classname>&lt; A1, S1 &gt; &amp;</paramtype></parameter><parameter name="b"><paramtype>const <classname>histogram</classname>&lt; A2, S2 &gt; &amp;</paramtype></parameter></function>
+<function name="operator/"><type>auto</type><template>
+          <template-type-parameter name="A1"/>
+          <template-type-parameter name="S1"/>
+          <template-type-parameter name="A2"/>
+          <template-type-parameter name="S2"/>
+        </template><parameter name="a"><paramtype>const <classname>histogram</classname>&lt; A1, S1 &gt; &amp;</paramtype></parameter><parameter name="b"><paramtype>const <classname>histogram</classname>&lt; A2, S2 &gt; &amp;</paramtype></parameter></function>
+<function name="operator*"><type>auto</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="h"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><parameter name="x"><paramtype>double</paramtype></parameter></function>
+<function name="operator*"><type>auto</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="x"><paramtype>double</paramtype></parameter><parameter name="h"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter></function>
+<function name="operator/"><type>auto</type><template>
+          <template-type-parameter name="A"/>
+          <template-type-parameter name="S"/>
+        </template><parameter name="h"><paramtype>const <classname>histogram</classname>&lt; A, S &gt; &amp;</paramtype></parameter><parameter name="x"><paramtype>double</paramtype></parameter></function>
+<function name="weight"><type>auto</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="t"><paramtype>T &amp;&amp;</paramtype><description><para>argument to be forward to the histogram. </para></description></parameter><purpose>Helper function to mark argument as weight. </purpose><description><para>
+</para></description></function>
+<function name="sample"><type>auto</type><template>
+          <template-nontype-parameter name="Ts"><type>typename...</type></template-nontype-parameter>
+        </template><parameter name="ts"><paramtype>Ts &amp;&amp;...</paramtype><description><para>arguments to be forwarded to the accumulator. </para></description></parameter><purpose>Helper function to mark arguments as sample. </purpose><description><para>
+</para></description></function>
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/indexed.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<class name="indexed_range"><template>
+      <template-type-parameter name="Histogram"/>
+    </template><purpose>Range over histogram bins with multi-dimensional index. </purpose><class name="accessor"><purpose>Pointer-like class to access value and index of current cell. </purpose><description><para>Its methods allow one to query the current indices and bins. Furthermore, it acts like a pointer to the cell value. </para></description><class name="index_view"><purpose>Array-like view into the current multi-dimensional index. </purpose><method-group name="public member functions">
+<method name="begin" cv="const noexcept"><type>auto</type></method>
+<method name="end" cv="const noexcept"><type>auto</type></method>
+<method name="size" cv="const noexcept"><type>auto</type></method>
+<method name="operator[]" cv="const noexcept"><type>int</type><parameter name="d"><paramtype>unsigned</paramtype></parameter></method>
+<method name="at" cv="const"><type>int</type><parameter name="d"><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<method-group name="private member functions">
+</method-group>
+<constructor><parameter name="b"><paramtype>const cache_item *</paramtype></parameter><parameter name="e"><paramtype>const cache_item *</paramtype></parameter></constructor>
+</class><method-group name="public member functions">
+<method name="operator *" cv="const noexcept"><type>decltype(auto)</type><purpose>Returns the cell value. </purpose></method>
+<method name="get" cv="const noexcept"><type>decltype(auto)</type><purpose>Returns the cell value. </purpose></method>
+<method name="operator-&gt;" cv="const noexcept"><type>decltype(auto)</type><purpose>Access fields and methods of the cell object. </purpose></method>
+<method name="index" cv="const noexcept"><type>int</type><parameter name="d"><paramtype>unsigned</paramtype><default>0</default><description><para>axis dimension. </para></description></parameter><purpose>Access current index. </purpose><description><para>
+</para></description></method>
+<method name="indices" cv="const noexcept"><type>auto</type><purpose>Access indices as an iterable range. </purpose></method>
+<method name="bin" cv="const"><type>decltype(auto)</type><template>
+          <template-nontype-parameter name="N"><type>unsigned</type><default>0</default><purpose><para>axis dimension. </para></purpose></template-nontype-parameter>
+        </template><parameter name=""><paramtype>std::integral_constant&lt; unsigned, N &gt;</paramtype><default>{}</default></parameter><purpose>Access current bin. </purpose><description><para>
+</para></description></method>
+<method name="bin" cv="const"><type>decltype(auto)</type><parameter name="d"><paramtype>unsigned</paramtype><description><para>axis dimension. </para></description></parameter><purpose>Access current bin. </purpose><description><para>
+</para></description></method>
+<method name="density" cv="const"><type>double</type><purpose>Computes density in current cell. </purpose><description><para>The density is computed as the cell value divided by the product of bin widths. Axes without bin widths, like <classname alt="boost::histogram::axis::category">axis::category</classname>, are treated as having unit bin with. </para></description></method>
+</method-group>
+<method-group name="private member functions">
+</method-group>
+<constructor><parameter name="p"><paramtype><classname>indexed_range</classname> &amp;</paramtype></parameter><parameter name="i"><paramtype>value_iterator</paramtype></parameter></constructor>
+</class><struct name="cache_item"><data-member name="idx"><type>int</type></data-member>
+<data-member name="begin"><type>int</type></data-member>
+<data-member name="end"><type>int</type></data-member>
+<data-member name="extent"><type>int</type></data-member>
+</struct><class name="range_iterator"><inherit access="public">boost::iterator_adaptor&lt; range_iterator, value_iterator, accessor, std::forward_iterator_tag, accessor &gt;</inherit><method-group name="public member functions">
+<method name="operator *" cv="const noexcept"><type><classname>accessor</classname></type></method>
+</method-group>
+<method-group name="private member functions">
+<method name="increment" cv="noexcept"><type>void</type></method>
+</method-group>
+<constructor cv="noexcept"><parameter name="p"><paramtype><classname>indexed_range</classname> *</paramtype></parameter><parameter name="i"><paramtype>value_iterator</paramtype></parameter></constructor>
+</class><method-group name="public member functions">
+<method name="begin" cv="noexcept"><type><classname>range_iterator</classname></type></method>
+<method name="end" cv="noexcept"><type><classname>range_iterator</classname></type></method>
+</method-group>
+<constructor><parameter name="h"><paramtype>Histogram &amp;</paramtype></parameter><parameter name="c"><paramtype>coverage</paramtype></parameter></constructor>
+</class><enum name="coverage"><enumvalue name="inner"><description><para>iterate over inner bins, exclude underflow and overflow </para></description></enumvalue><enumvalue name="all"><description><para>iterate over all bins, including underflow and overflow </para></description></enumvalue><purpose>Coverage mode of the indexed range generator. </purpose><description><para>Defines options for the iteration strategy. </para></description></enum>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<function name="indexed"><type>auto</type><template>
+          <template-type-parameter name="Histogram"/>
+        </template><parameter name="hist"><paramtype>Histogram &amp;&amp;</paramtype><description><para>Reference to the histogram. </para></description></parameter><parameter name="cov"><paramtype>coverage</paramtype><default>coverage::inner</default><description><para>Iterate over all or only inner bins (optional, default: inner). </para></description></parameter><purpose>Generates a range over the histogram entries. </purpose><description><para>Use this in a range-based for loop:</para><para><programlisting language="c++">for (auto x : indexed(hist)) { ... }
+</programlisting></para><para>The iterators dereference to an <classname alt="boost::histogram::indexed_range::accessor">indexed_range::accessor</classname>, which has methods to query the current indices and bins, and acts like a pointer to the cell value.</para><para>
+</para></description></function>
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/literals.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<namespace name="literals">
+<function name="operator&quot;&quot;_c"><type>auto</type><template>
+          <template-nontype-parameter name="digits"><type>char...</type></template-nontype-parameter>
+        </template><purpose>Suffix operator to generate literal compile-time numbers, 0_c, 12_c, etc. </purpose></function>
+</namespace>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/make_histogram.hpp">
+<para>Collection of factory functions to conveniently create histograms. </para><namespace name="boost">
+<namespace name="histogram">
+
+
+
+
+
+
+<function name="make_histogram_with"><type>auto</type><template>
+          <template-type-parameter name="Storage"/>
+          <template-type-parameter name="Axis"/>
+          <template-nontype-parameter name="Axes"><type>class...</type></template-nontype-parameter>
+          <template-type-parameter name=""><default>detail::requires_axis&lt;Axis&gt;</default></template-type-parameter>
+        </template><parameter name="storage"><paramtype>Storage &amp;&amp;</paramtype><description><para>Storage or container with standard interface (any vector, array, or map). </para></description></parameter><parameter name="axis"><paramtype>Axis &amp;&amp;</paramtype><description><para>First axis instance. </para></description></parameter><parameter name="axes"><paramtype>Axes &amp;&amp;...</paramtype><description><para>Other axis instances. </para></description></parameter><purpose>Make histogram from compile-time axis configuration and custom storage. </purpose><description><para>
+</para></description></function>
+<function name="make_histogram"><type>auto</type><template>
+          <template-type-parameter name="Axis"/>
+          <template-nontype-parameter name="Axes"><type>class...</type></template-nontype-parameter>
+          <template-type-parameter name=""><default>detail::requires_axis&lt;Axis&gt;</default></template-type-parameter>
+        </template><parameter name="axis"><paramtype>Axis &amp;&amp;</paramtype><description><para>First axis instance. </para></description></parameter><parameter name="axes"><paramtype>Axes &amp;&amp;...</paramtype><description><para>Other axis instances. </para></description></parameter><purpose>Make histogram from compile-time axis configuration and default storage. </purpose><description><para>
+</para></description></function>
+<function name="make_weighted_histogram"><type>auto</type><template>
+          <template-type-parameter name="Axis"/>
+          <template-nontype-parameter name="Axes"><type>class...</type></template-nontype-parameter>
+          <template-type-parameter name=""><default>detail::requires_axis&lt;Axis&gt;</default></template-type-parameter>
+        </template><parameter name="axis"><paramtype>Axis &amp;&amp;</paramtype><description><para>First axis instance. </para></description></parameter><parameter name="axes"><paramtype>Axes &amp;&amp;...</paramtype><description><para>Other axis instances. </para></description></parameter><purpose>Make histogram from compile-time axis configuration and weight-counting storage. </purpose><description><para>
+</para></description></function>
+<function name="make_histogram_with"><type>auto</type><template>
+          <template-type-parameter name="Storage"/>
+          <template-type-parameter name="Iterable"/>
+          <template-type-parameter name=""><default>detail::requires_sequence_of_any_axis&lt;Iterable&gt;</default></template-type-parameter>
+        </template><parameter name="storage"><paramtype>Storage &amp;&amp;</paramtype><description><para>Storage or container with standard interface (any vector, array, or map). </para></description></parameter><parameter name="iterable"><paramtype>Iterable &amp;&amp;</paramtype><description><para>Iterable range of axis objects. </para></description></parameter><purpose>Make histogram from iterable range and custom storage. </purpose><description><para>
+</para></description></function>
+<function name="make_histogram"><type>auto</type><template>
+          <template-type-parameter name="Iterable"/>
+          <template-type-parameter name=""><default>detail::requires_sequence_of_any_axis&lt;Iterable&gt;</default></template-type-parameter>
+        </template><parameter name="iterable"><paramtype>Iterable &amp;&amp;</paramtype><description><para>Iterable range of axis objects. </para></description></parameter><purpose>Make histogram from iterable range and default storage. </purpose><description><para>
+</para></description></function>
+<function name="make_weighted_histogram"><type>auto</type><template>
+          <template-type-parameter name="Iterable"/>
+          <template-type-parameter name=""><default>detail::requires_sequence_of_any_axis&lt;Iterable&gt;</default></template-type-parameter>
+        </template><parameter name="iterable"><paramtype>Iterable &amp;&amp;</paramtype><description><para>Iterable range of axis objects. </para></description></parameter><purpose>Make histogram from iterable range and weight-counting storage. </purpose><description><para>
+</para></description></function>
+<function name="make_histogram_with"><type>auto</type><template>
+          <template-type-parameter name="Storage"/>
+          <template-type-parameter name="Iterator"/>
+          <template-type-parameter name=""><default>detail::requires_iterator&lt;Iterator&gt;</default></template-type-parameter>
+        </template><parameter name="storage"><paramtype>Storage &amp;&amp;</paramtype><description><para>Storage or container with standard interface (any vector, array, or map). </para></description></parameter><parameter name="begin"><paramtype>Iterator</paramtype><description><para>Iterator to range of axis objects. </para></description></parameter><parameter name="end"><paramtype>Iterator</paramtype><description><para>Iterator to range of axis objects. </para></description></parameter><purpose>Make histogram from iterator interval and custom storage. </purpose><description><para>
+</para></description></function>
+<function name="make_histogram"><type>auto</type><template>
+          <template-type-parameter name="Iterator"/>
+          <template-type-parameter name=""><default>detail::requires_iterator&lt;Iterator&gt;</default></template-type-parameter>
+        </template><parameter name="begin"><paramtype>Iterator</paramtype><description><para>Iterator to range of axis objects. </para></description></parameter><parameter name="end"><paramtype>Iterator</paramtype><description><para>Iterator to range of axis objects. </para></description></parameter><purpose>Make histogram from iterator interval and default storage. </purpose><description><para>
+</para></description></function>
+<function name="make_weighted_histogram"><type>auto</type><template>
+          <template-type-parameter name="Iterator"/>
+          <template-type-parameter name=""><default>detail::requires_iterator&lt;Iterator&gt;</default></template-type-parameter>
+        </template><parameter name="begin"><paramtype>Iterator</paramtype><description><para>Iterator to range of axis objects. </para></description></parameter><parameter name="end"><paramtype>Iterator</paramtype><description><para>Iterator to range of axis objects. </para></description></parameter><purpose>Make histogram from iterator interval and weight-counting storage. </purpose><description><para>
+</para></description></function>
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/make_profile.hpp">
+<para>Collection of factory functions to conveniently create profiles. </para><para>Profiles are histograms which accept an additional sample and compute the mean of the sample in each cell. </para><namespace name="boost">
+<namespace name="histogram">
+<function name="make_profile"><type>auto</type><template>
+          <template-type-parameter name="Axis"/>
+          <template-nontype-parameter name="Axes"><type>typename...</type></template-nontype-parameter>
+          <template-type-parameter name=""><default>detail::requires_axis&lt;Axis&gt;</default></template-type-parameter>
+        </template><parameter name="axis"><paramtype>Axis &amp;&amp;</paramtype><description><para>First axis instance. </para></description></parameter><parameter name="axes"><paramtype>Axes &amp;&amp;...</paramtype><description><para>Other axis instances. </para></description></parameter><purpose>Make profle from compile-time axis configuration. </purpose><description><para>
+</para></description></function>
+<function name="make_weighted_profile"><type>auto</type><template>
+          <template-type-parameter name="Axis"/>
+          <template-nontype-parameter name="Axes"><type>typename...</type></template-nontype-parameter>
+          <template-type-parameter name=""><default>detail::requires_axis&lt;Axis&gt;</default></template-type-parameter>
+        </template><parameter name="axis"><paramtype>Axis &amp;&amp;</paramtype><description><para>First axis instance. </para></description></parameter><parameter name="axes"><paramtype>Axes &amp;&amp;...</paramtype><description><para>Other axis instances. </para></description></parameter><purpose>Make profle from compile-time axis configuration which accepts weights. </purpose><description><para>
+</para></description></function>
+<function name="make_profile"><type>auto</type><template>
+          <template-type-parameter name="Iterable"/>
+          <template-type-parameter name=""><default>detail::requires_sequence_of_any_axis&lt;Iterable&gt;</default></template-type-parameter>
+        </template><parameter name="iterable"><paramtype>Iterable &amp;&amp;</paramtype><description><para>Iterable range of axis objects. </para></description></parameter><purpose>Make profile from iterable range. </purpose><description><para>
+</para></description></function>
+<function name="make_weighted_profile"><type>auto</type><template>
+          <template-type-parameter name="Iterable"/>
+          <template-type-parameter name=""><default>detail::requires_sequence_of_any_axis&lt;Iterable&gt;</default></template-type-parameter>
+        </template><parameter name="iterable"><paramtype>Iterable &amp;&amp;</paramtype><description><para>Iterable range of axis objects. </para></description></parameter><purpose>Make profile from iterable range which accepts weights. </purpose><description><para>
+</para></description></function>
+<function name="make_profile"><type>auto</type><template>
+          <template-type-parameter name="Iterator"/>
+          <template-type-parameter name=""><default>detail::requires_iterator&lt;Iterator&gt;</default></template-type-parameter>
+        </template><parameter name="begin"><paramtype>Iterator</paramtype><description><para>Iterator to range of axis objects. </para></description></parameter><parameter name="end"><paramtype>Iterator</paramtype><description><para>Iterator to range of axis objects. </para></description></parameter><purpose>Make profile from iterator interval. </purpose><description><para>
+</para></description></function>
+<function name="make_weighted_profile"><type>auto</type><template>
+          <template-type-parameter name="Iterator"/>
+          <template-type-parameter name=""><default>detail::requires_iterator&lt;Iterator&gt;</default></template-type-parameter>
+        </template><parameter name="begin"><paramtype>Iterator</paramtype><description><para>Iterator to range of axis objects. </para></description></parameter><parameter name="end"><paramtype>Iterator</paramtype><description><para>Iterator to range of axis objects. </para></description></parameter><purpose>Make profile from iterator interval which accepts weights. </purpose><description><para>
+</para></description></function>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/ostream.hpp">
+</header>
+<header name="boost/histogram/accumulators/ostream.hpp">
+</header>
+<header name="boost/histogram/axis/ostream.hpp">
+</header>
+<header name="boost/histogram/serialization.hpp">
+<para>Implemenations of the serialization functions using <ulink url="https://www.boost.org/doc/libs/develop/libs/serialization/doc/index.html">Boost.Serialization</ulink>. </para></header>
+<header name="boost/histogram/storage_adaptor.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<class name="storage_adaptor"><template>
+      <template-type-parameter name="T"/>
+    </template><purpose>Turns any vector-like array-like, and map-like container into a storage type. </purpose><method-group name="public member functions">
+<method name="operator==" cv="const"><type>bool</type><template>
+          <template-type-parameter name="U"/>
+          <template-type-parameter name=""><default>detail::requires_iterable&lt;U&gt;</default></template-type-parameter>
+        </template><parameter name="u"><paramtype>const U &amp;</paramtype></parameter></method>
+</method-group>
+</class>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/unlimited_storage.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<class name="unlimited_storage"><template>
+      <template-type-parameter name="Allocator"/>
+    </template><purpose>Memory-efficient storage for integral counters which cannot overflow. </purpose><description><para>This storage provides a no-overflow-guarantee if it is filled with integral weights only. This storage implementation keeps a contiguous array of elemental counters, one for each cell. If an operation is requested, which would overflow a counter, the whole array is replaced with another of a wider integral type, then the operation is executed. The storage uses integers of 8, 16, 32, 64 bits, and then switches to a multiprecision integral type, similar to those in <ulink url="https://www.boost.org/doc/libs/develop/libs/multiprecision/doc/html/index.html">Boost.Multiprecision</ulink>.</para><para>A scaling operation or adding a floating point number turns the elements into doubles, which voids the no-overflow-guarantee. </para></description><struct name="adder"><method-group name="public member functions">
+<method name="operator()"><type>void</type><template>
+          <template-type-parameter name="Buffer"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name="tp"><paramtype>double *</paramtype></parameter><parameter name=""><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter><parameter name="x"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="operator()"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="Buffer"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name="tp"><paramtype>T *</paramtype></parameter><parameter name="b"><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter><parameter name="x"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="U_is_integral"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="Buffer"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name=""><paramtype>std::false_type</paramtype></parameter><parameter name="tp"><paramtype>T *</paramtype></parameter><parameter name="b"><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter><parameter name="x"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="U_is_integral"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="Buffer"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name=""><paramtype>std::true_type</paramtype></parameter><parameter name="tp"><paramtype>T *</paramtype></parameter><parameter name="b"><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter><parameter name="x"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="U_is_unsigned_integral"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="Buffer"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name=""><paramtype>std::false_type</paramtype></parameter><parameter name="tp"><paramtype>T *</paramtype></parameter><parameter name="b"><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter><parameter name="x"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="U_is_unsigned_integral"><type>void</type><template>
+          <template-type-parameter name="Buffer"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name=""><paramtype>std::true_type</paramtype></parameter><parameter name="tp"><paramtype>mp_int *</paramtype></parameter><parameter name=""><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter><parameter name="x"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="U_is_unsigned_integral"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="Buffer"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name=""><paramtype>std::true_type</paramtype></parameter><parameter name="tp"><paramtype>T *</paramtype></parameter><parameter name="b"><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter><parameter name="x"><paramtype>const U &amp;</paramtype></parameter></method>
+</method-group>
+</struct><struct name="buffer_type"><data-member name="alloc"><type>allocator_type</type></data-member>
+<data-member name="size"><type>std::size_t</type></data-member>
+<data-member name="type"><type>char</type></data-member>
+<data-member name="ptr"><type>void *</type></data-member>
+<method-group name="public member functions">
+<method name="apply" cv="const"><type>decltype(auto)</type><template>
+          <template-type-parameter name="F"/>
+          <template-nontype-parameter name="Ts"><type>class...</type></template-nontype-parameter>
+        </template><parameter name="f"><paramtype>F &amp;&amp;</paramtype></parameter><parameter name="ts"><paramtype>Ts &amp;&amp;...</paramtype></parameter></method>
+<method name="destroy" cv="noexcept"><type>void</type></method>
+<method name="make"><type>void</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="n"><paramtype>std::size_t</paramtype></parameter></method>
+<method name="make"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name="n"><paramtype>std::size_t</paramtype></parameter><parameter name="iter"><paramtype>U</paramtype></parameter></method>
+</method-group>
+<constructor><parameter name="a"><paramtype>allocator_type</paramtype><default>{}</default></parameter></constructor>
+<constructor cv="noexcept"><parameter name="o"><paramtype>buffer_type &amp;&amp;</paramtype></parameter></constructor>
+<copy-assignment cv="noexcept"><type>buffer_type &amp;</type><parameter name="o"><paramtype>buffer_type &amp;&amp;</paramtype></parameter></copy-assignment>
+<constructor><parameter name="o"><paramtype>const buffer_type &amp;</paramtype></parameter></constructor>
+<copy-assignment><type>buffer_type &amp;</type><parameter name="o"><paramtype>const buffer_type &amp;</paramtype></parameter></copy-assignment>
+<destructor/>
+</struct><struct name="incrementor"><method-group name="public member functions">
+<method name="operator()"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="Buffer"/>
+        </template><parameter name="tp"><paramtype>T *</paramtype></parameter><parameter name="b"><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter></method>
+<method name="operator()"><type>void</type><template>
+          <template-type-parameter name="Buffer"/>
+        </template><parameter name="tp"><paramtype>mp_int *</paramtype></parameter><parameter name=""><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter></method>
+<method name="operator()"><type>void</type><template>
+          <template-type-parameter name="Buffer"/>
+        </template><parameter name="tp"><paramtype>double *</paramtype></parameter><parameter name=""><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter></method>
+</method-group>
+</struct><class name="iterator_t"><template>
+      <template-type-parameter name="Value"/>
+      <template-type-parameter name="Reference"/>
+      <template-type-parameter name="Buffer"/>
+    </template><inherit access="public">boost::iterator_adaptor&lt; iterator_t&lt; Value, Reference, Buffer &gt;, std::size_t, Value, std::random_access_iterator_tag, Reference, std::ptrdiff_t &gt;</inherit><method-group name="public member functions">
+</method-group>
+<constructor cv="= default"/>
+<constructor><template>
+          <template-type-parameter name="V"/>
+          <template-type-parameter name="R"/>
+          <template-type-parameter name="B"/>
+        </template><parameter name="it"><paramtype>const iterator_t&lt; V, R, B &gt; &amp;</paramtype></parameter></constructor>
+<constructor cv="noexcept"><parameter name="b"><paramtype>Buffer *</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter></constructor>
+<method-group name="protected member functions">
+<method name="equal" cv="const noexcept"><type>bool</type><template>
+          <template-type-parameter name="V"/>
+          <template-type-parameter name="R"/>
+          <template-type-parameter name="B"/>
+        </template><parameter name="rhs"><paramtype>const iterator_t&lt; V, R, B &gt; &amp;</paramtype></parameter></method>
+<method name="dereference" cv="const"><type>Reference</type></method>
+</method-group>
+</class><struct name="multiplier"><method-group name="public member functions">
+<method name="operator()"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="Buffer"/>
+        </template><parameter name="tp"><paramtype>T *</paramtype></parameter><parameter name="b"><paramtype>Buffer &amp;</paramtype></parameter><parameter name="x"><paramtype>const double</paramtype></parameter></method>
+<method name="operator()"><type>void</type><template>
+          <template-type-parameter name="Buffer"/>
+        </template><parameter name="tp"><paramtype>double *</paramtype></parameter><parameter name="b"><paramtype>Buffer &amp;</paramtype></parameter><parameter name="x"><paramtype>const double</paramtype></parameter></method>
+<method name="operator()"><type>void</type><template>
+          <template-type-parameter name="T"/>
+          <template-type-parameter name="Buffer"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name="tp"><paramtype>T *</paramtype></parameter><parameter name="b"><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter><parameter name="x"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="operator()"><type>void</type><template>
+          <template-type-parameter name="Buffer"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name="tp"><paramtype>double *</paramtype></parameter><parameter name=""><paramtype>Buffer &amp;</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter><parameter name="x"><paramtype>const U &amp;</paramtype></parameter></method>
+</method-group>
+</struct><class name="reference"><inherit access="public">boost::histogram::unlimited_storage&lt; buffer_type &gt;::reference_t</inherit><method-group name="public member functions">
+<method name="operator+="><type><classname>reference</classname></type><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="t"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="operator *="><type><classname>reference</classname></type><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="t"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="operator-="><type><classname>reference</classname></type><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="t"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="operator/="><type><classname>reference</classname></type><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="t"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="operator++"><type><classname>reference</classname></type></method>
+<method name="operator&lt;" cv="const"><type>bool</type><parameter name="rhs"><paramtype><classname>reference</classname></paramtype></parameter></method>
+<method name="operator&gt;" cv="const"><type>bool</type><parameter name="rhs"><paramtype><classname>reference</classname></paramtype></parameter></method>
+<method name="operator==" cv="const"><type>bool</type><parameter name="rhs"><paramtype><classname>reference</classname></paramtype></parameter></method>
+</method-group>
+<copy-assignment><type><classname>reference</classname></type><parameter name="t"><paramtype><classname>reference</classname></paramtype></parameter></copy-assignment>
+<copy-assignment><type><classname>reference</classname></type><parameter name="t"><paramtype>const_reference</paramtype></parameter></copy-assignment>
+<copy-assignment><type><classname>reference</classname></type><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="t"><paramtype>const U &amp;</paramtype></parameter></copy-assignment>
+</class><class name="reference_t"><template>
+      <template-type-parameter name="Buffer"/>
+    </template><method-group name="public member functions">
+<method name="operator&lt;" cv="const"><type>bool</type><parameter name="rhs"><paramtype>reference_t</paramtype></parameter></method>
+<method name="operator&gt;" cv="const"><type>bool</type><parameter name="rhs"><paramtype>reference_t</paramtype></parameter></method>
+<method name="operator==" cv="const"><type>bool</type><parameter name="rhs"><paramtype>reference_t</paramtype></parameter></method>
+<method name="operator&lt;" cv="const"><type>bool</type><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="rhs"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="operator&gt;" cv="const"><type>bool</type><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="rhs"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="operator==" cv="const"><type>bool</type><template>
+          <template-type-parameter name="U"/>
+        </template><parameter name="rhs"><paramtype>const U &amp;</paramtype></parameter></method>
+<method name="conversion-operator" cv="const"><type>double</type></method>
+</method-group>
+<constructor><parameter name="b"><paramtype>Buffer *</paramtype></parameter><parameter name="i"><paramtype>std::size_t</paramtype></parameter></constructor>
+<constructor cv="= default"><parameter name=""><paramtype>const reference_t &amp;</paramtype></parameter></constructor>
+<copy-assignment cv="= delete"><type>reference_t &amp;</type><parameter name=""><paramtype>const reference_t &amp;</paramtype></parameter></copy-assignment>
+<copy-assignment cv="= delete"><type>reference_t &amp;</type><parameter name=""><paramtype>reference_t &amp;&amp;</paramtype></parameter></copy-assignment>
+<method-group name="protected member functions">
+<method name="op" cv="const"><type>bool</type><template>
+          <template-type-parameter name="Binary"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name="rhs"><paramtype>const reference_t&lt; U &gt; &amp;</paramtype></parameter></method>
+<method name="op" cv="const"><type>bool</type><template>
+          <template-type-parameter name="Binary"/>
+          <template-type-parameter name="U"/>
+        </template><parameter name="rhs"><paramtype>const U &amp;</paramtype></parameter></method>
+</method-group>
+</class><typedef name="allocator_type"><type>Allocator</type></typedef>
+<typedef name="value_type"><type>double</type></typedef>
+<typedef name="mp_int"><type><emphasis>unspecified</emphasis></type></typedef>
+<typedef name="const_reference"><type>reference_t&lt; const buffer_type &gt;</type></typedef>
+<typedef name="const_iterator"><type>iterator_t&lt; const value_type, const_reference, const buffer_type &gt;</type></typedef>
+<typedef name="iterator"><type>iterator_t&lt; value_type, <classname>reference</classname>, buffer_type &gt;</type></typedef>
+<method-group name="private static functions">
+<method name="type_index" cv="noexcept" specifiers="static"><type>constexpr char</type><template>
+          <template-type-parameter name="T"/>
+        </template></method>
+</method-group>
+<method-group name="public member functions">
+<method name="get_allocator" cv="const"><type>allocator_type</type></method>
+<method name="reset"><type>void</type><parameter name="s"><paramtype>std::size_t</paramtype></parameter></method>
+<method name="size" cv="const noexcept"><type>std::size_t</type></method>
+<method name="operator[]" cv="noexcept"><type><classname>reference</classname></type><parameter name="i"><paramtype>std::size_t</paramtype></parameter></method>
+<method name="operator[]" cv="const noexcept"><type>const_reference</type><parameter name="i"><paramtype>std::size_t</paramtype></parameter></method>
+<method name="operator==" cv="const noexcept"><type>bool</type><parameter name="o"><paramtype>const <classname>unlimited_storage</classname> &amp;</paramtype></parameter></method>
+<method name="operator==" cv="const"><type>bool</type><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="o"><paramtype>const T &amp;</paramtype></parameter></method>
+<method name="operator *="><type><classname>unlimited_storage</classname> &amp;</type><parameter name="x"><paramtype>const double</paramtype></parameter></method>
+<method name="begin" cv="noexcept"><type>iterator</type></method>
+<method name="end" cv="noexcept"><type>iterator</type></method>
+<method name="begin" cv="const noexcept"><type>const_iterator</type></method>
+<method name="end" cv="const noexcept"><type>const_iterator</type></method>
+<method name="serialize"><type>void</type><template>
+          <template-type-parameter name="Archive"/>
+        </template><parameter name=""><paramtype>Archive &amp;</paramtype></parameter><parameter name=""><paramtype>unsigned</paramtype></parameter></method>
+</method-group>
+<constructor specifiers="explicit"><parameter name="a"><paramtype>allocator_type</paramtype><default>{}</default></parameter></constructor>
+<constructor cv="= default"><parameter name=""><paramtype>const <classname>unlimited_storage</classname> &amp;</paramtype></parameter></constructor>
+<copy-assignment cv="= default"><type><classname>unlimited_storage</classname> &amp;</type><parameter name=""><paramtype>const <classname>unlimited_storage</classname> &amp;</paramtype></parameter></copy-assignment>
+<constructor cv="= default"><parameter name=""><paramtype><classname>unlimited_storage</classname> &amp;&amp;</paramtype></parameter></constructor>
+<copy-assignment cv="= default"><type><classname>unlimited_storage</classname> &amp;</type><parameter name=""><paramtype><classname>unlimited_storage</classname> &amp;&amp;</paramtype></parameter></copy-assignment>
+<constructor><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="s"><paramtype>const <classname>storage_adaptor</classname>&lt; T &gt; &amp;</paramtype></parameter></constructor>
+<copy-assignment><type><classname>unlimited_storage</classname> &amp;</type><template>
+          <template-type-parameter name="Iterable"/>
+          <template-type-parameter name=""><default>detail::requires_iterable&lt;Iterable&gt;</default></template-type-parameter>
+        </template><parameter name="s"><paramtype>const Iterable &amp;</paramtype></parameter></copy-assignment>
+<method-group name="private member functions">
+</method-group>
+<constructor><template>
+          <template-type-parameter name="T"/>
+        </template><parameter name="s"><paramtype>std::size_t</paramtype></parameter><parameter name="p"><paramtype>const T *</paramtype></parameter><parameter name="a"><paramtype>allocator_type</paramtype><default>{}</default></parameter><purpose>used by unit tests, not part of generic storage interface </purpose></constructor>
+</class>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+<header name="boost/histogram/unsafe_access.hpp">
+<namespace name="boost">
+<namespace name="histogram">
+<struct name="unsafe_access"><purpose>Unsafe read/write access to classes that potentially break consistency. </purpose><method-group name="public static functions">
+<method name="axes" specifiers="static"><type>auto &amp;</type><template>
+          <template-type-parameter name="Histogram"/>
+        </template><parameter name="hist"><paramtype>Histogram &amp;</paramtype><description><para>histogram. </para></description></parameter><purpose>Get axes. </purpose><description><para>
+</para></description></method>
+<method name="axes" specifiers="static"><type>const auto &amp;</type><template>
+          <template-type-parameter name="Histogram"/>
+        </template><parameter name="hist"><paramtype>const Histogram &amp;</paramtype><description><para>histogram. </para></description></parameter><purpose>Get axes. </purpose><description><para>
+</para></description></method>
+<method name="axis" specifiers="static"><type>decltype(auto)</type><template>
+          <template-type-parameter name="Histogram"/>
+          <template-nontype-parameter name="I"><type>unsigned</type><default>0</default><purpose><para>axis index (optional, default: 0). </para></purpose></template-nontype-parameter>
+        </template><parameter name="hist"><paramtype>Histogram &amp;</paramtype><description><para>histogram. </para></description></parameter><parameter name=""><paramtype>std::integral_constant&lt; unsigned, I &gt;</paramtype><default>{}</default></parameter><purpose>Get mutable axis reference with compile-time number. </purpose><description><para>
+
+</para></description></method>
+<method name="axis" specifiers="static"><type>decltype(auto)</type><template>
+          <template-type-parameter name="Histogram"/>
+        </template><parameter name="hist"><paramtype>Histogram &amp;</paramtype><description><para>histogram. </para></description></parameter><parameter name="i"><paramtype>unsigned</paramtype><description><para>axis index. </para></description></parameter><purpose>Get mutable axis reference with run-time number. </purpose><description><para>
+</para></description></method>
+<method name="storage" specifiers="static"><type>auto &amp;</type><template>
+          <template-type-parameter name="Histogram"/>
+        </template><parameter name="hist"><paramtype>Histogram &amp;</paramtype><description><para>histogram. </para></description></parameter><purpose>Get storage. </purpose><description><para>
+</para></description></method>
+<method name="storage" specifiers="static"><type>const auto &amp;</type><template>
+          <template-type-parameter name="Histogram"/>
+        </template><parameter name="hist"><paramtype>const Histogram &amp;</paramtype><description><para>histogram. </para></description></parameter><purpose>Get storage. </purpose><description><para>
+</para></description></method>
+</method-group>
+</struct>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</namespace>
+</namespace>
+</header>
+</library-reference>

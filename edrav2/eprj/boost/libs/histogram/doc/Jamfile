@@ -1,0 +1,51 @@
+# Copyright (c) 2016-2019 Klemens D. Morgenstern, Hans Dembinski
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+project doc/histogram ;
+
+import doxygen ;
+import quickbook ;
+import boostbook : boostbook ;
+
+doxygen reference
+:
+  ../../../boost/histogram.hpp
+  [ glob ../../../boost/histogram/*.hpp ]
+  [ glob ../../../boost/histogram/accumulators/*.hpp ]
+  [ glob ../../../boost/histogram/algorithm/*.hpp ]
+  [ glob ../../../boost/histogram/axis/*.hpp ]
+:
+  <doxygen:param>"PREDEFINED=\"BOOST_HISTOGRAM_DOXYGEN_INVOKED\" \\
+                             \"BOOST_HISTOGRAM_DETAIL_NODISCARD\" \\
+                             "
+  <doxygen:param>EXTRACT_ALL=YES
+  <doxygen:param>HIDE_FRIEND_COMPOUNDS=YES
+  <doxygen:param>ENABLE_PREPROCESSING=YES
+  <doxygen:param>MACRO_EXPANSION=YES
+  <doxygen:param>JAVADOC_AUTOBRIEF=YES
+  <doxygen:param>USE_MATHJAX=NO
+  <doxygen:param>SEARCH_INCLUDES=YES
+  <doxygen:param>EXCLUDE_SYMBOLS=detail
+  <doxygen:param>WARNINGS=YES
+  <doxygen:param>WARN_IF_DOC_ERROR=YES
+;
+
+boostbook histogram
+:
+  histogram.qbk
+:
+  <dependency>reference
+  <xsl:param>boost.root=../../../..
+  <xsl:param>boost.libraries=../../../libraries.htm
+  <xsl:param>boost.mathjax=1
+  <xsl:param>chunk.first.sections=1
+  <xsl:param>generate.section.toc.level=1
+  <xsl:param>generate.toc="chapter nop section nop"
+;
+
+alias boostdoc ;
+explicit boostdoc ;
+alias boostrelease : histogram ;
+explicit boostrelease ;

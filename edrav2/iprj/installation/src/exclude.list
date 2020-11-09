@@ -1,0 +1,14 @@
+pdb
+tests
+scripts
+signpkg
+unsigned
+.ilk
+.iobj
+.ipdb
+.cer
+.pdb
+edrcon.exe
+edrcon.cfg
+edrext.exe
+debug.cfg

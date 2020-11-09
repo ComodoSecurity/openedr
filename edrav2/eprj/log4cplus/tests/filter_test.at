@@ -1,0 +1,29 @@
+AT_SETUP([filter_test])
+AT_KEYWORDS([appenders])
+
+AT_CHECK([cp -f "${abs_srcdir}/filter_test/expout" .])
+AT_CHECK([cp -f "${abs_builddir}/filter_test/log4cplus.properties" .])
+
+m4_define([FILTER_TEST_GREPS], [
+  AT_CHECK([test -s debug_info_msgs.log])
+  AT_CHECK([! $GREP 'TRACE\|WARN\|ERROR\|FATAL' debug_info_msgs.log])
+
+  AT_CHECK([test -s fatal_msgs.log])
+  AT_CHECK([! $GREP 'TRACE\|DEBUG\|INFO\|WARN\|ERROR' fatal_msgs.log])
+
+  AT_CHECK([test -s trace_msgs.log])
+  AT_CHECK([! $GREP 'DEBUG\|INFO\|WARN\|ERROR\|FATAL' trace_msgs.log])
+])
+
+AT_CHECK(["${abs_top_builddir}/filter_test"], [0], [expout], [stderr])
+AT_CHECK([! $GREP "Please initialize the log4cplus system properly"< stderr])
+FILTER_TEST_GREPS
+
+ATX_WCHAR_T_TEST([
+  AT_CHECK([rm -f stderr debug_info_msgs.log fatal_msgs.log trace_msgs.log])
+  AT_CHECK(["${abs_top_builddir}/filter_testU"], [0], [expout], [stderr])
+  AT_CHECK([! $GREP "Please initialize the log4cplus system properly"< stderr])
+  FILTER_TEST_GREPS
+])
+
+AT_CLEANUP

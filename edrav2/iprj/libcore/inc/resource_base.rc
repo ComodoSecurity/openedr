@@ -1,0 +1,84 @@
+// Old style for rc.exe
+#ifndef __RESOURCE_BASE_RC__
+#define __RESOURCE_BASE_RC__
+
+#include <winres.h>
+#include "version.h"
+
+//////////////////////////////////////////////////////////////////////////
+//
+// Version info
+//
+
+//
+// Common fields
+//
+
+#define CMD_RC_PRODUCT_NAME_STR  "OpenEDR Agent"
+#define CMD_RC_COMPANY_NAME_STR "OpenEDR"
+#define CMD_RC_COPYRIGHT_STR  "2020 OpenEDR. All rights reserved."
+
+// Name of file
+// CMD_RC_TARGET_FILENAME is passed from compiler via preprocessor
+#ifdef CMD_RC_TARGET_FILENAME
+#define CMD_RC_TARGET_FILENAME_STR STR(CMD_RC_TARGET_FILENAME)
+#endif // CMD_RC_TARGET_FILENAME
+
+//
+// Replaceable fields
+//
+
+// CMD_RC_FILETYPE - FILETYPE value. Default = VFT_APP
+#ifndef CMD_RC_FILETYPE
+#define CMD_RC_FILETYPE VFT_APP
+#endif 
+
+// CMD_RC_FILESUBTYPE - FILESUBTYPE value. Default = VFT2_UNKNOWN
+#ifndef CMD_RC_FILESUBTYPE
+#define CMD_RC_FILESUBTYPE VFT2_UNKNOWN
+#endif 
+
+// RC_FILE_DESCRIPTION - FileDescription.
+#ifndef CMD_RC_FILE_DESCRIPTION_STR
+#define CMD_RC_FILE_DESCRIPTION_STR	CMD_RC_PRODUCT_NAME_STR " component"
+#endif
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION CMD_VERSION_MAJOR, CMD_VERSION_MINOR, CMD_VERSION_REVISION, CMD_VERSION_BUILD
+ PRODUCTVERSION CMD_VERSION_MAJOR, CMD_VERSION_MINOR, CMD_VERSION_REVISION, CMD_VERSION_BUILD
+ FILEFLAGSMASK VS_FFI_FILEFLAGSMASK	
+#ifdef _DEBUG
+ FILEFLAGS VS_FF_DEBUG
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE CMD_RC_FILETYPE
+ FILESUBTYPE CMD_RC_FILESUBTYPE
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0" /* LANG_ENGLISH/SUBLANG_ENGLISH_US, Unicode CP */
+        BEGIN
+			VALUE "FileDescription", CMD_RC_FILE_DESCRIPTION_STR
+			VALUE "FileVersion", CMD_STD_VERSION
+			VALUE "LegalCopyright", CMD_RC_COPYRIGHT_STR
+			VALUE "ProductName", CMD_RC_PRODUCT_NAME_STR
+			VALUE "ProductVersion", CMD_STD_VERSION
+			VALUE "CompanyName", CMD_RC_COMPANY_NAME_STR
+
+#ifdef CMD_RC_TARGET_FILENAME_STR
+			VALUE "InternalName", CMD_RC_TARGET_FILENAME_STR
+			VALUE "OriginalFilename", CMD_RC_TARGET_FILENAME_STR
+#endif
+		
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+		VALUE "Translation", 0x0409, 1252
+    END
+END
+
+#endif // __RESOURCE_BASE_RC__
+

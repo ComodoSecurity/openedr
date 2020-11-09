@@ -1,0 +1,4 @@
+#define CMD_RC_FILETYPE VFT_DLL
+
+#include "libcore\inc\resource_base.rc"
+

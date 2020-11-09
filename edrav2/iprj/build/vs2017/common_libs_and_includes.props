@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- eprj -->
+  <PropertyGroup>
+    <LibraryPath>$(CmdEPrjDir)\boost\lib\;$(CmdEPrjDir)\log4cplus\lib\win-$(Configuration)-$(Platform)\;$(CmdEPrjDir)\jsonrpccpp\lib\win-$(Configuration)-$(Platform)\;$(CmdEPrjDir)\jsoncpp\build\$(Platform)\$(Configuration)\;$(CmdEPrjDir)\curl\out\win-$(Configuration)-$(Platform)\;$(CmdEPrjDir)\awssdkcpp\lib\win-$(Configuration)-$(Platform)\;$(CmdEPrjDir)\openssl\lib\win-$(Configuration)-$(Platform)\;$(CmdEPrjDir)\uri\lib\win-$(Configuration)-$(Platform)\;$(CmdEPrjDir)\madchook\lib\$(CmdOutDirName)\;$(CmdEPrjDir)\madchookdrv\lib\$(CmdOutDirName)\;$(CmdEPrjDir)\grpc\lib\win-$(Configuration)-$(Platform)\;$(CmdEPrjDir)\protobuf\lib\win-$(Configuration)-$(Platform)\;$(CmdEPrjDir)\zlib\lib\win-$(Configuration)-$(Platform)\;$(CmdEPrjDir)\c-ares\lib\win-$(Configuration)-$(Platform)\;$(CmdEPrjDir)\tiny-aes-c\lib\$(CmdOutDirName)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(CmdEPrjDir)\boost\;$(CmdEPrjDir)\catch2\;$(CmdEPrjDir)\utfcpp\source\;$(CmdEPrjDir)\nlohmann_json\include\;$(CmdEPrjDir)\log4cplus\include\;$(CmdEPrjDir)\xxhash_cpp\xxhash\;$(CmdEPrjDir)\jsonrpccpp\src\;$(CmdEPrjDir)\jsoncpp\include\;$(CmdEPrjDir)\curl\include\;$(CmdEPrjDir)\clara\;$(CmdEPrjDir)\awssdkcpp\aws-cpp-sdk-core\include;$(CmdEPrjDir)\awssdkcpp\aws-cpp-sdk-firehose\include;$(CmdEPrjDir)\openssl\openssl\include;$(CmdEPrjDir)\uri\include;$(CmdEPrjDir)\madchookdrv\inc;$(CmdEPrjDir)\grpc\include;$(CmdEPrjDir)\googleapis\src;$(CmdEPrjDir)\protobuf\include;$(CmdEPrjDir)\tiny-aes-c;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+
+  <!-- NetFilter SDK and ProtocolFilter -->
+  <PropertyGroup>
+    <LibraryPath>$(CmdEPrjDir)\nfsdk\lib\$(CmdOutDirName)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(CmdEPrjDir)\nfsdk\inc\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+
+  <!-- eprj\crashpad -->
+  <PropertyGroup>
+    <LibraryPath>$(CmdEPrjDir)\crashpad\out\$(Configuration)-$(Platform)\obj\client;$(CmdEPrjDir)\crashpad\out\$(Configuration)-$(Platform)\obj\util;$(CmdEPrjDir)\crashpad\out\$(Configuration)-$(Platform)\obj\third_party\mini_chromium\mini_chromium\base;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(CmdEPrjDir)\crashpad;$(CmdEPrjDir)\crashpad\third_party\mini_chromium\mini_chromium;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+
+  <!-- eprj\libmicrohttpd -->
+  <PropertyGroup Label="UserMacros">
+    <IncludePath>$(CmdEPrjDir)\libmicrohttpd\src\include\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='Win32'" Label="UserMacros">
+    <LibraryPath>$(CmdEPrjDir)\libmicrohttpd\lib\x86\VS2017\$(Configuration)-static\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='x64'" Label="UserMacros">
+    <LibraryPath>$(CmdEPrjDir)\libmicrohttpd\lib\x86_64\VS2017\$(Configuration)-static\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+
+  <!-- iprj -->
+  <PropertyGroup>
+    <LibraryPath>$(CmdILibDir)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(CmdIPrjDir)\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+
+<!-- Examples of setting path for specified $(Configuration) or / and $(Platform)
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="UserMacros">
+    <LibraryPath>AdditionPath;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="UserMacros">
+    <LibraryPath>AdditionPath;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+-->
+</Project>

@@ -1,0 +1,167 @@
+//
+// Scenario submits files to Valkyrie
+//
+// Input queue: submit_to_valkyrie
+// Output queue: None
+//
+{
+	"version": "1.0",
+
+	// This scenario should work in separate pool as contains sleep() calling.
+	"threadPoolTag": "ValkyriePool",
+
+	"code": {
+
+		//
+		// Entrypoint
+		//
+		"main": [
+			// Get data from source queue
+			{
+				"processor": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.queueManager",
+					"command": "getQueue",
+					"params": { "name": "submit_to_valkyrie" }
+				},
+				"command": "get",
+				"$dst": "file"
+			},
+			// Submit file to Valkyrie
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				// Support replacement of submit command for ATS
+				"command": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.application",
+					"command": "getConfigValue",
+					"params": {
+						// Default command for valkyrie
+						"default": {
+							"$$proxy": "cachedObj",
+							"clsid": "0xACE892B6", // CLSID_Command
+							"processor": "objects.valkyrieService",
+							"command": "submit"
+						},
+						"skipNull": true,
+						"paths": "app.config.script.submit_to_valkyrie.submitCmd"
+					}
+				},
+				"ctxParams": {
+					"file": { "$path": "file" }
+				},
+				"$dst": "submitResult",
+				"$catch": "putBackToQueue"
+				// We can't use {"$catch" : "putBackToQueue"}.
+				// Exception can occur if data was invalid or non-network error was.
+				// In this case we should skip data, but not rollback it.
+			},
+			// Return file back to the queue if submission wasn't successful
+			{
+				"$goto": "incRetryCount",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "equal",
+					"args": [
+						{ "$path": "submitResult" },
+						false
+					]
+				}
+			}
+		],
+
+		//
+		// Increment the retry counter and check for max retry limit
+		//
+		"incRetryCount": [
+			// Increment the retry counter
+			{
+				"$set": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "add",
+					"args": [
+						1,
+						{
+							"$path": "file.retryCount",
+							"$default": 0
+						}
+					]
+				},
+				"$dst": "file.retryCount"
+			},
+			// Check if max retry limit has been reached
+			{
+				"$goto": "putBackToQueue",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "less",
+					"args": [
+						{ "$path": "file.retryCount" },
+						{
+							"$$proxy": "cachedCmd",
+							"processor": "objects.application",
+							"command": "getCatalogData",
+							"params": {
+								"path": "app.config.script.submit_to_valkyrie.retryCount"
+							}
+						}
+					]
+				}
+			},
+			// Log a message
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "loginf",
+				"component": "valkyrie",
+				"logLevel": 2, // Detailed
+				"args": [
+					"File's submit max retry limit has been reached. File is skipped"
+				]
+			}
+		],
+
+		//
+		// Put data back to queue and do some delay
+		//
+		"putBackToQueue": [
+			// Put data to the tail of the queue
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": { "name": "submit_to_valkyrie" }
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "file" }
+				}
+			},
+			// Sleep before next submission
+			{
+				"processor": "objects.application",
+				"command": "sleep",
+				"params": {
+					"msec": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.application",
+						"command": "getCatalogData",
+						"params": {
+							"default": 10000,
+							"path": "app.config.script.submit_to_valkyrie.retryDelay"
+						}
+					}
+				},
+				"$catch": null // Skip exception on terminate
+			}
+		]
+	}
+}

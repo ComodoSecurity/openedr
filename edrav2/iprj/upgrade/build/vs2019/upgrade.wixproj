@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.10</ProductVersion>
+    <ProjectGuid>{b7302b2d-5ee2-4660-a1c8-a8d560d9c581}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>upgrade</OutputName>
+    <OutputType>Package</OutputType>
+    <IncludeSearchPaths>
+    </IncludeSearchPaths>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PlatformName Condition=" '$(Platform)' == 'x86' ">Win32</PlatformName>
+  </PropertyGroup>
+  <Import Project="..\..\..\build\vs2019\consts.props" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>$(CmdRootDir)\out\upgrade\$(CmdOutDirName)\</OutputPath>
+    <IntermediateOutputPath>$(CmdRootDir)\out\temp\$(CmdOutDirName)\$(OutputName)\</IntermediateOutputPath>
+    <DefineConstants>BIN_PATH=$(CmdRootDir)\out\bin\;OUT_DIR_NAME=$(CmdOutDirName)\;SourceBinDir32=$(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\Win32\;SourceBinDir64=$(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\x64</DefineConstants>
+    <VerboseOutput>True</VerboseOutput>
+    <LinkerAdditionalOptions>-b ..\..\..\installation\src\</LinkerAdditionalOptions>
+    <CompilerAdditionalOptions>-I..\..\..\installation\src</CompilerAdditionalOptions>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>$(CmdRootDir)\out\upgrade\$(CmdOutDirName)\</OutputPath>
+    <IntermediateOutputPath>$(CmdRootDir)\out\temp\$(CmdOutDirName)\$(OutputName)\</IntermediateOutputPath>
+    <DefineConstants>BIN_PATH=$(CmdRootDir)\out\bin\;OUT_DIR_NAME=$(CmdOutDirName)\;SourceBinDir32=$(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\Win32\;SourceBinDir64=$(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\x64</DefineConstants>
+    <VerboseOutput>True</VerboseOutput>
+    <LinkerAdditionalOptions>-b ..\..\..\installation\src\</LinkerAdditionalOptions>
+    <CompilerAdditionalOptions>-I..\..\..\installation\src</CompilerAdditionalOptions>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\src\Product.wxs">
+      <Link>Product.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\src\FilesListWin32.wxs">
+      <Link>FilesListWin32.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\src\FilesListx64.wxs">
+      <Link>FilesListx32.wxs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\installation\src\Define.wxi">
+      <Link>Define.wxi</Link>
+    </Content>
+    <Content Include="..\..\..\installation\src\BuildInfo.wxi">
+      <Link>BuildInfo.wxi</Link>
+    </Content>
+    <Content Include="..\..\..\installation\src\InstallSequence.wxi">
+      <Link>InstallSequence.wxi</Link>
+    </Content>
+    <Content Include="..\..\..\installation\src\util.js">
+      <Link>util.js</Link>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixFirewallExtension">
+      <HintPath>$(WixExtDir)\WixFirewallExtension.dll</HintPath>
+      <Name>WixFirewallExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
+  </Target>
+  <Target Name="BeforeBuild">
+    <!-- Prepare direcotry with files to collect into installation -->
+    <Exec Command="rd $(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName) /S /Q" />
+    <Exec Command="md $(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\Win32" />
+    <Exec Command="md $(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\x64" />
+    <Exec Command="xcopy $(CmdRootDir)\out\bin\win-$(Configuration)-Win32 $(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\Win32 /Q /E /I /Exclude:$(ProjectDir)..\..\..\installation\src\exclude.list" />
+    <Exec Command="xcopy $(CmdRootDir)\out\bin\win-$(Configuration)-x64 $(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\x64 /Q /E /I /Exclude:$(ProjectDir)..\..\..\installation\src\exclude.list" />
+    <!-- Encrypt x86 files -->
+    <Exec Command="FOR /r &quot;$(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\Win32&quot; %%i in (*.cfg, *.qsc, *.src) do $(CmdRootDir)\out\bin\win-$(Configuration)-Win32\edrcon.exe file encrypt -f &quot;%%~i&quot; -o &quot;%%~i.new&quot; -e aes" />
+    <Exec Command="FOR /r &quot;$(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\Win32&quot; %%i in (*.new) do del &quot;%%~dpni&quot; /F /Q &amp; ren &quot;%%~i&quot; &quot;%%~ni&quot;" />
+    <!-- Encrypt x64 files -->
+    <Exec Command="FOR /r &quot;$(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\x64&quot; %%i in (*.cfg, *.qsc, *.src) do $(CmdRootDir)\out\bin\win-$(Configuration)-x64\edrcon.exe file encrypt -f &quot;%%~i&quot; -o &quot;%%~i.new&quot; -e aes" />
+    <Exec Command="FOR /r &quot;$(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\x64&quot; %%i in (*.new) do del &quot;%%~dpni&quot; /F /Q &amp; ren &quot;%%~i&quot; &quot;%%~ni&quot;" />
+    <!-- Enumerate all files to collect into installation -->
+    <HeatDirectory ToolPath="$(WixToolPath)" Directory="$(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\Win32" OutputFile="$(ProjectDir)..\..\src\FilesListWin32.wxs" GenerateGuidsNow="true" SuppressFragments="true" SuppressRegistry="true" ComponentGroupName="BinaryFilesWin32" PreprocessorVariable="var.SourceBinDir32" SuppressRootDirectory="true" DirectoryRefId="INSTALLDIRX86" />
+    <HeatDirectory ToolPath="$(WixToolPath)" Directory="$(CmdRootDir)\out\srcBinUpgrade\$(CmdOutDirName)\x64" OutputFile="$(ProjectDir)..\..\src\FilesListx64.wxs" GenerateGuidsNow="true" SuppressFragments="true" SuppressRegistry="true" ComponentGroupName="BinaryFilesX64" PreprocessorVariable="var.SourceBinDir64" SuppressRootDirectory="true" DirectoryRefId="INSTALLDIRX64" />
+  </Target>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

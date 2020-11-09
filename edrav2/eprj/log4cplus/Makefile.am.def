@@ -1,0 +1,8 @@
+AutoGen definitions Makefile.am.tpl;
+
+src-dirs = { name = src; };
+src-dirs = { name = simpleserver; };
+src-dirs = { name = qt4debugappender; };
+src-dirs = { name = qt5debugappender; };
+src-dirs = { name = swig; };
+src-dirs = { name = tests; };

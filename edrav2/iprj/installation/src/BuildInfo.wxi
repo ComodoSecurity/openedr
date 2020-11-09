@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define strproductid = "{45CC556C-A03B-42FF-A2FE-000000000000}" ?>
+  <?define strversion = "2.0.0.0" ?>
+</Include>

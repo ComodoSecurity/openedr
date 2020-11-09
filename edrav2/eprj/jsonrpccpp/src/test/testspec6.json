@@ -1,0 +1,37 @@
+[
+    {
+        "method": "test.method",
+        "params": {"name": "myname"},
+        "returns": "somestring"
+    },
+    {
+        "notification": "test.notification",
+        "params": {"name": "myname"}
+    },
+    {
+        "name": "test.method2",
+        "params": {"values": [1,2,3], "object": {"a": "b"}},
+        "returns": 33.2
+    },
+    {
+        "name": "test.notification2",
+        "params": {"values": [1,2,3], "object": {"a": "b"}}
+    },
+    {
+        "name": "testmethod3",
+        "params": [[], {}, 32.2],
+        "returns": {}
+    },
+    {
+        "name": "testmethod4",
+        "params": [[1], {}, 32.2],
+        "returns": []
+    },
+    {
+        "name": "testmethod5",
+        "returns": []
+    },
+    {
+        "name": "testmethod6"
+    }
+]

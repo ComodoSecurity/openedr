@@ -1,0 +1,4 @@
+coverage:
+  ignore:
+    - src/test/.*
+    - src/examples/.*

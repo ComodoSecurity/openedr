@@ -1,0 +1,525 @@
+//
+// Local policy definition for EventsMatching
+//
+{
+	"version": 2,
+	"name": "evmLocal",
+	"group": "eventsMatching",
+	"dependencies": [ "common" ],
+
+	"constants": {
+	    // where operation "match" is used
+	    // file names must be in low case
+		"knownTrustedPaths": [
+			"*\\git.exe",
+			"*\\devenv.exe",
+			"*\\cl.exe",
+			"*\\msbuild.exe"
+		],
+		"knownHostPaths": [
+			"*\\svchost.exe",
+			"*\\dllhost.exe",
+			"*\\taskhostw.exe",
+			"*\\sihost.exe",
+			"*\\backgroundTaskHost.exe",
+			"*\\ApplicationFrameHost.exe",
+			"*\\conhost.exe",
+			"*\\cmd.exe",
+			"*\\powershell.exe",
+			"*\\RuntimeBroker.exe",
+			"*\\cscript.exe",
+			"*\\wscript.exe",
+			"*\\wwahost.exe",
+			"*\\rundll32.exe"
+		],
+		"dangerousFileExtensions": [
+			"*.exe",
+			"*.scr",
+			"*.dll",
+			"*.ocx",
+			"*.cpl",
+			"*.com",
+			"*.pif",
+			"*.bat",
+			"*.cmd",
+			"*.ps1",
+			"*.ps1xml",
+			"*.ps2",
+			"*.ps2xml",
+			"*.psc1",
+			"*.psc2",
+			"*.vbs",
+			"*.vb",
+			"*.vbe",
+			"*.ws",
+			"*.wsf"
+		],
+		"shellProcesses": [
+			"*\\cmd.exe",
+			"*\\powershell.exe",
+			"*\\bash.exe",
+			"*\\cscript.exe",
+			"*\\wscript.exe"
+		],
+		"commonHttpFtpPorts": [
+			80,
+			8008,
+			8080,
+			443,
+			20,
+			21
+		]
+	},
+
+	"chains": {
+		"discardKnownTrusted": [
+			{
+				"priority": 2000,
+				"discard": {},
+				"condition": {
+					"$operation": "or",
+					"args": [
+						{
+							"$operation": "and",
+							"args": [
+								{
+									"$operation": "has",
+									"path": "parent",
+									"args": [ "@event.process" ]
+								},
+								{
+									"$operation": "equal",
+									"args": [ "@event.process.parent.imageFile.verdict", "@const.verdict.SAFE" ]
+								},
+								{
+									"$operation": "match",
+									"pattern": "@const.knownTrustedPaths",
+									"args": [ "@event.process.parent.imageFile.abstractPath" ]
+								}
+							]
+						},
+						{
+							"$operation": "and",
+							"args": [
+								{
+									"$operation": "equal",
+									"args": [ "@event.process.imageFile.verdict", "@const.verdict.SAFE" ]
+								},
+								{
+									"$operation": "match",
+									"pattern": "@const.knownTrustedPaths",
+									"args": [ "@event.process.imageFile.abstractPath" ]
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"createDetailedFileCopyEvent": [
+
+			// Event MLE_FILE_COPY_TO_USB
+			{
+				"condition": {
+					"$operation": "and",
+					"args": [
+						{
+							"$operation": "equal",
+							"args": [ "@event.source.volume.type", "FIXED" ]
+						},
+						{
+							"$operation": "equal",
+							"args": [ "@event.destination.volume.type", "REMOVABLE" ]
+						}
+					]
+				},
+				"createEvent": {
+					"eventType": "MLE_FILE_COPY_TO_USB",
+					"destination": "IN"
+				}
+			},
+
+			// Event MLE_FILE_COPY_TO_SHARE
+			{
+				"condition": {
+					"$operation": "and",
+					"args": [
+						{
+							"$operation": "equal",
+							"args": [ "@event.source.volume.type", "FIXED" ]
+						},
+						{
+							"$operation": "equal",
+							"args": [ "@event.destination.volume.type", "NETWORK" ]
+						}
+					]
+				},
+				"createEvent": {
+					"eventType": "MLE_FILE_COPY_TO_SHARE",
+					"destination": "IN"
+				}
+			},
+
+			// Event MLE_FILE_COPY_FROM_USB
+			{
+				"condition": {
+					"$operation": "and",
+					"args": [
+						{
+							"$operation": "equal",
+							"args": [ "@event.source.volume.type", "REMOVABLE" ]
+						},
+						{
+							"$operation": "equal",
+							"args": [ "@event.destination.volume.type", "FIXED" ]
+						}
+					]
+				},
+				"createEvent": {
+					"eventType": "MLE_FILE_COPY_FROM_USB",
+					"destination": "IN"
+				}
+			},
+
+			// Event MLE_FILE_COPY_FROM_SHARE
+			{
+				"condition": {
+					"$operation": "and",
+					"args": [
+						{
+							"$operation": "equal",
+							"args": [ "@event.source.volume.type", "NETWORK" ]
+						},
+						{
+							"$operation": "equal",
+							"args": [ "@event.destination.volume.type", "FIXED" ]
+						}
+					]
+				},
+				"createEvent": {
+					"eventType": "MLE_FILE_COPY_FROM_SHARE",
+					"destination": "IN"
+				}
+			}
+		],
+		"discardForkProcesses": [
+			{
+				"priority": 1500,
+				"discard": {},
+				"condition": {
+					"$operation": "and",
+					"args": [
+						{
+							"$operation": "has",
+							"path": "target",
+							"args": [ "@event" ]
+						},
+						{
+							"$operation": "equal",
+							"args": [ "@event.process.imageFile.uniquePath", "@event.target.imageFile.uniquePath" ]
+						},
+						{
+							"$operation": "!imatch",
+							"pattern": "@const.knownHostPaths",
+							"args": [ "@event.process.imageFile.uniquePath" ]
+						}
+					]
+				}
+			}
+		],
+		"createProcessTokenManipulationEvent": [
+		
+			// Event MLE_PROCESS_ELEVATION
+			{
+				"priority": 1100,
+				"condition": {
+					"$operation": "and",
+					"args": [
+						{
+							"$operation": "equal",
+							"args": [ "@event.process.parent.interactiveLogon", false ]
+						},
+						{
+							"$operation": "or",
+							"args": [
+								{
+									"$operation": "and",
+									"args": [
+										{
+											"$operation": "equal",
+											"args": [ "@event.process.token.user.class", "@const.tokenClass.SYSTEM" ]
+										},
+										{
+											"$operation": "contain",
+											"item": "@event.process.parent.token.user.class",
+											"args": [
+												[
+													"@const.tokenClass.GUEST",
+													"@const.tokenClass.USER",
+													"@const.tokenClass.LOCALADMIN",
+													"@const.tokenClass.DOMAINADMIN"
+												]
+											]
+										}
+									]
+								}, 
+								{
+									"$operation": "and",
+									"args": [
+										{
+											"$operation": "equal",
+											"args": [ "@event.process.token.user.class", "@const.tokenClass.DOMAINADMIN" ]
+										}, 
+										{
+											"$operation": "contain",
+											"item": "@event.process.parent.token.user.class",
+											"args": [
+												[
+													"@const.tokenClass.GUEST",
+													"@const.tokenClass.USER",
+													"@const.tokenClass.LOCALADMIN"
+												]
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				"createEvent": {
+					"eventType": "MLE_PROCESS_ELEVATION",
+					"destination": "IN_OUT",
+					"data": [
+						{
+							"name": "baseType",
+							"value": "@const.eventBaseType.MLE_PROCESS_ELEVATION"
+						}
+					]
+				}
+			},
+			
+			// Event MLE_INTEGRITY_LEVEL_ELEVATION
+			{
+				"priority": 1100,
+				"condition": {
+					"$operation": "and",
+					"args": [
+						{
+							"$operation": "greater",
+							"args": [ "@event.process.token.integrityLevel", "@event.process.parent.token.integrityLevel" ]
+						},
+						{
+							"$operation": "!equal",
+							"args": [ "@event.process.parent.imageFile.verdict", "@const.verdict.SAFE" ]
+						}
+					]
+				},
+				"createEvent": {
+					"eventType": "MLE_INTEGRITY_LEVEL_ELEVATION",
+					"destination": "IN_OUT",
+					"data": [
+						{
+							"name": "baseType",
+							"value": "@const.eventBaseType.MLE_INTEGRITY_LEVEL_ELEVATION"
+						}
+					]
+				}
+			}
+		],
+		"createThreadTokenManipulationEvent": [
+		
+			// Event MLE_THREAD_ELEVATION
+			{
+				"condition": {
+					"$operation": "and",
+					"args": [
+						{
+							"$operation": "has",
+							"path": "token",
+							"args": [ "@event.thread" ]
+						},
+						{
+							"$operation": "equal",
+							"args": [ "@event.process.parent.interactiveLogon", false ]
+						},
+						{
+							"$operation": "or",
+							"args": [
+								{
+									"$operation": "and",
+									"args": [
+										{
+											"$operation": "equal",
+											"args": [ "@event.thread.token.user.class", "@const.tokenClass.SYSTEM" ]
+										},
+										{
+											"$operation": "contain",
+											"item": "@event.process.token.user.class",
+											"args": [
+												[
+													"@const.tokenClass.GUEST",
+													"@const.tokenClass.USER",
+													"@const.tokenClass.LOCALADMIN",
+													"@const.tokenClass.DOMAINADMIN"
+												]
+											]
+										}
+									]
+								},
+								{
+									"$operation": "and",
+									"args": [
+										{
+											"$operation": "equal",
+											"args": [ "@event.thread.token.user.class", "@const.tokenClass.DOMAINADMIN" ]
+										},
+										{
+											"$operation": "contain",
+											"item": "@event.process.token.user.class",
+											"args": [
+												[
+													"@const.tokenClass.GUEST",
+													"@const.tokenClass.USER",
+													"@const.tokenClass.LOCALADMIN"
+												]
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"$operation": "or",
+							"args": [
+								{
+									"$operation": "equal",
+									"args": [ "@event.impersonationType", "@const.impersonationType.LOCAL" ]
+								},
+								{
+									"$operation": "and",
+									"args": [
+										{
+											"$operation": "equal",
+											"args": [ "@event.impersonationType", "@const.impersonationType.IPC" ]
+										},
+										{
+											"$operation": "or",
+											"args": [
+												{
+													"$operation": "!equal",
+													"args": [ "@event.process.imageFile.verdict", "@const.verdict.SAFE" ]
+												},
+												{
+													"$operation": "imatch",
+													"pattern": "@const.knownHostPaths",
+													"args": [ "@event.process.imageFile.uniquePath" ]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				"createEvent": {
+					"eventType": "MLE_THREAD_ELEVATION",
+					"destination": "IN_OUT",
+					"data": [
+						{
+							"name": "baseType",
+							"value": "@const.eventBaseType.MLE_THREAD_ELEVATION"
+						}
+					]
+				}
+			}
+		],
+		"createUnusualDataRequestEvent": [
+		
+			// Event MLE_DANGEROUS_FILE_DOWNLOAD
+			{
+				"condition": {
+					"$operation": "imatch",
+					"pattern": "@const.dangerousFileExtensions",
+					"args": [ "@event.url" ]
+				},
+				"createEvent": {
+					"eventType": "MLE_DANGEROUS_FILE_DOWNLOAD",
+					"destination": "IN_OUT",
+					"data": [
+						{
+							"name": "baseType",
+							"value": "@const.eventBaseType.MLE_DANGEROUS_FILE_DOWNLOAD"
+						}
+					]
+				}
+			},
+		
+			// Event MLE_NETWORK_REQUEST_DATA_FROM_SHELL
+			{
+				"condition": {
+					"$operation": "imatch",
+					"pattern": "@const.shellProcesses",
+					"args": [ "@event.process.imageFile.uniquePath" ]
+				},
+				"createEvent": {
+					"eventType": "MLE_NETWORK_REQUEST_DATA_FROM_SHELL",
+					"destination": "IN_OUT",
+					"data": [
+						{
+							"name": "baseType",
+							"value": "@const.eventBaseType.MLE_NETWORK_REQUEST_DATA_FROM_SHELL"
+						}
+					]
+				}
+			},
+		
+			// Event MLE_NETWORK_REQUEST_DATA_UNUSUAL_PORT
+			{
+				"condition": {
+					"$operation": "!contain",
+					"item": "@event.connection.remote.port",
+					"args": [ "@const.commonHttpFtpPorts" ]
+				},
+				"createEvent": {
+					"eventType": "MLE_NETWORK_REQUEST_DATA_UNUSUAL_PORT",
+					"destination": "IN_OUT",
+					"data": [
+						{
+							"name": "baseType",
+							"value": "@const.eventBaseType.MLE_NETWORK_REQUEST_DATA_UNUSUAL_PORT"
+						}
+					]
+				}
+			}
+		]
+	},
+
+	"bindings": [
+		{
+			"eventType": "@const.eventTypes",
+			"rules": [ "discardKnownTrusted" ]
+		},
+		{
+			"eventType": "MLE_FILE_COPY",
+			"rules": [ "createDetailedFileCopyEvent" ]
+		},
+		{
+			"eventType": [ "LLE_PROCESS_OPEN", "LLE_PROCESS_MEMORY_READ", "LLE_PROCESS_MEMORY_WRITE" ],
+			"rules": [ "discardForkProcesses" ]
+		},
+		{
+			"eventType": [ "LLE_PROCESS_CREATE" ],
+			"rules": [ "createProcessTokenManipulationEvent" ]
+		},
+		{
+			"eventType": [ "LLE_USER_IMPERSONATION" ],
+			"rules": [ "createThreadTokenManipulationEvent" ]
+		},
+		{
+			"eventType": [ "LLE_NETWORK_REQUEST_DATA" ],
+			"rules": [ "createUnusualDataRequestEvent" ]
+		}
+	]
+}

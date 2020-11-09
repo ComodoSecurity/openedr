@@ -1,0 +1,111 @@
+//
+// Scenario outputs events the cloud in batch mode
+//
+// Input queue: output_batch
+// Output queues: none
+//
+{
+	"version": "1.0",
+	"threadPoolTag": "OutputPool",
+
+	"code": {
+
+		//
+		// Entrypoint
+		//
+		"main": [
+			// Get data from the source queue
+			{
+				"processor": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.queueManager",
+					"command": "getQueue",
+					"params": { "name": "output_batch" }
+				},
+				"command": "get",
+				"$dst": "data"
+			},
+
+			// Check if the main receiver is enabled
+			{
+				"$goto": "putToMainReceiver",
+				"$if": {
+					"$gpath": "app.config.script.output.enableMainReceiver",
+					"$default": false
+				}
+			}
+		],
+
+		//
+		// Put data to the main receiver
+		//
+		"putToMainReceiver": [
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": "app.config.script.output.mainReceiver",
+					"command": "submit"
+				},
+				"ctxParams": {
+					"data": { "$path": "data" },
+					"default": false
+				},
+				"$dst": "submitResult"
+			},
+			// Return data back to the queue if submission wasn't successful
+			{
+				"$goto": "putBackToQueue",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "equal",
+					"args": [
+						{ "$path": "submitResult" },
+						false
+					]
+				}
+			}
+		],
+
+		// Put data back to queue
+		"putBackToQueue": [
+			// Put data to queue
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": { "name": "output_batch" }
+					},
+					"command": "rollback"
+				},
+				"ctxParams": {
+					"data": { "$path": "data" }
+				}
+			},
+			// Sleep before next submission
+			{
+				"processor": "objects.application",
+				"command": "sleep",
+				"params": {
+					"msec": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.application",
+						"command": "getCatalogData",
+						"params": {
+							"default": 10000,
+							"path": "app.config.script.output.mainReceiverRetryDelay"
+						}
+					}
+				},
+				"$catch": null // Skip exception on terminate
+			}
+		]
+	}
+}

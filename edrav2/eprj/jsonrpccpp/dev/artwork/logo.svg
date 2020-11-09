@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64px"
+   height="64px"
+   id="svg2989"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="logo.svg">
+  <defs
+     id="defs2991">
+    <linearGradient
+       id="linearGradient3777">
+      <stop
+         style="stop-color:#3ffa35;stop-opacity:0.88275862;"
+         offset="0"
+         id="stop3779" />
+      <stop
+         style="stop-color:#55e743;stop-opacity:0;"
+         offset="1"
+         id="stop3781" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.75"
+     inkscape:cx="-63.184781"
+     inkscape:cy="78.89271"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:document-units="px"
+     inkscape:grid-bbox="true"
+     showguides="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="775"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata2994">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       style="fill:#014b97;fill-opacity:0.84491978;fill-rule:evenodd;stroke:#000000;stroke-width:2.25018549;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:0.25668449;stroke-dasharray:none"
+       id="rect2997"
+       width="68.577087"
+       height="68.577087"
+       x="-2.8339977"
+       y="-1.9249072"
+       inkscape:export-filename="/home/cinemast/Arbeitsfläche/logo.png"
+       inkscape:export-xdpi="326"
+       inkscape:export-ydpi="326"
+       rx="6.7505574" />
+    <text
+       xml:space="preserve"
+       style="font-size:48.31641387999999893px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+       x="12.333372"
+       y="26.945349"
+       id="text3793"
+       sodipodi:linespacing="125%"
+       transform="scale(1.0969028,0.91165781)"
+       inkscape:export-filename="/home/cinemast/Arbeitsfläche/logo.png"
+       inkscape:export-xdpi="326"
+       inkscape:export-ydpi="326"><tspan
+         sodipodi:role="line"
+         x="12.333372"
+         y="26.945349"
+         style="font-size:16px;font-weight:bold;fill:#ffffff;fill-opacity:1;-inkscape-font-specification:Sans Bold"
+         id="tspan3801">JSON</tspan><tspan
+         sodipodi:role="line"
+         x="12.333372"
+         y="46.945351"
+         id="tspan3797"
+         style="font-size:16px;font-weight:normal;fill:#d4d4d4;fill-opacity:1;-inkscape-font-specification:Sans">RPC</tspan><tspan
+         sodipodi:role="line"
+         x="12.333372"
+         y="66.945351"
+         id="tspan3799"
+         style="font-size:16px;font-weight:normal;fill:#d4d4d4;fill-opacity:1;-inkscape-font-specification:Sans">C++</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#b32b2b;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-6.5400567"
+       y="19.173971"
+       id="text3805"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.7434867,-0.66875072,0.66875072,0.7434867,0,0)"
+       inkscape:export-filename="/home/cinemast/Arbeitsfläche/logo.png"
+       inkscape:export-xdpi="326"
+       inkscape:export-ydpi="326"><tspan
+         sodipodi:role="line"
+         id="tspan3807"
+         x="-6.5400567"
+         y="19.173971"
+         style="font-size:13px;font-style:normal;font-weight:bold;fill:#ffffff;fill-opacity:1;-inkscape-font-specification:Sans Bold">lib</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\test\init.cpp" />
+    <ClCompile Include="..\..\test\main.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\test\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\test\test_base64.cpp" />
+    <ClCompile Include="..\..\test\test_cache.cpp" />
+    <ClCompile Include="..\..\test\test_command.cpp" />
+    <ClCompile Include="..\..\test\test_common.cpp" />
+    <ClCompile Include="..\..\test\test_core.cpp" />
+    <ClCompile Include="..\..\test\test_cryptstream.cpp" />
+    <ClCompile Include="..\..\test\test_crypt_crc32.cpp" />
+    <ClCompile Include="..\..\test\test_crypt_crc64.cpp" />
+    <ClCompile Include="..\..\test\test_crypt_md5.cpp" />
+    <ClCompile Include="..\..\test\test_crypt_sha1.cpp" />
+    <ClCompile Include="..\..\test\test_crypt_xxh.cpp" />
+    <ClCompile Include="..\..\test\test_ctxcmds.cpp" />
+    <ClCompile Include="..\..\test\test_datagenerator.cpp" />
+    <ClCompile Include="..\..\test\test_dataproxy.cpp" />
+    <ClCompile Include="..\..\test\test_dictionarymixer.cpp" />
+    <ClCompile Include="..\..\test\test_dictstreamview.cpp" />
+    <ClCompile Include="..\..\test\test_dump.cpp" />
+    <ClCompile Include="..\..\test\test_error.cpp" />
+    <ClCompile Include="..\..\test\test_events.cpp" />
+    <ClCompile Include="..\..\test\test_filestream.cpp" />
+    <ClCompile Include="..\..\test\test_fsdatastorage.cpp" />
+    <ClCompile Include="..\..\test\test_jsonrpcclient.cpp" />
+    <ClCompile Include="..\..\test\test_jsonrpcserver.cpp" />
+    <ClCompile Include="..\..\test\test_lbvs.cpp" />
+    <ClCompile Include="..\..\test\test_localeventslogfile.cpp" />
+    <ClCompile Include="..\..\test\test_logging.cpp" />
+    <ClCompile Include="..\..\test\test_memstream.cpp" />
+    <ClCompile Include="..\..\test\test_scenario.cpp" />
+    <ClCompile Include="..\..\test\test_queue.cpp" />
+    <ClCompile Include="..\..\test\test_queuemgr.cpp" />
+    <ClCompile Include="..\..\test\test_scenariomgr.cpp" />
+    <ClCompile Include="..\..\test\test_randomdatagenerator.cpp" />
+    <ClCompile Include="..\..\test\test_services.cpp" />
+    <ClCompile Include="..\..\test\test_stream.cpp" />
+    <ClCompile Include="..\..\test\test_streamcache.cpp" />
+    <ClCompile Include="..\..\test\test_string.cpp" />
+    <ClCompile Include="..\..\test\test_stringstream.cpp" />
+    <ClCompile Include="..\..\test\test_threadpool.cpp" />
+    <ClCompile Include="..\..\test\test_stringmatcher.cpp" />
+    <ClCompile Include="..\..\test\test_variant.cpp" />
+    <ClCompile Include="..\..\test\test_variantproxy.cpp" />
+    <ClCompile Include="..\..\test\test_variant_convert.cpp" />
+    <ClCompile Include="..\..\test\test_variant_dictkey.cpp" />
+    <ClCompile Include="..\..\test\test_variant_intvalue.cpp" />
+    <ClCompile Include="..\..\test\test_variant_operation.cpp" />
+    <ClCompile Include="..\..\test\test_variant_serialization.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\test\common.h" />
+    <ClInclude Include="..\..\test\pch.h" />
+    <ClInclude Include="..\..\test\test_stream.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{D1D047FD-B1C4-4778-B085-00F9B7A75698}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>testvariant</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="..\..\..\build\vs2019\consts.props" />
+  <Import Project="$(CmdPropsDir)\test_gen.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(CmdPropsDir)\test.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>UT_LIBCORE_PROJECT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <Link />
+    <Link>
+      <AdditionalDependencies>libcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>UT_LIBCORE_PROJECT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <Link>
+      <AdditionalDependencies>libcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>UT_LIBCORE_PROJECT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <Link>
+      <AdditionalDependencies>libcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>UT_LIBCORE_PROJECT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link />
+    <Link>
+      <AdditionalDependencies>libcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,30 @@
+# Process with autom4te to create an -*- Autotest -*- test suite.
+
+m4_define([AT_PACKAGE_STRING],    [log4cplus])
+m4_define([AT_PACKAGE_BUGREPORT], [log4cplus-devel@lists.sourceforge.net])
+
+AT_INIT([log4cplus])
+AT_COLOR_TESTS
+
+m4_include([local.at])
+
+AT_BANNER([separate headers compilation])
+m4_include([headers.at])
+
+AT_BANNER([other tests])
+m4_include([appender_test.at])
+m4_include([configandwatch_test.at])
+m4_include([customloglevel_test.at])
+m4_include([fileappender_test.at])
+m4_include([filter_test.at])
+m4_include([hierarchy_test.at])
+m4_include([loglog_test.at])
+m4_include([ndc_test.at])
+m4_include([ostream_test.at])
+m4_include([patternlayout_test.at])
+m4_include([performance_test.at])
+m4_include([priority_test.at])
+m4_include([propertyconfig_test.at])
+m4_include([thread_test.at])
+m4_include([timeformat_test.at])
+m4_include([unit_tests.at])

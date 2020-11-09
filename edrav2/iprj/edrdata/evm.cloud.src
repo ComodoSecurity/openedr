@@ -1,0 +1,2473 @@
+{
+  "Events": {
+    "RB1": [
+      {
+        "BaseEventType": 9,
+        "EventType": null
+      }
+    ],
+    "RB2": [
+      {
+        "BaseEventType": 9,
+        "EventType": null
+      }
+    ],
+    "RB3": [
+      {
+        "BaseEventType": 9,
+        "EventType": null
+      }
+    ],
+    "RB4": [
+      {
+        "BaseEventType": 9,
+        "EventType": null
+      }
+    ],
+    "RD11": [
+      {
+        "BaseEventType": 18,
+        "EventType": null
+      }
+    ],
+    "RD15": [
+      {
+        "BaseEventType": 19,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "targetName",
+                  "Operator": "Match",
+                  "Value": "%windir%\\*"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "BooleanOperator": "Or",
+                  "Conditions": [
+                    {
+                      "Field": "parentVerdict",
+                      "Operator": "!Equal",
+                      "Value": 1
+                    },
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "Match",
+                      "Value": "*\\powershell.exe"
+                    }
+                  ]
+                },
+                {
+                  "Field": "targetName",
+                  "Operator": "Match",
+                  "Value": "*\\lsass.exe"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "b026999c1a5f406f981fa0893b335f93"
+      },
+      {
+        "BaseEventType": 19,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "Field": "parentVerdict",
+              "Operator": "!Equal",
+              "Value": 1
+            },
+            {
+              "Field": "targetName",
+              "Operator": "Match",
+              "Value": "%windir%\\*"
+            }
+          ]
+        },
+        "EventType": null
+      }
+    ],
+    "RD16": [
+      {
+        "BaseEventType": 20,
+        "EventType": null
+      }
+    ],
+    "RD17": [
+      {
+        "BaseEventType": 21,
+        "EventType": null
+      }
+    ],
+    "RD20": [
+      {
+        "BaseEventType": 22,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "Field": "parentVerdict",
+              "Operator": "!Equal",
+              "Value": 1
+            },
+            {
+              "Field": "targetName",
+              "Operator": "Match",
+              "Value": "%windir%\\*"
+            }
+          ]
+        },
+        "EventType": null
+      }
+    ],
+    "RD6": [
+      {
+        "BaseEventType": 15,
+        "EventType": null
+      }
+    ],
+    "RD7": [
+      {
+        "BaseEventType": 16,
+        "EventType": null
+      }
+    ],
+    "RD8": [
+      {
+        "BaseEventType": 17,
+        "EventType": null
+      }
+    ],
+    "RF1": [
+    ],
+    "RF10": [
+      {
+        "BaseEventType": 12,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "Field": "parentProcessPath",
+              "Operator": "MatchInList",
+              "Value": "EmailPaths"
+            },
+            {
+              "Field": "path",
+              "Operator": "!Match",
+              "Value": "%appdata%\\*"
+            },
+            {
+              "Field": "path",
+              "Operator": "!Match",
+              "Value": "%localappdata%\\*"
+            },
+            {
+              "Field": "path",
+              "Operator": "!Match",
+              "Value": "%userprofile%\\AppData\\*"
+            }
+          ]
+        },
+        "EventType": null
+      },
+      {
+        "BaseEventType": 7,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "WriteFileWhiteList"
+                },
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!MatchInList",
+                      "Value": "WriteFileBlackList"
+                    },
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!Match",
+                      "Value": "%systemroot%\\*"
+                    },
+                    {
+                      "BooleanOperator": "Or",
+                      "Conditions": [
+                        {
+                          "Field": "ftype",
+                          "Operator": "Equal",
+                          "Value": "PORTABLE_EXECUTABLE"
+                        },
+                        {
+                          "Field": "path",
+                          "Operator": "MatchInList",
+                          "Value": "InfectibleFiles"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*svch0st.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*scvhost.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*svchots.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*scvh0st.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*svhost.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*schost.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*svchosts.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*swchost.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*svshost.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*svcnost.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*syshost.exe"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "*svchsot.exe"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "57e43c45be37441db48f95a20d0e12a6"
+      },
+      {
+        "BaseEventType": 7,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "WriteFileWhiteList"
+                },
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!MatchInList",
+                      "Value": "WriteFileBlackList"
+                    },
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!Match",
+                      "Value": "%systemroot%\\*"
+                    },
+                    {
+                      "BooleanOperator": "Or",
+                      "Conditions": [
+                        {
+                          "Field": "ftype",
+                          "Operator": "Equal",
+                          "Value": "PORTABLE_EXECUTABLE"
+                        },
+                        {
+                          "Field": "path",
+                          "Operator": "MatchInList",
+                          "Value": "InfectibleFiles"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "%systemroot%\\System32\\Tasks*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "%systemroot%\\Tasks*"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "a08346e175ec4021a5849e68f171dee9"
+      },
+      {
+        "BaseEventType": 7,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "WriteFileWhiteList"
+                },
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!MatchInList",
+                      "Value": "WriteFileBlackList"
+                    },
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!Match",
+                      "Value": "%systemroot%\\*"
+                    },
+                    {
+                      "BooleanOperator": "Or",
+                      "Conditions": [
+                        {
+                          "Field": "ftype",
+                          "Operator": "Equal",
+                          "Value": "PORTABLE_EXECUTABLE"
+                        },
+                        {
+                          "Field": "path",
+                          "Operator": "MatchInList",
+                          "Value": "InfectibleFiles"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Field": "path",
+              "Operator": "Equal",
+              "Value": "%systemroot%\\system32\\drivers\\etc\\hosts"
+            }
+          ]
+        },
+        "EventType": "91d0c20403af46379368d13e8715902d"
+      },
+      {
+        "BaseEventType": 7,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "WriteFileWhiteList"
+                },
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!MatchInList",
+                      "Value": "WriteFileBlackList"
+                    },
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!Match",
+                      "Value": "%systemroot%\\*"
+                    },
+                    {
+                      "BooleanOperator": "Or",
+                      "Conditions": [
+                        {
+                          "Field": "ftype",
+                          "Operator": "Equal",
+                          "Value": "PORTABLE_EXECUTABLE"
+                        },
+                        {
+                          "Field": "path",
+                          "Operator": "MatchInList",
+                          "Value": "InfectibleFiles"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "ftype",
+                  "Operator": "Equal",
+                  "Value": "PORTABLE_EXECUTABLE"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "1ed76e2ff6284779b56a4017484eae55"
+      },
+      {
+        "BaseEventType": 7,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "WriteFileWhiteList"
+                },
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!MatchInList",
+                      "Value": "WriteFileBlackList"
+                    },
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!Match",
+                      "Value": "%systemroot%\\*"
+                    },
+                    {
+                      "BooleanOperator": "Or",
+                      "Conditions": [
+                        {
+                          "Field": "ftype",
+                          "Operator": "Equal",
+                          "Value": "PORTABLE_EXECUTABLE"
+                        },
+                        {
+                          "Field": "path",
+                          "Operator": "MatchInList",
+                          "Value": "InfectibleFiles"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "%appdata%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "%programdata%\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "%systemroot%\\system\\iosubsys\\*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "%systemroot%\\system\\vmm32\\*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "%systemroot%\\Tasks\\*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "%systemdrive%\\autoexec.bat"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "%systemdrive%\\config.sys"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "%systemroot%\\wininit.ini"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "%systemroot%\\winstart.bat"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "%systemroot%\\win.ini"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "%systemroot%\\system.ini"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "%systemroot%\\dosstart.bat"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "13f4ad43a3874bbb92594aec18c5f8bb"
+      },
+      {
+        "BaseEventType": 7,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "WriteFileWhiteList"
+                },
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!MatchInList",
+                      "Value": "WriteFileBlackList"
+                    },
+                    {
+                      "Field": "parentProcessPath",
+                      "Operator": "!Match",
+                      "Value": "%systemroot%\\*"
+                    },
+                    {
+                      "BooleanOperator": "Or",
+                      "Conditions": [
+                        {
+                          "Field": "ftype",
+                          "Operator": "Equal",
+                          "Value": "PORTABLE_EXECUTABLE"
+                        },
+                        {
+                          "Field": "path",
+                          "Operator": "MatchInList",
+                          "Value": "InfectibleFiles"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "%systemroot%\\system32\\grouppolicy\\*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "%systemroot%\\Sysvol\\sysvol\\*\\Policies\\*"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "d0174bf71f24469fa36b5b8380b6f48d"
+      },
+      {
+        "BaseEventType": 7,
+        "Condition": {
+          "BooleanOperator": "Or",
+          "Conditions": [
+            {
+              "Field": "parentProcessPath",
+              "Operator": "MatchInList",
+              "Value": "WriteFileWhiteList"
+            },
+            {
+              "Field": "parentVerdict",
+              "Operator": "!Equal",
+              "Value": 1
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "!MatchInList",
+                  "Value": "WriteFileBlackList"
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "!Match",
+                  "Value": "%systemroot%\\*"
+                },
+                {
+                  "BooleanOperator": "Or",
+                  "Conditions": [
+                    {
+                      "Field": "ftype",
+                      "Operator": "Equal",
+                      "Value": "PORTABLE_EXECUTABLE"
+                    },
+                    {
+                      "Field": "path",
+                      "Operator": "MatchInList",
+                      "Value": "InfectibleFiles"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": null
+      }
+    ],
+    "RF11": [
+      {
+        "BaseEventType": 10,
+        "EventType": null
+      }
+    ],
+    "RF12": [
+      {
+        "BaseEventType": 11,
+        "EventType": null
+      }
+    ],
+    "RF13": [
+      {
+        "BaseEventType": 13,
+        "Condition": {
+          "BooleanOperator": "Or",
+          "Conditions": [
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.lnk"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.wsf"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.hta"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.mhtml"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.html"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.doc"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.docm"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.xls"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.xlsm"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.ppt"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.pptm"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.chm"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.vbs"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.js"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.bat"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.pif"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.pdf"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.jar"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*.sys"
+            }
+          ]
+        },
+        "EventType": "989c729a17984d42ab1412016e317f5c"
+      },
+      {
+        "BaseEventType": 13,
+        "Condition": {
+          "Field": "ftype",
+          "Operator": "Equal",
+          "Value": "PORTABLE_EXECUTABLE"
+        },
+        "EventType": "3099ed1ec3d04ddf9a45be8662860607"
+      },
+      {
+        "BaseEventType": 13,
+        "EventType": null
+      }
+    ],
+    "RF14": [
+      {
+        "BaseEventType": 14,
+        "EventType": null
+      }
+    ],
+    "RF2": [
+    ],
+    "RF3": [
+    ],
+    "RF4": [
+      {
+        "BaseEventType": 8,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "Field": "path",
+              "Operator": "!Match",
+              "Value": "\\Device\\HarddiskVolumeShadowCopy*"
+            },
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "DeleteFileWhiteList"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "MatchInList",
+                  "Value": "DeleteFileExtensions"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": null
+      }
+    ],
+    "RF5": [
+    ],
+    "RF6": [
+    ],
+    "RF7": [
+    ],
+    "RF8": [
+    ],
+    "RF9": [
+    ],
+    "RN1": [
+      {
+        "BaseEventType": 2,
+        "Condition": {
+          "BooleanOperator": "Or",
+          "Conditions": [
+            {
+              "Field": "parentVerdict",
+              "Operator": "!Equal",
+              "Value": 1
+            },
+            {
+              "Field": "parentProcessPath",
+              "Operator": "Match",
+              "Value": "*\\powershell.exe"
+            }
+          ]
+        },
+        "EventType": null
+      }
+    ],
+    "RN2": [
+      {
+        "BaseEventType": 3,
+        "Condition": {
+          "BooleanOperator": "Or",
+          "Conditions": [
+            {
+              "Field": "parentVerdict",
+              "Operator": "!Equal",
+              "Value": 1
+            },
+            {
+              "Field": "parentProcessPath",
+              "Operator": "Match",
+              "Value": "*\\powershell.exe"
+            }
+          ]
+        },
+        "EventType": null
+      }
+    ],
+    "RP1": [
+      {
+        "BaseEventType": 1,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "Match",
+                  "Value": "*\\cmd.exe"
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "Match",
+                  "Value": "*\\winword.exe"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "prcs_cmd_line",
+                  "Operator": "Match",
+                  "Value": "*powershell*-nop*"
+                },
+                {
+                  "Field": "prcs_cmd_line",
+                  "Operator": "Match",
+                  "Value": "*powershell*-w*"
+                },
+                {
+                  "Field": "prcs_cmd_line",
+                  "Operator": "Match",
+                  "Value": "*powershell*-command*"
+                },
+                {
+                  "Field": "prcs_cmd_line",
+                  "Operator": "Match",
+                  "Value": "*powershell*-nol*"
+                },
+                {
+                  "Field": "prcs_cmd_line",
+                  "Operator": "Match",
+                  "Value": "*powershell*-inputformat*"
+                },
+                {
+                  "Field": "prcs_cmd_line",
+                  "Operator": "Match",
+                  "Value": "*powershell*-enc*"
+                },
+                {
+                  "Field": "prcs_cmd_line",
+                  "Operator": "Match",
+                  "Value": "*powershell*-noni*"
+                },
+                {
+                  "Field": "prcs_cmd_line",
+                  "Operator": "Match",
+                  "Value": "*powershell*-file*"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "cdda70f5496d482087b2f44029a5b801"
+      },
+      {
+        "BaseEventType": 1,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "Field": "parentVerdict",
+              "Operator": "!Equal",
+              "Value": 1
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "%systemroot%\\*"
+            }
+          ]
+        },
+        "EventType": "f885ad4e67f54ee2ad9a50c2dd0c2a51"
+      },
+      {
+        "BaseEventType": 1,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "Field": "parentProcessPath",
+              "Operator": "Match",
+              "Value": "*\\svchost.exe"
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "*\\wsmprovhost.exe"
+            }
+          ]
+        },
+        "EventType": "66ef0737ec1c4c2c8b1c080295f2b3fe"
+      },
+      {
+        "BaseEventType": 1,
+        "Condition": {
+          "Field": "verdict",
+          "Operator": "!Equal",
+          "Value": 1
+        },
+        "EventType": "6d958c4cbee349ceb7c59ff856ffbdc9"
+      },
+      {
+        "BaseEventType": 1,
+        "EventType": null
+      }
+    ],
+    "RP2": [
+    ],
+    "RP3": [
+    ],
+    "RR1": [
+    ],
+    "RR2": [
+      {
+        "BaseEventType": 4,
+        "Condition": {
+          "BooleanOperator": "Or",
+          "Conditions": [
+            {
+              "Field": "parentVerdict",
+              "Operator": "!Equal",
+              "Value": 1
+            },
+            {
+              "Field": "parentProcessPath",
+              "Operator": "MatchInList",
+              "Value": "RegWhiteList"
+            }
+          ]
+        },
+        "EventType": null
+      }
+    ],
+    "RR3": [
+      {
+        "BaseEventType": 5,
+        "Condition": {
+          "BooleanOperator": "Or",
+          "Conditions": [
+            {
+              "Field": "parentVerdict",
+              "Operator": "!Equal",
+              "Value": 1
+            },
+            {
+              "Field": "parentProcessPath",
+              "Operator": "MatchInList",
+              "Value": "RegWhiteList"
+            }
+          ]
+        },
+        "EventType": null
+      }
+    ],
+    "RR4": [
+    ],
+    "RR5": [
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "DisableTaskMgr"
+                },
+                {
+                  "Field": "reg_value_data",
+                  "Operator": "Equal",
+                  "Value": "1"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "e8bc7d1d3a9c475288a2050df45cf103"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "EnableLUA"
+                },
+                {
+                  "Field": "reg_value_data",
+                  "Operator": "Equal",
+                  "Value": "0"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "56c5351be09644ad861f1caec4287bb3"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\*"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "Type"
+                },
+                {
+                  "BooleanOperator": "Or",
+                  "Conditions": [
+                    {
+                      "Field": "reg_value_data",
+                      "Operator": "Equal",
+                      "Value": "1"
+                    },
+                    {
+                      "Field": "reg_value_data",
+                      "Operator": "Equal",
+                      "Value": "2"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "bc0631aecd6245418d35df08b04ff2dd"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "path",
+                      "Operator": "Match",
+                      "Value": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\*"
+                    },
+                    {
+                      "Field": "reg_value_name",
+                      "Operator": "Equal",
+                      "Value": "ImagePath"
+                    },
+                    {
+                      "Field": "reg_value_data",
+                      "Operator": "Match",
+                      "Value": "*svchost.exe*"
+                    }
+                  ]
+                },
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "path",
+                      "Operator": "Match",
+                      "Value": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\*\\Parameters"
+                    },
+                    {
+                      "Field": "reg_value_name",
+                      "Operator": "Equal",
+                      "Value": "ServiceDll"
+                    },
+                    {
+                      "Field": "reg_value_data",
+                      "Operator": "Match",
+                      "Value": "*.dll"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "fdc6461eb7564c1d97e328850c573ba1"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Active Setup\\Installed Components\\*"
+            }
+          ]
+        },
+        "EventType": "707a22bf3f214087851badd59aecfd5b"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\PowerShell\\1\\ShellIds\\Microsoft.PowerShell"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "ExecutionPolicy"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "32cdf29be6be4eacbecb64e22e1f63cb"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "AppInit_DLLs"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "fe5d10cc5a1f4324b6e5e5cc4d6236c9"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\PROTOCOLS\\Filter*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\PROTOCOLS\\Handler*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Internet Explorer\\Desktop\\Components*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Active Setup\\Installed Components*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\SharedTaskScheduler"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ShellServiceObjectDelayLoad*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ShellServiceObjectDelayLoad*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellExecuteHooks*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Classes\\*\\ShellEx\\ContextMenuHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Classes\\*\\ShellEx\\ContextMenuHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Classes\\AllFileSystemObjects\\ShellEx\\ContextMenuHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Classes\\AllFileSystemObjects\\ShellEx\\ContextMenuHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Classes\\Directory\\ShellEx\\ContextMenuHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Classes\\Directory\\ShellEx\\ContextMenuHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Classes\\Directory\\Shellex\\DragDropHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Classes\\Directory\\Shellex\\DragDropHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Classes\\Directory\\Shellex\\PropertySheetHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Classes\\Directory\\Shellex\\PropertySheetHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Classes\\Directory\\Shellex\\CopyHookHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Classes\\Directory\\Shellex\\CopyHookHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Classes\\Folder\\Shellex\\ColumnHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Classes\\Folder\\Shellex\\ColumnHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Classes\\Folder\\ShellEx\\ContextMenuHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Classes\\Folder\\ShellEx\\ContextMenuHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Classes\\Directory\\Background\\ShellEx\\ContextMenuHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Classes\\Directory\\Background\\ShellEx\\ContextMenuHandlers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\Ctf\\LangBarAddin*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Ctf\\LangBarAddin*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved*"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "db01fa168de3422eb99faa978032d3fb"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Policies\\Microsoft\\Windows\\System"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "DisableCMD"
+                },
+                {
+                  "Field": "reg_value_data",
+                  "Operator": "Equal",
+                  "Value": "2"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "da37875f24314368a4320ab9e490437b"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "DisableRegistryTools"
+                },
+                {
+                  "Field": "reg_value_data",
+                  "Operator": "Equal",
+                  "Value": "1"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "a0e5cd58509246dda2fb88fdbd7f57ea"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\SharedAccess\\Parameters\\FirewallPolicy\\StandardProfile*"
+            }
+          ]
+        },
+        "EventType": "96b71ea1b610490eb17e4fac4e05c0fa"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "Field": "path",
+              "Operator": "Equal",
+              "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\DisallowRun"
+            }
+          ]
+        },
+        "EventType": "5cc13bfff4704086bd26fc29879ec2c0"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "DataBasePath"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "457ddb5ee90e40669bb0ebb59b1a3ec2"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\*"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "ImagePath"
+                },
+                {
+                  "Field": "reg_value_data",
+                  "Operator": "Match",
+                  "Value": "*.exe*"
+                },
+                {
+                  "Field": "reg_value_data",
+                  "Operator": "!Match",
+                  "Value": "*svchost.exe*"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "1dd159a3ae9540e588b5542b40baf038"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "Field": "path",
+              "Operator": "Match",
+              "Value": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\WinSock2\\Parameters\\Protocol_Catalog9\\Catalog_Entries*"
+            }
+          ]
+        },
+        "EventType": "09c98128714e42a9ba7e39396281a312"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\*"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "NameServer"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "a68428da67f9419f8951553617030a5e"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "path",
+                      "Operator": "Equal",
+                      "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU"
+                    },
+                    {
+                      "Field": "reg_value_name",
+                      "Operator": "Equal",
+                      "Value": "NoAutoUpdate"
+                    },
+                    {
+                      "Field": "reg_value_data",
+                      "Operator": "Equal",
+                      "Value": "1"
+                    }
+                  ]
+                },
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "path",
+                      "Operator": "Equal",
+                      "Value": "HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\WindowsUpdate"
+                    },
+                    {
+                      "Field": "reg_value_name",
+                      "Operator": "Equal",
+                      "Value": "DisableWindowsUpdateAccess"
+                    },
+                    {
+                      "Field": "reg_value_data",
+                      "Operator": "Equal",
+                      "Value": "1"
+                    }
+                  ]
+                },
+                {
+                  "BooleanOperator": "And",
+                  "Conditions": [
+                    {
+                      "Field": "path",
+                      "Operator": "Equal",
+                      "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\WindowsUpdate"
+                    },
+                    {
+                      "Field": "reg_value_name",
+                      "Operator": "Equal",
+                      "Value": "DisableWindowsUpdateAccess"
+                    },
+                    {
+                      "Field": "reg_value_data",
+                      "Operator": "Equal",
+                      "Value": "1"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "9be254e485cb4c65970bac624df7e127"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\*"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "Start"
+                },
+                {
+                  "Field": "reg_value_data",
+                  "Operator": "Equal",
+                  "Value": "4"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "2d88bfa421e6491890f821e17d915932"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager"
+                },
+                {
+                  "Field": "reg_value_name",
+                  "Operator": "Equal",
+                  "Value": "BootExecute"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "15797fc9d02842efacd2dc3b3c9ce1fc"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\System\\Scripts\\Startup*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Policies\\Microsoft\\Windows\\System\\Scripts\\Logon*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnceEx*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\WindowsNT\\CurrentVersion\\Windows*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\WindowsNT\\CurrentVersion\\Windows\\Run*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\Run*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\Run*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Policies\\Microsoft\\Windows\\System\\Scripts\\Logoff*"
+                },
+                {
+                  "Field": "path",
+                  "Operator": "Match",
+                  "Value": "HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\System\\Scripts\\Shutdown*"
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "154766a47b27461992d8f708f94fed0f"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "BooleanOperator": "And",
+              "Conditions": [
+                {
+                  "Field": "path",
+                  "Operator": "Equal",
+                  "Value": "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced"
+                },
+                {
+                  "Field": "reg_value_data",
+                  "Operator": "Equal",
+                  "Value": "2"
+                },
+                {
+                  "BooleanOperator": "Or",
+                  "Conditions": [
+                    {
+                      "Field": "reg_value_name",
+                      "Operator": "Equal",
+                      "Value": "Hidden"
+                    },
+                    {
+                      "Field": "reg_value_name",
+                      "Operator": "Equal",
+                      "Value": "ShowSuperHidden"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "EventType": "640b2c53552440f7aac15d4a2938e782"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "And",
+          "Conditions": [
+            {
+              "BooleanOperator": "Or",
+              "Conditions": [
+                {
+                  "Field": "parentVerdict",
+                  "Operator": "!Equal",
+                  "Value": 1
+                },
+                {
+                  "Field": "parentProcessPath",
+                  "Operator": "MatchInList",
+                  "Value": "RegWhiteList"
+                }
+              ]
+            },
+            {
+              "Field": "path",
+              "Operator": "Equal",
+              "Value": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Lanmanserver\\Shares"
+            }
+          ]
+        },
+        "EventType": "2d2c4dd80a9240ceada041f4bcb588c6"
+      },
+      {
+        "BaseEventType": 6,
+        "Condition": {
+          "BooleanOperator": "Or",
+          "Conditions": [
+            {
+              "Field": "parentVerdict",
+              "Operator": "!Equal",
+              "Value": 1
+            },
+            {
+              "Field": "parentProcessPath",
+              "Operator": "MatchInList",
+              "Value": "RegWhiteList"
+            }
+          ]
+        },
+        "EventType": null
+      }
+    ]
+  },
+  "Lists": {
+    "DeleteFileExtensions": [
+      "*.app",
+      "*.bat",
+      "*.cmd",
+      "*.com",
+      "*.cpl",
+      "*.dll",
+      "*.exe",
+      "*.inf",
+      "*.job",
+      "*.jar",
+      "*.js",
+      "*.jar",
+      "*.jse",
+      "*.lnk",
+      "*.msc",
+      "*.msh",
+      "*.msh1",
+      "*.msh2",
+      "*.mshxml",
+      "*.msh1xml",
+      "*.msh2xml",
+      "*.osx",
+      "*.pif",
+      "*.ps1",
+      "*.ps2",
+      "*.psc2",
+      "*.psc1",
+      "*.ps1xml",
+      "*.ps2xml",
+      "*.py",
+      "*.pyc",
+      "*.reg",
+      "*.rgs",
+      "*.scr",
+      "*.scf",
+      "*.sct",
+      "*.sys",
+      "*.vb",
+      "*.vbe",
+      "*.vbs",
+      "*.vbscript",
+      "*.ws",
+      "*.wsf",
+      "*.wsh",
+      "*.chm",
+      "*.doc",
+      "*.docx",
+      "*.docm",
+      "*.dotm",
+      "*.hta",
+      "*.mam",
+      "*.mrc",
+      "*.mhtml",
+      "*.mht",
+      "*.otm",
+      "*.pdf",
+      "*.potm",
+      "*.ppam",
+      "*.ppsm",
+      "*.ppt",
+      "*.pptx",
+      "*.pptm",
+      "*.sldm",
+      "*.udf",
+      "*.xls",
+      "*.xlsx",
+      "*.xlam",
+      "*.xlm",
+      "*.xlsm",
+      "*.xltm",
+      "*.zip",
+      "*.7z",
+      "*.rar",
+      "*.rarx",
+      "*.gz",
+      "*.gz2",
+      "*.bz",
+      "*.bz2",
+      "*.cab",
+      "*.msi",
+      "*.msp"
+    ],
+    "DeleteFileWhiteList": [
+      "*\\powershell.exe",
+      "*\\cmd.exe",
+      "*\\sdelete.exe",
+      "*\\sdelete64.exe",
+      "*\\cscript.exe",
+      "*\\wscript.exe",
+      "*\\wmiprvse.exe"
+    ],
+    "EmailPaths": [
+      "*\\thunderbird.exe",
+      "*\\outlook.exe"
+    ],
+    "InfectibleFiles": [
+      "*.lnk",
+      "*.wsf",
+      "*.hta",
+      "*.mhtml",
+      "*.html",
+      "*.doc",
+      "*.docm",
+      "*.xls",
+      "*.xlsm",
+      "*.ppt",
+      "*.pptm",
+      "*.chm",
+      "*.vbs",
+      "*.js",
+      "*.bat",
+      "*.pif",
+      "*.pdf",
+      "*.jar",
+      "*.sys"
+    ],
+    "RegWhiteList": [
+      "*\\powershell.exe",
+      "*\\regedit.exe",
+      "*\\reg.exe",
+      "*\\cscript.exe",
+      "*\\wscript.exe"
+    ],
+    "WriteFileBlackList": [
+      "*\\cmdagent.exe",
+      "*\\MsMpEng.exe",
+      "*\\RmmService.exe",
+      "*\\ITSMService.exe",
+      "*\\officec2rclient.exe",
+      "*\\PmService.exe",
+      "*\\remsh.exe",
+      "*\\cfpconfg.exe",
+      "*\\ngen.exe",
+      "*\\cwagtsrv.exe",
+      "*\\edrstart.exe",
+      "*\\Code.exe",
+      "*\\git.exe",
+      "*\\DropboxUpdate.exe",
+      "*\\GoogleUpdate.exe",
+      "*\\devenv.exe"
+    ],
+    "WriteFileWhiteList": [
+      "*\\powershell.exe",
+      "*\\explorer.exe",
+      "*\\cmd.exe",
+      "*\\xcopy.exe",
+      "*\\cscript.exe",
+      "*\\wscript.exe"
+    ]
+  }
+}

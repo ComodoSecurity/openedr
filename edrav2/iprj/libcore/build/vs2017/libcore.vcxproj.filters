@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="__templates">
+      <UniqueIdentifier>{000ba28e-670a-486e-a9a0-a6186fa310df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="variant">
+      <UniqueIdentifier>{1bfa3b70-9102-4403-9350-8607adae34ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="string">
+      <UniqueIdentifier>{0f8ce00d-37b5-43c9-b158-76ec7977ae81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="variant\detail">
+      <UniqueIdentifier>{3e27307a-8073-41b1-83b6-8a9a3dbe67d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="variant\serialize">
+      <UniqueIdentifier>{4cbee4bc-ab35-419a-b2b9-4024cd7fa43b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="error">
+      <UniqueIdentifier>{44b93a25-a202-4016-a996-496e2186dc80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="io">
+      <UniqueIdentifier>{f28e22d6-a447-4e1e-a160-bdb616a439fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypt">
+      <UniqueIdentifier>{4e513908-74c4-48a9-9be3-a7d261bbb9da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="error\dump">
+      <UniqueIdentifier>{b591b777-f4d8-40f0-be59-a362ac5a4596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="log">
+      <UniqueIdentifier>{f3a44db7-3d6a-48b0-b2df-72c65e91e9bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{6307f515-d3e8-47f8-a7bd-add01ccd87e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ipc">
+      <UniqueIdentifier>{afde8a6b-e172-40ce-8774-f9b7ed457619}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="error\dump\win">
+      <UniqueIdentifier>{d3e12a5f-e83e-477f-abd7-419c31d1d9a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenario">
+      <UniqueIdentifier>{015e48be-d4b5-4aeb-a2ee-9c120122f201}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\inc\libcore.h" />
+    <ClInclude Include="..\..\src\pch.h" />
+    <ClInclude Include="..\..\src\pch_win.h" />
+    <ClInclude Include="..\..\inc\objects.h" />
+    <ClInclude Include="..\..\inc\extheaders.h" />
+    <ClInclude Include="..\..\inc\version.h" />
+    <ClInclude Include="..\..\inc\variant.hpp">
+      <Filter>variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\dictionary.hpp">
+      <Filter>variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\forward.hpp">
+      <Filter>variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\sequence.hpp">
+      <Filter>variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\variant_forward.hpp">
+      <Filter>variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\variant_impl.hpp">
+      <Filter>variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\string.hpp">
+      <Filter>string</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\detail\basic_dictionary.hpp">
+      <Filter>variant\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\detail\basic_sequence.hpp">
+      <Filter>variant\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\detail\value.hpp">
+      <Filter>variant\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\detail\value_int.hpp">
+      <Filter>variant\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\detail\value_string.hpp">
+      <Filter>variant\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\iterator.hpp">
+      <Filter>variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\serialize.hpp">
+      <Filter>variant\serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\error.hpp">
+      <Filter>error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\error\error_common.hpp">
+      <Filter>error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\error\error_win.hpp">
+      <Filter>error</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\dump.hpp">
+      <Filter>error\dump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\memstream.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\streamcache.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\stream.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\filestream.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\base64.h">
+      <Filter>crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\variantproxy.hpp">
+      <Filter>variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\variantproxy.h">
+      <Filter>variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\error\dump\crashpad.hpp">
+      <Filter>error\dump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\logging.hpp">
+      <Filter>log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\logsink.h">
+      <Filter>log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dictstreamview.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\common.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\application.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\core.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\command.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\message.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\object.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\basic.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\console.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\jsonrpcclient.h">
+      <Filter>ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\crypt.hpp">
+      <Filter>crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\crypt\crc32.hpp">
+      <Filter>crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\crypt\crc64.hpp">
+      <Filter>crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\crypt\md5.hpp">
+      <Filter>crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\crypt\sha1.hpp">
+      <Filter>crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\crypt\sha256.hpp">
+      <Filter>crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\lbvs.hpp">
+      <Filter>variant\serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\jsonrpcserver.h">
+      <Filter>ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\jsonrpc.h">
+      <Filter>ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\events.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\error\dump\dump_win.hpp">
+      <Filter>error\dump\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\io.hpp">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\service.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\command.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\error\dump\minidumpwriter.hpp">
+      <Filter>error\dump\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\templates\changeme.h">
+      <Filter>__templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\queue.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\queue.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\queuemgr.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\threadpool.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\datagenerator.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\servicemgr.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\dictionarymixer.h">
+      <Filter>variant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scenariomgr.h">
+      <Filter>scenario</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\scenario.h">
+      <Filter>scenario</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\utilities.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\stringmatcher.h">
+      <Filter>string</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\detail\value_dataproxy.hpp">
+      <Filter>variant\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\task.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ctxcmds.h">
+      <Filter>scenario</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\fsdatastorage.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\variantcmd.h">
+      <Filter>scenario</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\filestream-win.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\system.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\memory.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\aes.h">
+      <Filter>crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\serializer.h">
+      <Filter>variant\serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\cache.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\blobstg.hpp">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\variant\detail\dictkey.hpp">
+      <Filter>variant\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\crypt\common.hpp">
+      <Filter>crypt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\crypt\xxh.hpp">
+      <Filter>crypt</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\pch.cpp" />
+    <ClCompile Include="..\..\src\libcore.cpp" />
+    <ClCompile Include="..\..\src\pch_win.cpp" />
+    <ClCompile Include="..\..\src\dictstreamview.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\string_utf8.cpp">
+      <Filter>string</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\serialize_variant.cpp">
+      <Filter>variant\serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\variant.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\crashpad.cpp">
+      <Filter>error\dump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\memstream.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\streamcache.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\filestream.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stream.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base64.cpp">
+      <Filter>crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\logging.cpp">
+      <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\logsink.cpp">
+      <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\variantproxy.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\error_win.cpp">
+      <Filter>error</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\error.cpp">
+      <Filter>error</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dictstreamview.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\command.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\application.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\console.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\jsonrpcclient.cpp">
+      <Filter>ipc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\jsonrpcserver.cpp">
+      <Filter>ipc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dump_win.cpp">
+      <Filter>error\dump\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\minidumpwriter.cpp">
+      <Filter>error\dump\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\variantoperation.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\io.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\servicemgr.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\queuemgr.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\queue.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\threadpool.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\datagenerator.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\templates\changeme.cpp">
+      <Filter>__templates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scenariomgr.cpp">
+      <Filter>scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scenario.cpp">
+      <Filter>scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\dictionarymixer.cpp">
+      <Filter>variant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\string.cpp">
+      <Filter>string</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\stringmatcher.cpp">
+      <Filter>string</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\fsdatastorage.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ctxcmds.cpp">
+      <Filter>scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\variantcmd.cpp">
+      <Filter>scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\filestream-win.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\system_win.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\memory.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\aes.cpp">
+      <Filter>crypt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\serializer.cpp">
+      <Filter>variant\serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\lvbs.cpp">
+      <Filter>variant\serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cache.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\jsonrpc.cpp">
+      <Filter>ipc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\inc\variant\variant.natvis">
+      <Filter>variant</Filter>
+    </Natvis>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\inc\resource_base.rc" />
+  </ItemGroup>
+</Project>

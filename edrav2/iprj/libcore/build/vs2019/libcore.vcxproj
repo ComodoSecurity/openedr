@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\inc\application.hpp" />
+    <ClInclude Include="..\..\inc\basic.hpp" />
+    <ClInclude Include="..\..\inc\blobstg.hpp" />
+    <ClInclude Include="..\..\inc\command.hpp" />
+    <ClInclude Include="..\..\inc\common.hpp" />
+    <ClInclude Include="..\..\inc\core.hpp" />
+    <ClInclude Include="..\..\inc\crypt.hpp" />
+    <ClInclude Include="..\..\inc\crypt\common.hpp" />
+    <ClInclude Include="..\..\inc\crypt\crc32.hpp" />
+    <ClInclude Include="..\..\inc\crypt\crc64.hpp" />
+    <ClInclude Include="..\..\inc\crypt\md5.hpp" />
+    <ClInclude Include="..\..\inc\crypt\sha1.hpp" />
+    <ClInclude Include="..\..\inc\crypt\sha256.hpp" />
+    <ClInclude Include="..\..\inc\crypt\xxh.hpp" />
+    <ClInclude Include="..\..\inc\dump.hpp" />
+    <ClInclude Include="..\..\inc\error.hpp" />
+    <ClInclude Include="..\..\inc\error\dump\crashpad.hpp" />
+    <ClInclude Include="..\..\inc\error\dump\dump_win.hpp" />
+    <ClInclude Include="..\..\inc\error\dump\minidumpwriter.hpp" />
+    <ClInclude Include="..\..\inc\error\error_common.hpp" />
+    <ClInclude Include="..\..\inc\error\error_win.hpp" />
+    <ClInclude Include="..\..\inc\events.hpp" />
+    <ClInclude Include="..\..\inc\io.hpp" />
+    <ClInclude Include="..\..\inc\libcore.h" />
+    <ClInclude Include="..\..\inc\extheaders.h" />
+    <ClInclude Include="..\..\inc\memory.hpp" />
+    <ClInclude Include="..\..\inc\objects.h" />
+    <ClInclude Include="..\..\inc\logging.hpp" />
+    <ClInclude Include="..\..\inc\message.hpp" />
+    <ClInclude Include="..\..\inc\object.hpp" />
+    <ClInclude Include="..\..\inc\queue.hpp" />
+    <ClInclude Include="..\..\inc\service.hpp" />
+    <ClInclude Include="..\..\inc\string.hpp" />
+    <ClInclude Include="..\..\inc\system.hpp" />
+    <ClInclude Include="..\..\inc\task.hpp" />
+    <ClInclude Include="..\..\inc\threadpool.hpp" />
+    <ClInclude Include="..\..\inc\utilities.hpp" />
+    <ClInclude Include="..\..\inc\variant.hpp" />
+    <ClInclude Include="..\..\inc\variant\detail\basic_dictionary.hpp" />
+    <ClInclude Include="..\..\inc\variant\detail\basic_sequence.hpp" />
+    <ClInclude Include="..\..\inc\variant\detail\dictkey.hpp" />
+    <ClInclude Include="..\..\inc\variant\detail\value_dataproxy.hpp" />
+    <ClInclude Include="..\..\inc\variant\detail\value_int.hpp" />
+    <ClInclude Include="..\..\inc\variant\detail\value_string.hpp" />
+    <ClInclude Include="..\..\inc\variant\detail\value.hpp" />
+    <ClInclude Include="..\..\inc\variant\dictionary.hpp" />
+    <ClInclude Include="..\..\inc\variant\forward.hpp" />
+    <ClInclude Include="..\..\inc\variant\iterator.hpp" />
+    <ClInclude Include="..\..\inc\variant\lbvs.hpp" />
+    <ClInclude Include="..\..\inc\variant\sequence.hpp" />
+    <ClInclude Include="..\..\inc\variant\serialize.hpp" />
+    <ClInclude Include="..\..\inc\variant\variantproxy.hpp" />
+    <ClInclude Include="..\..\inc\variant\variant_forward.hpp" />
+    <ClInclude Include="..\..\inc\variant\variant_impl.hpp" />
+    <ClInclude Include="..\..\src\aes.h" />
+    <ClInclude Include="..\..\src\cache.h" />
+    <ClInclude Include="..\..\src\command.h" />
+    <ClInclude Include="..\..\inc\version.h" />
+    <ClInclude Include="..\..\src\base64.h" />
+    <ClInclude Include="..\..\src\console.h" />
+    <ClInclude Include="..\..\src\ctxcmds.h" />
+    <ClInclude Include="..\..\src\datagenerator.h" />
+    <ClInclude Include="..\..\src\dictionarymixer.h" />
+    <ClInclude Include="..\..\src\dictstreamview.h" />
+    <ClInclude Include="..\..\src\filestream-win.h" />
+    <ClInclude Include="..\..\src\filestream.h" />
+    <ClInclude Include="..\..\src\fsdatastorage.h" />
+    <ClInclude Include="..\..\src\jsonrpc.h" />
+    <ClInclude Include="..\..\src\jsonrpcserver.h" />
+    <ClInclude Include="..\..\src\localeventslogfile.h" />
+    <ClInclude Include="..\..\src\logsink.h" />
+    <ClInclude Include="..\..\src\serializer.h" />
+    <ClInclude Include="..\..\src\stringmatcher.h" />
+    <ClInclude Include="..\..\src\memstream.h" />
+    <ClInclude Include="..\..\src\pch.h" />
+    <ClInclude Include="..\..\src\pch_win.h" />
+    <ClInclude Include="..\..\src\scenario.h" />
+    <ClInclude Include="..\..\src\queue.h" />
+    <ClInclude Include="..\..\src\queuemgr.h" />
+    <ClInclude Include="..\..\src\jsonrpcclient.h" />
+    <ClInclude Include="..\..\src\scenariomgr.h" />
+    <ClInclude Include="..\..\src\servicemgr.h" />
+    <ClInclude Include="..\..\src\stream.h" />
+    <ClInclude Include="..\..\src\streamcache.h" />
+    <ClInclude Include="..\..\src\templates\changeme.h" />
+    <ClInclude Include="..\..\src\variantcmd.h" />
+    <ClInclude Include="..\..\src\variantproxy.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\edrext\src\cmd\sys\sys_win.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\aes.cpp" />
+    <ClCompile Include="..\..\src\cache.cpp" />
+    <ClCompile Include="..\..\src\command.cpp" />
+    <ClCompile Include="..\..\src\application.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\base64.cpp" />
+    <ClCompile Include="..\..\src\console.cpp" />
+    <ClCompile Include="..\..\src\core.cpp" />
+    <ClCompile Include="..\..\src\crashpad.cpp" />
+    <ClCompile Include="..\..\src\ctxcmds.cpp" />
+    <ClCompile Include="..\..\src\datagenerator.cpp" />
+    <ClCompile Include="..\..\src\dictionarymixer.cpp" />
+    <ClCompile Include="..\..\src\dictstreamview.cpp" />
+    <ClCompile Include="..\..\src\dump_win.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\error.cpp" />
+    <ClCompile Include="..\..\src\error_win.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\events.cpp" />
+    <ClCompile Include="..\..\src\filestream-win.cpp" />
+    <ClCompile Include="..\..\src\filestream.cpp" />
+    <ClCompile Include="..\..\src\fsdatastorage.cpp" />
+    <ClCompile Include="..\..\src\io.cpp" />
+    <ClCompile Include="..\..\src\jsonrpc.cpp" />
+    <ClCompile Include="..\..\src\jsonrpcserver.cpp" />
+    <ClCompile Include="..\..\src\libcore.cpp" />
+    <ClCompile Include="..\..\src\localeventslogfile.cpp" />
+    <ClCompile Include="..\..\src\logging.cpp" />
+    <ClCompile Include="..\..\src\logsink.cpp" />
+    <ClCompile Include="..\..\src\lvbs.cpp" />
+    <ClCompile Include="..\..\src\memory.cpp" />
+    <ClCompile Include="..\..\src\memstream.cpp" />
+    <ClCompile Include="..\..\src\minidumpwriter.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\jsonrpcclient.cpp" />
+    <ClCompile Include="..\..\src\pch_win.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scenario.cpp" />
+    <ClCompile Include="..\..\src\queue.cpp" />
+    <ClCompile Include="..\..\src\queuemgr.cpp" />
+    <ClCompile Include="..\..\src\scenariomgr.cpp" />
+    <ClCompile Include="..\..\src\serializer.cpp" />
+    <ClCompile Include="..\..\src\serialize_variant.cpp" />
+    <ClCompile Include="..\..\src\servicemgr.cpp" />
+    <ClCompile Include="..\..\src\stream.cpp" />
+    <ClCompile Include="..\..\src\streamcache.cpp" />
+    <ClCompile Include="..\..\src\string.cpp" />
+    <ClCompile Include="..\..\src\stringmatcher.cpp" />
+    <ClCompile Include="..\..\src\string_utf8.cpp" />
+    <ClCompile Include="..\..\src\system_win.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\templates\changeme.cpp" />
+    <ClCompile Include="..\..\src\threadpool.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch_win.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(TargetName)_win.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="..\..\src\variant.cpp" />
+    <ClCompile Include="..\..\src\variantcmd.cpp" />
+    <ClCompile Include="..\..\src\variantoperation.cpp" />
+    <ClCompile Include="..\..\src\variantproxy.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\inc\variant\variant.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\inc\resource_base.rc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{7ED98EB7-D581-4895-B1C6-C2311B61CEF3}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>libcore</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="..\..\..\build\vs2019\consts.props" />
+  <Import Project="$(CmdPropsDir)\lib_gen.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(CmdPropsDir)\lib.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

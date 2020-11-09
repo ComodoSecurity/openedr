@@ -1,0 +1,23 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+find_dependency(Threads)
+
+if(@HUNTER_ENABLED@)
+  find_package(jsoncpp CONFIG REQUIRED)
+endif()
+
+if(@HTTP_CLIENT@)
+  if(@HUNTER_ENABLED@)
+    find_package(CURL CONFIG REQUIRED)
+  else()
+    find_dependency(CURL)
+  endif()
+endif()
+
+if(@HTTP_SERVER@)
+  find_dependency(MHD)
+endif()
+
+include(${CMAKE_CURRENT_LIST_DIR}/libjson-rpc-cppTargets.cmake)

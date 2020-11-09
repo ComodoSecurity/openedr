@@ -1,0 +1,1117 @@
+//
+// Scenario converts MLE to the cloud format
+//
+// Input queue: transform_for_cloud
+// Output queue: app.config.script.transform_for_cloud.outputQueue
+//
+{
+	"version": "1.0",
+	"code": {
+
+		//
+		// Entrypoint
+		//
+		"main": [
+			// Get data from source queue
+			{
+				"processor": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.queueManager",
+					"command": "getQueue",
+					"params": { "name": "transform_for_cloud" }
+				},
+				"command": "get",
+				"$dst": "event"
+			},
+			// Put event to the batch queue
+			{
+				"$goto": "useOutputFilter",
+				"$if": {
+					"$gpath": "app.config.script.transform_for_cloud.enableOutputFilter",
+					"$default": false
+				}
+			},
+			//
+			// Fill version 1.1
+			//
+
+			// Create 'event2' which is used as a result event using some fields from the source event
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Add current protocol version
+					{
+						"item": "version",
+						"value": "1.1"
+					},
+					// Copy event type (LLE only)
+					{
+						"item": "baseType",
+						"localPath": "baseType"
+					},
+					// Copy event type (LLE or MLE)
+					{
+						"item": "type",
+						"localPath": "type",
+						"default": "<undefined>"
+					},
+					// Copy event time in UNCms
+					{
+						"item": "time",
+						"localPath": "time",
+						"default": "<undefined>"
+					},
+					// Field have to be copied from policy
+					{
+						"item": "baseEventType",
+						"localPath": "baseEventType",
+						"default": "<undefined>"
+					},
+					// Field have to be copied from policy
+					{
+						"item": "eventType",
+						"localPath": "eventType",
+						"default": null
+					},
+					// Copy customer id from the license
+					{
+						"item": "customerId",
+						"catalogPath": "app.config.license.customerId",
+						"default": "<undefined>"
+					},
+					// Copy endpoint id from the license
+					{
+						"item": "endpointId",
+						"catalogPath": "app.config.license.endpointId",
+						"default": "<undefined>"
+					},
+					// Copy device name from the config
+					{
+						"item": "deviceName",
+						"catalogPath": "os.hostName",
+						"default": "<undefined>"
+					},
+					// Copy session user name from the event
+					{
+						"item": "sessionUser",
+						"localPath": "process.token.user.name",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2"
+			},
+			// Jump to elevation-group events processing
+			{
+				"$goto": "fillElevation",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "contain",
+					"item": {
+						"$path": "event.baseType",
+						"$default": 0
+					},
+					"args": [
+						[
+							1000002, // MLE_PROCESS_ELEVATION
+							1000003, // MLE_THREAD_ELEVATION
+							1000004 // MLE_INTEGRITY_LEVEL_ELEVATION
+						]
+					]
+				}
+			},
+			// Add and transform 'processes' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'id' - unique process id
+					{
+						"item": "id",
+						"localPath": "id",
+						"default": "<undefined>"
+					},
+					// Copy 'pid' - system process id
+					{
+						"item": "pid",
+						"localPath": "pid",
+						"default": "<undefined>"
+					},
+					// Copy 'imagePath' - path to image file
+					{
+						"item": "imagePath",
+						"localPath": "imageFile.path",
+						"default": "<undefined>"
+					},
+					// Copy 'imageHash' - hash of image file
+					{
+						"item": "imageHash",
+						"localPath": "imageFile.hash",
+						"default": "<undefined>"
+					},
+					// DEBUG
+					//{
+					//	"item": "TEMP_flsVerdictIsReady",
+					//	"localPath": "imageFile.flsVerdictIsReady",
+					//	"default": "<undefined>"
+					//},
+					// Copy 'flsVerdict' - FLS service verdict for image file
+					{
+						"item": "flsVerdict",
+						"localPath": "imageFile.fls.verdict",
+						"default": 3 // UNKNOWN
+					},
+					// Copy 'verdict' - complex verdict for image file
+					{
+						"item": "verdict",
+						"localPath": "imageFile.verdict",
+						"default": 3 // UNKNOWN
+					},
+					// Copy 'userName' - user name of process session owner
+					{
+						"item": "userName",
+						"localPath": "token.user.name",
+						"default": "<undefined>"
+					},
+					// Copy 'creationTime' - creation time of process
+					{
+						"item": "creationTime",
+						"localPath": "creationTime",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{
+						"$$proxy": "cachedObj",
+						"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+						"command": {
+							"$$proxy": "cachedObj",
+							"clsid": "0xACE892B6", // CLSID_Command
+							"processor": "objects.processDataProvider",
+							"command": "getParentsChain"
+						},
+						"ctxParams": {
+							"data": { "$path": "event.process" },
+							"addSelf": {
+								"$$proxy": "cachedObj",
+								"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+								"operation": "!equal",
+								"args": [
+									1, // LLE_PROCESS_CREATE
+									{
+										"$path": "event.baseType",
+										"$default": 0
+									}
+								]
+							}
+						}
+					}
+				],
+				"$dst": "event2.processes"
+			},
+			// Fill 'childProcess' field if the raw event is edrdrv::SysmonEvent::ProcessCreate
+			{
+				"$goto": "fillChildProcess",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "contain",
+					"item": {
+						"$path": "event.baseType",
+						"$default": 0
+					},
+					"args": [ [ 1 ] ] // LLE_PROCESS_CREATE
+				}
+			},
+			// Fill 'file' info for file-based events
+			{
+				"$goto": "fillFile",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "or",
+					"args": [
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "has",
+							"path": "file",
+							"args": [ { "$path": "event" } ]
+						},
+						{
+							"$$proxy": "cachedObj",
+							"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+							"operation": "contain",
+							"item": {
+								"$path": "event.baseType",
+								"$default": 0
+							},
+							"args": [ [ 1000001 ] ] // MLE_FILE_COPY
+						}
+					]
+				}
+			},
+			// Fill 'registry' info for registry-based events
+			{
+				"$goto": "fillRegistry",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "has",
+					"path": "registry",
+					"args": [ { "$path": "event" } ]
+				}
+			},
+			// Fill 'network' info for LLE_NETWORK_REQUEST_DATA events and events based on it 
+			{
+				"$goto": "fillNetworkDownload",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "has",
+					"path": "url",
+					"args": [ { "$path": "event" } ]
+				}
+			},
+			// Fill 'network' info for network-based events
+			{
+				"$goto": "fillNetwork",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "has",
+					"path": "connection",
+					"args": [ { "$path": "event" } ]
+				}
+			},
+			// Fill 'network' info for Event::LLE_NETWORK_LISTEN
+			{
+				"$goto": "fillListenNetwork",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "contain",
+					"item": {
+						"$path": "event.baseType",
+						"$default": 0
+					},
+					"args": [ [ 41 ] ] // LLE_NETWORK_LISTEN
+				}
+			},
+			// Fill 'defensePlus' info for DefensePlus events
+			{
+				"$goto": "fillDefensePlus",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "has",
+					"path": "target",
+					"args": [ { "$path": "event" } ]
+				}
+			},
+			// Fill 'defensePlus' info for raw access events
+			{
+				"$goto": "fillDiskRawAccess",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "contain",
+					"item": {
+						"$path": "event.baseType",
+						"$default": 0
+					},
+					"args": [ [ 19, 22 ] ] // LLE_DISK_RAW_WRITE_ACCESS, LLE_DISK_LINK_CREATE
+				}
+			},
+			// Fill 'defensePlus' info for raw access events
+			{
+				"$goto": "fillVolumeRawAccess",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "contain",
+					"item": {
+						"$path": "event.baseType",
+						"$default": 0
+					},
+					"args": [ [ 20, 23 ] ] // LLE_VOLUME_RAW_WRITE_ACCESS, LLE_VOLUME_LINK_CREATE
+				}
+			},
+			// Fill 'defensePlus' info for raw access events
+			{
+				"$goto": "fillDeviceRawAccess",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "contain",
+					"item": {
+						"$path": "event.baseType",
+						"$default": 0
+					},
+					"args": [ [ 21, 24 ] ] // LLE_DEVICE_RAW_WRITE_ACCESS, LLE_DEVICE_LINK_CREATE
+				}
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill registry field for registry-based events
+		//
+		"fillRegistry": [
+			// Add 'registry' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'name' - registry value name
+					{
+						"item": "name",
+						"localPath": "registry.name"
+					},
+					// Copy 'data' - registry value data
+					{
+						"item": "data",
+						"localPath": "registry.data"
+					},
+					// Copy 'path' - registry path to value
+					{
+						"item": "path",
+						"localPath": "registry.path",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.registry"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill file field for file-related events
+		//
+		"fillFile": [
+			// Add 'id' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'hash' - unique process id
+					{
+						"item": "hash",
+						"localPath": "file.hash",
+						"default": "<undefined>"
+					},
+					// Copy 'hash' from the destination file (copy file events)
+					{
+						"item": "hash",
+						"localPath": "destination.hash"
+					},
+					// Copy 'type' - system process id
+					{
+						"item": "type",
+						"localPath": "file.type",
+						"default": "OTHER"
+					},
+					// Copy 'verdict' - FLS status to file
+					//{
+					//	"item": "verdict",
+					//	"localPath": "file.verdict",
+					//	"default": 3 // FLS_UNKNOWN
+					//},
+					// Copy 'path' - path to file
+					{
+						"item": "path",
+						"localPath": "file.path",
+						"default": "<undefined>"
+					},
+					// Copy 'path' from the destination file (copy file events)
+					{
+						"item": "path",
+						"localPath": "destination.path"
+					},
+					// Copy 'old.path' from the source file (copy file events)
+					{
+						"item": "old.path",
+						"localPath": "source.path"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.file"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill childProcess field for process-related events
+		//
+		"fillChildProcess": [
+			// Add 'id' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'id' - unique process id
+					{
+						"item": "id",
+						"localPath": "process.id",
+						"default": "<undefined>"
+					},
+					// Copy 'pid' - system process id
+					{
+						"item": "pid",
+						"localPath": "process.pid",
+						"default": "<undefined>"
+					},
+					// Copy 'imagePath' - path to image file
+					{
+						"item": "imagePath",
+						"localPath": "process.imageFile.path",
+						"default": "<undefined>"
+					},
+					// Copy 'imageHash' - hash of image file
+					{
+						"item": "imageHash",
+						"localPath": "process.imageFile.hash",
+						"default": "<undefined>"
+					},
+					// Copy 'flsVerdict' - FLS service verdict for image file
+					{
+						"item": "flsVerdict",
+						"localPath": "process.imageFile.fls.verdict",
+						"default": 3 // UNKNOWN
+					},
+					// Copy 'verdict' - complex verdict for image file
+					{
+						"item": "verdict",
+						"localPath": "process.imageFile.verdict",
+						"default": 3 // UNKNOWN
+					},
+					// Copy 'cmdLine' - user name of process session owner
+					{
+						"item": "cmdLine",
+						"localPath": "process.cmdLine",
+						"default": "<undefined>"
+					},
+					// Copy 'creationTime' - creation time of process
+					{
+						"item": "creationTime",
+						"localPath": "process.creationTime",
+						"default": "<undefined>"
+					},
+					// Copy 'elevationType' - creation time of process
+					{
+						"item": "elevationType",
+						"localPath": "process.token.elevationType",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.childProcess"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill defensePlus field for DefensePlus events
+		//
+		"fillDefensePlus": [
+			// Add 'targetName' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'targetName' - path to file
+					{
+						"item": "targetName",
+						"localPath": "target.imageFile.path",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.defensePlus"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill 'network' info for network-based events
+		//
+		"fillNetwork": [
+			// Add 'network' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					{
+						"item": "remoteIp",
+						"localPath": "connection.remote.ip"
+					},
+					{
+						"item": "remotePort",
+						"localPath": "connection.remote.port"
+					},
+					{
+						"item": "localIp",
+						"localPath": "connection.local.ip"
+					},
+					{
+						"item": "localPort",
+						"localPath": "connection.local.port"
+					},
+					{
+						"item": "status",
+						"localPath": "connection.status"
+					},
+					{
+						"item": "protocol",
+						"localPath": "connection.protocol"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.network"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill 'network' info for Event::LLE_NETWORK_LISTEN
+		//
+		"fillListenNetwork": [
+			// Add 'network' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					{
+						"item": "localIp",
+						"localPath": "address.ip"
+					},
+					{
+						"item": "localPort",
+						"localPath": "address.port"
+					},
+					{
+						"item": "protocol",
+						"localPath": "protocol"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.network"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill 'defensePlus' info for raw access events
+		//
+		"fillDiskRawAccess": [
+			// Add 'targetName' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'targetName' - path to file
+					{
+						"item": "targetName",
+						"localPath": "disk",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.defensePlus"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill 'defensePlus' info for raw access events
+		//
+		"fillVolumeRawAccess": [
+			// Add 'targetName' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'targetName' - path to file
+					{
+						"item": "targetName",
+						"localPath": "volume.name",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.defensePlus"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill 'defensePlus' info for raw access events
+		//
+		"fillDeviceRawAccess": [
+			// Add 'targetName' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'targetName' - path to file
+					{
+						"item": "targetName",
+						"localPath": "device",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.defensePlus"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Use OutputFilter to fill the output event descriptor
+		//
+		"useOutputFilter": [
+			// Call the output filter
+			{
+				"$dst": "event2",
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "obj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"cacheProcessor": true,
+					"processor": {
+						"$$proxy": "obj",
+						"clsid": "0x86BE13E4", // CLSID_OutputFilter
+						"events": {
+							"$$proxy": "cmd",
+							"processor": "objects.application",
+							"command": "getCatalogData",
+							"params": {
+								"path": "app.config.output.events"
+							}
+						}
+					},
+					"command": "filter"
+				},
+				"ctxParams": {
+					"type": { "$path": "event.type" },
+					"data": { "$path": "event" }
+				}
+			},
+			// Create 'event2' which is used as a result event using some fields from the source event
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "transform=",
+				"schema": [
+					// Add current protocol version
+					{
+						"item": "version",
+						"value": "2.0"
+					},
+					{
+						"item": "customerId",
+						"catalogPath": "app.config.license.customerId",
+						"default": "<undefined>"
+					},
+					// Copy endpoint id from the license
+					{
+						"item": "endpointId",
+						"catalogPath": "app.config.license.endpointId",
+						"default": "<undefined>"
+					},
+					// Copy device name from the config
+					{
+						"item": "deviceName",
+						"catalogPath": "os.hostName",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{ "$path": "event2" }
+				]
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill elevation-group events
+		//
+		"fillElevation": [
+			// Add and transform detailed 'processes' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'integrityLevel'
+					{
+						"item": "integrityLevel",
+						"localPath": "token.integrityLevel",
+						"default": "<undefined>"
+					},
+					// Copy 'token.user.class'
+					{
+						"item": "userClass",
+						"localPath": "token.user.class",
+						"default": "<undefined>"
+					},
+					// Copy 'id' - unique process id
+					{
+						"item": "id",
+						"localPath": "id",
+						"default": "<undefined>"
+					},
+					// Copy 'pid' - system process id
+					{
+						"item": "pid",
+						"localPath": "pid",
+						"default": "<undefined>"
+					},
+					// Copy 'imagePath' - path to image file
+					{
+						"item": "imagePath",
+						"localPath": "imageFile.path",
+						"default": "<undefined>"
+					},
+					// Copy 'imageHash' - hash of image file
+					{
+						"item": "imageHash",
+						"localPath": "imageFile.hash",
+						"default": "<undefined>"
+					},
+					// Copy 'flsVerdict' - FLS service verdict for image file
+					{
+						"item": "flsVerdict",
+						"localPath": "imageFile.fls.verdict",
+						"default": 3 // UNKNOWN
+					},
+					// Copy 'verdict' - complex verdict for image file
+					{
+						"item": "verdict",
+						"localPath": "imageFile.verdict",
+						"default": 3 // UNKNOWN
+					},
+					// Copy 'userName' - user name of process session owner
+					{
+						"item": "userName",
+						"localPath": "token.user.name",
+						"default": "<undefined>"
+					},
+					// Copy 'creationTime' - creation time of process
+					{
+						"item": "creationTime",
+						"localPath": "creationTime",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{
+						"$$proxy": "cachedObj",
+						"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+						"command": {
+							"$$proxy": "cachedObj",
+							"clsid": "0xACE892B6", // CLSID_Command
+							"processor": "objects.processDataProvider",
+							"command": "getParentsChain"
+						},
+						"ctxParams": {
+							"data": { "$path": "event.process" },
+							"addSelf": {
+								"$$proxy": "cachedObj",
+								"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+								"operation": "equal",
+								"args": [
+									1000003, // MLE_THREAD_ELEVATION
+									{
+										"$path": "event.baseType",
+										"$default": 0
+									}
+								]
+							}
+						}
+					}
+				],
+				"$dst": "event2.processes"
+			},
+			// Fill 'defensePlus' info for MLE_THREAD_ELEVATION events
+			{
+				"$goto": "fillThreadInfo",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "contain",
+					"item": {
+						"$path": "event.baseType",
+						"$default": 0
+					},
+					"args": [ [ 1000003 ] ] // MLE_THREAD_ELEVATION
+				}
+			},
+			// Fill detailed 'childProcess' field for token manipulation events
+			{
+				"$goto": "fillChildProcessDetailed",
+				"$if": {
+					"$$proxy": "cachedObj",
+					"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+					"operation": "contain",
+					"item": {
+						"$path": "event.baseType",
+						"$default": 0
+					},
+					"args": [ [ 1000002, 1000004 ] ] // MLE_PROCESS_ELEVATION, MLE_INTEGRITY_LEVEL_ELEVATION
+				}
+			}
+		],
+
+		//
+		// Fill 'defensePlus' info for for MLE_THREAD_ELEVATION events
+		//
+		"fillThreadInfo": [
+			// Add 'targetName' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'thread.token.user.class' - path to file
+					{
+						"item": "targetThreadUserClass",
+						"localPath": "thread.token.user.class",
+						"default": "<undefined>"
+					},
+					// Copy 'thread.tid' - path to file
+					{
+						"item": "targetThreadTID",
+						"localPath": "thread.tid",
+						"default": "<undefined>"
+					},
+					// Copy 'userName' - user name of impersonation token owner
+					{
+						"item": "userName",
+						"localPath": "thread.token.user.name",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.defensePlus"
+			},
+			// Goto result processingprocessing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill childProcess field for process-related events
+		//
+		"fillChildProcessDetailed": [
+			// Add 'id' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					// Copy 'integrityLevel'
+					{
+						"item": "integrityLevel",
+						"localPath": "process.token.integrityLevel",
+						"default": "<undefined>"
+					},
+					// Copy 'token.user.class'
+					{
+						"item": "userClass",
+						"localPath": "process.token.user.class",
+						"default": "<undefined>"
+					},
+					// Copy 'id' - unique process id
+					{
+						"item": "id",
+						"localPath": "process.id",
+						"default": "<undefined>"
+					},
+					// Copy 'pid' - system process id
+					{
+						"item": "pid",
+						"localPath": "process.pid",
+						"default": "<undefined>"
+					},
+					// Copy 'imagePath' - path to image file
+					{
+						"item": "imagePath",
+						"localPath": "process.imageFile.path",
+						"default": "<undefined>"
+					},
+					// Copy 'imageHash' - hash of image file
+					{
+						"item": "imageHash",
+						"localPath": "process.imageFile.hash",
+						"default": "<undefined>"
+					},
+					// Copy 'flsVerdict' - FLS service verdict for image file
+					{
+						"item": "flsVerdict",
+						"localPath": "process.imageFile.fls.verdict",
+						"default": 3 // UNKNOWN
+					},
+					// Copy 'verdict' - complex verdict for image file
+					{
+						"item": "verdict",
+						"localPath": "process.imageFile.verdict",
+						"default": 3 // UNKNOWN
+					},
+					// Copy 'cmdLine' - user name of process session owner
+					{
+						"item": "cmdLine",
+						"localPath": "process.cmdLine",
+						"default": "<undefined>"
+					},
+					// Copy 'creationTime' - creation time of process
+					{
+						"item": "creationTime",
+						"localPath": "process.creationTime",
+						"default": "<undefined>"
+					},
+					// Copy 'elevationType' - creation time of process
+					{
+						"item": "elevationType",
+						"localPath": "process.token.elevationType",
+						"default": "<undefined>"
+					},
+					// Copy 'userName' - user name of process session owner
+					{
+						"item": "userName",
+						"localPath": "process.token.user.name",
+						"default": "<undefined>"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.childProcess"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Fill 'network' info for event MLE_DANGEROUS_FILE_DOWNLOAD
+		//
+		"fillNetworkDownload": [
+			// Add 'network' field
+			{
+				"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+				"operation": "filter",
+				"schema": [
+					{
+						"item": "remoteIp",
+						"localPath": "connection.remote.ip"
+					},
+					{
+						"item": "remotePort",
+						"localPath": "connection.remote.port"
+					},
+					{
+						"item": "url",
+						"localPath": "url"
+					}
+				],
+				"args": [
+					{ "$path": "event" }
+				],
+				"$dst": "event2.network"
+			},
+			// Goto result processing
+			{
+				"$goto": "putResult"
+			}
+		],
+
+		//
+		// Put new event to destination queue
+		//
+		"putResult": [
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": {
+							"name": {
+								"$$proxy": "cachedCmd",
+								"processor": "objects.application",
+								"command": "getCatalogData",
+								"params": {
+									"path": "app.config.script.transform_for_cloud.outputQueue"
+								}
+							}
+						}
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event2" }
+				}
+			}
+		]
+	}
+}

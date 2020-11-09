@@ -1,0 +1,166 @@
+//
+// Scenario applies the patterns matching policy for each type of event
+//
+// Input queue: match_patterns
+// Output queue: app.config.script.match_patterns.outputQueue
+//
+{
+	"version": "1.0",
+	"code": {
+
+		//
+		// Entrypoint
+		//
+		"main": [
+			// Register commands to be called from the inner policy
+			{
+				"$dst": "eventHandler.call",
+				"$set": {
+					"createEvent": {
+						"$$proxy": "cachedObj",
+						"clsid": "0x61A30254", // CLSID_Scenario
+						"addParams": true,
+						"name": "createEvent",
+						"code": [
+							{
+								"$if": {
+									"$$proxy": "cachedObj",
+									"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+									"operation": "contain",
+									"item": { "$path": "params.destination" },
+									"args": [ [ "IN", "IN_OUT" ] ]
+								},
+								"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+								"command": {
+									"$$proxy": "cachedObj",
+									"clsid": "0xACE892B6", // CLSID_Command
+									"processor": {
+										"$$proxy": "cachedCmd",
+										"processor": "objects.queueManager",
+										"command": "getQueue",
+										"params": { "name": "match_patterns" }
+									},
+									"command": "put"
+								},
+								"ctxParams": {
+									"data": { "$path": "params.data" }
+								}
+							},
+							{
+								"$if": {
+									"$$proxy": "cachedObj",
+									"clsid": "0x3C365C39", // CLSID_VariantCtxCmd
+									"operation": "contain",
+									"item": { "$path": "params.destination" },
+									"args": [ [ "OUT", "IN_OUT" ] ]
+								},
+								"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+								"command": {
+									"$$proxy": "cachedObj",
+									"clsid": "0xACE892B6", // CLSID_Command
+									"processor": {
+										"$$proxy": "cachedCmd",
+										"processor": "objects.queueManager",
+										"command": "getQueue",
+										"params": {
+											"name": {
+												"$$proxy": "cachedCmd",
+												"processor": "objects.application",
+												"command": "getCatalogData",
+												"params": {
+													"path": "app.config.script.apply_policy.outputQueue"
+												}
+											}
+										}
+									},
+									"command": "put"
+								},
+								"ctxParams": {
+									"data": { "$path": "params.data" }
+								}
+							}
+						]
+					}
+				}
+			},
+			// Get event from source queue
+			{
+				"processor": {
+					"$$proxy": "cachedCmd",
+					"processor": "objects.queueManager",
+					"command": "getQueue",
+					"params": { "name": "match_patterns" }
+				},
+				"command": "get",
+				"$dst": "event"
+			},
+			// Call policy body scenario
+			{
+				"$exec": {
+					"$$proxy": "cmd",
+					"processor": "objects.application",
+					"command": "getCatalogData",
+					"params": {
+						"path": "app.config.policy.groups.patternsMatching.scenario"
+					}
+				},
+				"$dst": "eventHandler.policyResult"
+			},
+			// Check if we have policy result (policy matched)
+			{
+				"$goto": "discardEvent",
+				"$if": {
+					"$path": "eventHandler.policyResult.discard",
+					"$default": false
+				}
+			},
+			// Save event to output queue
+			{
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": {
+						"$$proxy": "cachedCmd",
+						"processor": "objects.queueManager",
+						"command": "getQueue",
+						"params": {
+							"name": {
+								"$$proxy": "cachedCmd",
+								"processor": "objects.application",
+								"command": "getCatalogData",
+								"params": {
+									"path": "app.config.script.match_patterns.outputQueue"
+								}
+							}
+						}
+					},
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		],
+
+		//
+		// Discard current event
+		//
+		"discardEvent": [
+			// Save event to discarded log
+			{
+				"$if": { "$gpath": "app.config.script.apply_policy.enableDiscardedLog" },
+				"clsid": "0x59D2EF6E", // CLSID_CallCtxCmd
+				"command": {
+					"$$proxy": "cachedObj",
+					"clsid": "0xACE892B6", // CLSID_Command
+					"processor": "app.config.script.apply_policy.discardedLog",
+					"command": "put"
+				},
+				"ctxParams": {
+					"data": { "$path": "event" }
+				}
+			}
+		]
+	}
+}

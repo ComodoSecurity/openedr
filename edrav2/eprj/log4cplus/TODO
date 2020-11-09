@@ -1,0 +1,47 @@
+Possible enhancements and directions of development, in no particular
+order:
+
+- Rewrite FileAppender to use OS specific file handling to allow
+  RollingFileAppender to roll log files shared between multiple
+  processes even on Windows.
+
+- Improve error handling
+  - allow not to throw exceptions
+  - create hooks to allow users to override behaviour
+
+- EventLog library appender.
+
+- org.apache.log4j.net.ZeroConfSocketHubAppender.
+
+- Reading log4j-like XML configuration files.
+
+- More flexible events format for transport over network. ASN.1? XML?
+  YAML? JSON?.
+
+- Modular PatternLayout; public PatternConverter classes; user defined
+  format specifiers.
+
+- More flexible log file rotation, like keeping only last 31 days of
+  logs produced by DailyRollingFileAppender, rotate at midnight, etc.
+
+- Installers for Debian, Ubuntu, Windows/Qt Creator.
+
+- Allow specifying codecvt facet for FileAppender through properties.
+
+- Custom codecvt facet for use FileAppender using log4cplus' internal
+  wchar_t <-> chart conversion routines.
+
+- Research possible use of Valgrind at compile time.
+
+- Research possible use of -fmudflap.
+
+- Improve CMake configuration checks (TLS) to be on par with
+  Autoconf's.
+
+- ConsoleAppender or specialized appender with colored output per log
+  level for *NIX platforms. Win32ConsoleAppender already has some
+  support for this.
+
+- Graylog2/GELF appender. See
+  <https://github.com/Graylog2/graylog2-docs/wiki/GELF>.
+

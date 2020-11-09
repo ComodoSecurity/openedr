@@ -1,0 +1,44 @@
+version: 2.0.0.{build}
+
+install:
+    - git submodule update --init --recursive
+
+environment:
+    matrix:
+      #
+      # >>> Enable for 1.x
+      # - PRJ_GEN: "Visual Studio 11 2012 Win64"
+      #   BDIR: msvc2012
+      #   PRJ_CFG: Release
+        - PRJ_GEN: "Visual Studio 12 2013 Win64"
+          BDIR: msvc2013
+          PRJ_CFG: Release
+          PARAMS: ''
+        - PRJ_GEN: "Visual Studio 14 2015 Win64"
+          BDIR: msvc2015
+          PRJ_CFG: Release
+          PARAMS: ''
+        - PRJ_GEN: "Visual Studio 14 2015 Win64"
+          BDIR: msvc2015clang
+          PRJ_CFG: Release
+          PARAMS: -T "v140_clang_c2"
+        # - PRJ_GEN: "Visual Studio 15 2017 Win64"
+        #   BDIR: msvc2017
+        #   PRJ_CFG: Release
+        #   PARAMS: ''
+        #   image: Visual Studio 2017
+        # - PRJ_GEN: "Visual Studio 15 2017 Win64"
+        #   BDIR: msvc2017clang
+        #   PRJ_CFG: Release
+        #   PARAMS: -T "v141_clang_c2"
+        #   image: Visual Studio 2017
+
+build_script:
+    - mkdir build.%BDIR%
+    - cd build.%BDIR%
+    - cmake .. -G "%PRJ_GEN%" "-DCMAKE_BUILD_TYPE=%PRJ_CFG%" %PARAMS%
+    - cmake --build . --config "%PRJ_CFG%" --clean-first
+
+test_script:
+    - ctest -V --output-on-failure -C %PRJ_CFG%
+

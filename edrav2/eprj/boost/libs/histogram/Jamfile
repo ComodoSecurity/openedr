@@ -1,0 +1,30 @@
+# Copyright (c) 2018 Mateusz Loskot <mateusz@loskot.net>
+# Copyright Klemens David Morgenstern, Hans P. Dembinski 2016-2017
+#
+# Use, modification and distribution is subject to the Boost Software License,
+# Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
+import common ;
+
+path-constant THIS_PATH : . ;
+
+# only works with clang because of -fsanitize-blacklist
+variant histogram_ubasan : debug :
+    <cxxflags>"-fno-omit-frame-pointer -O0 -fno-inline -fsanitize=address,leak,undefined -fno-sanitize-recover=all -fsanitize-blacklist=$(THIS_PATH)/tools/blacklist.supp"
+    # correct linkflags don't work on travis, use workaround
+    <linkflags>"-fsanitize=address,leak,undefined"
+    # <linkflags>"-lasan -lubsan"
+    ;
+
+project
+    : requirements
+    <implicit-dependency>/boost//headers
+    <include>$(BOOST_ROOT)
+    : default-build
+    <warnings>all
+    #<warnings-as-errors>on
+    ;
+
+build-project test ;
+build-project examples ;

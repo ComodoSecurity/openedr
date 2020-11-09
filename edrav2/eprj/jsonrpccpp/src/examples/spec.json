@@ -1,0 +1,51 @@
+[
+    {
+        "name": "sayHello",
+        "params": {
+            "name": "Peter"
+        },
+        "returns": "Hello Peter"
+    },
+    {
+        "name": "notifyServer"
+    },
+    {
+        "name": "addNumbers",
+        "params": [
+            3,
+            4
+        ],
+        "returns": 7
+    },
+    {
+        "name": "addNumbers2",
+        "params": [
+            3.2,
+            4.1
+        ],
+        "returns": 7.5
+    },
+    {
+        "name": "isEqual",
+        "params": [
+            "string1",
+            "string2"
+        ],
+        "returns": false
+    },
+    {
+        "name": "buildObject",
+        "params": [
+            "peter",
+            1990
+        ],
+        "returns": {
+            "name": "peter",
+            "year": 1990
+        }
+    },
+    {
+        "name" : "methodWithoutParameters",
+        "returns": "String"
+    }
+]

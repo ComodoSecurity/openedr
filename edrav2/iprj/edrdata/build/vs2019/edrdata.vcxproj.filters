@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="qsc">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\..\..\edrdata\qsc\calc_file_hash.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\edrdata\qsc\enrich_mle.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\edrdata\qsc\filter_lle.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\..\edrdata\qsc\transform_for_cloud.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\qsc\apply_policy.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\scenarios.cfg" />
+    <CopyFileToFolders Include="..\..\debug.cfg" />
+    <CopyFileToFolders Include="..\..\qsc\enrich_lle.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\qsc\check_for_valkyrie.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\qsc\submit_to_valkyrie.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\qsc\get_fls_verdict.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\qsc\output.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\compiler.cfg" />
+    <CopyFileToFolders Include="..\..\cacert.pem" />
+    <CopyFileToFolders Include="..\..\qsc\output_batch.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\..\ptm.local.src" />
+    <CopyFileToFolders Include="..\..\common.src" />
+    <CopyFileToFolders Include="..\..\evm.local.src" />
+    <CopyFileToFolders Include="..\..\qsc\match_patterns.qsc">
+      <Filter>qsc</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\evm.act" />
+    <None Include="..\..\evm.cloud.src" />
+  </ItemGroup>
+</Project>

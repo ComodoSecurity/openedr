@@ -1,0 +1,33 @@
+language: cpp
+dist: trusty
+services:
+  - docker
+before_install:
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]
+    then
+     brew update
+     brew install jsoncpp argtable curl hiredis redis
+     brew install libmicrohttpd --with-ssl
+    fi
+
+matrix:
+  include:
+    - env: OS=fedora
+      os: linux
+    - env: OS=arch
+      os: linux
+    - env: OS=debian9
+      os: linux
+    - env: OS=debian10
+      os: linux
+    - env: OS=ubuntu1604
+      os: linux
+    - env: OS=ubuntu1804
+      os: linux
+    - env: OS=osx
+      os: osx
+      compiler: clang
+
+script:
+    - cd docker && make ${OS};

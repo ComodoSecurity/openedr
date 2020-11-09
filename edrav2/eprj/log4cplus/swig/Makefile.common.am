@@ -1,0 +1,14 @@
+if WITH_SWIG
+SWIG_SOURCES = \
+  %D%/configurator.swg \
+  %D%/hierarchy.swg \
+  %D%/log4cplus.swg \
+  %D%/logger.swg \
+  %D%/loggingevent.swg
+
+%D%/log4cplus.swg: %D%/configurator.swg \
+  %D%/hierarchy.swg \
+  %D%/logger.swg \
+  %D%/loggingevent.swg
+
+endif

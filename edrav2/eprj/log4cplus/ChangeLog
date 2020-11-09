@@ -1,0 +1,106 @@
+# log4cplus 2.0.3
+
+  - Fix compilation on systems without `O_CLOEXEC`. This affects, e.g.,
+    Solaris 10. GitHub issue #326. (Patch by Jiangrz).
+
+  - Provide `log4cplus::deinitialize()` to make the API symmetric
+    (`log4cplus::initialize()` already exists) and to allow
+    de-/initialization without `log4cplus::Initializer` instance. GitHub
+    issue #340.
+
+  - Deal with `register` keyword being generated in SWIG based bindings. The
+    keyword is unused and reserved in C++17. Remove use of
+    `std::unary_function`, it was removed in C++17.
+
+  - Add ability to define new log levels using C API. Add reconfiguration
+    API. (Jens Rehsack)
+
+  - Add `NDCMatchFilter` and `MDCMatchFilter`. (Franck)
+
+
+# log4cplus 2.0.2
+
+  - Allow setting thread pool size using new function
+    `setThreadPoolSize()`. Allow setting the size from `log4cplus.properties`
+    using `log4cplus.threadPoolSize` property. Lower initial thread pool size
+    by half to `std::thread::hardware_concurrency()` threads. GitHub issue
+    #315.
+
+  - Fix Autotools based build for MinGW. GitHub issue #317.
+
+  - Add `configure` script option `--enable-lto` to allow easier LTO builds.
+
+  - Optimization of `getFormattedTime()`. (Alexey Vishtak)
+
+  - Introduction of `LOG4CPLUS_MACRO_FILE()` used in logging macros to allow
+    users to redefine it and consequently hide source file names from their
+    compiled executables and logging output.
+
+
+# log4cplus 2.0.1
+
+  - Update to Automake 1.16.1.
+
+  - Adjust `spi::LoggerFactory` to allow custom `spi::LoggerImpl`. GitHub
+    issue #309.
+
+  - Fix MacOS X compilation. GitHub issue #312.
+
+
+# log4cplus 2.0
+
+  - CMake improvements: Automate export of includes if building as Cmake
+    sub-module. (Rodion Malinovsky)
+
+  - Debian spec file improvements: Use parallel build. Fix installation path
+    on 64bit. (Michal Marek)
+
+  - CMake improvements: Use `${CMAKE_INSTALL_LIBDIR}` instead of hardcoding
+    lib. (Radek Dostál)
+
+  - Experimental Windows 10 ARM support through CMAKE
+
+
+# log4cplus 2.0-RC2
+
+  - Avoid copying whole message just to prepend message length in
+    `SocketAppender`. Instead, use OS specific "gather" socket write.
+
+  - Fixed GitHub issue #136.
+
+  - `FileAppender` classes now have `TextMode` property that can be set to
+    `Binary` or `Text` (default) to specify underlying IO stream behavior
+    with respect to end-of-line handling. (Patch by raphaelmarcucci).
+
+  - Fixed compilation issues when building log4cplus with Visual Studio and
+    Clang toolchain.
+
+  - Fixed various shutdown and initialization related deadlocks and
+    crashes. GitHub issues #251, #253.
+
+  - Fixed GitHub issue #243. Single-threaded build with Visual Studio and
+    CMake were not single-threaded.
+
+  - Fixed GitHub issue #250. Creating WiX based installer using CPack does
+    not work because of missing license file.
+
+
+# log4cplus 2.0-RC1
+
+  - **IMPORTANT**: Implementation language is now C++11. OS specific
+    implementations have been replaced by C++11 facilities wherever
+    possible. This lowers complexity of the library and improves
+    maintainability but it also brings limitations to when the library can be
+    used. Specifically, the library should not be used before `main()` is
+    entered and after `main()` is left. Even more specifically, the library
+    should not be used during global objects construction and destruction.
+
+  - log4cplus uses Catch unit testing framework and has unit tests.
+
+  - log4cplus supports IPv6.
+
+  - Autotools based build system is now partially generated from templates by
+    the Autogen tool.
+
+  - Autotools based build system can build both `wchar_t` and plain `char`
+    variants at once.

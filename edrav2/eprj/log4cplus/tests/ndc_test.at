@@ -1,0 +1,10 @@
+AT_SETUP([ndc_test])
+AT_KEYWORDS([appenders])
+
+AT_CHECK([cp -f "${abs_srcdir}/ndc_test/expout" .])
+AT_CHECK(["${abs_top_builddir}/ndc_test"], [0], [expout])
+ATX_WCHAR_T_TEST([
+  AT_CHECK(["${abs_top_builddir}/ndc_test"], [0], [expout])
+])
+
+AT_CLEANUP

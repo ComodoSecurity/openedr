@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CopyFileToFolders Include="$(OutDir)..\edrsvc.exe">
+      <Filter>bin</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="$(OutDir)..\edrpm64.dll">
+      <Filter>bin</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="$(OutDir)..\edrpm32.dll">
+      <Filter>bin</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="$(OutDir)..\edrmm.dll">
+      <Filter>bin</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="$(OutDir)..\unsigned\edrdrv.sys">
+      <Filter>bin</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="$(OutDir)..\edrcon.exe">
+      <Filter>bin</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="bin">
+      <UniqueIdentifier>{ae5394f5-d1d0-45d4-86b7-e01418f499ed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

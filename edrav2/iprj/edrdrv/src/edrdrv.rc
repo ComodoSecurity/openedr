@@ -1,0 +1,5 @@
+#define CMD_RC_FILE_DESCRIPTION_STR CMD_RC_PRODUCT_NAME_STR " filter driver"
+#define CMD_RC_FILETYPE VFT_DRV
+#define CMD_RC_FILESUBTYPE VFT2_DRV_SYSTEM
+
+#include "libcore\inc\resource_base.rc"

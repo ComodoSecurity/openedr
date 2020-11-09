@@ -1,0 +1,43 @@
+#include <winresrc.h>
+
+#ifdef NDEBUG
+#define VER_DEBUG 0
+#else
+#define VER_DEBUG VS_FF_DEBUG
+#endif
+
+#if @log4cplus_build_shared@
+#define VER_FILETYPE VFT_DLL
+#else
+#define VER_FILETYPE VFT_STATIC_LIB
+#endif
+
+#define VER_BINARY @log4cplus_version_major@,@log4cplus_version_minor@,@log4cplus_version_patch@,0
+#define VER_STR "@log4cplus_version_major@.@log4cplus_version_minor@.@log4cplus_version_patch@"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION VER_BINARY
+PRODUCTVERSION VER_BINARY
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS VER_DEBUG
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VER_FILETYPE
+FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "log4cplus"
+            VALUE "FileDescription", "log4cplus logging library"
+            VALUE "FileVersion", VER_STR
+            VALUE "InternalName", "@log4cplus@"
+            VALUE "ProductName", "@log4cplus@"
+            VALUE "ProductVersion", VER_STR
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 1200
+    END
+END

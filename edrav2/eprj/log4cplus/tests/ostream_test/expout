@@ -1,0 +1,16 @@
+DEBUG - This is a really long message.
+Just testing it out
+What do you think?
+DEBUG - This is a bool: 1
+INFO - This is a char: x
+INFO - This is a short: -100
+INFO - This is a unsigned short: 100
+INFO - This is a int: 1000
+INFO - This is a unsigned int: 1000
+INFO - This is a long(hex): 5f5e100
+INFO - This is a unsigned long: 100000000
+WARN - This is a float: 1.2345
+ERROR - This is a double: 1.2345234234
+FATAL - This is a long double: 123452342342.25
+WARN - The following message is empty:
+WARN - 

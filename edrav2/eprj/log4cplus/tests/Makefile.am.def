@@ -1,0 +1,23 @@
+AutoGen definitions Makefile.am.tpl;
+
+tests = { name = appender_test; };
+tests = {
+      name = configandwatch_test;
+      need_threads = 1; };
+tests = { name = customloglevel_test; };
+tests = { name = fileappender_test; };
+tests = { name = filter_test; };
+tests = { name = hierarchy_test; };
+tests = { name = loglog_test; };
+tests = { name = ndc_test; };
+tests = { name = ostream_test; };
+tests = { name = patternlayout_test; };
+tests = { name = performance_test; };
+tests = { name = priority_test; };
+tests = { name = propertyconfig_test; };
+tests = { name = socket_test; };
+tests = {
+       name = thread_test;
+       need_threads = 1; };
+tests = { name = timeformat_test; };
+tests = { name = unit_tests; };

@@ -1,0 +1,38 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "installation", "..\..\iprj\installation\build\vs2017\installation.wixproj", "{6C957042-F2BE-441C-9CD7-589F51F0D842}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "upgrade", "..\..\iprj\upgrade\build\vs2017\upgrade.wixproj", "{B7302B2D-5EE2-4660-A1C8-A8D560D9C581}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C957042-F2BE-441C-9CD7-589F51F0D842}.Debug|x64.ActiveCfg = Debug|x64
+		{6C957042-F2BE-441C-9CD7-589F51F0D842}.Debug|x64.Build.0 = Debug|x64
+		{6C957042-F2BE-441C-9CD7-589F51F0D842}.Debug|x86.ActiveCfg = Debug|x86
+		{6C957042-F2BE-441C-9CD7-589F51F0D842}.Debug|x86.Build.0 = Debug|x86
+		{6C957042-F2BE-441C-9CD7-589F51F0D842}.Release|x64.ActiveCfg = Release|x64
+		{6C957042-F2BE-441C-9CD7-589F51F0D842}.Release|x64.Build.0 = Release|x64
+		{6C957042-F2BE-441C-9CD7-589F51F0D842}.Release|x86.ActiveCfg = Release|x86
+		{6C957042-F2BE-441C-9CD7-589F51F0D842}.Release|x86.Build.0 = Release|x86
+		{B7302B2D-5EE2-4660-A1C8-A8D560D9C581}.Debug|x64.ActiveCfg = Debug|x86
+		{B7302B2D-5EE2-4660-A1C8-A8D560D9C581}.Debug|x86.ActiveCfg = Debug|x86
+		{B7302B2D-5EE2-4660-A1C8-A8D560D9C581}.Debug|x86.Build.0 = Debug|x86
+		{B7302B2D-5EE2-4660-A1C8-A8D560D9C581}.Release|x64.ActiveCfg = Release|x86
+		{B7302B2D-5EE2-4660-A1C8-A8D560D9C581}.Release|x86.ActiveCfg = Release|x86
+		{B7302B2D-5EE2-4660-A1C8-A8D560D9C581}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {95D3BA5A-70A1-4B03-AC5A-A355CB328717}
+	EndGlobalSection
+EndGlobal

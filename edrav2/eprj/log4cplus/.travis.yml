@@ -1,0 +1,81 @@
+language: cpp
+sudo: false
+dist: trusty
+compiler:
+  - gcc
+  - clang
+addons: &addons
+  apt:
+    sources: &sources
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-precise-3.8
+      - ubuntu-sdk-team
+    packages: &packages
+      - g++-6
+      - gcc-6
+      - clang-3.8
+      - libstdc++-5-dev
+      - swig
+      - python
+      # - qtbase5-dev
+env:
+  # - PARAM_THREADS="--enable-threads --with-python --with-qt5 --with-working-c-locale --with-wchar_t-support --enable-unit-tests"
+  #   CXXFLAGS="" SWIG_FLAGS="" QT=qtbase5-dev
+  # - PARAM_THREADS="--enable-threads --with-python --with-qt5 --with-working-locale --with-wchar_t-support --enable-unit-tests"
+  #   CXXFLAGS="" SWIG_FLAGS="" QT=qtbase5-dev
+  # - PARAM_THREADS="--disable-threads --with-python --with-qt5 --with-working-locale --with-wchar_t-support --enable-unit-tests"
+  #   CXXFLAGS="" SWIG_FLAGS="" QT=qtbase5-dev
+  # - PARAM_THREADS="--enable-threads --with-python --with-qt5 --with-iconv --with-wchar_t-support --enable-unit-tests"
+  #   CXXFLAGS="" SWIG_FLAGS="" QT=qtbase5-dev
+  # - PARAM_THREADS="--disable-threads --with-python --with-qt5 --with-iconv --with-wchar_t-support --enable-unit-tests"
+  #   CXXFLAGS="" SWIG_FLAGS="" QT=qtbase5-dev
+  - PARAM_THREADS="--enable-threads --with-python --with-qt --with-working-c-locale --with-wchar_t-support --enable-unit-tests"
+    CXXFLAGS="" SWIG_FLAGS=""
+  - PARAM_THREADS="--enable-threads --with-python --with-qt --with-working-locale --with-wchar_t-support --enable-unit-tests"
+    CXXFLAGS="" SWIG_FLAGS=""
+  - PARAM_THREADS="--disable-threads --with-python --with-qt --with-working-locale --with-wchar_t-support --enable-unit-tests"
+    CXXFLAGS="" SWIG_FLAGS=""
+  - PARAM_THREADS="--enable-threads --with-python --with-qt --with-iconv --with-wchar_t-support --enable-unit-tests"
+    CXXFLAGS="" SWIG_FLAGS=""
+  - PARAM_THREADS="--disable-threads --with-python --with-qt --with-iconv --with-wchar_t-support --enable-unit-tests"
+    CXXFLAGS="" SWIG_FLAGS=""
+before_install:
+  - lsb_release -a
+  - git submodule update --init --recursive
+before_script:
+  - |
+      case "$CXX" in #(
+      g++*) CXX=g++-6 #(
+      ;;
+      clang++*) CXX=clang++-3.8
+      ;;
+      esac
+  - |
+      case "$CC" in #(
+      gcc*) CC=gcc-6 #(
+      ;;
+      clang*) CC=clang-3.8
+      ;;
+      esac
+  - export CXX CC
+  - sh ./scripts/fix-timestamps.sh
+  - mkdir objdir
+  - cd objdir
+script: ../configure $PARAM_THREADS
+  CPPFLAGS="-U_GLIBCXX_USE_FLOAT128"
+  CXXFLAGS="$CXXFLAGS"
+  SWIG_FLAGS="$SWIG_FLAGS"
+  && make
+  && make check
+after_failure:
+  - cat config.log
+  - cat tests/testsuite.log
+branches:
+  only:
+    - 2.0.x
+notifications:
+  recipients:
+    - vhaisman@gmail.com
+  email:
+    on_success: always
+    on_failure: always

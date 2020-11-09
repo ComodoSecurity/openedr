@@ -1,0 +1,14 @@
+AT_SETUP([configandwatch_test])
+AT_KEYWORDS([appenders])
+
+AT_SKIP_IF([test "x$ENABLE_THREADS" != "xyes"])
+AT_CHECK([cp -f "${abs_builddir}/configandwatch_test/log4cplus.properties" .])
+AT_CHECK(["${abs_top_builddir}/configandwatch_test"], [0], [ignore], [stderr])
+AT_CHECK([! $GREP "Please initialize the log4cplus system properly"< stderr])
+
+ATX_WCHAR_T_TEST([
+  AT_CHECK(["${abs_top_builddir}/configandwatch_testU"], [0], [ignore], [stderr])
+  AT_CHECK([! $GREP "Please initialize the log4cplus system properly"< stderr])
+])
+
+AT_CLEANUP

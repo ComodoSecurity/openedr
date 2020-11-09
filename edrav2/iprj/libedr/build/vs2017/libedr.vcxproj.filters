@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\..\src\pch.h" />
+    <ClInclude Include="..\..\inc\extheaders.h" />
+    <ClInclude Include="..\..\inc\objects.h" />
+    <ClInclude Include="..\..\inc\libedr.h" />
+    <ClCompile Include="..\..\src\pch.cpp" />
+    <ClCompile Include="..\..\src\libedr.cpp" />
+    <ClInclude Include="..\..\src\policycompiler.h">
+      <Filter>policy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\inc\policy.hpp">
+      <Filter>policy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\eventenricher.h" />
+    <ClInclude Include="..\..\src\signcontext.h" />
+    <ClInclude Include="..\..\src\policy.h">
+      <Filter>policy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\policy_v1.h">
+      <Filter>policy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\policyoperation.h">
+      <Filter>policy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\eventfilter.h" />
+    <ClInclude Include="..\..\src\policy_v2.h">
+      <Filter>policy</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="policy">
+      <UniqueIdentifier>{ec4c2588-2c6f-4003-b301-ec58bb36bd7f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\policycompiler.cpp">
+      <Filter>policy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\eventenricher.cpp" />
+    <ClCompile Include="..\..\src\signcontext.cpp" />
+    <ClCompile Include="..\..\src\policy.cpp">
+      <Filter>policy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\policy_v1.cpp">
+      <Filter>policy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\policyoperation.cpp">
+      <Filter>policy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\eventfilter.cpp" />
+    <ClCompile Include="..\..\src\policy_v2.cpp">
+      <Filter>policy</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

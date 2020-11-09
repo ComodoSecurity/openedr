@@ -1,0 +1,12 @@
+AT_SETUP([performance_test])
+AT_KEYWORDS([appenders])
+
+AT_CHECK([cp -f "${abs_builddir}/performance_test/log4cplus.properties" .])
+AT_CHECK(["${abs_top_builddir}/performance_test"], [0], [stdout], [stderr])
+AT_CHECK([! $GREP "Please initialize the log4cplus system properly"< stderr])
+ATX_WCHAR_T_TEST([
+  AT_CHECK(["${abs_top_builddir}/performance_testU"], [0], [stdout], [stderr])
+  AT_CHECK([! $GREP "Please initialize the log4cplus system properly"< stderr])
+])
+
+AT_CLEANUP

@@ -1,0 +1,20 @@
+[
+    {
+        "method": "testmethod",
+        "params": {"name": "myname"},
+        "returns": "somestring"
+    },
+    {
+        "notification": "testnotification",
+        "params": {"name": "myname"}
+    },
+    {
+        "name": "testmethod2",
+        "params": {"values": [1,2,3], "object": {"a": "b"}},
+        "returns": 33.2
+    },
+    {
+        "name": "testnotification2",
+        "params": {"values": [1,2,3], "object": {"a": "b"}}
+    }
+]

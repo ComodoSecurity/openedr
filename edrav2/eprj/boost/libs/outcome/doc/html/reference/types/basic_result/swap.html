@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>void swap(basic_result &amp;) - Boost.Outcome documentation</title>
+<link rel="stylesheet" href="../../../css/boost.css" type="text/css">
+<meta name="generator" content="Hugo 0.52 with Boostdoc theme">
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+<link rel="icon" href="../../../images/favicon.ico" type="image/ico"/>
+<body><div class="spirit-nav">
+<a accesskey="p" href="../../../reference/types/basic_result/inequality_failure_type.html"><img src="../../../images/prev.png" alt="Prev"></a>
+    <a accesskey="u" href="../../../reference/types/basic_result.html"><img src="../../../images/up.png" alt="Up"></a>
+    <a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../../reference/types/basic_result/as_failure_lvalue.html"><img src="../../../images/next.png" alt="Next"></a></div><div id="content">
+  <div class="titlepage"><div><div><h1 style="clear: both"><code>void swap(basic_result &amp;)</code></h1></div></div></div>
+  <p>Swap one basic_result with another.</p>
+
+<p><em>Requires</em>: Always available.</p>
+
+<p><em>Complexity</em>: Same as for the <code>swap()</code> implementations of the <code>value_type</code> and <code>error_type</code>. The noexcept of underlying operations is propagated.</p>
+
+<p><em>Guarantees</em>: If an exception is thrown during the operation, the state of both operands on entry is guaranteed restored, if at least one of the underlying operations is marked <code>noexcept</code>. If neither is marked <code>noexcept</code>, an attempt is made to undo the partially completed operation. If that too fails, the flag bits are forced to something consistent such that there can be no simultaneously valued and errored state, or valueless and errorless.</p>
+
+
+        </div><p><small>Last revised: March 03, 2019 at 00:11:47 UTC</small></p>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../../../reference/types/basic_result/inequality_failure_type.html"><img src="../../../images/prev.png" alt="Prev"></a>
+    <a accesskey="u" href="../../../reference/types/basic_result.html"><img src="../../../images/up.png" alt="Up"></a>
+    <a accesskey="h" href="../../../index.html"><img src="../../../images/home.png" alt="Home"></a><a accesskey="n" href="../../../reference/types/basic_result/as_failure_lvalue.html"><img src="../../../images/next.png" alt="Next"></a></div></body>
+</html>

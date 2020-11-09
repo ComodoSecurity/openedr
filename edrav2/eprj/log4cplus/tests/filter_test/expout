@@ -1,0 +1,63 @@
+Entering main()...
+Test filters set up through properties file.
+log4cplus: Just opened file: all_msgs.log
+log4cplus: Just opened file: debug_info_msgs.log
+log4cplus: Just opened file: fatal_msgs.log
+log4cplus: Just opened file: trace_msgs.log
+WARN - Testing....
+TRACE - ENTER: ::printDebug()
+DEBUG - This is a DEBUG message
+INFO - This is a INFO message
+WARN - This is a WARN message
+ERROR - This is a ERROR message
+FATAL - This is a FATAL message
+INFO - visible
+INFO - invisible
+TRACE - EXIT:  ::printDebug()
+Test custom function filter.
+WARN - Testing std::function<> filter....
+log4cplus: Entering ConsoleAppender::close()..
+log4cplus: Destroying appender named [STDOUT].
+log4cplus: Destroying appender named [ALL_MSGS].
+log4cplus: Destroying appender named [TRACE_MSGS].
+log4cplus: Destroying appender named [DEBUG_INFO_MSGS].
+log4cplus: Destroying appender named [FATAL_MSGS].
+log4cplus: function filter: denying event: ENTER: ::printDebug()
+log4cplus: function filter: denying event: This is a DEBUG message
+log4cplus: function filter: denying event: This is a INFO message
+log4cplus: function filter: going neutral on event: This is a WARN message
+WARN - This is a WARN message
+log4cplus: function filter: going neutral on event: This is a ERROR message
+ERROR - This is a ERROR message
+log4cplus: function filter: going neutral on event: This is a FATAL message
+FATAL - This is a FATAL message
+log4cplus: function filter: accepting event: visible
+INFO - visible
+log4cplus: function filter: denying event: invisible
+log4cplus: function filter: denying event: EXIT:  ::printDebug()
+Test custom function filter added using second overload of addFilter().
+log4cplus: function filter: going neutral on event: Testing std::function<> filter, 2nd overload of addFilter()....
+WARN - Testing std::function<> filter, 2nd overload of addFilter()....
+log4cplus: Entering ConsoleAppender::close()..
+log4cplus: Destroying appender named [SECOND].
+log4cplus: function filter: accepting event: ENTER: ::printDebug()
+TRACE - ENTER: ::printDebug()
+log4cplus: function filter: accepting event: This is a DEBUG message
+DEBUG - This is a DEBUG message
+log4cplus: function filter: accepting event: This is a INFO message
+INFO - This is a INFO message
+log4cplus: function filter: accepting event: This is a WARN message
+WARN - This is a WARN message
+log4cplus: function filter: accepting event: This is a ERROR message
+ERROR - This is a ERROR message
+log4cplus: function filter: accepting event: This is a FATAL message
+FATAL - This is a FATAL message
+log4cplus: function filter: accepting event: visible
+INFO - visible
+log4cplus: function filter: accepting event: invisible
+INFO - invisible
+log4cplus: function filter: accepting event: EXIT:  ::printDebug()
+TRACE - EXIT:  ::printDebug()
+Exiting main()...
+log4cplus: Entering ConsoleAppender::close()..
+log4cplus: Destroying appender named [THIRD].

@@ -1,0 +1,8 @@
+#define CMD_RC_FILE_DESCRIPTION_STR CMD_RC_PRODUCT_NAME_STR " service"
+
+#include "libcore\inc\resource_base.rc"
+
+//
+// Icon
+//
+IDI_MAIN                ICON                    "edrsvc.ico"

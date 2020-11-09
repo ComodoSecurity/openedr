@@ -1,0 +1,31 @@
+log4cplus:WARN You have tried to set a null error-handler.
+log4cplus:WARN Tried to add NULL appender
+List size: 2
+Loop Body: Appender name = First
+Loop Body: Appender name = Second
+List size: 1
+Loop Body: Appender name = First
+log4cplus:WARN Tried to remove NULL appender
+List size: 0
+Should be First: First
+Should be Second: Second
+
+DEBUG - This is a test...
+DEBUG - This is a test...
+log4cplus: Entering ConsoleAppender::close()..
+log4cplus:ERROR Attempted to append to closed appender named [Second].
+log4cplus:ERROR Cannot find LayoutFactory: "log4cplus::WrongLayout"
+Got expected exception: Cannot find LayoutFactory: "log4cplus::WrongLayout"
+log4cplus: Entering ConsoleAppender::close()..
+log4cplus: Destroying appender named [Fourth].
+log4cplus:ERROR Unrecognized log level: WRONG
+log4cplus: Entering ConsoleAppender::close()..
+log4cplus: Destroying appender named [Fifth].
+log4cplus:ERROR Appender::ctor()- Cannot find FilterFactory: log4cplus::spi::WrongFilter
+Got expected exception: Appender::ctor()- Cannot find FilterFactory: log4cplus::spi::WrongFilter
+log4cplus: Destroying appender named [Seventh].
+log4cplus:ERROR Derived Appender did not call destructorImpl().
+log4cplus: Destroying appender named [Second].
+log4cplus: Entering ConsoleAppender::close()..
+log4cplus: Destroying appender named [First].
+Exiting main()...

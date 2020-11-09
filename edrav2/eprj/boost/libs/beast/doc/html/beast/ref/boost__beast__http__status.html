@@ -1,0 +1,737 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>http::status</title>
+<link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Beast">
+<link rel="up" href="../ref.html" title="This Page Intentionally Left Blank 2/2">
+<link rel="prev" href="boost__beast__http__span_body/writer.html" title="http::span_body::writer">
+<link rel="next" href="boost__beast__http__status_class.html" title="http::status_class">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__beast__http__span_body/writer.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="boost__beast__http__status_class.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="beast.ref.boost__beast__http__status"></a><a class="link" href="boost__beast__http__status.html" title="http::status">http::status</a>
+</h4></div></div></div>
+<p>
+        <a class="indexterm" name="idm45213592758848"></a>
+      </p>
+<h5>
+<a name="beast.ref.boost__beast__http__status.h0"></a>
+        <span class="phrase"><a name="beast.ref.boost__beast__http__status.synopsis"></a></span><a class="link" href="boost__beast__http__status.html#beast.ref.boost__beast__http__status.synopsis">Synopsis</a>
+      </h5>
+<p>
+        Defined in header <code class="literal">&lt;<a href="../../../../../../boost/beast/http/status.hpp" target="_top">boost/beast/http/status.hpp</a>&gt;</code>
+      </p>
+<pre class="programlisting"><span class="keyword">enum</span> <span class="identifier">status</span>
+</pre>
+<p>
+        <a class="indexterm" name="idm45213592751008"></a>
+ <a class="indexterm" name="idm45213592749904"></a>
+ <a class="indexterm" name="idm45213592748800"></a>
+ <a class="indexterm" name="idm45213592747696"></a>
+ <a class="indexterm" name="idm45213592746592"></a>
+ <a class="indexterm" name="idm45213592745520"></a>
+ <a class="indexterm" name="idm45213592744416"></a>
+ <a class="indexterm" name="idm45213592743312"></a>
+ <a class="indexterm" name="idm45213592742192"></a>
+ <a class="indexterm" name="idm45213592741088"></a>
+ <a class="indexterm" name="idm45213592739984"></a>
+ <a class="indexterm" name="idm45213592738880"></a>
+ <a class="indexterm" name="idm45213592737776"></a>
+ <a class="indexterm" name="idm45213592736672"></a>
+ <a class="indexterm" name="idm45213592735568"></a>
+ <a class="indexterm" name="idm45213592734464"></a>
+ <a class="indexterm" name="idm45213592733360"></a>
+ <a class="indexterm" name="idm45213592732256"></a>
+ <a class="indexterm" name="idm45213592731152"></a>
+ <a class="indexterm" name="idm45213592730048"></a>
+ <a class="indexterm" name="idm45213592728944"></a>
+ <a class="indexterm" name="idm45213592727840"></a>
+ <a class="indexterm" name="idm45213592726736"></a>
+ <a class="indexterm" name="idm45213592725632"></a>
+ <a class="indexterm" name="idm45213592724528"></a>
+ <a class="indexterm" name="idm45213592723424"></a>
+ <a class="indexterm" name="idm45213592722320"></a>
+ <a class="indexterm" name="idm45213592721216"></a>
+ <a class="indexterm" name="idm45213592720112"></a>
+ <a class="indexterm" name="idm45213592719008"></a>
+ <a class="indexterm" name="idm45213592717888"></a>
+ <a class="indexterm" name="idm45213592716784"></a>
+ <a class="indexterm" name="idm45213592715680"></a>
+ <a class="indexterm" name="idm45213592714576"></a>
+ <a class="indexterm" name="idm45213592713472"></a>
+ <a class="indexterm" name="idm45213592712368"></a>
+ <a class="indexterm" name="idm45213592711264"></a>
+ <a class="indexterm" name="idm45213592710160"></a>
+ <a class="indexterm" name="idm45213592709056"></a>
+ <a class="indexterm" name="idm45213592707952"></a>
+ <a class="indexterm" name="idm45213592706848"></a>
+ <a class="indexterm" name="idm45213592705744"></a>
+ <a class="indexterm" name="idm45213592704640"></a>
+ <a class="indexterm" name="idm45213592703536"></a>
+ <a class="indexterm" name="idm45213592702432"></a>
+ <a class="indexterm" name="idm45213592701328"></a>
+ <a class="indexterm" name="idm45213592700224"></a>
+ <a class="indexterm" name="idm45213592699120"></a>
+ <a class="indexterm" name="idm45213592698000"></a>
+ <a class="indexterm" name="idm45213592696880"></a>
+ <a class="indexterm" name="idm45213592695760"></a>
+ <a class="indexterm" name="idm45213592694656"></a>
+ <a class="indexterm" name="idm45213592693552"></a>
+ <a class="indexterm" name="idm45213592692448"></a>
+ <a class="indexterm" name="idm45213592691344"></a>
+ <a class="indexterm" name="idm45213592690240"></a>
+ <a class="indexterm" name="idm45213592689136"></a>
+ <a class="indexterm" name="idm45213592688016"></a>
+ <a class="indexterm" name="idm45213592686912"></a>
+ <a class="indexterm" name="idm45213592685808"></a>
+ <a class="indexterm" name="idm45213592684704"></a>
+ <a class="indexterm" name="idm45213592683600"></a>
+ <a class="indexterm" name="idm45213592682480"></a>
+
+      </p>
+<h5>
+<a name="beast.ref.boost__beast__http__status.h1"></a>
+        <span class="phrase"><a name="beast.ref.boost__beast__http__status.values"></a></span><a class="link" href="boost__beast__http__status.html#beast.ref.boost__beast__http__status.values">Values</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="literal">unknown</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  An unknown status-code.
+                </p>
+                <p>
+                  This value indicates that the value for the status code is not
+                  in the list of commonly recognized status codes. Callers interested
+                  in the exactly value should use the interface which provides the
+                  raw integer.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">continue_</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">switching_protocols</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Switching Protocols.
+                </p>
+                <p>
+                  This status indicates that a request to switch to a new protocol
+                  was accepted and applied by the server. A successful response to
+                  a WebSocket Upgrade HTTP request will have this code.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">processing</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">ok</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">created</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">accepted</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">non_authoritative_information</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">no_content</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">reset_content</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">partial_content</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">multi_status</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">already_reported</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">im_used</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">multiple_choices</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">moved_permanently</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">found</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">see_other</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">not_modified</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">use_proxy</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">temporary_redirect</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">permanent_redirect</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">bad_request</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">unauthorized</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">payment_required</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">forbidden</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">not_found</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">method_not_allowed</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">not_acceptable</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">proxy_authentication_required</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">request_timeout</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">conflict</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">gone</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">length_required</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">precondition_failed</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">payload_too_large</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">uri_too_long</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">unsupported_media_type</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">range_not_satisfiable</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">expectation_failed</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">misdirected_request</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">unprocessable_entity</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">locked</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">failed_dependency</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">upgrade_required</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">precondition_required</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">too_many_requests</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">request_header_fields_too_large</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">connection_closed_without_response</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">unavailable_for_legal_reasons</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">client_closed_request</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">internal_server_error</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">not_implemented</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">bad_gateway</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">service_unavailable</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">gateway_timeout</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">http_version_not_supported</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">variant_also_negotiates</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">insufficient_storage</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">loop_detected</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">not_extended</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">network_authentication_required</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">network_connect_timeout_error</code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="beast.ref.boost__beast__http__status.h2"></a>
+        <span class="phrase"><a name="beast.ref.boost__beast__http__status.description"></a></span><a class="link" href="boost__beast__http__status.html#beast.ref.boost__beast__http__status.description">Description</a>
+      </h5>
+<p>
+        Convenience header <code class="literal">&lt;<a href="../../../../../../boost/beast/http.hpp" target="_top">boost/beast/http.hpp</a>&gt;</code>
+      </p>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2016-2019 Vinnie
+      Falco<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="boost__beast__http__span_body/writer.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../ref.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="boost__beast__http__status_class.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

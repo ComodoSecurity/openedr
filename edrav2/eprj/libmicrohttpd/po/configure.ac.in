@@ -1,0 +1,17 @@
+# This configure.ac.in is in the public domain
+
+# Use versions from parent configure
+AC_INIT([@PACKAGE_NAME@], [@PACKAGE_VERSION@], [@PACKAGE_BUGREPORT@])
+
+AC_CONFIG_SRCDIR([Makevars])
+AC_CONFIG_MACRO_DIR([../m4])
+AC_CONFIG_AUX_DIR([..])
+AM_INIT_AUTOMAKE([silent-rules])
+
+AM_GNU_GETTEXT([external])
+
+# gettext expect that 'po' files will stay in subdirectory.
+# Form './Makefile.in' is accepted by gettext as subdirectory but caused some
+# troubles with in-place build (with relative path to source files). To workaround
+# this, some hack are used in Makefile.
+AC_OUTPUT([./Makefile.in])

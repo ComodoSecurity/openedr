@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\src\edrsvc.cpp" />
+    <ClCompile Include="..\..\src\mode_start.cpp" />
+    <ClCompile Include="..\..\src\mode_default.cpp" />
+    <ClCompile Include="..\..\src\mode_dump.cpp" />
+    <ClCompile Include="..\..\src\mode_empty.cpp" />
+    <ClCompile Include="..\..\src\mode_install.cpp" />
+    <ClCompile Include="..\..\src\mode_stop.cpp" />
+    <ClCompile Include="..\..\src\mode_wait.cpp" />
+    <ClCompile Include="..\..\src\pch.cpp" />
+    <ClCompile Include="..\..\src\service.cpp" />
+    <ClCompile Include="..\..\src\mode_enroll.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\pch.h" />
+    <ClInclude Include="..\..\src\service.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="data">
+      <UniqueIdentifier>{a95ce2cd-61ec-48f9-a3ef-d9db4f406c62}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\..\data\edrsvc.cfg">
+      <Filter>data</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\src\edrsvc.rc" />
+  </ItemGroup>
+</Project>

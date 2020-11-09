@@ -1,0 +1,4 @@
+#define CMD_RC_FILE_DESCRIPTION_STR CMD_RC_PRODUCT_NAME_STR " console"
+
+#include "resource_base.rc"
+
