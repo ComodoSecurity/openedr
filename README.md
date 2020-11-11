@@ -67,7 +67,20 @@ You should have Microsoft Visual Studio to build the code
 * Zlib: Compression Libraries (https://zlib.net/)
 
 # Installation Instructions
-Coming soon
+## OpenEDR :
+OpenEDR project will release installer MSI’s signed by Comodo Security Solutions, The default installation folder is C:\Program Files\OpenEdr\EdrAgentV2, currently we don’t have many option to edit/configure the rule set, alerts etc.  Those will be coming with upcoming releases. 
+
+The agent outputs to C:\ProgramData\edrsvc\log\output_events by default, there you will see the EDR telemetry data where you should point this to Filebeat or other log streaming solutions you want.
+
+## Elasticsearch:
+There are multiple options to run Elasticsearch, you can either install and run it on your own machine, on your data center or use Elasticsearch service on public cloud providers like AWS and GCP. If you want to run Elasticsearch by yourself. You can refer to here for installation instructions on various platforms https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html
+
+Another option is using Docker, this will also enable a quick start for PoC and later can be extended to be production environment as well. You can access the guide for this setup here : https://www.elastic.co/guide/en/elasticsearch/reference/7.10/docker.html
+## Filebeat:
+Filebeat is very good option to transfer OpenEDR outputs to Elasticsearch, you need to install Filebeat on each system you want to monitor. Overall instructions for it can be found here : https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation-configuration.html 
+
+We don’t have OpenEDR Filebeat modules yet so you need to configure custom input option for filebeat https://www.elastic.co/guide/en/beats/filebeat/current/configuration-filebeat-options.html
+
 
 # Releases
 Coming soon
