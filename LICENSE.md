@@ -3,11 +3,11 @@ Commons Clause License
 
 www.commonsclause.com
 
-The build produces 1 set of binaries.  All fall under Commons Clause license. Binaries contains following source codes that are licensed seperately, all public releases contain following licenses owned by Comodo Security.
+The build produces one set of binaries, which all fall under the Commons Clause license. The binaries also contain the following source codes that are licensed separately, and all public releases of EDR by Comodo Security Solutions, Inc. contain the following licenses acquired by Comodo Security Solutions, Inc.
 * https://netfiltersdk.com/license.html
 * http://help.madshi.net/License.htm
 
-The following source codes contained with or used in OpenEDR are specifically excluded from the Commons Clause License:
+Therefore, the following source code contained with or used in OpenEDR are specifically excluded from the Commons Clause License:
  
 1. Netfilter SDK : https://netfiltersdk.com/
 2. MadCodeHook: http://madshi.net/
