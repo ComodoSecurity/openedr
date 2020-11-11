@@ -326,14 +326,16 @@ NTSTATUS initialize()
 	bool fSuccessInit = false;
 	__try
 	{
-		// Create devise
-		IFERR_RET(IoCreateDevice(
-			g_pCommonData->pDriverObject,      // Our Driver Object
+		// Create device
+		IFERR_RET(IoCreateDeviceSecure(
+			g_pCommonData->pDriverObject,   // Our Driver Object
 			0,                              // We don't use a device extension
 			&c_usNtDeviceName,              // Device name
 			FILE_DEVICE_UNKNOWN,            // Device type
 			FILE_DEVICE_SECURE_OPEN,        // Device characteristics
 			FALSE,                          // Not an exclusive device
+			&SDDL_DEVOBJ_SYS_ALL_ADM_ALL,	// Restrict access to the device object to only LocalSystem and Administrators
+			NULL,							// No device class GUID
 			&g_pCommonData->pIoctlDeviceObject)); // Returned ptr to Device Object
 
 		// Create symlink
