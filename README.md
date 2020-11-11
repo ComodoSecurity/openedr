@@ -67,6 +67,10 @@ You should have Microsoft Visual Studio to build the code
 * Zlib: Compression Libraries (https://zlib.net/)
 
 # Installation Instructions
+OpenEDR is single agent that can be installed on Windows endpoints. It generates extensible telemetry data over all security relevant events. It also use file lookup, analysis and verdict systems from Comodo, https://valkyrie.comodo.com/. You can also have your own account and free license there.
+
+The telemetry data is stored locally on the endpoint itself. You can use any log streaming solution and analysis platform. Here we will present, how can you do remote streaming and analysis via open source tools like Elasticsearch and Filebeat.
+
 ## OpenEDR :
 OpenEDR project will release installer MSI’s signed by Comodo Security Solutions, The default installation folder is C:\Program Files\OpenEdr\EdrAgentV2, currently we don’t have many option to edit/configure the rule set, alerts etc.  Those will be coming with upcoming releases. 
 
