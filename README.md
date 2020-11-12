@@ -87,4 +87,4 @@ We don’t have OpenEDR Filebeat modules yet so you need to configure custom inp
 
 
 # Releases
-Coming soon
+https://github.com/ComodoSecurity/openedr/releases/tag/2.0.0.0
