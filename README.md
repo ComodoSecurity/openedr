@@ -88,3 +88,12 @@ We don’t have OpenEDR Filebeat modules yet so you need to configure custom inp
 
 # Releases
 https://github.com/ComodoSecurity/openedr/releases/tag/2.0.0.0
+
+# Screenshots
+How OpenEDR integration with a platform looks like and also a showcase for openedr capabilities
+[![OpenEDR](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/Screenshot_1.jpg)](https://enterprise.comodo.com/dragon/)
+[![OpenEDR](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/Screenshot_2.jpg)](https://enterprise.comodo.com/dragon/)
+[![OpenEDR](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/Screenshot_3.jpg)](https://enterprise.comodo.com/dragon/)
+[![OpenEDR](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/Screenshot_4.jpg)](https://enterprise.comodo.com/dragon/)
+[![OpenEDR](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/Screenshot_5.jpg)](https://enterprise.comodo.com/dragon/)
+[![OpenEDR](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/Screenshot_6.jpg)](https://enterprise.comodo.com/dragon/)
