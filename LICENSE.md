@@ -16,5 +16,6 @@ Therefore, the following source code contained with or used in OpenEDR are speci
 
 Please contact the respective software owners directly for licensing information.
 
-Clarification
+Clarification:
+
 MSSPs (Managed Security Services Providers) or SOCs (Security Operation Centers) can use OpenEDR -with or without modifying- and can create service offerings around OpenEDR. They can charge for these services. The above licensing does NOT prohibit this use case. 
