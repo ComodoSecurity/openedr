@@ -13,6 +13,7 @@
 #pragma warning(push, 3)
 #include <limits.h>
 #include <wdm.h>
+#include <wdmsec.h>
 #pragma warning(pop)
 
 #include "kernelstl/std.hpp"
