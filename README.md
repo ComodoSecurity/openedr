@@ -7,7 +7,7 @@ OpenEDR is a full blown EDR capability. It is one of the most sophisticated, eff
 
 OpenEDR is free and its source code is open to public. OpenEDR allows you to analyze what’s happening across your entire environment at base-security-event level. This granularity enables accurate root-causes analysis needed for faster and more effective remediation. Proven to be the best way to convey this type of information, process hierarchy tracking provide more than just data, they offer actionable knowledge. It collects all the details on endpoints, hashes, and base and advanced events. You get detailed file and device trajectory information and can navigate single events to uncover a larger issue that may be compromising your system.
 
-OpenEDR’s security architecture simplifies *breach detection, protection and visibility* by working for all threat vectors without requiring any other agent or solution. The agent records all telemetry information locally and then will send the data to locally hosted or cloud hosted ElasticSeach deployments. Real-time visibility and continuous analysis are the vital elements of the entire endpoint security concept. OpenEDR enables you to perform analysis into what's happening across your environment at base event level granularity. This allows accurate root cause analysis leading to better remediation of your compromises. Integrated Security Architecture of OpenEDR delivers Full Attack Vector Visibility including MITRE Framework. 
+OpenEDR’s security architecture simplifies *breach detection, protection and visibility* by working for all threat vectors without requiring any other agent or solution. The agent records all telemetry information locally and then will send the data to locally hosted or cloud hosted Elasticsearch deployments. Real-time visibility and continuous analysis are the vital elements of the entire endpoint security concept. OpenEDR enables you to perform analysis into what's happening across your environment at base event level granularity. This allows accurate root cause analysis leading to better remediation of your compromises. Integrated Security Architecture of OpenEDR delivers Full Attack Vector Visibility including MITRE Framework. 
 
 The Open EDR consists of the following components:
 
@@ -46,7 +46,7 @@ You should have Microsoft Visual Studio to build the code
 * Boost C++ Libraries (http://www.boost.org/)
 * c-ares: asynchronous resolver library (https://github.com/c-ares/c-ares)
 * Catch2: a unit testing framework for C++ (https://github.com/catchorg/Catch2)
-* Clare : Command Line parcer for C++ (https://github.com/catchorg/Clara)
+* Clare : Command Line parser for C++ (https://github.com/catchorg/Clara)
 * Cli: cross-platform header only C++14 library for interactive command line interfaces (https://cli.github.com/) 
 * Crashpad: crash-reporting system (https://chromium.googlesource.com/crashpad/crashpad/+/master/README.md)
 * Curl: command-line tool for transferring data specified with URL syntax (https://curl.haxx.se/)
