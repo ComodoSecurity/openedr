@@ -66,6 +66,9 @@ You should have Microsoft Visual Studio to build the code
 * xxhash_cpp: xxHash library to C++17. (https://cyan4973.github.io/xxHash/)
 * Zlib: Compression Libraries (https://zlib.net/)
 
+# Roadmap
+Please refer here for project roadmap : https://github.com/ComodoSecurity/openedr_roadmap/projects/1
+
 # Installation Instructions
 OpenEDR is single agent that can be installed on Windows endpoints. It generates extensible telemetry data over all security relevant events. It also use file lookup, analysis and verdict systems from Comodo, https://valkyrie.comodo.com/. You can also have your own account and free license there.
 
