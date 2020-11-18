@@ -35,6 +35,10 @@ For details you can refer here : https://techtalk.comodo.com/2020/09/19/open-edr
 * Join to Slack [![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://openedr.com/register/)
 * Registration [![Email](https://img.shields.io/badge/email-join-blue.svg)](mailto:register@openedr.com)
 
+# Quick Start
+The community response to OpenEDR has been absolutely amazing! Thank you.
+We had a lot of request from people who want to deploy and use OpenEDR easily and quickly. We have a roadmap to achieve all these. However in the meanwhile we have decided to use Comodo Dragon Enterprise platform with OpenEDR to achieve that. With simply opening an account, you will be able to use OpenEDR. No custom installation, no log forwarding configuration, or worrying about storing telemetry data. All of that is handled by the Comodo Dragon Platform. This is only a short term solution until all the easy to use packages for OpenEDR is finalized. In the meanwhile do take advantage of this by emailing quick-start@openedr.com to get you up and running!
+
 # Build Instructions
 You should have Microsoft Visual Studio to build the code
 * Microsoft Visual Studio Solution File is under /openedr/edrav2/build/vs2019/
