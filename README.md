@@ -12,6 +12,7 @@ OpenEDR’s security architecture simplifies *breach detection, protection and v
 ## Quick Start
 The community response to OpenEDR has been absolutely amazing! Thank you. We had a lot of request from people who want to deploy and use OpenEDR easily and quickly. We have a roadmap to achieve all these. However in the meanwhile we have decided to use Comodo Dragon Enterprise platform with OpenEDR to achieve that. With simply opening an account, you will be able to use OpenEDR. No custom installation, no log forwarding configuration, or worrying about storing telemetry data. All of that is handled by the Comodo Dragon Platform. This is only a short term solution until all the easy to use packages for OpenEDR is finalized. In the meanwhile do take advantage of this by emailing quick-start@openedr.com to get you up and running!
 
+## Components
 The Open EDR consists of the following components:
 
 * Runtime components
