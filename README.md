@@ -9,6 +9,9 @@ OpenEDR is free and its source code is open to public. OpenEDR allows you to ana
 
 OpenEDR’s security architecture simplifies *breach detection, protection and visibility* by working for all threat vectors without requiring any other agent or solution. The agent records all telemetry information locally and then will send the data to locally hosted or cloud hosted ElasticSeach deployments. Real-time visibility and continuous analysis are the vital elements of the entire endpoint security concept. OpenEDR enables you to perform analysis into what's happening across your environment at base event level granularity. This allows accurate root cause analysis leading to better remediation of your compromises. Integrated Security Architecture of OpenEDR delivers Full Attack Vector Visibility including MITRE Framework. 
 
+## Quick Start
+The community response to OpenEDR has been absolutely amazing! Thank you. We had a lot of request from people who want to deploy and use OpenEDR easily and quickly. We have a roadmap to achieve all these. However in the meanwhile we have decided to use Comodo Dragon Enterprise platform with OpenEDR to achieve that. With simply opening an account, you will be able to use OpenEDR. No custom installation, no log forwarding configuration, or worrying about storing telemetry data. All of that is handled by the Comodo Dragon Platform. This is only a short term solution until all the easy to use packages for OpenEDR is finalized. In the meanwhile do take advantage of this by emailing quick-start@openedr.com to get you up and running!
+
 The Open EDR consists of the following components:
 
 * Runtime components
@@ -34,10 +37,6 @@ For details you can refer here : https://techtalk.comodo.com/2020/09/19/open-edr
 * Community Forums: https://community.openedr.com/
 * Join to Slack [![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://openedr.com/register/)
 * Registration [![Email](https://img.shields.io/badge/email-join-blue.svg)](mailto:register@openedr.com)
-
-# Quick Start
-The community response to OpenEDR has been absolutely amazing! Thank you.
-We had a lot of request from people who want to deploy and use OpenEDR easily and quickly. We have a roadmap to achieve all these. However in the meanwhile we have decided to use Comodo Dragon Enterprise platform with OpenEDR to achieve that. With simply opening an account, you will be able to use OpenEDR. No custom installation, no log forwarding configuration, or worrying about storing telemetry data. All of that is handled by the Comodo Dragon Platform. This is only a short term solution until all the easy to use packages for OpenEDR is finalized. In the meanwhile do take advantage of this by emailing quick-start@openedr.com to get you up and running!
 
 # Build Instructions
 You should have Microsoft Visual Studio to build the code
