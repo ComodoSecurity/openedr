@@ -26,6 +26,7 @@ namespace io {
 		public ICommandProcessor
 	{
 		int m_nDaysStore = 3;
+		bool m_bMultiline = false;
 		std::chrono::steady_clock::time_point m_lastCheckTime;
 		int m_currentMonthDay = -1;
 		std::filesystem::path m_sLogPath;
