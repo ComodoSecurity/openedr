@@ -50,7 +50,7 @@ You should have Microsoft Visual Studio to build the code
 * Boost C++ Libraries (http://www.boost.org/)
 * c-ares: asynchronous resolver library (https://github.com/c-ares/c-ares)
 * Catch2: a unit testing framework for C++ (https://github.com/catchorg/Catch2)
-* Clare : Command Line parcer for C++ (https://github.com/catchorg/Clara)
+* Clare : Command Line parser for C++ (https://github.com/catchorg/Clara)
 * Cli: cross-platform header only C++14 library for interactive command line interfaces (https://cli.github.com/) 
 * Crashpad: crash-reporting system (https://chromium.googlesource.com/crashpad/crashpad/+/master/README.md)
 * Curl: command-line tool for transferring data specified with URL syntax (https://curl.haxx.se/)
@@ -74,7 +74,7 @@ You should have Microsoft Visual Studio to build the code
 Please refer here for project roadmap : https://github.com/ComodoSecurity/openedr_roadmap/projects/1
 
 # Installation Instructions
-OpenEDR is single agent that can be installed on Windows endpoints. It generates extensible telemetry data over all security relevant events. It also use file lookup, analysis and verdict systems from Comodo, https://valkyrie.comodo.com/. You can also have your own account and free license there.
+OpenEDR is single agent that can be installed on Windows endpoints. It generates extensible telemetry data over all security relevant events. It also uses file lookup, analysis and verdict systems from Comodo, https://valkyrie.comodo.com/. You can also have your own account and free license there.
 
 The telemetry data is stored locally on the endpoint itself. You can use any log streaming solution and analysis platform. Here we will present, how can you do remote streaming and analysis via open source tools like Elasticsearch and Filebeat.
 
