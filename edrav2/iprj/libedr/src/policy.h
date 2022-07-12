@@ -12,7 +12,7 @@
 #pragma once
 #include <policy.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 namespace policy {
 
@@ -322,6 +322,6 @@ using ParserPtr = std::shared_ptr<IParser>;
 
 } // namespace policy
 } // namespace edr
-} // namespace openEdr
+} // namespace cmd
 
 /// @} 

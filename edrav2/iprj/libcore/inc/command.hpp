@@ -11,7 +11,7 @@
 #include "variant.hpp"
 #include "threadpool.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// @brief Interface of any command.
@@ -39,7 +39,7 @@ public:
 ///
 /// @brief Fast constructor of Command object
 /// 
-/// @param vCommandDescriptor A command descriptor (see openEdr::Command) or object 
+/// @param vCommandDescriptor A command descriptor (see cmd::Command) or object 
 ///                           which implements ICommand
 /// @return Command object
 ///
@@ -48,9 +48,9 @@ extern ObjPtr<ICommand> createCommand(Variant vCommandDescriptor);
 ///
 /// @brief Fast constructor of Command object
 /// 
-/// @param vProcessor "processor" field from a command descriptor (see openEdr::Command)
-/// @param vCommand "command" field from a command descriptor (see openEdr::Command)
-/// @param vParams "params" field from a command descriptor (see openEdr::Command)
+/// @param vProcessor "processor" field from a command descriptor (see cmd::Command)
+/// @param vCommand "command" field from a command descriptor (see cmd::Command)
+/// @param vParams "params" field from a command descriptor (see cmd::Command)
 /// @return Command object
 ///
 extern ObjPtr<ICommand> createCommand(Variant vProcessor, Variant vCommand, Variant vParams = Variant());
@@ -58,7 +58,7 @@ extern ObjPtr<ICommand> createCommand(Variant vProcessor, Variant vCommand, Vari
 ///
 /// @brief Fast exec of Command
 /// 
-/// @param vCommandDesc - A command descriptor (see openEdr::Command) or object 
+/// @param vCommandDesc - A command descriptor (see cmd::Command) or object 
 ///                       which implements ICommand
 /// @return Result of command execution
 ///
@@ -80,7 +80,7 @@ inline void execCommandAsync(ObjPtr<ICommand> pCmd)
 ///
 /// Runs the specified command asynchronously
 ///
-/// @param vCommandDesc - A command descriptor (see openEdr::Command) or object 
+/// @param vCommandDesc - A command descriptor (see cmd::Command) or object 
 ///                       which implements ICommand
 ///
 inline void execCommandAsync(Variant vCommandDesc)
@@ -107,7 +107,7 @@ inline ThreadPool::TimerContextPtr execCommandAsync(Size nDuration, ObjPtr<IComm
 /// If command returned true then it will be called again in the specified timeout.
 ///
 /// @param [in] tDuration pimeout for call (in milliseconds)
-/// @param vCommandDesc - A command descriptor (see openEdr::Command) or object 
+/// @param vCommandDesc - A command descriptor (see cmd::Command) or object 
 ///                       which implements ICommand
 /// @return Pointer to timer context object
 ///
@@ -120,9 +120,9 @@ inline ThreadPool::TimerContextPtr execCommandAsync(Size nDuration, Variant vCom
 ///
 /// @brief Fast exec of Command
 /// 
-/// @param vProcessor "processor" field from a command descriptor (see openEdr::Command)
-/// @param vCommand "command" field from a command descriptor (see openEdr::Command)
-/// @param vParams "params" field from a command descriptor (see openEdr::Command)
+/// @param vProcessor "processor" field from a command descriptor (see cmd::Command)
+/// @param vCommand "command" field from a command descriptor (see cmd::Command)
+/// @param vParams "params" field from a command descriptor (see cmd::Command)
 /// @return Result of command execution
 ///
 inline Variant execCommand(Variant vProcessor, Variant vCommand, Variant vParams = Variant())
@@ -345,5 +345,5 @@ public:
 	}
 };
 
-} // namespace openEdr 
+} // namespace cmd 
 

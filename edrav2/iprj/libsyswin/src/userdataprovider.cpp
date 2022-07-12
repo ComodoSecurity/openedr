@@ -12,7 +12,7 @@
 #include "pch.h"
 #include "userdataprovider.h"
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 namespace win {
 
@@ -476,7 +476,7 @@ Variant UserDataProvider::getTokenInfo(Variant vParams)
 //
 Variant UserDataProvider::getSessionsInfo()
 {
-	auto pSesData = openEdr::sys::getSessionsInfo(true);
+	auto pSesData = cmd::sys::getSessionsInfo(true);
 	Sequence vSessions;
 	for (auto& sesData : *pSesData)
 	{
@@ -505,7 +505,7 @@ void UserDataProvider::loadState(Variant vState)
 //
 //
 //
-openEdr::Variant UserDataProvider::saveState()
+cmd::Variant UserDataProvider::saveState()
 {
 	return {};
 }
@@ -849,6 +849,6 @@ Variant PathConverter::execute(Variant vCommand, Variant vParams)
 
 } // namespace win
 } // namespace sys
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @}

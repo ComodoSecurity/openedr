@@ -13,7 +13,7 @@
 
 #include "netmon.h"
 
-namespace openEdr {
+namespace cmd {
 namespace netmon {
 namespace win {
 
@@ -157,6 +157,6 @@ inline std::optional<std::string> convertStreamToString(ProtocolFilters::PFObjec
 
 } // namespace win
 } // namespace netmon
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

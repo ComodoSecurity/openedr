@@ -8,7 +8,7 @@
 //
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Name of Injection DLL (64-bit)

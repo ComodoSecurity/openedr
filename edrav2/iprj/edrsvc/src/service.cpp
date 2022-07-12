@@ -13,7 +13,7 @@
 #include "pch.h"
 #include "service.h"
 
-namespace openEdr {
+namespace cmd {
 namespace win {
 
 // Set component for logging
@@ -360,7 +360,7 @@ Variant WinService::install(Variant vParams)
 			{ "startMode", nStartMode},
 			{ "errorControl", vParams.get("errorControl", SERVICE_ERROR_NORMAL) },  
 			{ "description", "Protects system against malicious activity and data leaks" },
-			{ "displayName", "OpenEDR Service" },
+			{ "displayName", "Comodo EDR Service" },
 			{ "restartIfCrash", Dictionary() },
 			{ "reinstall", fReinstall}
 		})
@@ -519,9 +519,14 @@ Variant WinService::stopService()
 //
 void WinService::saveServiceData(const std::string& sName, Variant vData) const
 {
-	sys::win::WriteRegistryValue(HKEY_LOCAL_MACHINE, L"Software\\OpenEdrAgent",
+	sys::win::WriteRegistryValue(HKEY_LOCAL_MACHINE, L"Software\\ComodoEdrAgent",
 		std::wstring(sName.begin(), sName.end()), vData);
 
+}
+
+void cmd::win::WinService::runInstance(const std::wstring& args)
+{
+	(void)cmd::win::startElevatedInstanceWithParams(args);
 }
 
 //
@@ -532,7 +537,7 @@ std::optional<Variant> WinService::loadServiceData(const std::string& sName) con
 	try
 	{
 		return sys::win::ReadRegistryValue(HKEY_LOCAL_MACHINE,
-			std::wstring(L"Software\\OpenEdrAgent"), std::wstring(sName.begin(), sName.end()));
+			std::wstring(L"Software\\ComodoEdrAgent"), std::wstring(sName.begin(), sName.end()));
 	}
 	catch (...)
 	{
@@ -548,7 +553,7 @@ Variant WinService::loadServiceData(const std::string& sName, Variant vDefault) 
 	try
 	{
 		return sys::win::ReadRegistryValue(HKEY_LOCAL_MACHINE,
-			std::wstring(L"Software\\OpenEdrAgent"), std::wstring(sName.begin(), sName.end()));
+			std::wstring(L"Software\\ComodoEdrAgent"), std::wstring(sName.begin(), sName.end()));
 	}
 	catch (...)
 	{
@@ -705,11 +710,25 @@ Variant WinService::execute(Variant vCommand, Variant vParams)
 		return true;
 	}
 
+	///
+	/// @fn Variant WinService::execute()
+	///
+	/// ##### runInstance()
+	/// Run edr instance with specific args
+	///   * args - params for command line
+	///
+	else if (vCommand == "runInstance")
+	{
+		const std::wstring args = vParams["args"];
+		runInstance(args);
+		return true;
+	}
+
 	return Application::execute(vCommand, vParams);
 
 	TRACE_END(FMT("Error during processing of the command <" << vCommand << ">"));
 }
 
 } // namespace win
-} // namespace openEdr
+} // namespace cmd
 /// @}

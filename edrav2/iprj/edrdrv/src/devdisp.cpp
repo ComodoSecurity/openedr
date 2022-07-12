@@ -14,7 +14,7 @@
 #include "ioctl.h"
 #include "netmon.h"
 
-namespace openEdr {
+namespace cmd {
 namespace devdisp {
 
 
@@ -66,5 +66,5 @@ void finalize() noexcept
 }
 
 } // namespace devdisp
-} // namespace openEdr
+} // namespace cmd
 /// @}

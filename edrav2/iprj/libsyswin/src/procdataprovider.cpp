@@ -14,7 +14,7 @@
 
 using namespace std::chrono_literals;
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 namespace win {
 
@@ -45,9 +45,8 @@ void ProcessDataProvider::finalConstruct(Variant vConfig)
 	m_sEndpointId = getCatalogData("app.config.license.endpointId", "");
 	m_pUserDP = queryInterfaceSafe<IUserInformation>(queryServiceSafe("userDataProvider"));
 
-
 	// URL: https://support.microsoft.com/en-us/help/131065/how-to-obtain-a-handle-to-any-process-with-sedebugprivilege
-	EnableAllPrivileges();
+	cmd::sys::win::enableAllPrivileges();
 }
 
 //
@@ -122,13 +121,47 @@ std::wstring getProcessCmdLine(const HANDLE hProcess)
 		sBuffer.resize(c_nMaxNtPathLen);
 	
 	sBuffer[0] = 0;
-	// URL: https://wj32.org/wp/2009/01/24/howto-get-the-command-line-of-processes/
-	// madCodeHook function, do not add :: before it
-	if (!GetProcessCommandLine(hProcess, sBuffer.data(), DWORD(sBuffer.size())))
+
+	ULONG returnLength = 0;
+	PROCESS_BASIC_INFORMATION basicInfo = {0};
+	NTSTATUS status = ::NtQueryInformationProcess(hProcess, ProcessBasicInformation, &basicInfo, sizeof(basicInfo), &returnLength);
+	if (!NT_SUCCESS(status) || nullptr == basicInfo.PebBaseAddress)
 	{
 		LOGLVL(Debug, "Fail to query command line of process <" << ::GetProcessId(hProcess) << ">");
 		return {};
 	}
+
+	PRTL_USER_PROCESS_PARAMETERS paramsPtr = nullptr;
+	PPEB peb = basicInfo.PebBaseAddress;
+
+	SIZE_T numberOfBytesRead;
+	if (!::ReadProcessMemory(hProcess, &peb->ProcessParameters, &paramsPtr, sizeof(paramsPtr), &numberOfBytesRead))
+	{
+		LOGLVL(Debug, "Fail to ReadProcessMemory for query command line of process <" << ::GetProcessId(hProcess) << ">" << " error <" << ::GetLastError() << ">");
+		return {};
+	}
+
+	RTL_USER_PROCESS_PARAMETERS params = { 0 };
+	if (!::ReadProcessMemory(hProcess, paramsPtr, &params, sizeof(params), &numberOfBytesRead))
+	{
+		LOGLVL(Debug, "Fail to ReadProcessMemory for query command line of process <" << ::GetProcessId(hProcess) << ">" << " error <" << ::GetLastError() << ">");
+		return {};
+	}
+
+	if (0 == params.CommandLine.Length)
+	{
+		LOGLVL(Debug, "Fail to query command line of process <" << ::GetProcessId(hProcess) << ">");
+		return {};
+	}
+
+	sBuffer.resize(params.CommandLine.Length / sizeof(WCHAR) + 1);
+	if (!::ReadProcessMemory(hProcess, params.CommandLine.Buffer, const_cast<PWCHAR>(sBuffer.data()), params.CommandLine.Length, &numberOfBytesRead))
+	{
+		LOGLVL(Debug, "Fail to ReadProcessMemory for query command line of process <" << ::GetProcessId(hProcess) << ">" << " error <" << ::GetLastError() << ">");
+		return {};
+	}
+
+	sBuffer[params.CommandLine.Length / sizeof(WCHAR)] = UNICODE_NULL;
 
 	return sBuffer.c_str();
 }
@@ -584,7 +617,7 @@ void ProcessDataProvider::loadState(Variant vState)
 //
 //
 //
-openEdr::Variant ProcessDataProvider::saveState()
+cmd::Variant ProcessDataProvider::saveState()
 {
 	return {};
 }
@@ -731,6 +764,6 @@ Variant ProcessDataProvider::execute(Variant vCommand, Variant vParams)
 
 } // namespace win
 } // namespace sys
-} // namespace openEdr 
+} // namespace cmd 
 
  /// @}

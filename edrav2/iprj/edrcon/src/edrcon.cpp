@@ -9,7 +9,7 @@
 ///
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 
 //
 // Put appMode class factories here
@@ -26,7 +26,7 @@ extern std::shared_ptr<IApplicationMode> createAppMode_run();
 extern std::shared_ptr<IApplicationMode> createAppMode_file();
 extern std::shared_ptr<IApplicationMode> createAppMode_compile();
 
-} // namespace openEdr
+} // namespace cmd
 
 //
 //
@@ -42,20 +42,20 @@ int wmain(int argc, wchar_t* argv[])
 	// Enable buffering to prevent VS from chopping up UTF-8 byte sequences
 	setvbuf(stdout, nullptr, _IOFBF, 1000);
 
-	auto pApp = createObject<openEdr::Application>();
-	pApp->addMode(openEdr::Application::c_sDefModeName, openEdr::createAppMode_default());
-	pApp->addMode("dump", openEdr::createAppMode_dump());
-	pApp->addMode("unprot", openEdr::createAppMode_unprot());
-	pApp->addMode("debug", openEdr::createAppMode_debug());
-	pApp->addMode("wait", openEdr::createAppMode_wait());
-	pApp->addMode("run", openEdr::createAppMode_run());
-	pApp->addMode("file", openEdr::createAppMode_file());
-	pApp->addMode("process", openEdr::createAppMode_process());
-	pApp->addMode("rpcserver", openEdr::createAppMode_rpcserver());
-	pApp->addMode("compile", openEdr::createAppMode_compile());
+	auto pApp = createObject<cmd::Application>();
+	pApp->addMode(cmd::Application::c_sDefModeName, cmd::createAppMode_default());
+	pApp->addMode("dump", cmd::createAppMode_dump());
+	pApp->addMode("unprot", cmd::createAppMode_unprot());
+	pApp->addMode("debug", cmd::createAppMode_debug());
+	pApp->addMode("wait", cmd::createAppMode_wait());
+	pApp->addMode("run", cmd::createAppMode_run());
+	pApp->addMode("file", cmd::createAppMode_file());
+	pApp->addMode("process", cmd::createAppMode_process());
+	pApp->addMode("rpcserver", cmd::createAppMode_rpcserver());
+	pApp->addMode("compile", cmd::createAppMode_compile());
 	// Add your application mode handlers below
 
-	int ec = pApp->run("edrcon", "OpenEDR console", argc, argv);
+	int ec = pApp->run("edrcon", "Comodo EDR console", argc, argv);
 	SetConsoleOutputCP(nConsoleCP);
 	return ec;
 

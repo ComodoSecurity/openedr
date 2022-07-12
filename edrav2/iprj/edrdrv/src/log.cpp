@@ -15,7 +15,7 @@
 #include "workerthread.h"
 #include "log.h"
 
-namespace openEdr {
+namespace cmd {
 namespace log {
 
 ///
@@ -373,5 +373,5 @@ void logInfo(const char* sFormat, ...)
 }
 
 } // namespace log
-} // namespace openEdr
+} // namespace cmd
 /// @}

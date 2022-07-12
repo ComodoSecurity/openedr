@@ -13,7 +13,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "netmon"
 
-namespace openEdr {
+namespace cmd {
 namespace netmon {
 
 namespace dns {
@@ -259,4 +259,4 @@ void DnsUdpParser::notifyClose(std::shared_ptr<const ConnectionInfo> pConInfo)
 }
 
 } // namespace netmon
-} // namespace openEdr
+} // namespace cmd

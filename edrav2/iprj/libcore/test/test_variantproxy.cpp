@@ -8,7 +8,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 //
 // TestDictionaryProxy is plain wrapper of Dictionary

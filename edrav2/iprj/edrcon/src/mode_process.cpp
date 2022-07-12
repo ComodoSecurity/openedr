@@ -9,7 +9,7 @@
 ///
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -109,7 +109,7 @@ std::shared_ptr<IApplicationMode> createAppMode_process()
 	return std::make_shared<AppMode_process>();
 }
 
-} // namespace openEdr
+} // namespace cmd
 
 
 // FIXME: remove garbage functional from MadCHook (@kroshin)

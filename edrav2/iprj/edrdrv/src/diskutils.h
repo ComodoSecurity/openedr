@@ -18,7 +18,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 
-namespace openEdr {
+namespace cmd {
 
 // To unify alignment for kernel and user mode (1 byte)
 #pragma pack(push, 1)
@@ -87,5 +87,5 @@ NTSTATUS getContainerId(PDEVICE_OBJECT pVolumeObject, UNICODE_STRING* pDst,
 ///
 void printVolumeInfo(PCFLT_RELATED_OBJECTS FltObjects);
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

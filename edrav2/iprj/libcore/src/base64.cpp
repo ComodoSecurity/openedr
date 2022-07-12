@@ -9,7 +9,7 @@
 #include "pch.h"
 #include "base64.h"
 
-namespace openEdr {
+namespace cmd {
 namespace crypt {
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -184,4 +184,4 @@ Size Base64Decoder::read(void* pBuffer, Size nSize, Size* pProceedSize)
 }
 
 } // namespace crypt
-} // namespace openEdr 
+} // namespace cmd 

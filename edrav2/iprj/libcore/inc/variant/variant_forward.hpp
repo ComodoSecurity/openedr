@@ -18,7 +18,7 @@
 #include "forward.hpp"
 #include "detail/value.hpp"
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 namespace detail {
 
@@ -859,7 +859,7 @@ inline std::ostream& operator<<(std::ostream& oStrStream, const Variant& vVal)
 /// * Implementing the ISerializable interface. It return result of ISerializable::serialize.
 /// * Implementing the IReadableStream interface. Create base64 representation of data and descriptor suitable stream
 ///
-/// @sa openEdr::variant::json::serializeStream
+/// @sa cmd::variant::json::serializeStream
 ///
 Variant serializeObject(Variant vSrc);
 
@@ -1102,5 +1102,5 @@ template<typename T, typename Result = void>
 using IsVariantType = IsSameType<T, Variant, Result>;
 
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

@@ -15,7 +15,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "core"
 
-namespace openEdr {
+namespace cmd {
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -478,7 +478,7 @@ public:
 // 
 // It is created to share global managers between modules (DLL, SO).
 //
-// The most of Core features has global function wrapper (e.g. openEdr::createObject). 
+// The most of Core features has global function wrapper (e.g. cmd::createObject). 
 // Use them instead raw Core object access.
 // Core object pointer should be get with the GetCore() function
 //
@@ -572,12 +572,12 @@ public:
 };
 
 
-} // namespace openEdr
+} // namespace cmd
 
 // Pointer to core for debug usage
-static openEdr::Core* g_pCore = nullptr;
+static cmd::Core* g_pCore = nullptr;
 
-namespace openEdr {
+namespace cmd {
 
 //
 // Core creator
@@ -672,7 +672,7 @@ extern IMessageProcessor& getMessageProcessor()
 }
 
 } // namespace detail
-} // namespace openEdr 
+} // namespace cmd 
 
 
 

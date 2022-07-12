@@ -8,11 +8,63 @@
 //
 #include "pch.h"
 #include "eventenricher.h"
-
-namespace openEdr {
+#include <fstream>
+namespace cmd {
 
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "enricher"
+
+namespace {
+	bool containsInterpetatorCmd(const std::wstring& cmdLine)
+	{
+		return (cmdLine.find(L"cmd.exe") != std::string::npos)
+			|| (cmdLine.find(L"python.exe") != std::string::npos)
+			|| (cmdLine.find(L"py3.exe") != std::string::npos)
+			|| (cmdLine.find(L"py.exe") != std::string::npos)
+			|| (cmdLine.find(L"powershell.exe") != std::string::npos)
+			|| (cmdLine.find(L"powershell_ise.exe") != std::string::npos);
+	}
+
+	std::wstring getFilePath(std::wstring str)
+	{
+		const std::wstring executableExt(L".exe");
+		auto commandEnd = str.find(executableExt);
+
+		if (commandEnd == std::wstring::npos)
+			return L"";
+
+		str.erase(str.begin(), str.begin() + commandEnd + executableExt.length());
+
+		const std::wregex filePathRegex(L"[A-za-z]:.*(\.cmd|\.bat|\.ps1|\.py)");
+
+		str.erase(remove_if(str.begin(), str.end(), [](const wchar_t& sym) {return sym == L'\"'; }), str.end());
+
+		std::wsmatch match;
+
+		const std::wstring& str2 = str;
+
+		if (std::regex_search(str2.begin(), str2.end(), match, filePathRegex))
+			return match[0];
+
+		return L"";
+	}
+
+	Variant readContent(const std::wstring& filePath)
+	{
+		std::ifstream fileStream(filePath);
+
+		const uintmax_t fileContentLimit = 100000;
+		const uintmax_t size = std::clamp<uintmax_t>(std::filesystem::file_size(filePath), 0, fileContentLimit);
+
+		if (size == 0)
+			return {};
+		
+		std::string content(size, '\0');
+		fileStream.read(content.data(), size);
+
+		return content;
+	}
+}
 
 //
 //
@@ -48,7 +100,7 @@ void EventEnricher::loadState(Variant vState)
 //
 //
 //
-openEdr::Variant EventEnricher::saveState()
+cmd::Variant EventEnricher::saveState()
 {
 	return {};
 }
@@ -315,19 +367,42 @@ void EventEnricher::put(const Variant& vEventRef)
 
 		break;
 	}
+	case Event::LLE_PROCESS_CREATE:
+	{
+		auto processInfo = vEvent.get("process");
+		auto enrichedProcessInfo = m_pProcProvider->enrichProcessInfo(processInfo);
+		vEvent.put("process", enrichedProcessInfo);
+
+		const std::wstring cmdLine = enrichedProcessInfo["cmdLine"];
+		if (containsInterpetatorCmd(cmdLine))
+		{
+			const std::wstring scriptPath = getFilePath(cmdLine);
+			const Variant scriptContent = !scriptPath.empty() ? readContent(scriptPath) : Variant();
+
+			if (!scriptContent.isEmpty())
+			{
+				vEvent.put("scriptContent", scriptContent);
+			}
+		}
+		break;
+	}
 	case Event::LLE_PROCESS_OPEN:
 	case Event::LLE_PROCESS_MEMORY_READ:
 	case Event::LLE_PROCESS_MEMORY_WRITE:
 	{
-		auto vTarget = vEvent["target"];
-		auto vTargetInfo = m_pProcProvider->enrichProcessInfo(vTarget);
-		if (vTargetInfo.isEmpty())
+		if (vEvent.has("target"))
 		{
-			LOGLVL(Detailed, "Process <" << vTarget["pid"] << "> not found, skip event <" <<
-				Enum(eEventType) << ">");
-			return;
+			auto vTarget = vEvent["target"];
+			auto vTargetInfo = m_pProcProvider->enrichProcessInfo(vTarget);
+			if (vTargetInfo.isEmpty())
+			{
+				LOGLVL(Detailed, "Process <" << vTarget["pid"] << "> not found, skip event <" <<
+					Enum(eEventType) << ">");
+				return;
+			}
+			vEvent.put("target", vTargetInfo);
 		}
-		vEvent.put("target", vTargetInfo);
+
 		break;
 	}
 	case Event::LLE_WINDOW_PROC_GLOBAL_HOOK:
@@ -519,4 +594,4 @@ Variant EventEnricher::execute(Variant vCommand, Variant vParams)
 	TRACE_END(FMT("Error during processing of the command <" << vCommand << ">"));
 }
 
-} // namespace openEdr 
+} // namespace cmd 

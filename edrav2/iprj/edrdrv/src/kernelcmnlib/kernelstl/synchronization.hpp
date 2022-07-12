@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 
 //
 // std::scoped_lock analog
@@ -479,6 +479,6 @@ public:
 	}
 };
 
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

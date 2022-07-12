@@ -19,7 +19,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "queue"
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Initialize object with following parameters:
@@ -597,5 +597,5 @@ Variant Queue::execute(Variant vCommand, Variant vParams)
 	TRACE_END(FMT("Error during processing of the command <" << vCommand << ">"));
 }
 
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

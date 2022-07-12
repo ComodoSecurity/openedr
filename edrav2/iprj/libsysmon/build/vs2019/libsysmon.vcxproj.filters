@@ -8,12 +8,14 @@
     <ClInclude Include="..\..\inc\objects.h" />
     <ClInclude Include="..\..\src\pch_win.h" />
     <ClInclude Include="..\..\inc\edrdrvapi.hpp" />
+    <ClInclude Include="..\..\inc\FltPortReceiver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\pch.cpp" />
     <ClCompile Include="..\..\src\controller.cpp" />
     <ClCompile Include="..\..\src\libsysmon.cpp" />
     <ClCompile Include="..\..\src\pch_win.cpp" />
+    <ClCompile Include="..\..\src\FltPortReceiver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

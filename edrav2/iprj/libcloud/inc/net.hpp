@@ -10,7 +10,7 @@
 ///
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace net {
 
 ///
@@ -246,5 +246,5 @@ std::vector<std::string> getHostByName(const std::string& sHostname);
 std::vector<std::string> getHostByAddress(const std::string& sAddress);
 
 } // namespace net
-} // namespace openEdr
+} // namespace cmd
 /// @} 

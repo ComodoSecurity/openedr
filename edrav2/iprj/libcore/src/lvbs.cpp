@@ -11,7 +11,7 @@
 #include "pch.h"
 #include <io.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 namespace lbvs {
 
@@ -468,4 +468,4 @@ bool serializeToLbvs(Variant vData, Variant vSchema, std::vector<uint8_t>& pData
 }
 
 } // namespace variant
-} // namespace openEdr 
+} // namespace cmd 

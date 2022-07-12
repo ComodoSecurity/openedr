@@ -5,9 +5,9 @@
 #include "pch.h"
 #include "test_stream.h"
 
-using namespace openEdr;
+using namespace cmd;
 
-TEST_CASE("FileStream.createObject", "[openEdr::io]")
+TEST_CASE("FileStream.createObject", "[cmd::io]")
 {
 	SECTION("Create object")
 	{
@@ -20,7 +20,7 @@ TEST_CASE("FileStream.createObject", "[openEdr::io]")
 	}
 }
 
-TEST_CASE("FileStream.queryInterface", "[openEdr::io]")
+TEST_CASE("FileStream.queryInterface", "[cmd::io]")
 {
 	auto pObj = io::createTempStream();
 
@@ -68,7 +68,7 @@ TEST_CASE("FileStream.queryInterface", "[openEdr::io]")
 
 }
 
-TEST_CASE("FileStream.read", "[openEdr::io]")
+TEST_CASE("FileStream.read", "[cmd::io]")
 {
 	ObjPtr<io::IReadableStream> pStream;
 	REQUIRE_NOTHROW([&]() {
@@ -83,7 +83,7 @@ TEST_CASE("FileStream.read", "[openEdr::io]")
 	readStream(pStream);
 }
 
-TEST_CASE("FileStream.write", "[openEdr::io]")
+TEST_CASE("FileStream.write", "[cmd::io]")
 {
 	ObjPtr<io::IWritableStream> pStream;
 	REQUIRE_NOTHROW([&]() {
@@ -94,7 +94,7 @@ TEST_CASE("FileStream.write", "[openEdr::io]")
 	testRawWritableStream(pStream);
 }
 
-TEST_CASE("FileStream.position", "[openEdr::io]")
+TEST_CASE("FileStream.position", "[cmd::io]")
 {
 	ObjPtr<io::IReadableStream> pStream;
 	REQUIRE_NOTHROW([&]() {
@@ -109,7 +109,7 @@ TEST_CASE("FileStream.position", "[openEdr::io]")
 	streamPosition(pStream);
 }
 
-TEST_CASE("FileStream.size", "[openEdr::io]")
+TEST_CASE("FileStream.size", "[cmd::io]")
 {
 	ObjPtr<io::IWritableStream> pStream;
 	REQUIRE_NOTHROW([&]() {

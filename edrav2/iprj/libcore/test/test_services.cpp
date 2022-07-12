@@ -4,7 +4,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 CMD_DECLARE_LIBRARY_CLSID(CLSID_ExampleService, 0xE05E45C6);
 

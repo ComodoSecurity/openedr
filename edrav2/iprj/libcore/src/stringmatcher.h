@@ -15,7 +15,7 @@
 #include <common.hpp>
 #include <command.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace string {
 
 ///
@@ -58,7 +58,7 @@ public:
 	///
 	/// @param vConfig the object's configuration including the following fields:
 	///   **schema** - a dictionary or a sequence of dictionaries with rules
-	///     @sa openEdr::variant::operation::replace()
+	///     @sa cmd::variant::operation::replace()
 	/// @throw error::InvalidArgument if configuration is not valid.
 	///
 	void finalConstruct(Variant vConfig);
@@ -95,6 +95,6 @@ public:
 };
 
 } // namespace string
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

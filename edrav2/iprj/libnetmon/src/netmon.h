@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace netmon {
 
 //////////////////////////////////////////////////////////////////////////
@@ -348,6 +348,6 @@ public:
 };
 
 } // namespace netmon
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

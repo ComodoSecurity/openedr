@@ -16,7 +16,7 @@
 #include "winapi.h"
 #include "screen.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 //
@@ -169,4 +169,4 @@ REGISTER_PRE_CALLBACK(StretchBlt, [](
 });
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd

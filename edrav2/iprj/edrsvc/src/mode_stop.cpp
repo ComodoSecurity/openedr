@@ -10,7 +10,7 @@
 #include "pch.h"
 #include "service.h"
 
-namespace openEdr {
+namespace cmd {
 namespace win {
 
 //
@@ -63,4 +63,4 @@ std::shared_ptr<IApplicationMode> createAppMode_stop()
 	return std::make_shared<win::AppMode_stop>();
 }
 
-} // namespace openEdr
+} // namespace cmd

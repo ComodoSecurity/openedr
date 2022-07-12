@@ -11,7 +11,7 @@
 #include "object.hpp"
 #include "common.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 class ICommand;
 class TimerContext;
@@ -260,5 +260,5 @@ public:
 [[nodiscard]]
 ObjPtr<ITaskContext> convertToTask(ThreadPool::TimerContextPtr pTimerContext);
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

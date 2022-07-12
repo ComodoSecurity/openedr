@@ -16,7 +16,7 @@
 #include "winapi.h"
 #include "process.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 #pragma warning(disable : 26812)
@@ -341,4 +341,4 @@ REGISTER_POST_CALLBACK(ImpersonateNamedPipeClient, [](BOOL fResult, HANDLE hName
 });
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd

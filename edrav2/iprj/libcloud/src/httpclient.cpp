@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "httpclnt"
 
-namespace openEdr {
+namespace cmd {
 namespace net {
 
 namespace beast = boost::beast;
@@ -1170,5 +1170,5 @@ void HttpClient::restart()
 }
 
 } // namespace net
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

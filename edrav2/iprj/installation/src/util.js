@@ -109,13 +109,13 @@ var OldAgentValues = {
 	"__readOldAgentValue": function (name) {
 		var shell = new ActiveXObject("WScript.Shell");
 		try {
-			return shell.RegRead("HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\OpenEdr\\EDREndpoint\\" + name);
+			return shell.RegRead("HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\COMODO\\EDREndpoint\\" + name);
 		}
 		catch (err) {
 			LogErr(err);
 		}
 		try {
-			return shell.RegRead("HKEY_LOCAL_MACHINE\\SOFTWARE\\OpenEdr\\EDREndpoint\\" + name);
+			return shell.RegRead("HKEY_LOCAL_MACHINE\\SOFTWARE\\COMODO\\EDREndpoint\\" + name);
 		}
 		catch (err) {
 			LogErr(err);
@@ -209,7 +209,7 @@ function SaveToken() {
 	var params = Session.Property("CustomActionData").split("*");
 	var token = params[0];
 	if (token) {
-		var cmdLine = "reg add HKLM\\Software\\OpenEdrAgent /v Token /d \"" + token + "\" /f";
+		var cmdLine = "reg add HKLM\\Software\\ComodoEdrAgent /v Token /d \"" + token + "\" /f";
 		if (params[1]) {
 			cmdLine += " /reg:64";
 		}
@@ -222,7 +222,7 @@ function SaveToken() {
 }
 
 function SetLocalMode() {
-	var cmdLine = "reg add HKLM\\Software\\OpenEdrAgent /v LocalMode /t REG_DWORD /d 1 /f";
+	var cmdLine = "reg add HKLM\\Software\\ComodoEdrAgent /v LocalMode /t REG_DWORD /d 1 /f";
 	var res = SilentRun(cmdLine);
 	Log("Save LocalMode=1 to registry");
 }
@@ -381,8 +381,8 @@ function SilentRun(cmdLine) {
 		tmpFile.Close();
 	}
 	catch (err) { }
-	//"C:\Windows\System32\cmd.exe" /C "C:\Program Files\OpenEdr\EdrAgentV2\edrsvc.exe" install  > C:\Users\Tester\AppData\Local\Temp\rad0AFF3.tmp 2>&1
-	//"C:\Windows\System32\cmd.exe" /C "C:\Program Files\OpenEdr\EdrAgentV2\edrsvc.exe" install  > C:\Users\Tester\AppData\Local\Temp\rad177B7.tmp 2>&1
+	//"C:\Windows\System32\cmd.exe" /C "C:\Program Files\COMODO\EdrAgentV2\edrsvc.exe" install  > C:\Users\Tester\AppData\Local\Temp\rad0AFF3.tmp 2>&1
+	//"C:\Windows\System32\cmd.exe" /C "C:\Program Files\COMODO\EdrAgentV2\edrsvc.exe" install  > C:\Users\Tester\AppData\Local\Temp\rad177B7.tmp 2>&1
 	if (fullFileName != null) cmdLine = "cmd /C \"" + cmdLine + "\" > " + fullFileName + " 2>&1";
 	
 	Log("Run command line: " + cmdLine);
@@ -533,6 +533,12 @@ function StopEdrService() {
 	_ExecSilentCommand(Session.Property("CustomActionData"), "Stop edr service");
 }
 
+function RestartEdrService() {
+	var commandPattern = Session.Property("CustomActionData");
+	_ExecSilentCommand(commandPattern.replace("*command*", "stop"), "Stop edr service");
+	_ExecSilentCommand(commandPattern.replace("*command*", "start"), "Start edr service");
+}
+
 function UninstallEdrService() {
 	var result = _ExecSilentCommand(Session.Property("CustomActionData"), "Uninstall edr service");
 	var service = "edrsvc";
@@ -567,8 +573,8 @@ function DeleteEdrServiceArtefacts() {
 	}
 
 	try {
-		RegDelete("HKLM\\SOFTWARE\\OpenEdrAgent", true); // x64
-		RegDelete("HKLM\\SOFTWARE\\OpenEdrAgent", false); // x86
+		RegDelete("HKLM\\SOFTWARE\\ComodoEdrAgent", true); // x64
+		RegDelete("HKLM\\SOFTWARE\\ComodoEdrAgent", false); // x86
 		Log("Edrsvc's registry artefacts deleted succesfully");
 	}
 	catch (err) {

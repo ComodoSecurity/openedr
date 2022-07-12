@@ -11,8 +11,9 @@
 /// @{
 #pragma once
 #include "objects.h"
+#include "FltPortReceiver.h"
 
-namespace openEdr {
+namespace cmd {
 namespace win {
 
 #define SYSMON_USE_OVERLAPPED
@@ -26,19 +27,15 @@ class SystemMonitorController : public ObjectBase <CLSID_SystemMonitorController
 {
 private:
 	/// Number of threads to process events from driver.
-	static const size_t c_nTreadsCount = 2;
-	
-	/// Default size of receiving message (per thread).
-	static const size_t c_nDefMsgSize = 0x1000;
-	
-	/// Maximal size of receiving message (per thread).
-	static const size_t c_nMaxMsgSize = 0x100000; // 1Mb
+	static const size_t c_nTreadsCount = 2;	
 
 	/// Name of communication port to receive messages.
 	inline static const wchar_t c_sPortName[] = L"" CMD_EDRDRV_FLTPORT_NAME;
 	
 	/// Name of Windows service.
 	inline static const wchar_t c_sDrvSrvName[] = L"" CMD_EDRDRV_SERVICE_NAME;
+
+	inline static const wchar_t c_sPCAService[] = L"" CMD_PCA_SERVICE_NAME;
 	
 	/// Name of mini-filter driver file.
 	inline static const wchar_t c_sDriverName[] = L"" CMD_EDRDRV_FILE_NAME;
@@ -65,24 +62,10 @@ private:
 
 	//
 	ObjPtr<IDataReceiver> m_pReceiver;
-	sys::win::ScopedFileHandle m_pConnectionPort;
-	std::vector<std::thread> m_pThreadPool;
+
 	sys::win::ScopedFileHandle m_pIoctl;
 	std::locale m_Locale = std::locale("");
-
-	// Tread specific data
-	struct OverlappedContext
-	{
-		// Must be first member of struct
-		OVERLAPPED pOvlp = {};
-		MemPtr<Byte> pData;
-		size_t nDataSize = 0;
-	};
-	std::vector<OverlappedContext> m_pOvlpCtxes;
-	sys::win::ScopedHandle m_pCompletionPort;
-
-	bool resizeMessage(OverlappedContext* pOvlpCtx);
-	void pumpMessage(OverlappedContext* pOvlpCtx);
+	cmd::win::FltPortReceiver m_hFltPortReceiver;
 
 	Variant m_vEventSchema;
 	Variant m_vConfigSchema;
@@ -95,19 +78,10 @@ private:
 	bool m_fInitialized = false;
 	bool m_fWasStarted = false;
 	std::string m_sStartMode { "auto" };
-	std::atomic_bool m_fTerminate = false;
 	uint32_t m_nSelfPid = 0;
 	InjectionMode m_eInjection = InjectionMode::None;
 
-	// Statistic
-	std::mutex m_mtxStatistic;
-	size_t m_nMsgCount = 0;
-	double m_nMsgSize = 0;
-
 	// Driver messages parsing thread functions
-	void parseEventsThread();
-	void parseEventsThreadInt();
-	void replyMessage(PFILTER_MESSAGE_HEADER pMessage, NTSTATUS nStatus);
 	void sendIoctl(uint32_t nCode, void* pInput, Size nInput, void* pOutput, Size nOutput);
 
 	// Deserialize buffer and send data into receiver
@@ -180,6 +154,6 @@ public:
 };
 
 } // namespace win
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

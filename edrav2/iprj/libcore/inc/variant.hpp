@@ -40,10 +40,10 @@
 //
 // Put basic data types to global cmd namespace
 //
-namespace openEdr {
+namespace cmd {
 
 using variant::Variant;
 using variant::Dictionary;
 using variant::Sequence;
 
-} // namespace openEdr
+} // namespace cmd

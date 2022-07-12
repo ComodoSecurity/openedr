@@ -20,7 +20,7 @@ typedef uint64_t Enum;
 #include <libcore\inc\variant\lbvs.hpp>
 
 
-namespace openEdr {
+namespace cmd {
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -207,6 +207,6 @@ void updateList(edrdrv::UpdateRulesMode eMode, List<ListData>& dst, List<ListDat
 	}
 }
 
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

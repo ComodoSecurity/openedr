@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "aws"
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 namespace aws {
 
@@ -177,6 +177,6 @@ Variant FirehoseClient::execute(Variant vCommand, Variant vParams)
 
 } // namespace aws
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

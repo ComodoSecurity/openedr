@@ -10,7 +10,7 @@
 #pragma once
 #include "policy.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 namespace policy {
 namespace operation {
@@ -82,6 +82,6 @@ OperationPtr createOperation(Operation operation, Variant vParams, Context& ctx)
 
 } // namespace policy 
 } // namespace edr 
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @} 

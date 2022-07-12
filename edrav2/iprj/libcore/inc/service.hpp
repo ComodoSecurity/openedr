@@ -10,7 +10,7 @@
 #include "object.hpp"
 #include "variant.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Service (singleton) interface
@@ -109,5 +109,5 @@ inline void removeGlobalObject(std::string_view sName)
 	putCatalogData(getServicePath(sName), nullptr);
 }
 
-} // namespace openEdr 
+} // namespace cmd 
 

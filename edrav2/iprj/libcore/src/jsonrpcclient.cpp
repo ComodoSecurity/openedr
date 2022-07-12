@@ -15,7 +15,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "jsonrpcclt"
 
-namespace openEdr {
+namespace cmd {
 namespace ipc {
 
 //
@@ -230,4 +230,4 @@ void JsonRpcClient::notifyQueueOverflowWarning(Variant vTag)
 }
 
 } // namespace ipc
-} // namespace openEdr 
+} // namespace cmd 

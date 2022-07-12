@@ -17,7 +17,7 @@
 #include <system.hpp>
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 namespace win {
 
@@ -174,5 +174,5 @@ public:
 
 } // namespace win
 } // namespace io
-} // namespace openEdr
+} // namespace cmd
 /// @} 

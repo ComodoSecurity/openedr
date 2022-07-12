@@ -14,7 +14,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 typedef uint64_t Time;
@@ -147,5 +147,5 @@ inline bool matchWildcard(const std::wstring_view sString, const std::wstring_vi
 } // namespace string
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd
 

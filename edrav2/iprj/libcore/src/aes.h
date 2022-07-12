@@ -9,7 +9,7 @@
 #include <io.hpp>
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace crypt {
 
 namespace detail {
@@ -110,4 +110,4 @@ public:
 };
 
 } // namespace crypt
-} // namespace openEdr 
+} // namespace cmd 

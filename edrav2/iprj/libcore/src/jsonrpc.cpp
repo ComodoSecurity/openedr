@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "jsonrpc"
 
-namespace openEdr {
+namespace cmd {
 namespace ipc {
 
 constexpr char c_sInvalid[] = "invalid";
@@ -220,4 +220,4 @@ Variant decryptJsonValue(const Json::Value& data)
 }
 
 } // namespace ipc
-} // namespace openEdr
+} // namespace cmd

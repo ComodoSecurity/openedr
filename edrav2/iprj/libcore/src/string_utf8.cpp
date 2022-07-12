@@ -8,7 +8,7 @@
 //
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 namespace string {
 
 //
@@ -80,4 +80,4 @@ std::string convertToUtf8(const std::string& sSrc)
 }
 
 } // namespace string
-} // namespace openEdr 
+} // namespace cmd 

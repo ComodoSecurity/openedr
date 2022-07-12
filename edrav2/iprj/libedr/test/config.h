@@ -5,3 +5,9 @@
 // Reviewer:
 //
 #pragma once
+
+//
+// Uncomment this line to include extra tests
+// which require COMODO VPN to be established
+//
+//#define COMODO_VPN_ENABLED

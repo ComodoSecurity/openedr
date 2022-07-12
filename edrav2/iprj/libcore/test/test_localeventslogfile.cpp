@@ -8,7 +8,7 @@
 #include "pch.h"
 #include "common.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 //
 //
@@ -28,7 +28,7 @@ TEST_CASE("LocalEventsLogFile.create")
 		// sName: vCatalogConfig, vConfig
 		{ "Config 0", Dictionary({ {"path", sTempPath.c_str()} })},
 		{ "Config 1", Dictionary({ {"path", sTempPath.c_str()} , {"mode", "create"} })},
-		{ "Config 2", Dictionary({ {"path", sTempPathCreate.c_str()} , {"mode", "create"}, {"daysStore", 5} }) },
+		{ "Config 2", Dictionary({ {"path", sTempPathCreate.c_str()} , {"mode", "create"}, {"daysStore", 5}, {"multiline", true} }) },
 	};
 
 	for (const auto& [sName, params] : mapData)
@@ -70,7 +70,8 @@ TEST_CASE("LocalEventsLogFile.put")
 	const auto c_dictConfig = Dictionary({
 			{ "path", sStgPath.c_str() },
 			{ "mode", "create" },
-			{ "daysStore", 5 }
+			{ "daysStore", 5 },
+			{ "multiline", true}
 		});
 
 	const auto dictEvent1 = Dictionary({

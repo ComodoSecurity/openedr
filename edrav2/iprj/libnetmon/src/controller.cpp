@@ -15,7 +15,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "netmon"
 
-namespace openEdr {
+namespace cmd {
 namespace netmon {
 
 //
@@ -331,6 +331,6 @@ Variant NetworkMonitorController::execute(Variant vCommand, Variant vParams)
 }
 
 } // namespace netmon
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

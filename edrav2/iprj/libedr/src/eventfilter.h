@@ -9,7 +9,7 @@
 #pragma once
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Event filter.
@@ -148,6 +148,6 @@ public:
 	void reset() override;
 };
 
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

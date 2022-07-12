@@ -17,7 +17,7 @@
 #pragma once
 #include "basic.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Returns SourceLocation of current thread 
@@ -148,8 +148,8 @@ struct FreeMemDeleter
 ///  * CHECK_IN_SOURCE_LOCATION("fileName", 10);  - checking in "fileName" and line 10.
 ///
 #define CHECK_IN_SOURCE_LOCATION(...)											\
-	openEdr::detail::CheckInSourceLocationHelper CONCAT_ID(CheckInLoc, __LINE__) \
-	(SL, openEdr::detail::CheckInSourceLocationHelper::checkInPlace(__VA_ARGS__))
+	cmd::detail::CheckInSourceLocationHelper CONCAT_ID(CheckInLoc, __LINE__) \
+	(SL, cmd::detail::CheckInSourceLocationHelper::checkInPlace(__VA_ARGS__))
 
 ///
 /// Smart pointer returned by allocMem() and reallocMem()
@@ -180,5 +180,5 @@ inline MemPtr<T> reallocMem(MemPtr<T>& pOldBlock, Size nNewCount)
 }
 
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

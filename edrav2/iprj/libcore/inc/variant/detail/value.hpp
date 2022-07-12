@@ -12,7 +12,7 @@
 #include "value_int.hpp"
 #include "value_string.hpp"
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 namespace detail {
 
@@ -200,4 +200,4 @@ public:
 
 } // namespace detail
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd

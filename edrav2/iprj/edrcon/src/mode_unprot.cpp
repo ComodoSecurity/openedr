@@ -9,7 +9,7 @@
 ///
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -139,4 +139,4 @@ std::shared_ptr<IApplicationMode> createAppMode_unprot()
 	return std::make_shared<AppMode_unprot>();
 }
 
-} // namespace openEdr
+} // namespace cmd

@@ -1,5 +1,6 @@
 #pragma once
 
+//#define FEATURE_ENABLE_MADCHOOK 
 #define _WIN32_WINNT _WIN32_WINNT_WIN7
 #include <SDKDDKVer.h>
 
@@ -14,6 +15,7 @@
 #include <combaseapi.h>
 #include <mmeapi.h>
 #include <sddl.h>
+#include <Psapi.h>
 #define _NTDEF_
 typedef NTSTATUS* PNTSTATUS;
 #include <ntsecapi.h>
@@ -39,6 +41,7 @@ typedef NTSTATUS* PNTSTATUS;
 #define XXH_USE_STDLIB
 #include <xxhash.hpp>
 
+#if defined(FEATURE_ENABLE_MADCHOOK)
 // MadCHook
 #ifdef PLATFORM_WIN
 #pragma warning(push)
@@ -55,6 +58,10 @@ typedef NTSTATUS* PNTSTATUS;
 #pragma warning(pop)
 #endif
 #pragma comment(lib, "madCHook.lib")
+
+#else
+#include <../detours/detours.h>
+#endif // FEATURE_ENABLE_MADCHOOK
 
 // Local files
 #include "common.h"

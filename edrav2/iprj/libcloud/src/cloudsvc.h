@@ -13,7 +13,7 @@
 #include <objects.h>
 #include <net.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 
 ///
@@ -109,5 +109,5 @@ public:
 };
 
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd
 /// @} 

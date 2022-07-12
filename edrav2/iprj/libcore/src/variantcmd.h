@@ -11,7 +11,7 @@
 #include <objects.h>
 #include <common.hpp>
 
-namespace openEdr {
+namespace cmd {
 
 // Internal namespace to avoid names errors
 namespace ctxoper {
@@ -133,4 +133,4 @@ public:
 };
 
 
-} // namespace openEdr 
+} // namespace cmd 

@@ -19,10 +19,10 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD eCallReason, LPVOID /*pReserved*/)
 	switch (eCallReason)
 	{
 		case DLL_PROCESS_ATTACH:
-			openEdr::edrmm::startMemoryLeaksMonitoring();
+			cmd::edrmm::startMemoryLeaksMonitoring();
 			break;
 		case DLL_PROCESS_DETACH:
-			openEdr::edrmm::saveMemoryLeaks();
+			cmd::edrmm::saveMemoryLeaks();
 			break;
 		case DLL_THREAD_ATTACH:
 		case DLL_THREAD_DETACH:

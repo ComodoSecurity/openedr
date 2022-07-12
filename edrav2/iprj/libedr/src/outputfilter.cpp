@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "outflt"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -235,6 +235,6 @@ Variant OutputFilter::execute(Variant vCommand, Variant vParams)
 	error::OperationNotSupported(SL, FMT("Unsupported command <" << vCommand << ">")).throwException();
 }
 
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

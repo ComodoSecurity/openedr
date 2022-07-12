@@ -9,7 +9,7 @@
 ///
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 
 static inline bool fCrtlBreakIsUsed = false;
 
@@ -290,4 +290,4 @@ std::shared_ptr<IApplicationMode> createAppMode_run()
 	return std::make_shared<AppMode_run>();
 }
 
-} // namespace openEdr
+} // namespace cmd

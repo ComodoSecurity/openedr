@@ -13,7 +13,7 @@
 #include "basic.hpp"
 #include "string.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Object CLSID.
@@ -114,7 +114,7 @@ public:
 //
 // FIXME: May we rename it with I prefix?
 //
-#define OBJECT_INTERFACE virtual public openEdr::IObject
+#define OBJECT_INTERFACE virtual public cmd::IObject
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -204,6 +204,6 @@ inline std::ostream& operator<<(std::ostream& os, ObjPtr<T> pObj)
 	return (os << "Object<" << pObj->getClassId() << ":" << hex(pObj->getId()) << ">");
 }
 
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @}

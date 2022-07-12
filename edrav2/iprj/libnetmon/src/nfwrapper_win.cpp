@@ -14,7 +14,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "netmon"
 
-namespace openEdr {
+namespace cmd {
 namespace netmon {
 namespace win {
 
@@ -741,4 +741,4 @@ void NetFilterWrapper::shutdown()
 
 } // namespace win
 } // namespace netmon
-} // namespace openEdr
+} // namespace cmd

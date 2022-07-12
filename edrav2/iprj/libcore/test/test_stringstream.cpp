@@ -5,7 +5,7 @@
 #include "pch.h"
 #include "test_stream.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 TEST_CASE("StringReadableStream.finalConstruct")
 {

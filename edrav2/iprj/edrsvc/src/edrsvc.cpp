@@ -10,7 +10,7 @@
 #include "pch.h"
 #include "service.h"
 
-namespace openEdr {
+namespace cmd {
 
 //
 // Put appMode class factories here
@@ -23,8 +23,9 @@ extern std::shared_ptr<IApplicationMode> createAppMode_dump();
 extern std::shared_ptr<IApplicationMode> createAppMode_start();
 extern std::shared_ptr<IApplicationMode> createAppMode_stop();
 extern std::shared_ptr<IApplicationMode> createAppMode_enroll();
+extern std::shared_ptr<IApplicationMode> createAppMode_restart();
 
-} // namespace openEdr
+} // namespace cmd
 
 //
 //
@@ -43,17 +44,18 @@ int wmain(int argc, wchar_t* argv[])
 	// ::SetErrorMode(SEM_NOOPENFILEERRORBOX | SEM_FAILCRITICALERRORS);
 	int ec = 0;
 	{
-		auto pApp = createObject<openEdr::win::WinService>();
-		pApp->addMode(openEdr::Application::c_sDefModeName, openEdr::createAppMode_default());
-		pApp->addMode("start", openEdr::createAppMode_start());
-		pApp->addMode("stop", openEdr::createAppMode_stop());
-		pApp->addMode("install", openEdr::createAppMode_install());
-		pApp->addMode("enroll", openEdr::createAppMode_enroll());
-		pApp->addMode("uninstall", openEdr::createAppMode_install());
-		pApp->addMode("server", openEdr::createAppMode_wait());
-		//pApp->addMode("dump", openEdr::createAppMode_dump());
-		//pApp->addMode("test", openEdr::createAppMode_wait());
-		ec = pApp->run("edrsvc", "OpenEDR service", argc, argv);
+		auto pApp = createObject<cmd::win::WinService>();
+		pApp->addMode(cmd::Application::c_sDefModeName, cmd::createAppMode_default());
+		pApp->addMode("start", cmd::createAppMode_start());
+		pApp->addMode("stop", cmd::createAppMode_stop());
+		pApp->addMode("restart", cmd::createAppMode_restart());
+		pApp->addMode("install", cmd::createAppMode_install());
+		pApp->addMode("enroll", cmd::createAppMode_enroll());
+		pApp->addMode("uninstall", cmd::createAppMode_install());
+		pApp->addMode("server", cmd::createAppMode_wait());
+		//pApp->addMode("dump", cmd::createAppMode_dump());
+		//pApp->addMode("test", cmd::createAppMode_wait());
+		ec = pApp->run("edrsvc", "Comodo EDR service", argc, argv);
 	}
 	// std::cout << "Application finished." << std::endl;
 	SetConsoleOutputCP(nConsoleCP);

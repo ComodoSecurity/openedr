@@ -1,0 +1,6 @@
+Software Requirements:
+- Windows 2000 or above
+- .NET Framework 2.0
+
+Developer Requirements:
+- Visual Studio 2008

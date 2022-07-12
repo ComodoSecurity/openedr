@@ -15,7 +15,7 @@
 
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 
 ///
@@ -155,6 +155,6 @@ Variant createSequenceProxy(Variant vValue,
 	CreateProxyCallback fnCreateDictionaryProxy, CreateProxyCallback fnCreateSequenceProx);
 
 } // namespace variant
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @}

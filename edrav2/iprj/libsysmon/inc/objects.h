@@ -3,8 +3,8 @@
 //
 // ClassId's declarations
 //
-namespace openEdr {
+namespace cmd {
 
 CMD_DECLARE_LIBRARY_CLSID(CLSID_SystemMonitorController, 0x5A601182);
 
-} // namespace openEdr
+} // namespace cmd

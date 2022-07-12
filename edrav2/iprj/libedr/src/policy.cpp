@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "policy"
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 namespace policy {
 
@@ -936,6 +936,6 @@ void PolicySourceLocation::leaveVariable()
 
 } // namespace policy
 } // namespace edr
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

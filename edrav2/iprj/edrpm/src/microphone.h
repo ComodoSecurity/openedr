@@ -14,11 +14,11 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 inline CRITICAL_SECTION g_mtxIMMDeviceEnumerator;
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd
 

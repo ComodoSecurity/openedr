@@ -3,7 +3,7 @@
 //
 // ClassId's declarations
 //
-namespace openEdr {
+namespace cmd {
 
 CMD_DECLARE_LIBRARY_CLSID(CLSID_WinServiceController, 0xA77B4433);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_ProcessDataProvider, 0x92FA1819);
@@ -13,4 +13,4 @@ CMD_DECLARE_LIBRARY_CLSID(CLSID_SignDataProvider, 0x2588A006);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_PathConverter, 0xB8901152);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_Token, 0x6C87B081);
 
-} // namespace openEdr
+} // namespace cmd

@@ -14,7 +14,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "ctxcmd"
 
-namespace openEdr {
+namespace cmd {
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -42,7 +42,7 @@ void CallCtxCmd::VariantWithVars::init(const ContextAwareValue& cavSrc,
 //
 //
 //
-std::optional<openEdr::Variant> CallCtxCmd::VariantWithVars::get(const Variant& vContext)
+std::optional<cmd::Variant> CallCtxCmd::VariantWithVars::get(const Variant& vContext)
 {
 	if (!m_cavSrc.isValid() && m_patches.empty())
 		return std::nullopt;
@@ -354,4 +354,4 @@ Variant CachedValueCtxCmd::execute(Variant vContext, [[maybe_unused]] Variant vP
 	TRACE_END("Error during command execution");
 }
 
-} // namespace openEdr 
+} // namespace cmd 

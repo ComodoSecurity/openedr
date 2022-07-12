@@ -20,7 +20,7 @@
 // Fill free to delete the interfaces unneccessary for you.
 //
 
-namespace openEdr {
+namespace cmd {
 namespace templates {
 
 ///
@@ -70,5 +70,5 @@ public:
 };
 
 } // namespace templates
-} // namespace openEdr
+} // namespace cmd
 /// @} 

@@ -17,7 +17,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "fsdtastg"
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 ///
@@ -206,5 +206,5 @@ Variant FsDataStorage::execute(Variant vCommand, Variant vParams)
 }
 
 } // namespace io 
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

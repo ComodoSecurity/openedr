@@ -16,7 +16,7 @@
 #pragma once
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 
 //
@@ -215,5 +215,5 @@ public:
 };
 
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd
 /// @}

@@ -14,7 +14,7 @@
 #include "filestream.h"
 #include "stream.h"
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 // Set component for logging
@@ -48,7 +48,7 @@ ObjPtr<IReadableStream> createFileStream(const std::wstring_view& sFileName, con
 //
 //
 //
-ObjPtr<openEdr::io::IReadableStream> createFileStream(const std::filesystem::path& pathFile, const FileMode eFlag)
+ObjPtr<cmd::io::IReadableStream> createFileStream(const std::filesystem::path& pathFile, const FileMode eFlag)
 {
 	TRACE_BEGIN;
 	auto pObj = createObject(CLSID_File,
@@ -60,7 +60,7 @@ ObjPtr<openEdr::io::IReadableStream> createFileStream(const std::filesystem::pat
 //
 //
 //
-ObjPtr<openEdr::io::IReadableStream> createFileStreamSafe(const std::filesystem::path& pathFile,
+ObjPtr<cmd::io::IReadableStream> createFileStreamSafe(const std::filesystem::path& pathFile,
 	const FileMode eFlag, error::ErrorCode* pEC)
 {
 	if (pEC != nullptr)
@@ -274,21 +274,21 @@ bool File::checkAttribute(FileAttribute eFileAttr)
 		error::win::WinApiError(SL).throwException();
 	switch (eFileAttr)
 	{
-		case openEdr::io::FileAttribute::Readonly:
+		case cmd::io::FileAttribute::Readonly:
 			return testFlag(m_pFileInfo.dwFileAttributes, DWORD(FILE_ATTRIBUTE_READONLY));
-		case openEdr::io::FileAttribute::Hidden:
+		case cmd::io::FileAttribute::Hidden:
 			return testFlag(m_pFileInfo.dwFileAttributes, DWORD(FILE_ATTRIBUTE_HIDDEN));
-		case openEdr::io::FileAttribute::System:
+		case cmd::io::FileAttribute::System:
 			return testFlag(m_pFileInfo.dwFileAttributes, DWORD(FILE_ATTRIBUTE_SYSTEM));
-		case openEdr::io::FileAttribute::Directory:
+		case cmd::io::FileAttribute::Directory:
 			return testFlag(m_pFileInfo.dwFileAttributes, DWORD(FILE_ATTRIBUTE_DIRECTORY));
-		case openEdr::io::FileAttribute::Archive:
+		case cmd::io::FileAttribute::Archive:
 			return testFlag(m_pFileInfo.dwFileAttributes, DWORD(FILE_ATTRIBUTE_ARCHIVE));
-		case openEdr::io::FileAttribute::Device:
+		case cmd::io::FileAttribute::Device:
 			return testFlag(m_pFileInfo.dwFileAttributes, DWORD(FILE_ATTRIBUTE_DEVICE));
-		case openEdr::io::FileAttribute::Normal:
+		case cmd::io::FileAttribute::Normal:
 			return testFlag(m_pFileInfo.dwFileAttributes, DWORD(FILE_ATTRIBUTE_NORMAL));
-		case openEdr::io::FileAttribute::Temporary:
+		case cmd::io::FileAttribute::Temporary:
 			return testFlag(m_pFileInfo.dwFileAttributes, DWORD(FILE_ATTRIBUTE_TEMPORARY));
 		default:
 			error::InvalidArgument(SL, "Invalid attribute is").throwException();
@@ -313,13 +313,13 @@ tm File::getTime(FileTime eFileTime)
 	__time64_t tmpTime;
 	switch (eFileTime)
 	{
-		case openEdr::io::FileTime::Create:
+		case cmd::io::FileTime::Create:
 			tmpTime = Stat.st_ctime;
 			break;
-		case openEdr::io::FileTime::LastAccess:
+		case cmd::io::FileTime::LastAccess:
 			tmpTime = Stat.st_atime;
 			break;
-		case openEdr::io::FileTime::LastWrite:
+		case cmd::io::FileTime::LastWrite:
 			tmpTime = Stat.st_mtime;
 			break;
 		default:
@@ -418,6 +418,6 @@ Variant File::execute(Variant vCommand, Variant vParams)
 }
 
 } // namespace io
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @}

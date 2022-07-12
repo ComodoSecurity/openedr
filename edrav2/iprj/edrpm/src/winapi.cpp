@@ -20,8 +20,8 @@
 
 #include "winapi.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd

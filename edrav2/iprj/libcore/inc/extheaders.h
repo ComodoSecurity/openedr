@@ -64,7 +64,7 @@
 #define UNICODE
 
 // xxhash library
-namespace openEdr {
+namespace cmd {
 namespace crypt { //namespace xxh {
 #define XXH_USE_STDLIB
 #define XXH_ACCEPT_NULL_INPUT_POINTER 1

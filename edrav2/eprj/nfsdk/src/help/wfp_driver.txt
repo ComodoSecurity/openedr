@@ -1,0 +1,14 @@
+WFP driver uses the same API in nfapi. WFP driver is installed in the same way as TDI driver, by copying it to windows\system32\drivers and registering using nfapi functions. WFP driver can have the same name as TDI driver. In this case if TDI driver is already installed, it is not necessary to register WFP driver once again. Just replace the driver binary and reboot. 
+
+WFP driver can be unloaded dynamically by stopping it as a service, e.g. net stop netfilter2.
+
+System requirements:
+Windows 7 and higher. The driver doesn’t work on Vista!
+
+WFP driver has several differences from TDI driver:
+
+- NF_OFFLINE filtering flag is not supported.
+
+- nf_tcpSetSockOpt supports only one option: TCP_SOCKET_NODELAY. The other options are ignored.
+
+

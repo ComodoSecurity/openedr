@@ -10,7 +10,7 @@
 #include "pch_win.h"
 #include <cmd/sys/net.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 namespace net {
 
@@ -136,5 +136,5 @@ InterfacesInfoPtr getInterfaces(bool fOnlyEnabled, bool fOnlyWithAssignedIp)
 
 } // namespace net
 } // namespace sys
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

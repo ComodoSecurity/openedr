@@ -4,7 +4,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 CMD_DECLARE_LIBRARY_CLSID(CLSID_TestExtractContextCommand, 0xE52D3FA0);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_TestReturnCommand, 0xE52D3FA1);

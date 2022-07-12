@@ -12,7 +12,7 @@
 
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 namespace string {
 
 //
@@ -84,6 +84,6 @@ std::wstring convertWildcardToRegex(std::wstring_view sWildcard)
 }
 
 } // namespace string
-} // namespace openEdr
+} // namespace cmd
 
 // @}

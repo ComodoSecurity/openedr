@@ -9,7 +9,7 @@
 #pragma once
 #include "..\inc\objects.h"
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Events Enricher
@@ -62,4 +62,4 @@ public:
 	// ICommandProcessor
 	virtual Variant execute(Variant vCommand, Variant vParams) override;
 };
-} // namespace openEdr 
+} // namespace cmd 

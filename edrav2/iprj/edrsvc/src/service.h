@@ -11,8 +11,21 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace win {
+
+inline ObjPtr<ICommandProcessor> startElevatedInstanceWithParams(const std::wstring& params)
+{
+	const std::wstring wPath = getCatalogData("app.imageFile");
+	const std::wstring completeParams = std::wstring(L" ") + params;
+	auto ec = sys::executeApplication(wPath, completeParams, true, 0);
+	if (ec != 0)
+		error::Exception(SL, ErrorCode(ec),
+			"Can't run elevated instance of application").throwException();
+	std::this_thread::sleep_for(std::chrono::seconds(1));
+
+	return queryInterface<ICommandProcessor>(queryService("appRpcClient"));
+}
 
 //
 //
@@ -25,18 +38,14 @@ inline ObjPtr<ICommandProcessor> startElevatedInstance(bool fStdOut)
 		return queryInterface<ICommandProcessor>(queryService("application"));
 	if (fStdOut)
 		std::cout << "Seems we have no rights. Performing UAC elevation..." << std::endl;
-	std::wstring wPath = getCatalogData("app.imageFile");
+
 	std::wstring wParams(L" server /l=");
 	wParams += std::to_wstring((Size)getCatalogData("app.config.log.logLevel"));
 	wParams += L" --timeout=60000 --logpath=";
 	wParams += getCatalogData("app.logPath");
 	wParams += L"\\server";
-	auto ec = sys::executeApplication(wPath, wParams, true, 0);
-	if (ec != 0)
-		error::Exception(SL, ErrorCode(ec),
-			"Can't run elevated instance of application").throwException();
-	std::this_thread::sleep_for(std::chrono::seconds(1));
-	return queryInterface<ICommandProcessor>(queryService("appRpcClient"));
+
+	return startElevatedInstanceWithParams(wParams);
 }
 
 //
@@ -120,6 +129,7 @@ protected:
 	Variant loadServiceData(const std::string& sName, Variant vDefault) const;
 	std::optional<Variant> loadServiceData(const std::string& sName) const;
 	void saveServiceData(const std::string& sName, Variant vData) const;
+	void runInstance(const std::wstring& args);
 
 public:
 	WinService();
@@ -130,5 +140,5 @@ public:
 };
 
 } // namespace win
-} // namespace openEdr
+} // namespace cmd
 /// @}

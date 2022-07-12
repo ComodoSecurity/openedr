@@ -4,7 +4,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr::crypt;
+using namespace cmd::crypt;
 
 static const uint8_t g_sStr[] = "Hello world!";
 static const size_t g_nStrLen = std::size(g_sStr) - 1;
@@ -112,7 +112,7 @@ TEST_CASE("crc32.string")
 
 TEST_CASE("crc32.stream")
 {
-	auto pStream = openEdr::io::createMemoryStream(g_sStr, g_nStrLen);
+	auto pStream = cmd::io::createMemoryStream(g_sStr, g_nStrLen);
 
 	SECTION("readAll")
 	{
@@ -138,6 +138,6 @@ TEST_CASE("crc32.stream")
 		{
 			crc32::getHash(pStream, g_nStrLen + 1);
 		};
-		REQUIRE_THROWS_AS(fn(), openEdr::error::NoData);
+		REQUIRE_THROWS_AS(fn(), cmd::error::NoData);
 	}
 }

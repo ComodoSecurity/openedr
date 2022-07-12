@@ -12,7 +12,7 @@
 #include "pch.h"
 #include "signcontext.h"
 
-namespace openEdr {
+namespace cmd {
 
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "ctxsvc"
@@ -683,6 +683,6 @@ Variant ContextService::execute(Variant vCommand, Variant vParams)
 	TRACE_END(FMT("Error during processing of the command <" << vCommand << ">"));
 }
 
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @} 

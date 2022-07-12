@@ -13,7 +13,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "netmon"
 
-namespace openEdr {
+namespace cmd {
 namespace netmon {
 namespace win {
 
@@ -398,4 +398,4 @@ void UdpConnection::notifyClose()
 
 } // namespace win
 } // namespace netmon
-} // namespace openEdr
+} // namespace cmd

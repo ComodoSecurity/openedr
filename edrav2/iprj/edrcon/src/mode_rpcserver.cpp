@@ -11,7 +11,7 @@
 
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -78,4 +78,4 @@ std::shared_ptr<IApplicationMode> createAppMode_rpcserver()
 	return std::make_shared<AppMode_rpcserver>();
 }
 
-} // namespace openEdr
+} // namespace cmd

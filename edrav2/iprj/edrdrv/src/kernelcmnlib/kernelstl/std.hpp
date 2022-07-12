@@ -155,7 +155,7 @@ using add_const_t = const _Ty;
 // std::move
 //
 template<class _Ty>
-inline[[nodiscard]] constexpr remove_reference_t<_Ty>&& move(_Ty&& _Arg) noexcept
+[[nodiscard]] inline constexpr remove_reference_t<_Ty>&& move(_Ty&& _Arg) noexcept
 {	// forward _Arg as movable
 	return (static_cast<remove_reference_t<_Ty>&&>(_Arg));
 }

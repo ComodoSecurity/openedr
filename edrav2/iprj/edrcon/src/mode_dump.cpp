@@ -9,7 +9,7 @@
 ///
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -43,4 +43,4 @@ std::shared_ptr<IApplicationMode> createAppMode_dump()
 	return std::make_shared<AppMode_dump>();
 }
 
-} // namespace openEdr
+} // namespace cmd

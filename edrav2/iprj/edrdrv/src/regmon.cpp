@@ -16,7 +16,7 @@
 #include "regmon.h"
 #include "config.h"
 
-namespace openEdr {
+namespace cmd {
 namespace regmon {
 
 //
@@ -1499,5 +1499,5 @@ void finalize()
 }
 
 } // namespace regmon
-} // namespace openEdr
+} // namespace cmd
 /// @}

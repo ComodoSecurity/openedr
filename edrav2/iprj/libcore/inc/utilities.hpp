@@ -12,7 +12,13 @@
 
 #pragma once
 
-namespace openEdr {
+//! @brief Useful macro for determine string size in bytes
+#define string_byte_size(_size_) static_cast<DWORD>((_size_) * sizeof(wchar_t))
+
+//! @brief Useful macro for determine string size in count of chars
+#define string_char_size(_byte_size_) ((_byte_size_) / sizeof(wchar_t))
+
+namespace cmd {
 
 ///
 /// A template-class for RAII-like resource management.
@@ -235,6 +241,6 @@ inline std::string getIsoTime(Time time)
 }
 
 #endif // CMD_SKIP_FRAMEWORK
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

@@ -14,7 +14,11 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+#include "FltPort.h"
+#include "../../libsysmon/inc/edrdrvapi.hpp"
+
+
+namespace cmd {
 namespace edrpm {
 
 //
@@ -68,6 +72,11 @@ private:
 			{60000},	// PROCMON_THREAD_IMPERSONATION = 0x0016,
 			{0},		// PROCMON_PIPE_IMPERSONATION = 0x0017,
 		};
+		inline auto GetEventTimeout(RawEvent eventId)
+		{
+			auto id = unsigned(eventId) - ProcmonEventsOffset;
+			return pEvents[id].nTimeout;
+		}
 	};
 
 	CRITICAL_SECTION m_mtxQueue;
@@ -93,13 +102,21 @@ private:
 	ScopedHandle m_hTimeoutEvent;
 	ScopedHandle m_hTerminationEvent;
 
+	// update config retry attempts
+	uint8_t m_MaxRetryCountAndWait = 10;
+	uint8_t m_MaxRetryCount = 3;
+
+	inline static const wchar_t c_sPortName[] = L"" CMD_EDRDRV_FLTPORT_PROCMON_IN_NAME;
+	cmd::win::FltPort m_hFltPort;
+
 	bool updateConfig();
 	void workerThreadFunction();
 	static DWORD WINAPI workerThread(void* data);
 
 	void hookAll();
 	void unhookAll();
-
+	const uint8_t GetMaxRetryCount() const { return m_MaxRetryCount; };
+	const uint8_t GetMaxRetryCountAndWait() const { return m_MaxRetryCountAndWait; };
 public:
 	Injection();
 	virtual ~Injection();
@@ -180,6 +197,7 @@ bool sendEvent(RawEvent eEvent, Fn1 fnWriteData, Fn2 fnHashData, Buffer& pAnswer
 		logError(std::string("Fail to get data for event <") + std::to_string(uint32_t(eEvent)) + ">");
 		return false;
 	}
+	bool result = true;
 	if (eEvent < RawEvent::_Max)
 	{
 		dbgPrint(std::string("Add to queue event <") + std::to_string(uint32_t(eEvent)) + ">");
@@ -187,9 +205,9 @@ bool sendEvent(RawEvent eEvent, Fn1 fnWriteData, Fn2 fnHashData, Buffer& pAnswer
 	}
 	else
 	{
-		g_Injection.sendEventToSrv(pData, pAnswer);
+		result = g_Injection.sendEventToSrv(pData, pAnswer);
 	}
-	return true;
+	return result;
 }
 
 //
@@ -230,5 +248,5 @@ inline bool sendEvent(RawEvent eEvent, Buffer& pAnswer)
 }
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd
 

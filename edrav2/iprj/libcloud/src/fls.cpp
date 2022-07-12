@@ -23,7 +23,7 @@ constexpr char c_sZeroHash[] = "0000000000000000000000000000000000000000";
 constexpr char c_sUdpPrefix[] = "udp://";
 constexpr char c_sProtocolDelimiter[] = "://";
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 namespace fls {
 
@@ -782,6 +782,6 @@ Variant FlsService::execute(Variant vCommand, Variant vParams)
 
 } // namespace fls
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

@@ -10,7 +10,7 @@
 #include "object.hpp"
 #include "variant.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Interface provides abstract function for loading Variant variable into object.
@@ -143,5 +143,5 @@ public:
 	virtual Variant getProgressInfo() = 0;
 };
 
-} // namespace openEdr 
+} // namespace cmd 
 

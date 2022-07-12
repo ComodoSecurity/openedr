@@ -18,7 +18,7 @@
 #error You should include this file only into windows-specific code
 #endif // #ifdef _WIN32
 
-namespace openEdr {
+namespace cmd {
 namespace error {
 namespace win {
 
@@ -106,5 +106,5 @@ public:
 
 } // namespace win
 } // namespace error
-} // namespace openEdr
+} // namespace cmd
 /// @}

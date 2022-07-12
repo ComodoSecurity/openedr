@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 namespace win {
 
@@ -297,6 +297,6 @@ enum class ImpersonationType
 
 } // namespace win
 } // namespace sys
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

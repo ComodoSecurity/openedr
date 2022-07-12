@@ -13,7 +13,7 @@
 #include "variant.hpp"
 #include "lbvs.hpp"
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 class IRawWritableStream;
@@ -150,6 +150,6 @@ Variant deserializeFromLbvs(ObjPtr<io::IRawReadableStream> pStream, Variant vSch
 bool serializeToLbvs(Variant vData, Variant vSchema, std::vector<uint8_t>& pData);
 
 } // namespace variant
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @}

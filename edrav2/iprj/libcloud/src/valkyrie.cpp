@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "valkyrie"
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 namespace valkyrie {
 
@@ -552,6 +552,6 @@ Variant ValkyrieService::execute(Variant vCommand, Variant vParams)
 
 } // namespace valkyrie
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

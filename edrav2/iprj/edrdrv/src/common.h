@@ -21,7 +21,12 @@
 #include "log.h"
 #include "sysapi.h"
 #include "stringutils.h"
+#include "kernelinjectlib/kernelinjectlib.hpp"
 #pragma prefast(disable:__WARNING_ENCODE_MEMBER_FUNCTION_POINTER, "Not valid for kernel mode drivers")
+
+#if defined(FEATURE_ENABLE_MADCHOOK)
+#pragma comment(lib, "madchookdrv.lib");
+#endif
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -42,7 +47,7 @@ typedef uint64_t Enum;
 #include "lbvsext.h"
 
 
-namespace openEdr {
+namespace cmd {
 
 using EvFld = edrdrv::EventField;
 
@@ -55,7 +60,8 @@ using EvFld = edrdrv::EventField;
 /// ftlport can't send message because limits
 inline constexpr NTSTATUS STATUS_QUEUE_LIMIT_EXEEDED = 0x4F000001;
 
-using namespace openEdr::edrdrv;
+using namespace cmd::edrdrv;
+using kernelInjectLib::IInjectorPtr;
 
 //
 // Process rules
@@ -143,6 +149,7 @@ struct CommonGlobalData
 {
 	PDRIVER_OBJECT pDriverObject = nullptr; ///< Driver object
 	PFLT_FILTER pFilter = nullptr; ///< FS Filter object
+	DynUnicodeString systemRootDirectory; ///< Normalized path to \\SystemRoot 
 
 	DynUnicodeString usRegistryPath; ///< Driver registry path
 
@@ -207,6 +214,10 @@ struct CommonGlobalData
 	AtomicBool fEnableDllInjection = false; ///< Enable DLL injection
 	List<DynUnicodeString> injectedDllList;
 	AtomicBool fVerifyInjectedDll = true; ///< Enable Dll verification
+	AtomicBool fProxyShutdown = true; ///< Proxy client is torn down
+#if !defined(FEATURE_ENABLE_MADCHOOK)
+	IInjectorPtr injector;
+#endif
 
 	//
 	// regmon
@@ -254,6 +265,17 @@ struct CommonGlobalData
 	PZwQuerySystemInformation fnZwQuerySystemInformation = nullptr;
 	PCmCallbackGetKeyObjectIDEx fnCmCallbackGetKeyObjectIDEx = nullptr;
 	PCmCallbackReleaseKeyObjectIDEx fnCmCallbackReleaseKeyObjectIDEx = nullptr;
+
+	//
+	// Signing verification API
+	//
+	PPsIsProtectedProcess PsIsProtectedProcess = nullptr;
+	PPsIsProtectedProcessLight PsIsProtectedProcessLight = nullptr;
+	PPsGetProcessSignatureLevel PsGetProcessSignatureLevel = nullptr;
+	PSeGetCachedSigningLevel SeGetCachedSigningLevel = nullptr;
+	PNtSetCachedSigningLevel NtSetCachedSigningLevel = nullptr;
+	PPsGetProcessWow64Process PsGetProcessWow64Process = nullptr;
+	PPsWrapApcWow64Thread PsWrapApcWow64Thread = nullptr;
 
 	//
 	// Contains resources initialization which can NOT return errors.
@@ -314,7 +336,7 @@ inline bool isEventEnabled(SysmonEvent eventType)
 	return isEventMaskEnabled(createEventMask(eventType));
 }
 
-} // namespace openEdr
+} // namespace cmd
 
   /// @}
 

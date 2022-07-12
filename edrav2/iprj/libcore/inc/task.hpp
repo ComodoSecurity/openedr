@@ -10,7 +10,7 @@
 #include "object.hpp"
 #include "threadpool.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 
 //
@@ -225,5 +225,5 @@ inline ObjPtr<ITaskContext> startTask(std::string_view sName, Size nTimeout,
 	})));
 }
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

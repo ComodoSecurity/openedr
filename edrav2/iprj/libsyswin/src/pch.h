@@ -31,23 +31,6 @@
 #include <deque>
 #include <unordered_set>
 
-#ifdef PLATFORM_WIN
-#pragma warning(push)
-#pragma warning(disable:4505)
-#endif
-// FIXME: Remove usage of MadCHook from libsyswin (or maybe move EDR code from libsyswin to libedr)
-//namespace mchook {
-#define _PROCESSTYPES_H
-#include <SystemIncludes.h>
-#include <Systems.h>
-// We use internal functional
-#include <StringConstants.h>
-#include <FunctionTypes.h>
-//}
-#ifdef PLATFORM_WIN
-#pragma warning(pop)
-#endif
-
 #include "utilities.hpp"
 #include "dataproviders.hpp"
 

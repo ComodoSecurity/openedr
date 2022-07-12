@@ -4,8 +4,8 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
-using namespace openEdr::variant::lbvs;
+using namespace cmd;
+using namespace cmd::variant::lbvs;
 
 enum class TestId : FieldId
 {

@@ -18,7 +18,7 @@
 #include "dllinj.h"
 #include "config.h"
 
-namespace openEdr {
+namespace cmd {
 namespace procmon {
 
 //
@@ -175,6 +175,18 @@ NTSTATUS Context::init()
 	return eResult;
 }
 
+void Context::closePort()
+{
+	if (nullptr == g_pCommonData->pFilter)
+		return;
+
+	PFLT_PORT port = (PFLT_PORT)InterlockedExchangePointer((PVOID*)&ProxyPort, nullptr);
+	if (port != nullptr)
+	{
+		FltCloseClientPort(g_pCommonData->pFilter, &port);
+	}
+}
+
 //
 //
 //
@@ -183,6 +195,8 @@ void Context::free()
 	processInfo.free();
 	delete pOpenProcessFilter;
 	delete pRegMonEventFilter;
+
+	closePort();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -345,13 +359,33 @@ void releaseContext(Context* pCtx)
 		decRef(pCtx);
 }
 
-
 NTSTATUS getContext(HANDLE nProcessId, ContextPtr& pCtx, bool fAllowCreateNew)
 {
 	Context* pRawCtx = nullptr;
 	IFERR_RET_NOLOG(getContext(nProcessId, &pRawCtx, fAllowCreateNew));
 	pCtx.reset(pRawCtx);
 	return STATUS_SUCCESS;
+}
+
+NTSTATUS getProcessContext(HANDLE ProcessId, ContextPtr& ProcessContext)
+{
+	IFERR_RET_NOLOG(getContext(ProcessId, ProcessContext, false));
+	return STATUS_SUCCESS;
+}
+
+//
+//
+//
+void closeAllClientPorts()
+{
+	UniqueLock lock(g_pCommonData->mtxProcessContextList);
+
+	auto head = &g_pCommonData->processContextList;
+	for (auto currentItem = head->Flink; currentItem != head; currentItem = currentItem->Flink)
+	{
+		Context* context = CONTAINING_RECORD(currentItem, Context, _ListEntry);
+		context->closePort();
+	}
 }
 
 //
@@ -1275,18 +1309,18 @@ NTSTATUS sendProcessDelete(PEPROCESS pProcess, HANDLE nProcessId)
 //
 // Create/Terminate process callback
 //
-VOID notifyOnCreateProcess(_Inout_ PEPROCESS pProcess, 
+VOID notifyOnCreateProcess(_Inout_ PEPROCESS pProcess,
 	_In_ HANDLE nProcessId, _In_opt_ PPS_CREATE_NOTIFY_INFO pCreateInfo)
 {
 	// Process start
 	if (pCreateInfo != NULL)
-    {
+	{
 		procmon::Context* pNewProcessCtx = nullptr;
 		procmon::Context* pParentProcessCtx = nullptr;
 		__try
 		{
 			IFERR_LOG(procmon::fillContext(nProcessId, nullptr, &pNewProcessCtx));
-			IFERR_LOG(procmon::fillContext(pCreateInfo->CreatingThreadId.UniqueProcess, 
+			IFERR_LOG(procmon::fillContext(pCreateInfo->CreatingThreadId.UniqueProcess,
 				nullptr, &pParentProcessCtx));
 
 			// logging
@@ -1301,19 +1335,24 @@ VOID notifyOnCreateProcess(_Inout_ PEPROCESS pProcess,
 			{
 				// objmon
 				objmon::detail::notifyOnProcessCreation(pNewProcessCtx, pParentProcessCtx);
-				// dllinj
-				dllinj::detail::notifyOnProcessCreation(pNewProcessCtx, pParentProcessCtx);
+
+				if (!pCreateInfo->IsSubsystemProcess)
+				{
+					dllinj::detail::notifyOnProcessCreation(pNewProcessCtx, pParentProcessCtx);
+				}
 			}
 
 			if (g_pCommonData->fEnableMonitoring && !isProcessInWhiteList(pNewProcessCtx))
-				IFERR_LOG(sendProcessCreate(pProcess, nProcessId, pCreateInfo, pNewProcessCtx), 
-					"Can't send event %u (ProcessCreate). pid: %Id.\r\n", 
+			{
+				IFERR_LOG(sendProcessCreate(pProcess, nProcessId, pCreateInfo, pNewProcessCtx), "Can't send event %u (ProcessCreate). pid: %Id.\r\n",
 					(ULONG)SysmonEvent::ProcessCreate, (ULONG_PTR)nProcessId);
+			}
 		}
 		__finally
 		{
 			if (pNewProcessCtx != nullptr)
 				procmon::releaseContext(pNewProcessCtx);
+
 			if (pParentProcessCtx != nullptr)
 				procmon::releaseContext(pParentProcessCtx);
 		}
@@ -1321,7 +1360,7 @@ VOID notifyOnCreateProcess(_Inout_ PEPROCESS pProcess,
 
 	// Process finish
 	else
-    {
+	{
 		Context* pCtx = nullptr;
 		__try
 		{
@@ -1344,8 +1383,8 @@ VOID notifyOnCreateProcess(_Inout_ PEPROCESS pProcess,
 
 			LOGINFO3("Process %Id destroyed\r\n", (ULONG_PTR)nProcessId);
 
-			if (g_pCommonData->fEnableMonitoring && !isProcessInWhiteList(pCtx) )
-				IFERR_LOG(sendProcessDelete(pProcess, nProcessId), 
+			if (g_pCommonData->fEnableMonitoring && !isProcessInWhiteList(pCtx))
+				IFERR_LOG(sendProcessDelete(pProcess, nProcessId),
 					"Can't send event %u (ProcessDelete). pid: %Id.\r\n",
 					(ULONG)SysmonEvent::ProcessDelete, (ULONG_PTR)nProcessId);
 
@@ -1435,7 +1474,7 @@ void finalize()
 }
 
 } // namespace procmon
-} // namespace openEdr
+} // namespace cmd
 
 
 //
@@ -1452,7 +1491,7 @@ EXTERN_C BOOLEAN cmdedr_isProcessInWhiteList(ULONG_PTR nProcessId)
 {
 	if (nProcessId < 4)
 		return true;
-	return openEdr::procmon::isProcessInWhiteList(nProcessId);
+	return cmd::procmon::isProcessInWhiteList(nProcessId);
 }
 
 /// @}

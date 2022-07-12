@@ -14,7 +14,7 @@
 #include "objmon.h"
 #include "fltport.h"
 
-namespace openEdr {
+namespace cmd {
 namespace objmon {
 
 //////////////////////////////////////////////////////////////////////////
@@ -424,5 +424,5 @@ void finalize()
 }
 
 } // namespace objmon
-} // namespace openEdr
+} // namespace cmd
 /// @}

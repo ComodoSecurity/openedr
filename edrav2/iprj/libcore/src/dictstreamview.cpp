@@ -11,7 +11,7 @@
 #include "dictstreamview.h"
 #include "variantproxy.h"
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 //////////////////////////////////////////////////////////////////////////////
@@ -315,4 +315,4 @@ Variant DictionaryStreamView::clone()
 	return m_data.clone();
 }
 } // namespace io
-} // namespace openEdr 
+} // namespace cmd 

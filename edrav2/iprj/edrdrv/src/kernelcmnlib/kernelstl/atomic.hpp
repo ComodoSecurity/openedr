@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 
 //
 // Atomic types
@@ -152,6 +152,6 @@ public:
 	}
 };
 
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

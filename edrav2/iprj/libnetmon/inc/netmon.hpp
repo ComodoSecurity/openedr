@@ -9,7 +9,7 @@
 ///
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace netmon {
 
 inline constexpr uint64_t c_nDefaultEventsFlags = 0xffffffffffffffffui64;
@@ -36,4 +36,4 @@ enum class RawEvent : uint32_t
 };
 
 } // namespace netmon
-} // namespace openEdr
+} // namespace cmd

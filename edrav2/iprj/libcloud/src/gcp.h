@@ -12,7 +12,7 @@
 #pragma once
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 namespace gcp {
 
@@ -172,6 +172,6 @@ public:
 
 } // namespace gcp
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd
 
 /// @} 

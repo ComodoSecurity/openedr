@@ -15,7 +15,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "jsonrpcsvr"
 
-namespace openEdr {
+namespace cmd {
 namespace ipc {
 
 namespace detail {
@@ -227,4 +227,4 @@ void JsonRpcServer::stopServer()
 }
 
 } // namespace ipc
-} // namespace openEdr 
+} // namespace cmd 

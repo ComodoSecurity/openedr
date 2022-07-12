@@ -12,7 +12,7 @@
 #include "pch.h"
 #include "winsvcctrl.h"
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 namespace win {
 
@@ -652,6 +652,6 @@ Variant WinServiceController::execute(Variant vCommand, Variant vParams)
 
 } // namespace win
 } // namespace sys
-} // namespace openEdr 
+} // namespace cmd 
 
   /// @}

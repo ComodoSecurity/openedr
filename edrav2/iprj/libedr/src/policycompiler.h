@@ -13,7 +13,7 @@
 #include <policy.hpp>
 #include "policy.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 namespace policy {
 
@@ -63,6 +63,6 @@ public:
 
 } // namespace policy
 } // namespace edr
-} // namespace openEdr
+} // namespace cmd
 
 /// @} 

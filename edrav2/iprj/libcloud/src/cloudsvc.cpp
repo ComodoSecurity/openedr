@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "cloudsvc"
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 
 //
@@ -255,8 +255,9 @@ Variant CloudService::doHeartbeat()
 
 	checkCredentials();
 
-	//REMOVED: heartbit request
+	//FIXME: REMOVED: heartbit request
 	Variant vResult;
+
 	LOGLVL(Detailed, "Receive heartbeat response (command <" << vResult.get("command", Variant()) << ">)");
 
 	if (vResult.isNull())
@@ -279,6 +280,14 @@ Variant CloudService::doHeartbeat()
 		LOGLVL(Detailed, "Process <updatePolicy> command");
 		(void)getPolicy();
 		confirmCommand(sCommandId);
+
+		// restart edr service to apply an obtained policies
+		sendMessage(Message::RequestAppRestart);
+	}
+	else if (vCommand == "restartService")   
+	{
+		LOGLVL(Detailed, "Process <restart service> command");
+		sendMessage(Message::RequestAppRestart);
 	}
 	else if (vCommand == "updateAgent")
 	{		
@@ -379,7 +388,7 @@ void CloudService::confirmCommand(std::string_view sCommandId)
 
 	checkCredentials();
 
-	//REMOVED: command/ack request
+	//FIXME: REMOVED: command/ack request
 
 	TRACE_END("Error during request to acknowledge service");
 
@@ -402,7 +411,7 @@ Variant CloudService::getConfig(Variant vParams)
 	if (!vCurrParams.has("tryTimeout"))
 		vCurrParams.put("tryTimeout", 5000);
 
-	//REMOVED: config retrieval from cloud
+	//FIXME: REMOVED: config retrieval from cloud
 	Variant vResult;
 
 	if (vResult.has("gcpPubSubTopic"))
@@ -457,8 +466,9 @@ Variant CloudService::getPolicy(Variant vParams)
 	if (!vCurrParams.has("tryTimeout"))
 		vCurrParams.put("tryTimeout", 5000);
 
-	//REMOVED: policy retrieval from cloud
+	//FIXME: REMOVED: policy retrieval from cloud
 	Variant vResult;
+
 	// Update EVM source policy in the catalog
 	auto vEvmPolicy = getCatalogData(m_sPolicyCatalogPath + ".groups.eventsMatching.source.evmCloud");
 	if (vResult.has("policy"))
@@ -507,7 +517,7 @@ Variant CloudService::getToken(Variant vParams)
 		{"x-api-key", vParams["apiKey"]}
 	}));
 
-	//REMOVED: token retrieval from cloud
+	//FIXME: REMOVED: token retrieval from cloud
 	Variant vResult;
 
 	if (!vResult.has("token"))
@@ -534,12 +544,12 @@ Variant CloudService::enroll(Variant vParams)
 	if (sEndpointId.empty())
 		throw error::InvalidArgument(SL, "The <endpointId> is not specifed");
 
-	
 	std::string sCustomerId = vParams.get("customerId", "");
 	std::string sClientId = vParams.get("clientId", "");
-	
-	//REMOVED: enroll procedure
+
+	//FIXME: REMOVED: enroll procedure
 	Variant vResult;
+
 	// enrollment service had an error then returns customerID instead companyID
 	if (!vResult.has("companyID"))
 		vResult.put("companyID", variant::convert<variant::ValueType::String>(vResult["customerID"]));
@@ -580,8 +590,8 @@ Variant CloudService::getIdentity(Variant vParams)
 	std::string sMachineId = vParams.get("machineId", "");
 	if (sMachineId.empty())
 		throw error::InvalidArgument(SL, "The <machineId> parameter is not specifed");
-	
-	//REMOVED: identity retrieval from cloud
+
+	//FIXME: REMOVED: identity retrieval from cloud
 	Variant vResult;
 
 	if (!vResult.has("endpointID"))
@@ -645,7 +655,7 @@ Variant CloudService::reportEndpointInfo(bool fFull)
 
 	LOGLVL(Detailed, "Send <info_update> report");
 
-	//REMOVED: status/update request
+	//FIXME: REMOVED: status/update request
 
 	return vData;
 	TRACE_END("Error during request to info_update service");
@@ -665,7 +675,8 @@ void CloudService::reportOffline()
 	{
 		checkCredentials();
 
-		//REMOVED: status/update request
+	//FIXME: REMOVED: status/update request
+
 	}
 	CMD_PREPARE_CATCH
 	catch (error::OperationCancelled& e)
@@ -701,8 +712,9 @@ void CloudService::reportUninstall(bool fFailSafe)
 			confirmCommand(sUninstallCommandId);
 			putCatalogData("app.config.extern.endpoint.uninstall.commandId", nullptr);
 		}
-		//REMOVED: status/update request
-		
+
+		//FIXME: REMOVED: status/update request
+
 	}
 	catch (...)
 	{
@@ -899,5 +911,5 @@ Variant CloudService::execute(Variant vCommand, Variant vParams)
 }
 
 } // namespace cloud
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

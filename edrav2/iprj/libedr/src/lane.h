@@ -9,7 +9,7 @@
 #pragma once
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 
 ///
@@ -36,6 +36,6 @@ public:
 };
 
 } // namespace edr
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

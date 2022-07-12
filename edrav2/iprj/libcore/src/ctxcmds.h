@@ -11,7 +11,7 @@
 #include <objects.h>
 #include <common.hpp>
 
-namespace openEdr {
+namespace cmd {
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -313,4 +313,4 @@ public:
 	Variant execute(Variant vContext, Variant vParam) override;
 };
 
-} // namespace openEdr 
+} // namespace cmd 

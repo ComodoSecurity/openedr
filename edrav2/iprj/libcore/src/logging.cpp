@@ -11,7 +11,7 @@
 #include <io.hpp>
 #include "logsink.h"
 
-namespace openEdr {
+namespace cmd {
 namespace logging {
 namespace detail {
 
@@ -324,7 +324,7 @@ void setComponentLogLevel(const std::string& sName, LogLevel logLevel)
 }
 
 } // namespace logging
-} // namespace openEdr
+} // namespace cmd
 
 
 #undef CMD_COMPONENT
@@ -332,18 +332,18 @@ void setComponentLogLevel(const std::string& sName, LogLevel logLevel)
 
 void logMadCHookError(const wchar_t* sMsg)
 {
-	auto s = openEdr::string::convertWCharToUtf8(sMsg);
-	openEdr::error::RuntimeError(SL, s).log();
+	auto s = cmd::string::convertWCharToUtf8(sMsg);
+	cmd::error::RuntimeError(SL, s).log();
 }
 
 void logMadCHookWarning(const wchar_t* sMsg)
 {
-	auto s = openEdr::string::convertWCharToUtf8(sMsg);
+	auto s = cmd::string::convertWCharToUtf8(sMsg);
 	LOGWRN(s);
 }
 
 void logMadCHookInfo(const wchar_t* sMsg)
 {
-	auto s = openEdr::string::convertWCharToUtf8(sMsg);
+	auto s = cmd::string::convertWCharToUtf8(sMsg);
 	LOGLVL(Debug, s);
 }

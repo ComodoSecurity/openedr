@@ -9,7 +9,7 @@
 #include "stream.h"
 #include "streamcache.h"
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,7 +163,7 @@ IoSize ReadableStreamCache::getSize()
 //
 //
 //
-ObjPtr<IReadableStream> createStreamCache(ObjPtr<IReadableStream> pStream, openEdr::Size nCacheSize)
+ObjPtr<IReadableStream> createStreamCache(ObjPtr<IReadableStream> pStream, cmd::Size nCacheSize)
 {
 	auto pObj = createObject(CLSID_ReadableStreamCache, 
 		Dictionary({ {"stream", pStream}, {"cacheSize", nCacheSize} }));
@@ -304,4 +304,4 @@ ObjPtr<IReadableStream> convertStream(ObjPtr<IRawReadableStream> pStream, IoSize
 }
 
 } // namespace io
-} // namespace openEdr 
+} // namespace cmd 

@@ -22,6 +22,8 @@
     <ClCompile Include="..\..\src\screen.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\hookapi.cpp" />
+    <ClCompile Include="..\..\src\FltPort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\common.h" />
@@ -44,6 +46,8 @@
     <ClInclude Include="..\..\src\screen.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\hookapi.h" />
+    <ClInclude Include="..\..\src\FltPort.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -52,5 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\edrpm.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\edrpm.def" />
   </ItemGroup>
 </Project>

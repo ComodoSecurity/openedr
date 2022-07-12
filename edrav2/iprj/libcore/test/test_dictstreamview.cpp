@@ -9,8 +9,8 @@
 
 #include "pch.h"
 
-using namespace openEdr;
-using namespace openEdr::io;
+using namespace cmd;
+using namespace cmd::io;
 
 //////////////////////////////////////////////////////////////////////////////
 //

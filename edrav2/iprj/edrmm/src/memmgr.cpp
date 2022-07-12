@@ -35,7 +35,7 @@ If you add exception, standard malloc without debug will be used.
 #endif
 
 
-namespace openEdr {
+namespace cmd {
 namespace edrmm {
 
 //////////////////////////////////////////////////////////////////////////
@@ -322,5 +322,5 @@ void saveMemoryLeaks()
 #endif // USE_MSC_MEM_LEAKS_DETECTION
 
 } // namespace edrmm
-} // namespace openEdr
+} // namespace cmd
 

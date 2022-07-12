@@ -11,7 +11,7 @@
 #include <objects.h>
 #include <common.hpp>
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// @brief Wrapper of any command. ICommand implementation.
@@ -92,4 +92,4 @@ public:
 	void put(const Variant& vData) override;
 };
 
-} // namespace openEdr 
+} // namespace cmd 

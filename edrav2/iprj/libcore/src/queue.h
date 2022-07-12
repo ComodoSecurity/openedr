@@ -16,7 +16,7 @@
 #include <service.hpp>
 #include <queue.hpp>
 
-namespace openEdr {
+namespace cmd {
 
 ///////////////////////////////////////////////////////////////////////
 //
@@ -164,5 +164,5 @@ public:
 	Variant execute(Variant vCommand, Variant vParams) override;
 };
 
-} // namespace openEdr
+} // namespace cmd
 /// @} 

@@ -13,7 +13,7 @@
 #include "common.h"
 #include <Ntstrsafe.h>
 
-namespace openEdr {
+namespace cmd {
 
 
 namespace detail {
@@ -478,7 +478,7 @@ public:
 	//
 	bool isEqual(PCUNICODE_STRING other, bool fCaseInSensitive) const
 	{
-		return compare(other, fCaseInSensitive) == 0;
+		return !!RtlEqualUnicodeString(*this, other, fCaseInSensitive);
 	}
 
 	//
@@ -518,6 +518,33 @@ public:
 		// Add zero end
 		if(m_us.Length < m_us.MaximumLength)
 			m_us.Buffer[(((size_t)m_us.Length)+1) / sizeof(wchar_t)] = 0;
+		return STATUS_SUCCESS;
+	}
+
+	//
+	//
+	//
+	NTSTATUS concatenate(PCUNICODE_STRING String1, PCUNICODE_STRING String2 = nullptr, PCUNICODE_STRING String3 = nullptr, PCUNICODE_STRING String4 = nullptr, POOL_TYPE ePoolType = NonPagedPool)
+	{
+		NT_ASSERT(String1->Length);
+		size_t lengthRequired = (size_t)String1->Length + (ARGUMENT_PRESENT(String2) ? (size_t)String2->Length : 0) + (ARGUMENT_PRESENT(String3) ? (size_t)String3->Length : 0) + 
+			(ARGUMENT_PRESENT(String4) ? (size_t)String4->Length : 0);
+		
+		IFERR_RET_NOLOG(alloc(lengthRequired + sizeof(UNICODE_NULL), ePoolType));
+
+		RtlCopyUnicodeString(&m_us, String1);
+		if (ARGUMENT_PRESENT(String2)) 
+			IFERR_RET_NOLOG(RtlAppendUnicodeStringToString(&m_us, String2));
+
+		if (ARGUMENT_PRESENT(String3))
+			IFERR_RET_NOLOG(RtlAppendUnicodeStringToString(&m_us, String3));
+
+		if (ARGUMENT_PRESENT(String4))
+			IFERR_RET_NOLOG(RtlAppendUnicodeStringToString(&m_us, String4));
+
+		// Add zero end
+		if (m_us.Length < m_us.MaximumLength)
+			m_us.Buffer[(((size_t)m_us.Length) + 1) / sizeof(wchar_t)] = 0;
 		return STATUS_SUCCESS;
 	}
 
@@ -693,5 +720,5 @@ inline void convertBinToHex(const void* pSrc, size_t nSrcSize, char* psDst, size
 	psDst[nConvertSize * 2] = '\0';
 }
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

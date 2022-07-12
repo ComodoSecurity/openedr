@@ -12,7 +12,7 @@
 #pragma once
 #include "list.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -379,6 +379,6 @@ public:
 	}
 };
 
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

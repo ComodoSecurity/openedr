@@ -7,7 +7,7 @@
 //
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 namespace detail {
 
@@ -115,7 +115,7 @@ private:
 		}
 		catch (std::bad_cast& e)
 		{
-			openEdr::error::ArithmeticError(SL, FMT("Can't cast Variant to requested integer type: " << e.what())).throwException();
+			cmd::error::ArithmeticError(SL, FMT("Can't cast Variant to requested integer type: " << e.what())).throwException();
 		}
 	}
 
@@ -294,4 +294,4 @@ public:
 
 } // namespace detail
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd

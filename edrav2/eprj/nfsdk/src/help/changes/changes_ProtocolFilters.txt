@@ -1,0 +1,517 @@
+Build 1.2.2.4
+- Added a function pf_deleteExceptions.
+- Added a flag for SSL filter FF_SSL_DISABLE_TLS_1_1, allowing to disable TLS 1.1 protocol.
+
+Build 1.2.2.3
+- Fixed an issue with C API code.
+- Added new function pf_getRootSSLCertFileName, returning the full path to root certificate.
+
+Build 1.2.2.1
+- The flag enable-weak-ssl-ciphers is added for OpenSSL to support the servers with deprecated ciphers.
+- Fixed an issue in file streams code for Windows.
+
+Build 1.2.1.9
+- Fixed an issue in certificate importing code for Linux and Mac OS.
+
+Build 1.2.1.8
+- Fixed several issues with timers and internal variables.
+
+Build 1.2.1.6
+- OpenSSL configuration is updated to build with statically linked MSVC runtime.
+
+Build 1.2.1.5
+- OpenSSL upgraded to version 1.1.1b (supports TLS 1.3 and additional protocol features).
+- ProtocolFilters is made cross-platform, suitable for Windows, Linux and Mac OS.
+- Added make file make\msvc.mak for building the component using nmake.exe. 
+
+Build 1.2.1.3
+- Added new flag for SSL filter FF_SSL_DISABLE_TLS_1_0, which can be used in pf_addFilter to disable deprecated version of TLS protocol for connections with remote server.
+- Added new flag for SSL filter FF_SSL_DONT_IMPORT_SELF_SIGNED. It is possible to specify it in pf_addFilter to avoid importing self signed certificates to trusted storages.
+- Added a function pf_setExceptionsTimeout specifying timeouts for SSL exceptions.
+
+Build 1.2.1.0
+- Added new object type OT_SSL_TLS_EXCEPTION for indications of TLS protocol exceptions, when FF_SSL_INDICATE_EXCEPTIONS flag is enabled for SSL filter.
+- Fixed an issue in SSL filter for compatibility with FTP protocol in disconnect state.
+- Fixed an issue with domain names indicated in OT_SSL_EXCEPTION and OT_SSL_TLS_EXCEPTION objects.
+
+Build 1.2.0.8
+- Optimized the filtering on TCP send path to avoid client timeouts.
+- SSL filter with FF_SSL_VERIFY flag suspends TLS connections during validation of server certificate.
+- zlib is upgraded to version 1.2.11.
+
+Build 1.2.0.5
+- SSL filter allows requesting a client certificate after the main handshake.
+- The minimum DH key size is limited to 1024 with FF_SSL_VERIFY flag.
+- Fixed an issue in HTTP filter with parsing requests after receiving unexpected responses.
+- OCSP check in SSL filter is implemented using CryptoAPI for compatibility with fresh installations of Windows 10.
+- Fixed a problem with handling client certificates in SSL filter.
+
+Build 1.2.0.1
+- Added a workaround for importing root certificate to Firefox with master password enabled.
+- Added a new flag for FT_SSL filter FF_SSL_KEEP_SERIAL_NUMBERS, allowing to copy serial numbers from original server certificates.
+- Minor performance enhancement for synchronization objects, PFObject streams.
+- Added a function pf_setRootSSLCertSubjectEx, allowing to specify own root certificate for generating domain certificates.
+- Several well known folders are bypassed during searching for Mozilla certificate databases in user profiles.
+
+Build 1.1.9.6
+- OpenSSL is upgraded to version 1.0.2n and built with no-asm flag to avoid issues with SHA (https://github.com/openssl/openssl/issues/4470).
+- Fixed compatibility issues in SSL filter with Microsoft services using old TLS protocol (like OWA, Exchange RPC over HTTP). 
+- Fixed the parsing of HTTP responses having Content-Length and response code other than 200.
+
+Build 1.1.9.5
+- NSS tools for importing root certificate to Mozilla products is upgraded to version 3.35 for compatibility with Firefox and other products using new certificate database in cert9.db.
+
+Build 1.1.9.4
+- Root SSL certificate is imported to storages located in remote APPDATA and LOCALAPPDATA folders taken from all user profile registry keys.
+
+Build 1.1.9.3
+- x64 version of OpenSSL is rebuilt with no-asm flag for better compatibility.
+- Fixed false classification of STARTTLS commands as a TLS handshake in SSL filter.
+
+Build 1.1.9.1
+- Fixed an issue in HTTP filter with parsing responses having Content-Length field and empty body.
+- Fixed a parsing error in FTP filter with FileZilla client which uses pipelining for PASV and PORT commands.
+- FTP filter classifies properly the connections of FTP clients which use OPTS command.
+- Added pf_waitForImportCompletion function allowing to wait until root certificate import is completed after a call to pf_setRootSSLCertSubject.
+- Added a correct check for the situation when configuration folder specified in pf_init cannot be created.
+- Added a manifest with requirement of elevated administrative rights and import to Windows certificate storage to ProtocolFilters\tools\import_root_cert 
+- Fixed overwriting Accept-Encoding header in HTTP filter for a case when browser requires "identity" encoding.
+- Fixed a compatibility issue with Firefox 55/56 in SSL filter.
+
+Build 1.1.8.6
+- The exceptions in SSL filter due to weak DH prime are added immediately without using a delay with counter.
+
+Build 1.1.8.5
+- Fixed a build issue with MSVC 2017.
+
+Build 1.1.8.4
+- Added a validity check for system root certificates in SSL filter.
+
+Build 1.1.8.3
+- Implemented additional checks for known TLS vulneribilities when FF_SSL_VERIFY flag is enabled in SSL filter.
+- Added a fix in SSL filter to avoid false positives with adding TLS exceptions.
+
+Build 1.1.8.2
+- SSL filter uses graceful TLS shutdown to avoid issues in some clients.
+- Fixed a bug in HTTP filter with parsing chunked encoding.
+- SSL filter only adds exceptions instead of closing TLS connections with weak DH keys between 1024 and 1280 bits.
+
+Build 1.1.7.9
+- Fixed an issue with filtering SMTP protocol of QQ mail service that uses a non-standard extension MAILCOMPRESS.
+
+Build 1.1.7.8
+- SSL filter: Removed the deprecated RC4 from the default TLS cipher list.
+- SSL filter: DH keys smaller than 1280 bits are classified as weak, so the host is added to exceptions.
+- Proxy filter: increased the limit for requests.
+
+Build 1.1.7.7
+- When SSL filter is added without FF_SSL_SUPPORT_CLIENT_CERTIFICATES flag, requesting a client certificate by server adds host to exceptions after 2 unsuccessful attempts.
+
+Build 1.1.7.6
+- HTTP filter modifies Accept-Encoding field in request headers to avoid receiving the responses with unsupported encodings.
+
+Build 1.1.7.5
+- The procedure of adding automatic SSL exceptions is modified to avoid false positives with antiviruses.
+
+Build 1.1.7.4
+- Debug builds write a log file asyncronously for better performance.
+
+Build 1.1.7.3
+- SSL filter adds host to the list of exceptions if SSL connection is closed immediately after establishing only for hardcoded hosts.
+- OpenSSL and WinSock initialization/deinitialization is moved to pf_init/pf_free path.
+
+Build 1.1.7.2
+- SSL filter adds host to the list of exceptions if SSL connection is closed immediately after establishing.
+
+Build 1.1.7.1
+- Fixed an issue with filtering FTP over SOCKS proxy connections.
+- HTTP filter uses for filtered response the same transfer encoding as in original response.
+- OpenSSL is upgraded to version 1.0.2h.
+
+Build 1.1.6.8
+- Fixed a hang on loading broken file with SSL certificates (cert.db).
+
+Build 1.1.6.7
+- Added support for TLS session resumtion in SSL filter, for compatibility with secure FTP servers.
+- Minor performance optimization.
+
+Build 1.1.6.5
+- SSL filter signs MITM certificates with the algorithm used for signing original certificates.
+
+Build 1.1.6.4
+- Fixed hangs of SSL connections on renegotiation when server requires a client certificate.
+
+Build 1.1.6.3
+- Removed the code for disabling filtering from PFEventsDefault.
+
+Build 1.1.6.2
+- Fixed an issue with delayed remote disconnects for TCP sessions.
+
+Build 1.1.6.1
+- Fixed an overflow issue occured in HTTP filter during updating Content-Length larger than MAX_INT after returning DPCR_UPDATE_AND_BYPASS or DPCR_UPDATE_AND_FILTER_READ_ONLY from dataPartAvailable.
+
+Build 1.1.6.0
+- Fixed an issue in SSL filter with negotiating a set of algorithms for remote TLS connections.
+
+Build 1.1.5.9
+- Root certificate is imported to Windows storage even if the certificate already exists.
+
+Build 1.1.5.8
+- Added a workaround in SSL filter for a case with flag FF_SSL_COMPATIBILITY when server closes connection by returning TLS response.
+
+Build 1.1.5.7
+- Added a fix to HTTP filter to avoid issues when a server returns content longer than specified in Content-Length.
+- Minor optimization.
+
+Build 1.1.5.6
+- Fixed an issue with importing SSL root certificate to Opera.
+- SSL filter uses OCSP stapling TLS extension for better performance when FF_SSL_VERIFY flag is enabled.
+- Added a timeout in SSL filter for certificate revocation checks.
+
+Build 1.1.5.4
+- Added a flag FF_SSL_DECODE_ONLY for SSL filter, allowing to bypass encoding the traffic between proxy and server. 
+It is useful for example when a local or remote server should handle both HTTP and HTTPS traffic as generic HTTP.
+It is possible to enable the flag dynamically, by returning DPCR_FILTER_READ_ONLY from dataPartAvailable for OT_SSL_HANDSHAKE_OUTGOING object, containing some known domain name. 
+
+Build 1.1.5.3
+- Added a patch for Logjam SSL vulnerability.
+- Fixed a code for importing root certificate to old versions of Opera.
+
+Build 1.1.5.2
+- OpesSSL is upgraded to version 1.0.2c.
+
+Build 1.1.5.1
+- Added a flag FF_SSL_ENABLE_ALPN for SSL filter, which enables using of TLS extension for negotiating the next protocol (e.g. HTTP/2,SPDY,HTTP/1.1).
+This feature is disabled by default to block HTTP/2 and SPDY.
+- SSL exceptions are stored as records in container files x.db, xtls.db and xv.db for better performance.
+- Fixed an issue in SSL filter with obtaining a client certificate from Windows storage for processes having low security privileges.
+- When FF_SSL_INDICATE_CLIENT_CERT_REQUESTS flag is enabled, and server requests a client certificate, SSL filter indicates via dataPartAvailable an object 
+of type OT_SSL_CLIENT_CERT_REQUEST, containing server domain name (or IP address the name is not specified in SNI) in a single stream.  
+If dataPartAvailable returns DPCR_BYPASS, SSL filter adds host to internal list of exceptions and doesn't try to filter SSL for this host in future. 
+
+Build 1.1.5.0
+- When FF_SSL_VERIFY flag is enabled, SSL filter validates server certificates in a separate thread to avoid deadlocks. 
+The synchronous validation checks only cached certificates and uses basic check rules.
+- SSL validation checks only cached certificates when OCSP server is not available.
+- pf_setRootSSLCertImportFlags supports new flag RSIF_GENERATE_ROOT_PRIVATE_KEY. When it is enabled, 
+SSL filter generates a unique private key for root certificate.
+- By default SSL filter tries to use TLS 1.2 for SSL/TLS connections.
+
+Build 1.1.4.6
+- A postfix is appended to root certificate, to re-generate old certificates signed with SHA1 to new signed with SHA256.
+
+Build 1.1.4.5
+- SSL filter stores all certificates in a single file cert.db. The certificates and keys are encrypted. 
+The existing certificates are imported to the new storage automatically.
+The certificates are cached in memory for better performance.
+- When FF_SSL_VERIFY flag is specified for SSL filter, the validation of SSL certificates occurs periodically, once per 24 hours. 
+Also the filter validates full certificate chain to detect revoked, self-signed certificates and invalid certificate properties.
+- Fixed an issue in SSL filter with switching to TLS 1.2 protocol.
+
+Build 1.1.4.4
+- In some cases HTTP filter didn't work properly with old versions of Kaspersky antivirus.
+
+Build 1.1.4.3
+- Fixed incorrect switching to TLS 1.2 protocol for SSL filter in compatibility mode.
+
+Build 1.1.4.2
+- Added a flag FF_HTTP_BLOCK_SPDY for FT_HTTP filter, allowing to block SPDY protocol. When SPDY is blocked, the browsers switch to generic HTTP, which can be filtered.
+
+Build 1.1.4.1
+- OpenSSL is upgraded to version 1.0.2.
+- Fixed a minor issue in SSL filter.
+
+Build 1.1.4.0
+- Fixed the logic of adding exceptions in SSL filter.
+
+Build 1.1.3.9
+- Fixed possible deadlocks during initialization and unloading the library.
+- Fixed false positives in the code adding exceptions in SSL filter.
+
+Build 1.1.3.8
+- Added a flag FF_SSL_INDICATE_SERVER_CERTIFICATES for FT_SSL filter. When it is specified, SSL filter indicates the objects with type OT_SSL_SERVER_CERTIFICATE via dataPartAvailable after receiving server certificate. 
+The objects contain the certificate, it's subject and issuer in 3 streams. It is possible to check the certificates and return DPCR_FILTER, DPCR_BYPASS or DPCR_BLOCK to let SSL filter know what to do with SSL connection.
+
+- Added a flag FF_SSL_INDICATE_EXCEPTIONS for FT_SSL filter. When it is specified, SSL filter indicates the objects with type OT_SSL_EXCEPTION via dataPartAvailable each time when server or client closes a connection during SSL handshake. 
+The indicated objects with type OT_SSL_EXCEPTION have one stream, containing a remote host name from TLS SNI field, or remote endpoint string host:port in case if SNI field is empty.
+dataPartAvailable can return DPCR_BLOCK to avoid adding the host to list of exceptions.
+
+- SSL filter tries to use TLS 1.2 protocol if the server doesn't support TLS 1.0.
+
+- SSL filter tries to use for server connection the set of ciphers taken from client hanshake request. It can provide better compatibility if the client chooses a specific cipher list according to it's requirements.
+
+Build 1.1.3.7
+- The signing algorithm for SSL certificates is changed to SHA256. To re-generate the existing certificates it is possible to change the name of root certificate, passed to pf_setRootSSLCertSubject. 
+Or delete the files from SSL subfolder of ProtocolFilters configuration directory. 
+
+Build 1.1.3.6
+- Fixed some issues in SSL filtering code.
+
+Build 1.1.3.4
+- Fixed an issue with parsing chunked encoding in HTTP filter.
+- SSL filter adds exception in case when a connection is disconnected because server requires client certificate.
+
+Build 1.1.3.3
+- Fixed an issue in SMTP filter.
+
+Build 1.1.3.2
+- Fixed an issue with 101 HTTP responses.
+- SSL filter generates self-signed certificates having 2048 bits to avoid blocking SSL connections in latest versions of browsers.
+
+Build 1.1.2.9
+- Fixed random errors in OpenSSL when there are multiple worker threads.
+- Fixed errors in library cleanup code.
+
+Build 1.1.2.8
+- Added fixes to HTTP filter for correct parsing non-standard HTTP requests and responses.
+
+Build 1.1.2.7
+- Added a fix to HTTP filter for correct parsing the chunked HTTP requests without Content-Length header.
+
+Build 1.1.2.6
+- Changed the locking model for better performance. The library uses session-level locks instead of global lock to allow filtering the connections simultaneously in several threads.
+
+Build 1.1.2.5
+- Fixed an issue in HTTP filter related to finding the end of HTML responses.
+
+Build 1.1.2.4
+- The root certificate is generated with earlier start validity date to avoid issues on machines with invalid time.
+
+Build 1.1.2.3
+- Added a workaround in HTTP filter for a situation of violating standard, 
+when HTTP server returns several odd bytes after a response with specified Content-Length.
+
+Build 1.1.2.2
+- Added a fix in HTTP filter for proper classification of the protocol.
+- SSL filter works more properly during filtering TLS protocol.
+
+Build 1.1.2.1
+- Added a fix in HTTP filter for proper handling of 204 responses with incorrectly formatted status.
+
+Build 1.1.1.9
+- Added a fix in SSL filter, allowing to avoid issues with servers which don't support older SSL 2 protocols.
+
+Build 1.1.1.8
+- It is possible to change HTTP requests and responses in dataPartAvailable and return DPCR_UPDATE_AND_BYPASS or DPCR_UPDATE_AND_FILTER_READ_ONLY
+to skip the rest of object data or indicate later the full object via dataAvailable in read-only mode.
+- Fixed SSL filtering code to avoid blocking SSL connections when a server requests a client certificate, but can 
+continue handshake when the client certificate is not available.
+- OpenSSL is updated to version 1.0.1g.
+
+Build 1.1.1.7
+- Fixed the logic in HTTP filter related to parsing multiple subsequent requests and responses.
+
+Build 1.1.1.6
+- HTTP filter reclassifies the protocol after receiving a response on HTTPS CONNECT request.
+- HTTP filter handles the responses with code 100 more properly.
+
+Build 1.1.1.5
+- Fixed a procotol classification issue in SSL filter.
+- HTTP filter is able to avoid blocking the downloading of HTML pages having wrong Content-Length field value in headers.
+
+Build 1.1.1.4
+- Added new API function pf_setRootSSLCertImportFlags. It is possible to call this function before pf_setRootSSLCertSubject to avoid 
+importing root certificate to certain types of storages. 
+
+Build 1.1.1.3
+- Fixed an issue in HTTP filter, related to handling responses with code 204.
+- Added TLS exceptions to SSL filter. When a client tries to establish TLS connection with SSL server that doesn't support TLS, 
+SSL filter adds host:port to exceptions as *.ssl file in SSL subfolder of ProtocolFilters configuration directory. Next time
+a connection with this server is established using SSL instead of TLS.
+
+Build 1.1.1.2
+- Fixed an issue in SSL filter, related to used set of OpenSSL encryption protocols.
+
+Build 1.1.1.1
+- Fixed an issue with validating SSL certificates with inline intermediate CAs when FF_SSL_VERIFY is enabled for SSL filter.
+
+Build 1.1.1.0
+- Added flags FF_SSL_VERIFY and FF_SSL_SUPPORT_CLIENT_CERTIFICATES for SSL filter.
+
+Build 1.1.0.9
+- Fixed an issue with filtering HTTP requests containing national characters in URL.
+
+Build 1.1.0.8
+- SSL filter adds an automatic exception when server requests a client certificate immediately, i.e. doesn't wait for repeating the same situation for process, IP and port.
+
+Build 1.1.0.7
+- SSL filter adds an automatic exception when server requests a client certificate.
+
+Build 1.1.0.6
+- SSL filter doesn't add exceptions for connections redirected to local proxy.
+
+Build 1.1.0.5
+- SSL filter adds exceptions in case when a client drops SSL connection immediately after establishing handshake.
+- The files of SSL certificates have root certificate name as a prefix, to avoid issues after changing the name of root certificate.
+
+Build 1.1.0.3
+- Implemented more correct disconnect for TCP sessions when a filter process emulates server disconnection.
+
+Build 1.1.0.2
+- SSL filter generates a self-signed certificate if the original certificate is self-signed.
+- SSL filter doesn't try graceful shutdown during disconnecting SSL session.
+
+Build 1.1.0.0
+- Fixed an issue with filtering pipelined requests in HTTP filter. 
+- Implemented a protection from non-standard usage of protocol in HTTP filter. It fixes hangs during filtering connections of some flash applications.
+
+Build 1.0.9.8
+- Fixed an issue in FT_PROXY filter.
+
+Build 1.0.9.7
+- Fixed an issue with filtering outgoing ICQ messages.
+
+Build 1.0.9.6
+- Fixed breaking SSL connections with some servers, which require TLS.
+
+Build 1.0.9.5
+- Fixed issues with filtering SSL connections to old servers.
+
+Build 1.0.9.4
+- Added FTP proxy support in FT_FTP filter.
+- Fixed issues in HTTPS proxy filtering code in FT_PROXY filter.
+
+Build 1.0.9.3
+- XMPP filter automatically decompresses gzipped XML streams for read-only objects.
+- Added function pf_unzipStream, allowing to decompress data streams compressed with gzip.
+
+Build 1.0.9.2
+- OpenSSL is upgraded to latest version 1.0.1c.
+
+Build 1.0.9.1
+- Updated XMPP filter to support flash:stream requests.
+
+Build 1.0.9.0
+- Fixed an issue in HTTP filter with filtering responses missing required headers.
+
+Build 1.0.8.9
+- Fixed an issue with filtering 304 requests in HTTP filter.
+
+Build 1.0.8.8
+- Fixed the incompatibilities with new builds of Opera.
+
+Build 1.0.8.7
+- The call to nss\certutil.exe doesn't create conhost.exe.
+
+Build 1.0.8.6
+- Fixed an issue in HTTP parser related to filtering responses with status code other than 200.
+
+Build 1.0.8.5
+- SSL exceptions are not added on breaking SSL handshake due to connection abort.
+
+Build 1.0.8.4
+- The hosts which require client SSL certificates are added to the list of exceptions automatically by SSL filter.
+
+Build 1.0.8.3
+- SSL filter didn't work properly with the server certificates missing CN field.
+- SSL filter specifies remote IP address in OT_SSL_HANDSHAKE_* objects when the server name from TLS SNI extension in unavailable.
+
+Build 1.0.8.2
+- HTTP filter saves as-is the objects compressed with unsupported algorithms.
+
+Build 1.0.8.1
+- SSL filter adds host to exception list when the client aborts connection after receiving a certificate.
+
+Build 1.0.8.0
+- Added XMPP filter.
+- Fixed an issue in HTTP parser related to filtering chunked encoding.
+- ProtocolFilters cuts off Kaspersky KAVCONN_ID packets from traffic automatically.
+- HTTP filter more correctly handles the cases with responses missing header divider.
+
+Build 1.0.7.5
+- In SSL filter implemented a workaround for the cases when SSL server returns a certificate with different host name in properties.
+- SSL certificates are re-generated if original certificate changes.
+
+Build 1.0.7.4
+- When a client uses TLS SNI extension, SSL filter generates certificate with the specified domain name.
+- SSL filter uses notBefore and notAfter fields from original certificate for generating new certificate.
+
+Build 1.0.7.3
+- Added flag FF_SSL_COMPATIBILITY for SSL filter. It is necessary to use this flag during filtering HTTPS connections of Outlook,
+to avoid issues with RPC over HTTPS.
+- SSL filter uses TLS SNI field obtained from client applications during SSL handshake with servers.
+- SSL filter is fixed for compatibility with Google Chrome.
+
+Build 1.0.7.2
+- Added flags FF_HTTP_KEEP_PIPELINING and FF_HTTP_INDICATE_SKIPPED_OBJECTS for HTTP filter.
+
+Build 1.0.7.1
+- FT_PROXY filter works for both incoming and outgoing connections. 
+- Fixed minor issues in HTTP filter.
+
+Build 1.0.7.0
+- Fixed several bugs in HTTP and POP3 filters.
+
+Build 1.0.6.9
+- The buffer limits are updated for SMTP, POP3, Proxy and NNTP filters.
+- Fixed SSL filtering code to support PF_NO_SSL_FILTER configuration.
+
+Build 1.0.6.8
+- Added new flag for SSL filter: FF_SSL_TLS_AUTO. It is useful for decoding TLS for unknown protocols, which establish encoded session dynamically using a special protocol command.
+- pf_setRootSSLCertSubject imports root certificate to Pidgin.
+- pf_deleteFilter marks the filter as deleted, and actually deletes the filter object when it is possible to do it safely. Now it is possible to 
+call pf_deleteFilter from dataAvailable/dataPartAvailable. 
+- Added new API function pf_canDisableFiltering. It returns true when it is safe to disable filtering for the connection 
+with specified id (there are no filters in chain and internal buffers are empty).
+- pf_isFilterActive returns true only if the appropriate protocol is classified. pf_getFilterCount counts only active filters.
+
+Build 1.0.6.7
+- pf_setRootSSLCertSubject automatically adds root SSL certificate with given name 
+to certificate storages (Windows internal storage, Mozilla products, Opera). 
+
+Build 1.0.6.5
+- Fixed bugs in HTTP and HTTP/SOCKS proxy filters.
+- PFHeader ignores invalid header fields.
+
+Build 1.0.6.3
+- Added a method detach() for PFObject. It works like clone(), but moves all streams to new object instead of copying the data, thus it works faster.
+
+Build 1.0.6.2
+- Added FF_SSL_INDICATE_HANDSHAKE_REQUESTS for SSL filter. It enables indicating OT_SSL_HANDSHAKE_OUTGOING/OT_SSL_HANDSHAKE_INCOMING objects
+during SSL handshake. 
+
+Build 1.0.6.1
+- HTTP filter splits pipelined requests.
+
+Build 1.0.5.8
+- Several fixes in HTTP filter and Delphi API.
+
+Build 1.0.5.6
+- Additional checking is implemented in HTTP filter to detect violations of HTTP standard.
+
+Build 1.0.5.5
+- Updated UDP filtering code.
+
+Build 1.0.5.4
+- HTTP filter handles HEAD requests properly.
+
+Build 1.0.5.3
+- Fixed an incompatibility with old versions of QIP in FT_ICQ filter.
+- Added a new API function pf_isFilterActive.
+- Patched OpenSSL libraries to avoid long delays on Windows 7 in some cases.
+- Minor bugfixes.
+
+Build 1.0.5.1
+- Added SOCKS v4/4a/5 support to FT_PROXY filter.
+- Added new filters: FT_ICQ, FT_FTP, FT_NNTP.
+- Fixed several issues in FT_POP3, FT_SMTP, FT_SSL.
+- Added a tool import_root_cert for automatic importing root SSL certificate to Mozilla Firefox/Thunderbird and Opera.
+- The documentation and samples are updated according to changes above.
+
+Build 1.0.0.8
+- Reduced the size of internal buffers to avoid timeouts in some HTTP clients.
+- Fixed an incompatibility with Opera email client.
+
+build 1.0.0.6
+- Fixed a problem in HTTP filter related to parsing HTTP responses without Content-Length and Content-Type fields.
+- Minor optimization.
+
+build 1.0.0.4
+- The new function pf_getFilterCount returns the number of active filters for a connection.
+- The new functions nf_tcpDisableFiltering and pf_getFilterCount are used in PFEventsDefault to disable filtering the connections with unknown protocols.
+- HTTP filter skipped the content of aborted connections, filtered in read-only mode.
+- HTTP filter is able to filter the incoming connections.
+- Other minor bugfixes.
+
+build 1.0.0.1:
+- HTTP filter blocked some other protocols.

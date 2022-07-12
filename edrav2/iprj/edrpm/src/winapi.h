@@ -14,7 +14,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 #define NtCurrentProcess() ( (HANDLE)(LONG_PTR) -1 )  
@@ -119,5 +119,5 @@ DECLARE_TRAMP("advapi32.dll", ImpersonateNamedPipeClient);
 DECLARE_TRAMP("sspicli.dll", LsaLogonUser);
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd
 

@@ -14,7 +14,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "ctxcmd"
 
-namespace openEdr {
+namespace cmd {
 
 // Internal namespace to avoid names errors
 namespace ctxoper {
@@ -736,4 +736,4 @@ OperationPtr createOperation(const Variant& vOperation, const Variant& vConfig)
 
 } // namespace ctxoper;
 
-} // namespace openEdr 
+} // namespace cmd 

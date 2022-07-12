@@ -17,7 +17,7 @@
 #include "microphone.h"
 #include "Mmdeviceapi.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 typedef struct MY_IMMDeviceEnumeratorVtbl
@@ -120,9 +120,12 @@ void parseIMMDeviceEnumerator(MY_IMMDeviceEnumerator* pEnumerator)
 	::EnterCriticalSection(&g_mtxIMMDeviceEnumerator);
 	if (!fHooked)
 	{
-		::LoadLibraryW(L"MMDevAPI.dll");
+		::LoadLibraryW(L"MMDevAPI.dll"); // TODO: hooking system for delay load DLLs
+#if defined(FEATURE_ENABLE_MADCHOOK)
 		HookCode(pEnumerator->lpVtbl->EnumAudioEndpoints, fnEnumAudioEndpoints, (LPVOID*)&pEnumAudioEndpoints);
-		fHooked = true;
+#else
+		fHooked = detours::HookCode(pEnumerator->lpVtbl->EnumAudioEndpoints, fnEnumAudioEndpoints, (LPVOID*)&pEnumAudioEndpoints);
+#endif
 	}
 	::LeaveCriticalSection(&g_mtxIMMDeviceEnumerator);
 }
@@ -181,4 +184,4 @@ REGISTER_PRE_CALLBACK(waveInOpen, [](
 });
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd

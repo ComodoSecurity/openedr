@@ -28,6 +28,11 @@
     <ClCompile Include="..\..\src\fltport.cpp" />
     <ClCompile Include="..\..\src\ioctl.cpp" />
     <ClCompile Include="..\..\src\kernelcmnlib\kernelstl\new.cpp" />
+    <ClCompile Include="..\..\src\kernelinjectlib\injectengine\apcinjector.cpp" />
+    <ClCompile Include="..\..\src\kernelinjectlib\injectengine\apcqueue.cpp" />
+    <ClCompile Include="..\..\src\kernelinjectlib\injectengine\iatinject.cpp" />
+    <ClCompile Include="..\..\src\kernelinjectlib\injectengine\injector.cpp" />
+    <ClCompile Include="..\..\src\kernelinjectlib\injectengine\petools.cpp" />
     <ClCompile Include="..\..\src\log.cpp" />
     <ClCompile Include="..\..\src\netmon.cpp" />
     <ClCompile Include="..\..\src\objmon.cpp" />
@@ -55,6 +60,12 @@
     <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\std.hpp" />
     <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\string.hpp" />
     <ClInclude Include="..\..\src\kernelcmnlib\kernelstl\synchronization.hpp" />
+    <ClInclude Include="..\..\src\kernelinjectlib\injectengine\apcinjector.hpp" />
+    <ClInclude Include="..\..\src\kernelinjectlib\injectengine\apcqueue.hpp" />
+    <ClInclude Include="..\..\src\kernelinjectlib\injectengine\iatinject.hpp" />
+    <ClInclude Include="..\..\src\kernelinjectlib\injectengine\injector.hpp" />
+    <ClInclude Include="..\..\src\kernelinjectlib\injectengine\petools.hpp" />
+    <ClInclude Include="..\..\src\kernelinjectlib\kernelinjectlib.hpp" />
     <ClInclude Include="..\..\src\lbvsext.h" />
     <ClInclude Include="..\..\src\log.h" />
     <ClInclude Include="..\..\src\netmon.h" />
@@ -123,23 +134,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;madchookdrv.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
     </Link>
+    <ClCompile />
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;madchookdrv.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
     </Link>
+    <ClCompile />
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;madchookdrv.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
     </Link>
+    <ClCompile />
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;madchookdrv.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
     </Link>
+    <ClCompile />
+    <ClCompile>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

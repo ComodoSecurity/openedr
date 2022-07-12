@@ -9,14 +9,14 @@
 #include "config.h"
 #include "common.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 //
 //
 //
 TEST_CASE("lanes.getCurLane_setCurLane")
 {
-	using namespace openEdr::edr;
+	using namespace cmd::edr;
 
 	SECTION("simple")
 	{
@@ -73,7 +73,7 @@ TEST_CASE("lanes.getCurLane_setCurLane")
 //
 TEST_CASE("lanes.checkCurLane")
 {
-	using namespace openEdr::edr;
+	using namespace cmd::edr;
 
 	SECTION("less")
 	{
@@ -128,7 +128,7 @@ TEST_CASE("lanes.checkCurLane")
 //
 TEST_CASE("lanes.convertLaneToString")
 {
-	using namespace openEdr::edr;
+	using namespace cmd::edr;
 
 	REQUIRE(convertLaneToString(LaneType::Fast) == "Fast");
 	REQUIRE(convertLaneToString(LaneType::SlowLocalFS) == "SlowLocalFS");
@@ -141,7 +141,7 @@ TEST_CASE("lanes.convertLaneToString")
 //
 TEST_CASE("lanes.convertStringToLane")
 {
-	using namespace openEdr::edr;
+	using namespace cmd::edr;
 
 	REQUIRE(convertStringToLane("Fast") == LaneType::Fast);
 	REQUIRE(convertStringToLane("SlowLocalFS") == LaneType::SlowLocalFS);
@@ -154,7 +154,7 @@ TEST_CASE("lanes.convertStringToLane")
 //
 TEST_CASE("lanes.convertVariantToLane")
 {
-	using namespace openEdr::edr;
+	using namespace cmd::edr;
 
 	REQUIRE(convertVariantToLane(Variant("Fast")) == LaneType::Fast);
 	REQUIRE(convertVariantToLane(Variant(LaneType::Fast)) == LaneType::Fast);
@@ -182,7 +182,7 @@ Variant execLaneOperation(std::string_view sOperation, Variant vParams = Variant
 //
 TEST_CASE("LaneOperation.get")
 {
-	using namespace openEdr::edr;
+	using namespace cmd::edr;
 
 	SECTION("asStr_is_absent")
 	{
@@ -208,7 +208,7 @@ TEST_CASE("LaneOperation.get")
 //
 TEST_CASE("LaneOperation.set")
 {
-	using namespace openEdr::edr;
+	using namespace cmd::edr;
 
 	SECTION("simple")
 	{
@@ -244,7 +244,7 @@ TEST_CASE("LaneOperation.set")
 //
 TEST_CASE("LaneOperation.check")
 {
-	using namespace openEdr::edr;
+	using namespace cmd::edr;
 
 	SECTION("less")
 	{
@@ -277,7 +277,7 @@ TEST_CASE("LaneOperation.check")
 //
 TEST_CASE("LaneOperation.enableStatistic")
 {
-	using namespace openEdr::edr;
+	using namespace cmd::edr;
 
 	SECTION("enable_false")
 	{
@@ -325,7 +325,7 @@ TEST_CASE("LaneOperation.enableStatistic")
 //
 TEST_CASE("LaneOperation.getStatistic")
 {
-	using namespace openEdr::edr;
+	using namespace cmd::edr;
 
 	setCurLane(LaneType::Fast);
 	execLaneOperation("enableStatistic", Dictionary({ {"enable", false} }));

@@ -7,7 +7,7 @@
 #include "pch.h"
 #include <events.hpp>
 
-namespace openEdr {
+namespace cmd {
 
 namespace eventtype {
 
@@ -122,4 +122,4 @@ const char* getEventTypeString(Event eventType)
 		"> has no text string")).throwException();
 }
 
-} // namespace openEdr
+} // namespace cmd

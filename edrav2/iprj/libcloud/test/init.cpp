@@ -8,16 +8,16 @@
 //
 bool initTestFramework()
 {
-	openEdr::logging::initLogging();
-	//openEdr::logging::setRootLogLevel(openEdr::LogLevel::Normal);
+	cmd::logging::initLogging();
+	//cmd::logging::setRootLogLevel(cmd::LogLevel::Normal);
 	return true;
 }
 
 
 void finalizeTestFramework()
 { 
-	openEdr::shutdownGlobalPools();
-	openEdr::putCatalogData("objects", nullptr);
-	openEdr::clearCatalog();
-	openEdr::unsubscribeAll();
+	cmd::shutdownGlobalPools();
+	cmd::putCatalogData("objects", nullptr);
+	cmd::clearCatalog();
+	cmd::unsubscribeAll();
 }

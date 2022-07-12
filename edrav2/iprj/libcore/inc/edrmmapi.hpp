@@ -18,7 +18,7 @@
 #endif // _MSC_VER
 #endif // EDRMM_EXPORTS
 
-namespace openEdr {
+namespace cmd {
 namespace edrmm {
 
 //
@@ -111,7 +111,7 @@ CMD_EDRMM_API MemInfo getMemInfo();
 CMD_EDRMM_API void setMemLeaksTimeout(const uint32_t nTimeout);
 
 } // namespace edrmm
-} // namespace openEdr 
+} // namespace cmd 
 /// @}
 
 

@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 namespace win {
 
@@ -103,6 +103,11 @@ bool isCritical(const HANDLE hProcess);
 bool setPrivilege(HANDLE hToken, LPCTSTR Privilege, BOOL bEnablePrivilege);
 
 //
+// Enable all privileges in the token except SE_BACKUP_NAME / SE_RESTORE_NAME and SE_TAKE_OWNERSHIP_NAME.
+//
+bool enableAllPrivileges();
+
+//
 // Wrapper of SHGetKnownFolderPath
 // @return path or "" if error
 //
@@ -120,6 +125,6 @@ std::wstring getProcessImagePath(const HANDLE hProcess);
 
 } // namespace win
 } // namespace sys
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

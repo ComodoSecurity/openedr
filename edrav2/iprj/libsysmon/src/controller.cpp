@@ -11,17 +11,19 @@
 /// @{
 #include "pch.h"
 #include "controller.h"
+#include "../../libprocmon/inc/procmonevent.h"
 
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "libsysmon"
 
-namespace openEdr {
+namespace cmd {
 namespace win {
 
 //
 //
 //
 SystemMonitorController::SystemMonitorController()
+	: m_hFltPortReceiver(c_sPortName, c_nTreadsCount, edrdrv::c_nReplyMode, "SysMon::EventsPool")
 {
 }
 
@@ -64,10 +66,14 @@ void SystemMonitorController::finalConstruct(Variant vConfig)
 		}
 		else
 		{
+#if defined(FEATURE_ENABLE_MADCHOOK)
 			LOGWRN("Injection DLLs not found in system directory. Use default directory.");
 			std::wstring sImageDir(getCatalogData("app.imagePath"));
 			sqDllName.push_back(sImageDir + L"\\" + c_sInjDll64);
 			sqDllName.push_back(sImageDir + L"\\" + c_sInjDll32);
+#else
+			LOGWRN("Injection DLLs not found in system directory.");
+#endif
 		}
 #else
 		std::wstring sSystemDir(getCatalogData("os.systemDir"));
@@ -94,7 +100,6 @@ void SystemMonitorController::finalConstruct(Variant vConfig)
 	m_vConfigSchema = variant::deserializeFromJson(edrdrv::c_sConfigSchema);
 	m_vUpdateRulesSchema = variant::deserializeFromJson(edrdrv::c_sUpdateRulesSchema);
 	m_vSetProcessInfoSchema = variant::deserializeFromJson(edrdrv::c_sSetProcessInfoSchema);
-
 
 	TRACE_END("Can't deserialize driver schema.");
 
@@ -124,11 +129,40 @@ void SystemMonitorController::install(Variant vParams)
 	bool fReinstall = execCommand(createObject(CLSID_WinServiceController), "isExist",
 			Dictionary({ {"name", c_sDrvSrvName} }));
 
+	std::unique_ptr<void, std::function<void(void*)>> pcaServiceEnabler(nullptr);
+
 	// We must stop service on reinstall
 	if (fReinstall)
 	{
 		(void) execCommand(createObject(CLSID_WinServiceController), "stop",
 			Dictionary({ {"name", c_sDrvSrvName} }));
+	}
+	else // we have to stop the PCA service before the edr service installation, regarding CODEV-4457
+	{	 // and run it after the edr service will be installed
+
+		const bool pcaServiceExists = execCommand(createObject(CLSID_WinServiceController), "isExist",
+			Dictionary({ {"name", c_sPCAService} }));
+
+		if (pcaServiceExists)
+		{
+			// PCA service stop
+			(void)execCommand(createObject(CLSID_WinServiceController), "stop",
+				Dictionary({ {"name", c_sPCAService} }));
+
+			auto startPcaService = [](auto* obj)
+			{
+				if (obj) // dummy object
+				{
+					delete obj;
+
+					// PCA service start
+					(void)execCommand(createObject(CLSID_WinServiceController), "start",
+						Dictionary({ {"name", c_sPCAService} }));
+				}
+			};
+
+			pcaServiceEnabler = std::unique_ptr<void, std::function<void(void*)>>(new int(1)/*dummy object*/, startPcaService);
+		}
 	}
 
 	namespace fs = std::filesystem;
@@ -407,216 +441,21 @@ void SystemMonitorController::shutdown()
 //
 void SystemMonitorController::startThreads()
 {
-	// Prepare the communication port.
-	HRESULT hr = ::FilterConnectCommunicationPort(c_sPortName, 0, nullptr, 0,
-		nullptr, &m_pConnectionPort);
-	if (FAILED(hr))
-		// TODO: write new Error handler for HRESULT
-		// https://blogs.msdn.microsoft.com/oldnewthing/20061103-07/?p=29133
-		error::win::WinApiError(SL, hr, "Can't open driver connection port").throwException();
-
-	// Create the IO completion port for asynchronous message passing. 
-	m_pCompletionPort.reset(::CreateIoCompletionPort(m_pConnectionPort, nullptr, 0,
-		DWORD(m_nThreadsCount)));
-	if (!m_pCompletionPort)
-		error::win::WinApiError(SL, "Can't open driver completion port").throwException();
-
-	// Create listening threads.
-	m_pOvlpCtxes.resize(m_nThreadsCount);
-	for (auto& pCtx : m_pOvlpCtxes)
+	Handler handler = [this](HandlerContext& ctxt)
 	{
-		pCtx.nDataSize = c_nDefMsgSize;
-		pCtx.pData = allocMem(pCtx.nDataSize);
-		if (pCtx.pData == nullptr)
-			error::BadAlloc(SL, "Can't allocate memory for port message").throwException();
-		pumpMessage(&pCtx);
-	}
+		return this->parseEvent(ctxt.pInData, ctxt.nInDataSize);
+	};
 
-	// Reset statistic
-	m_nMsgCount = 0;
-	m_nMsgSize = 0;
-	m_fTerminate = false;
-
-	// Start all threads.
-	if (!m_pThreadPool.empty())
-		error::InvalidUsage(SL, "Threads pool is not empty").throwException();
-
-	for (Size i = 0; i < m_nThreadsCount; ++i)
-		m_pThreadPool.push_back(std::thread([this]() { this->parseEventsThread(); }));
+	m_hFltPortReceiver.Start(handler);
 }
 
 //
 //
 //
 void SystemMonitorController::stopThreads()
-{
-	m_fTerminate = true;
-
-	//  Wake up the listening thread if it is waiting for message 
-	//  via GetQueuedCompletionStatus() 
-	if (m_pConnectionPort)
-		CancelIoEx(m_pConnectionPort, NULL);
-
-	// Wait all threads termination
-	for (auto& pThread : m_pThreadPool)
-		if (pThread.joinable())
-			pThread.join();
-	m_pThreadPool.clear();
-
-	m_pOvlpCtxes.clear();
-	m_pConnectionPort.reset();
-	m_pCompletionPort.reset();
+{	
+	m_hFltPortReceiver.Stop();
 	m_pIoctl.reset();
-}
-
-//
-//
-//
-void SystemMonitorController::parseEventsThreadInt()
-{
-	LOGLVL(Detailed, "Event's receiving thread is started");
-
-	while (!m_fTerminate)
-	{
-#ifdef ENABLE_EVENT_TIMINGS
-		using namespace std::chrono;
-		auto t0 = steady_clock::now();
-#endif		
-		//  Get overlapped structure asynchronously, the overlapped structure 
-		//  was previously pumped by FilterGetMessage(...)
-		DWORD nOutSize = 0;
-		ULONG_PTR key = {};
-		LPOVERLAPPED pOvlp = nullptr;
-		if (!::GetQueuedCompletionStatus(m_pCompletionPort, &nOutSize, &key, &pOvlp, INFINITE))
-		{
-			//  The completion port handle associated with it is closed 
-			//  while the call is outstanding, the function returns FALSE, 
-			//  *lpOverlapped will be NULL, and GetLastError will return ERROR_ABANDONED_WAIT_0
-			auto ec = GetLastError();
-			if (HRESULT_FROM_WIN32(ec) == E_HANDLE || // Completion port becomes unavailable
-				ec == ERROR_ABANDONED_WAIT_0 ||	// Completion port was closed
-				ec == ERROR_OPERATION_ABORTED) // Rised when CancelIoEx() called
-				break;
-
-			if (ec != ERROR_INSUFFICIENT_BUFFER)
-				error::win::WinApiError(SL, ec, "Can't receive driver message").throwException();
-
-			LOGLVL(Trace, "Message buffer too small. Try to resize.");
-			auto pOvlpCtx = (OverlappedContext*)pOvlp;
-			if (!resizeMessage(pOvlpCtx))
-			{
-				auto pMessage = PFILTER_MESSAGE_HEADER(pOvlpCtx->pData.get());
-				replyMessage(pMessage, S_FALSE);
-			}
-
-			pumpMessage(pOvlpCtx);
-			continue;
-		}
-#ifdef ENABLE_EVENT_TIMINGS
-		auto t1 = steady_clock::now();
-#endif
-
-		//  Recover message structure from overlapped structure.
-		auto pMessage = PFILTER_MESSAGE_HEADER(((OverlappedContext*)pOvlp)->pData.get());
-		Byte* pData = (Byte*)pMessage + sizeof(FILTER_MESSAGE_HEADER);
-		Size nDataSize = nOutSize;
-
-#ifdef ENABLE_EVENT_TIMINGS
-		std::pair<Size, Size> times;
-		replyMessage(pMessage, parseEvent(pData, nDataSize, times) ? S_OK : S_FALSE);
-		auto t2 = steady_clock::now();
-#else
-		replyMessage(pMessage, parseEvent(pData, nDataSize) ? S_OK : S_FALSE);
-#endif
-
-		//  If finalized flag is set from main thread, then it would break the while loop.
-		if (m_fTerminate)
-			break;
-
-		// After we process the message, pump an overlapped structure into completion port again.
-		pumpMessage((OverlappedContext*)pOvlp);
-#ifdef ENABLE_EVENT_TIMINGS
-		auto t3 = steady_clock::now();
-		milliseconds totalTime(duration_cast<milliseconds>(t3 - t0));
-		milliseconds receiveTime(duration_cast<milliseconds>(t1 - t0));
-		milliseconds parseTime(duration_cast<milliseconds>(t2 - t1));
-		milliseconds pumpTime(duration_cast<milliseconds>(t3 - t2));
-		LOGLVL(Debug, "Message statistic: total <" << totalTime.count() <<
-			">, receive <" << receiveTime.count() << ">, parse <" << parseTime.count() <<
-			"> [lbvs <" << times.first << ">, queue <" << times.second << ">], pump <" << 
-			pumpTime.count() << ">, msg size <" << nDataSize << ">");
-#endif
-	}
-
-	LOGLVL(Detailed, "Event's receiving thread is finished");
-}
-
-//
-//
-//
-void SystemMonitorController::replyMessage(PFILTER_MESSAGE_HEADER pMessage, NTSTATUS nStatus)
-{
-	if constexpr (edrdrv::c_nReplyMode)
-	{
-		//  Reply the worker thread status to the filter
-		//  This is important because the filter will also wait for the thread 
-		//  in case that the thread is killed before telling filter 
-		//  the parse is done or aborted.
-		FILTER_REPLY_HEADER replyMsg = {};
-		replyMsg.Status = nStatus;
-		replyMsg.MessageId = pMessage->MessageId;
-		HRESULT hr = ::FilterReplyMessage(m_pConnectionPort, &replyMsg, sizeof(replyMsg));
-		if (FAILED(hr))
-		{
-			if (hr != ERROR_FLT_NO_WAITER_FOR_REPLY) // Driver exit with timeout
-				error::win::WinApiError(SL, hr, "Failed to reply to the driver").throwException();
-		}
-	}
-	else
-		return;
-}
-
-//
-//
-//
-bool SystemMonitorController::resizeMessage(OverlappedContext* pOvlpCtx)
-{
-	DWORD nDataSize = 0;
-	DWORD err = ERROR_SUCCESS;
-	if (!::GetOverlappedResult(m_pCompletionPort, LPOVERLAPPED(pOvlpCtx), &nDataSize, TRUE))
-		err = GetLastError();
-	if (err != ERROR_INSUFFICIENT_BUFFER)
-	{
-		error::win::WinApiError(SL, err, "Fail to get overlapped result").log();
-		return false;
-	}
-
-	if (nDataSize < pOvlpCtx->nDataSize || nDataSize > c_nMaxMsgSize)
-	{
-		LOGWRN("Overlapped data is too large <" << nDataSize << ">");
-		return false;
-	}
-
-	pOvlpCtx->nDataSize = nDataSize;
-	pOvlpCtx->pData = reallocMem(pOvlpCtx->pData, pOvlpCtx->nDataSize);
-	if (pOvlpCtx->pData == nullptr)
-		error::BadAlloc(SL, "Can't allocate memory for driver port message").throwException();
-	LOGLVL(Trace, "Message resized to <" << nDataSize << "> bytes");
-
-	return true;
-}
-
-//
-//
-//
-void SystemMonitorController::pumpMessage(OverlappedContext* pOvlpCtx)
-{
-	ZeroMemory(&pOvlpCtx->pOvlp, sizeof(OVERLAPPED));
-	// Pump messages into queue of completion port.
-	HRESULT hr = ::FilterGetMessage(m_pConnectionPort,
-		PFILTER_MESSAGE_HEADER(pOvlpCtx->pData.get()), DWORD(pOvlpCtx->nDataSize), &pOvlpCtx->pOvlp);
-	if (hr != HRESULT_FROM_WIN32(ERROR_IO_PENDING))
-		error::win::WinApiError(SL, hr, "FilterGetMessage failed").throwException();
 }
 
 //
@@ -648,19 +487,12 @@ bool SystemMonitorController::parseEvent(const Byte* pBuffer, const Size nBuffer
 bool SystemMonitorController::parseEvent(const Byte* pBuffer, const Size nBufferSize)
 #endif
 {
-	// Collect statistics
-	{
-		std::scoped_lock lock(m_mtxStatistic);
-		m_nMsgCount++;
-		m_nMsgSize = nBufferSize / m_nMsgCount + (m_nMsgCount - 1) * m_nMsgSize / m_nMsgCount;
-	}
-
 	CMD_TRY
 	{
 #ifdef ENABLE_EVENT_TIMINGS
 		using namespace std::chrono;
 		auto t0 = steady_clock::now();
-#endif		
+#endif
 		Variant vEvent = variant::deserializeFromLbvs(pBuffer, nBufferSize, m_vEventSchema);
 		edrdrv::SysmonEvent nRawEventId = vEvent["rawEventId"];
 		LOGLVL(Trace, "Parse raw event <" << size_t(nRawEventId) << 
@@ -709,30 +541,6 @@ bool SystemMonitorController::parseEvent(const Byte* pBuffer, const Size nBuffer
 		return false;
 	}
 	return true;
-}
-
-//
-//
-//
-void SystemMonitorController::parseEventsThread()
-{
-	// TODO: add thread guard here
-	CMD_TRY
-	{ 
-		if (!::SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST))
-			error::win::WinApiError(SL, "Can't set thread priority").log();
-		sys::setThreadName("SysMon::EventsPool");
-		parseEventsThreadInt();
-	}
-	CMD_PREPARE_CATCH
-	catch (error::Exception& e)
-	{
-		e.log(SL, "System monitor fail to parse event");
-	}
-	catch (...)
-	{
-		error::RuntimeError(SL, "Unknown error").log();
-	}
 }
 
 // 
@@ -1075,6 +883,6 @@ Variant SystemMonitorController::execute(Variant vCommand, Variant vParams)
 }
 
 } // namespace win
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

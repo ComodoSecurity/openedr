@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "libnetmon"
 
-namespace openEdr {
+namespace cmd {
 namespace netmon {
 
 //////////////////////////////////////////////////////////////////////////
@@ -185,6 +185,6 @@ public:
 };
 
 } // namespace netmon
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

@@ -14,7 +14,7 @@
 #include "error.hpp"
 #include "command.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 // Fix for moxygen generator
 namespace application {struct a{};}
@@ -289,5 +289,5 @@ public:
 	virtual Variant execute(Variant vCommand, Variant vParams) override;
 };
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

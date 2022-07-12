@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace ipc {
 
 constexpr char c_sEncryptedFieldName[] = "5811728c";
@@ -80,6 +80,6 @@ void encryptJsonValue(const Variant& vData, Json::Value& result, const Variant& 
 Variant decryptJsonValue(const Json::Value& data);
 
 } // namespace ipc
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// IP protocols numbers.
@@ -33,6 +33,6 @@ enum class AppProtocol : uint16_t
 	FTP = 2,
 };
 
-} // namespace openEdr
+} // namespace cmd
 
 /// @} 

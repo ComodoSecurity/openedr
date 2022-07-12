@@ -9,8 +9,8 @@
 #include "config.h"
 #include "common.h"
 
-using namespace openEdr;
-using namespace openEdr::edr;
+using namespace cmd;
+using namespace cmd::edr;
 
 //
 //

@@ -10,7 +10,7 @@
 #pragma once
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace logging {
 
 //
@@ -54,4 +54,4 @@ public:
 };
 
 } // namespace logging
-} // namespace openEdr /// @}
+} // namespace cmd /// @}

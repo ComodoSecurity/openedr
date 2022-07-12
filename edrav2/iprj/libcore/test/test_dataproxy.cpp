@@ -4,7 +4,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 CMD_DECLARE_LIBRARY_CLSID(CLSID_FinalConstructCounter, 0xE52D3F50);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_CommandProcessorExecuteCounter, 0xE52D3F51);
@@ -75,12 +75,12 @@ using namespace test_dataproxy;
 CMD_DEFINE_LIBRARY_CLASS(FinalConstructCounter)
 CMD_DEFINE_LIBRARY_CLASS(CommandProcessorExecuteCounter)
 
-using openEdr::variant::createCmdProxy;
-using openEdr::variant::createObjProxy;
-using openEdr::variant::createLambdaProxy;
-using openEdr::variant::detail::RawValueType;
-using openEdr::variant::ValueType;
-using openEdr::variant::detail::getRawType;
+using cmd::variant::createCmdProxy;
+using cmd::variant::createObjProxy;
+using cmd::variant::createLambdaProxy;
+using cmd::variant::detail::RawValueType;
+using cmd::variant::ValueType;
+using cmd::variant::detail::getRawType;
 
 //
 //

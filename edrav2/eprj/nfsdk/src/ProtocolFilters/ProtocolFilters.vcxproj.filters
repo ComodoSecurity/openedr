@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{c9cce9ce-2bfa-4b58-9449-7c8a2f4ec988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zlib">
+      <UniqueIdentifier>{887a9621-046f-4bb3-b212-3e146d109bae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SSL">
+      <UniqueIdentifier>{20c341e2-389d-4027-9c2b-07737d4ccd96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Filters">
+      <UniqueIdentifier>{94812223-64f2-4e8b-ad4a-b84647c98469}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="auxutil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dbglogger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IFilterBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IOB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MFStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PFObjectImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Proxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProxySession.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="socksdefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sync.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TSProcessInfoHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnzipStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFCDefs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFEvents.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFEvents_c.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFEventsDefault.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFFilterDefs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFHeader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFHeader_c.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFObject.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFObject_c.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFStream.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PFStream_c.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ProtocolFilters.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ProtocolFilters_c.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\crc32.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\deflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\inffast.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\inffixed.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\inflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\inftrees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\trees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\zconf.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\zlib.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="zlib\zutil.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="SSL\certimp.h">
+      <Filter>SSL</Filter>
+    </ClInclude>
+    <ClInclude Include="SSL\gpkey.h">
+      <Filter>SSL</Filter>
+    </ClInclude>
+    <ClInclude Include="SSL\SSLDataProvider.h">
+      <Filter>SSL</Filter>
+    </ClInclude>
+    <ClInclude Include="FTPDataFilter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="FTPFilter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="HTTPDefs.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="HTTPFilter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="HTTPParser.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="icqdefs.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="ICQFilter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="NNTPFilter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="POP3Filter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="ProxyFilter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="RawFilter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="SMTPFilter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="SSLFilter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="SSLSessionData.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+    <ClInclude Include="XMPPFilter.h">
+      <Filter>Filters</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ProtocolFilters.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="zlib\adler32.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\compress.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\crc32.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\deflate.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\infback.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\inffast.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\inflate.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\inftrees.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\trees.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\uncompr.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="zlib\zutil.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="SSL\certimp.cpp">
+      <Filter>SSL</Filter>
+    </ClCompile>
+    <ClCompile Include="SSL\SSLDataProvider.cpp">
+      <Filter>SSL</Filter>
+    </ClCompile>
+    <ClCompile Include="auxutil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IOB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MFStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PFHeader_c.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PFObjectImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PFObjectImpl_c.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PFStream_c.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtocolFilters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtocolFilters_c.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Proxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxySession.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TSProcessInfoHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UnzipStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FTPDataFilter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="FTPFilter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="HTTPFilter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="HTTPParser.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="ICQFilter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="NNTPFilter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="POP3Filter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyFilter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="RawFilter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="SMTPFilter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="SSLFilter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="SSLSessionData.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="XMPPFilter.cpp">
+      <Filter>Filters</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

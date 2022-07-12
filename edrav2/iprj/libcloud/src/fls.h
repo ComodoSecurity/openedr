@@ -14,7 +14,7 @@
 #include <fls.hpp>
 #include "flscommon.h"
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 namespace fls {
 
@@ -185,6 +185,6 @@ public:
 
 } // namespace fls
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd
 
 /// @} 

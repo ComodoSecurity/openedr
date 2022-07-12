@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "queuemgr"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -357,5 +357,5 @@ Variant QueueManager::execute(Variant vCommand, Variant vParams)
 		FMT("QueueManager doesn't support command <" << vCommand << ">")).throwException();
 }
 
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

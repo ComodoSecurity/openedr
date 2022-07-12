@@ -8,7 +8,7 @@
 #include "pch.h"
 #include "config.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 const std::string_view c_sCustomerId = "CustomerIdPlaceholder";
 const std::string_view c_sEndpointId = "EndpointIdPlaceholder"; // UT_LIBCLOUD

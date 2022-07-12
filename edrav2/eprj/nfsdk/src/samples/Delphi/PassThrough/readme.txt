@@ -1,0 +1,1 @@
+This sample uses nfapi.dll with C interface (from bin\Release_c_api or bin\Debug_c_api folders) for filtering TCP and UDP.

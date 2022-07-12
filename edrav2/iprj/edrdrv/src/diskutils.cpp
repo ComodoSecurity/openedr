@@ -15,7 +15,7 @@
 
 #include <Ntddstor.h>
 
-namespace openEdr {
+namespace cmd {
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -572,6 +572,6 @@ void printVolumeInfo(PCFLT_RELATED_OBJECTS FltObjects)
 }
 
 
-} // namespace openEdr
+} // namespace cmd
 /// @}
 

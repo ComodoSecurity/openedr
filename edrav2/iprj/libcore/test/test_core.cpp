@@ -4,7 +4,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -13,7 +13,7 @@ using namespace openEdr;
 
 TEST_CASE("ObjectManager.getObjectManager")
 {
-	using namespace openEdr;
+	using namespace cmd;
 
 	auto& ObjectManager1 = getObjectManager();
 	auto& ObjectManager2 = getObjectManager();
@@ -22,9 +22,9 @@ TEST_CASE("ObjectManager.getObjectManager")
 }
 
 
-TEST_CASE("ObjectManager.generateObjectId", "[openEdr::Core]")
+TEST_CASE("ObjectManager.generateObjectId", "[cmd::Core]")
 {
-	using namespace openEdr;
+	using namespace cmd;
 
 	{
 		auto ObjectId1 = getObjectManager().generateObjectId();
@@ -51,7 +51,7 @@ CMD_DECLARE_LIBRARY_CLSID(CLSID_ClassWithErrorInFinalConstruct, 0x38656F53);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_NotRegisteredClass, 0x38656F54);
 
 
-namespace openEdr {
+namespace cmd {
 
 //
 // Test interface 1
@@ -92,7 +92,7 @@ public:
 	}
 };
 
-static_assert(openEdr::detail::HasFinalConstruct<ClassWithFinalConstruct>::value, "openEdr::ClassWithFinalConstruct must have finalConstruct");
+static_assert(cmd::detail::HasFinalConstruct<ClassWithFinalConstruct>::value, "cmd::ClassWithFinalConstruct must have finalConstruct");
 
 //
 //
@@ -106,7 +106,7 @@ public:
 	}
 };
 
-static_assert(!openEdr::detail::HasFinalConstruct<ClassWithoutFinalConstruct>::value, "openEdr::ClassWithFinalConstruct must not have finalConstruct");
+static_assert(!cmd::detail::HasFinalConstruct<ClassWithoutFinalConstruct>::value, "cmd::ClassWithFinalConstruct must not have finalConstruct");
 
 //
 //
@@ -155,7 +155,7 @@ public:
 
 };
 
-} // namespace openEdr {
+} // namespace cmd {
 
 //
 // Classes registration
@@ -169,9 +169,9 @@ CMD_END_LIBRARY_DEFINITION(TestLibrary)
 
 
 
-TEST_CASE("ObjectManager.IObject_interface", "openEdr::Core")
+TEST_CASE("ObjectManager.IObject_interface", "cmd::Core")
 {
-	using namespace openEdr;
+	using namespace cmd;
 
 	// getClassId
 	{
@@ -188,7 +188,7 @@ TEST_CASE("ObjectManager.IObject_interface", "openEdr::Core")
 }
 //regCreateObjectAndLibrary
 //createObject_and_library_registration
-TEST_CASE("ObjectManager.CreateObject_and_Library_registration", "openEdr::Core")
+TEST_CASE("ObjectManager.CreateObject_and_Library_registration", "cmd::Core")
 {
 	// FIXME: add sections
 
@@ -266,7 +266,7 @@ TEST_CASE("ObjectManager.CreateObject_and_Library_registration", "openEdr::Core"
 CMD_DECLARE_LIBRARY_CLSID(CLSID_ClassForConstructDestructTest, 0x38656DC0);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_StatInfoTestObject, 0x35B24C92);
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -297,7 +297,7 @@ public:
 	}
 };
 
-} // namespace openEdr {
+} // namespace cmd {
 
 //
 // Classes registration
@@ -363,7 +363,7 @@ TEST_CASE("ObjectManager.createObject_from_descriptor")
 // queryInterface and getObjPtrFromThis
 //
 
-namespace openEdr {
+namespace cmd {
 
 //
 // Base class of several interfaces
@@ -424,7 +424,7 @@ inline auto ClassForQueryInterfaceTest::returnPointerToThis()
 }
 
 
-} // namespace openEdr {
+} // namespace cmd {
 
 //
 //
@@ -597,7 +597,7 @@ TEST_CASE("MemoryManager.CHECK_IN_SOURCE_LOCATION")
 //
 TEST_CASE("CatalogManager.getCatalogManager")
 {
-	using namespace openEdr;
+	using namespace cmd;
 
 	auto& CatalogManager1 = getCatalogManager();
 	auto& CatalogManager2 = getCatalogManager();
@@ -892,7 +892,7 @@ public:
 //
 TEST_CASE("MessageProcessor.sendMessage")
 {
-	using namespace openEdr;
+	using namespace cmd;
 	std::string sSubsriptionId = "ExampleMessageSubscriber";
 
 	SECTION("with_parameters")
@@ -924,7 +924,7 @@ TEST_CASE("MessageProcessor.sendMessage")
 //
 TEST_CASE("MessageProcessor.subscribeOnMessage")
 {
-	using namespace openEdr;
+	using namespace cmd;
 	std::string sSubsriptionId = "ExampleMessageSubscriber";
 
 	SECTION("one_subscriber")
@@ -1010,7 +1010,7 @@ TEST_CASE("MessageProcessor.subscribeOnMessage")
 //
 TEST_CASE("MessageProcessor.unsubscribeFromMessage")
 {
-	using namespace openEdr;
+	using namespace cmd;
 
 	SECTION("simple_test")
 	{ 
@@ -1074,7 +1074,7 @@ TEST_CASE("MessageProcessor.unsubscribeFromMessage")
 //
 TEST_CASE("MessageProcessor.unsubscribeAll")
 {
-	using namespace openEdr;
+	using namespace cmd;
 
 	auto fnScenario = [&]()
 	{
@@ -1096,7 +1096,7 @@ TEST_CASE("MessageProcessor.unsubscribeAll")
 //
 TEST_CASE("MessageProcessor.load_config_data")
 {
-	using namespace openEdr;
+	using namespace cmd;
 
 	Sequence seqMessageList;
 

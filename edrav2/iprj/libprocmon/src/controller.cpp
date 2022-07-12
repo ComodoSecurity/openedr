@@ -12,6 +12,7 @@
 /// @{
 #include "pch.h"
 #include "controller.h"
+#include "procmonevent.h"
 
 // madCodeHook internal function
 void WINAPI EnableAllPrivileges(void);
@@ -19,13 +20,14 @@ void WINAPI EnableAllPrivileges(void);
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "procmon"
 
-namespace openEdr {
+namespace cmd {
 namespace win {
 
 //
 //
 //
 ProcessMonitorController::ProcessMonitorController()
+	: m_hFltPortReceiver(c_sPortName, c_nTreadsCount, true, "ProcMon::EventsPool")
 {
 	std::srand((unsigned int)std::time(0));
 }
@@ -46,8 +48,11 @@ void ProcessMonitorController::finalConstruct(Variant vConfig)
 	m_pReceiver = queryInterfaceSafe<IDataReceiver>(vConfig.get("receiver", {}));
 	m_nTimeout = vConfig.get("timeout", c_nDefaultTimeout);
 
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	InitializeMadCHook();
-
+#else
+	// TODO: our own IPC implementation
+#endif // FEATURE_ENABLE_MADCHOOK
 	if (m_pReceiver)
 	{
 		m_fInjectOnStart = vConfig.get("injectAllOnStart", m_fInjectOnStart);
@@ -61,6 +66,7 @@ void ProcessMonitorController::finalConstruct(Variant vConfig)
 		m_vConfigSchema = variant::deserializeFromJson(edrpm::c_sConfigSchema);
 		TRACE_END("Can't deserialize schema");
 
+#if defined(FEATURE_ENABLE_MADCHOOK)
 		CHECK_IN_SOURCE_LOCATION();
 		if (!CreateIpcQueue(edrpm::c_sIpcEventsPort, ipcEventsCallback, this, 1))
 			error::RuntimeError("Can't create IPC channel").throwException();
@@ -75,6 +81,28 @@ void ProcessMonitorController::finalConstruct(Variant vConfig)
 			m_hGlobalEvent.reset(CreateGlobalEvent(edrpm::c_sGlobalCaptureEvent, TRUE, FALSE));
 		if (!m_hGlobalEvent)
 			error::RuntimeError("Fail to create global handle").throwException();
+#else
+		CHECK_IN_SOURCE_LOCATION();
+		m_hGlobalEvent.reset(::OpenEvent(EVENT_ALL_ACCESS, FALSE, edrpm::c_sGlobalCaptureEvent));
+		if (m_hGlobalEvent)
+			ResetEvent(m_hGlobalEvent);
+		else
+		{
+			SECURITY_ATTRIBUTES Security;
+			SECURITY_DESCRIPTOR Descriptor;
+			memset(&Security, 0, sizeof(Security));
+			memset(&Descriptor, 0, sizeof(Descriptor));
+			InitializeSecurityDescriptor(&Descriptor, SECURITY_DESCRIPTOR_REVISION);
+			SetSecurityDescriptorDacl(&Descriptor, TRUE, NULL, FALSE);
+			Security.nLength = sizeof(Security);
+			Security.lpSecurityDescriptor = &Descriptor;
+			Security.bInheritHandle = FALSE;
+
+			m_hGlobalEvent.reset(CreateEvent(&Security, TRUE, FALSE, edrpm::c_sGlobalCaptureEvent));
+		}
+		if (!m_hGlobalEvent)
+			error::RuntimeError("Fail to create global handle").throwException();
+#endif // FEATURE_ENABLE_MADCHOOK
 	}
 
 	// Setup directories
@@ -126,7 +154,8 @@ bool ProcessMonitorController::isDllLoadedIntoProcess(const uint32_t dwPid, cons
 //
 //
 //
-bool ProcessMonitorController::jectProcess(bool fInject, const uint32_t nPid)
+#if defined(FEATURE_ENABLE_MADCHOOK)
+bool ProcessMonitorController::injectProcess(bool fInject, const uint32_t nPid)
 {
 	sys::win::ScopedHandle hTarget(::OpenProcess(PROCESS_ALL_ACCESS, false, nPid));
 	if (!hTarget)
@@ -214,7 +243,7 @@ BOOL WINAPI ProcessMonitorController::injectionCallback(PVOID pContext, DWORD dw
 //
 //
 //
-void ProcessMonitorController::jectAll(const bool fInject, const std::wstring& sIncludeMask, const std::wstring& sExcludeMask)
+void ProcessMonitorController::injectAll(const bool fInject, const std::wstring& sIncludeMask, const std::wstring& sExcludeMask)
 {
 	LOGLVL(Detailed, (fInject ?
 		"Start to inject to all existing processes" :
@@ -256,97 +285,31 @@ void ProcessMonitorController::jectAll(const bool fInject, const std::wstring& s
 		"Finish to inject to all existing processes" : 
 		"Finish to uninject from all existing processes"));
 }
+#endif // FEATURE_ENABLE_MADCHOOK
 
-Event g_pEventMap[] = {
-	Event::LLE_PROCESS_MEMORY_READ,		// PROCMON_PROCESS_MEMORY_READ = 0x0000,
-	Event::LLE_PROCESS_MEMORY_WRITE,	// PROCMON_PROCESS_MEMORY_WRITE = 0x0001,
-	Event::LLE_NONE,					// PROCMON_API_SET_WINDOWS_HOOK = 0x0002,
-	Event::LLE_NONE,					// PROCMON_STORAGE_RAW_ACCESS_WRITE = 0x0003,
-	Event::LLE_NONE,					// PROCMON_STORAGE_RAW_LINK_CREATE = 0x0004,
-	Event::LLE_KEYBOARD_GLOBAL_READ,	// PROCMON_API_GET_KEYBOARD_STATE = 0x0005,
-	Event::LLE_KEYBOARD_GLOBAL_READ,	// PROCMON_API_GET_KEY_STATE = 0x0006,
-	Event::LLE_KEYBOARD_GLOBAL_READ,	// PROCMON_API_REGISTER_HOT_KEY = 0x0007,
-	Event::LLE_KEYBOARD_GLOBAL_READ,	// PROCMON_API_REGISTER_RAW_INPUT_DEVICES = 0x0008,
-	Event::LLE_KEYBOARD_BLOCK,			// PROCMON_API_BLOCK_INPUT = 0x0009,
-	Event::LLE_KEYBOARD_BLOCK,			// PROCMON_API_ENABLE_WINDOW = 0x000A,
-	Event::LLE_CLIPBOARD_READ,			// PROCMON_API_GET_CLIPBOARD_DATA = 0x000B,
-	Event::LLE_CLIPBOARD_READ,			// PROCMON_API_SET_CLIPBOARD_VIEWER = 0x000C,
-	Event::LLE_KEYBOARD_GLOBAL_WRITE,	// PROCMON_API_SEND_INPUT = 0x000D,
-	Event::LLE_KEYBOARD_GLOBAL_WRITE,	// PROCMON_API_KEYBD_EVENT = 0x000E,
-	Event::LLE_MICROPHONE_ENUM,			// PROCMON_API_ENUM_AUDIO_ENDPOINTS = 0x000F,
-	Event::LLE_MICROPHONE_READ,			// PROCMON_API_WAVE_IN_OPEN = 0x0010,
-	Event::LLE_MOUSE_GLOBAL_WRITE,		// PROCMON_API_MOUSE_EVENT = 0x0011,
-	Event::LLE_WINDOW_DATA_READ,		// PROCMON_COPY_WINDOW_BITMAP = 0x0012,
-	Event::LLE_DESKTOP_WALLPAPER_SET,	// PROCMON_DESKTOP_WALLPAPER_SET = 0x0013,
-	Event::LLE_MOUSE_BLOCK,				// PROCMON_API_CLIP_CURSOR = 0x0014,
-	Event::LLE_USER_LOGON,				// PROCMON_INTERACTIVE_LOGON = 0x0015,
-	Event::LLE_USER_IMPERSONATION,		// PROCMON_THREAD_IMPERSONATION = 0x0016,
-	Event::LLE_USER_IMPERSONATION,		// PROCMON_PIPE_IMPERSONATION = 0x0017,
-};
 
-static_assert(std::size(g_pEventMap) == Size(edrpm::RawEvent::_Max), "Not enough items in the table <g_pEventMap>");
-
-//
-//
-//
-void ProcessMonitorController::parseEvent(edrpm::RawEvent eEvent, Variant vEvent)
+void WINAPI ProcessMonitorController::ipcEventsCallbackInt(const void* pMessageBuf, unsigned long dwMessageLen, void* pAnswerBuf, unsigned long dwAnswerLen, void* pContext, bool& fHasAnswer)
 {
-	auto nEvent = uint32_t(eEvent);
-	if (nEvent >= std::size(g_pEventMap))
+	edrpm::RawEvent nRawEventId = edrpm::RawEvent::_Max;
+	CMD_TRY
 	{
-		LOGLVL(Trace, vEvent.print());
-		error::InvalidArgument(SL, FMT("There is no mapping for event <" << nEvent << ">")).throwException();
+		ProcessMonitorController * pThis = (ProcessMonitorController*)pContext;
+		if (pThis == nullptr)
+			error::InvalidArgument(SL, "Invalid this pointer").throwException();
+		if (pMessageBuf == nullptr)
+			error::InvalidArgument(SL, "Invalid incoming buffer for IPC command").throwException();
+
+		ProcmonEvent procmonEvent((Byte*)pMessageBuf, dwMessageLen, (Byte*)pAnswerBuf, dwAnswerLen,
+			pThis->m_fInitialized, pThis->m_pReceiver, pThis->m_vEventSchema,
+			pThis->m_vInjectionConfig, pThis->m_vConfigSchema, c_nClassId);
+		
+		procmonEvent.handle(fHasAnswer);
 	}
-
-	vEvent.put("baseType", g_pEventMap[nEvent]);
-
-	switch (eEvent)
+		CMD_PREPARE_CATCH
+		catch (error::Exception& e)
 	{
-		case edrpm::RawEvent::PROCMON_API_SET_WINDOWS_HOOK:
-		{
-			std::string sHookType = vEvent["hookType"];
-			if (sHookType == "WH_KEYBOARD" || sHookType == "WH_KEYBOARD_LL")
-				vEvent.put("baseType", Event::LLE_KEYBOARD_GLOBAL_READ);
-			else
-				vEvent.put("baseType", Event::LLE_WINDOW_PROC_GLOBAL_HOOK);
-			break;
-		}
-		case edrpm::RawEvent::PROCMON_STORAGE_RAW_ACCESS_WRITE:
-		{
-			uint32_t nObjectType = vEvent["objectType"];
-			if (nObjectType == 0)
-				vEvent.put("baseType", Event::LLE_DISK_RAW_WRITE_ACCESS);
-			else if (nObjectType == 1)
-				vEvent.put("baseType", Event::LLE_VOLUME_RAW_WRITE_ACCESS);
-			else if (nObjectType == 2)
-				vEvent.put("baseType", Event::LLE_DEVICE_RAW_WRITE_ACCESS);
-			else
-				error::InvalidFormat(SL, FMT("Fail to parse event <" << uint32_t(eEvent) << ">")).throwException();
-			break;
-		}
-		case edrpm::RawEvent::PROCMON_STORAGE_RAW_LINK_CREATE:
-		{
-			uint32_t nObjectType = vEvent["objectType"];
-			if (nObjectType == 0)
-				vEvent.put("baseType", Event::LLE_DISK_LINK_CREATE);
-			else if (nObjectType == 1)
-				vEvent.put("baseType", Event::LLE_VOLUME_LINK_CREATE);
-			else if (nObjectType == 2)
-				vEvent.put("baseType", Event::LLE_DEVICE_LINK_CREATE);
-			else
-				error::InvalidFormat(SL, FMT("Fail to parse event <" << uint32_t(eEvent) << ">")).throwException();
-			break;
-		}
-		case edrpm::RawEvent::PROCMON_THREAD_IMPERSONATION:
-		{
-			vEvent.put("impersonationType", sys::win::ImpersonationType::Local);
-			break;
-		}
-		case edrpm::RawEvent::PROCMON_PIPE_IMPERSONATION:
-		{
-			vEvent.put("impersonationType", sys::win::ImpersonationType::Ipc);
-			break;
-		}
+		e.log(SL, FMT("Process monitor fail to parse event <" << uint32_t(nRawEventId) << ">"));
+		LOGLVL(Trace, string::convertToHex((Byte*)pMessageBuf, (Byte*)pMessageBuf + dwMessageLen));
 	}
 }
 
@@ -356,81 +319,8 @@ void ProcessMonitorController::parseEvent(edrpm::RawEvent eEvent, Variant vEvent
 void WINAPI ProcessMonitorController::ipcEventsCallback(const char*, const void* pMessageBuf, 
 	unsigned long dwMessageLen, void* pAnswerBuf, unsigned long dwAnswerLen, void* pContext)
 {
-
-	edrpm::RawEvent nRawEventId = edrpm::RawEvent::_Max;
-	CMD_TRY
-	{
-		ProcessMonitorController* pThis = (ProcessMonitorController*)pContext;
-		if (pThis == nullptr)
-			error::InvalidArgument(SL, "Invalid this pointer").throwException();
-		if (pMessageBuf == nullptr)
-			error::InvalidArgument(SL, "Invalid incoming buffer for IPC command").throwException();
-
-		Variant vEvent = variant::deserializeFromLbvs(pMessageBuf, dwMessageLen, pThis->m_vEventSchema);
-		nRawEventId = vEvent["rawEventId"];
-
-		if (nRawEventId == edrpm::RawEvent::PROCMON_LOG_MESSAGE)
-		{
-#undef CMD_COMPONENT
-#define CMD_COMPONENT "inject"
-			uint32_t nPid = getByPath(vEvent, "process.pid", 0);
-			std::string sModule = vEvent.get("path", "");
-			std::string sMsg = std::string(vEvent["errMsg"]) + " (pid <" + 
-				std::to_string(nPid) + ">, name (" + sModule + ">)";
-
-			edrpm::ErrorType eType(vEvent["errType"]);
-			switch (eType)
-			{
-			case edrpm::ErrorType::Error:
-				error::RuntimeError(SL, sMsg).log();
-				break;
-			case edrpm::ErrorType::Warning:
-				LOGWRN(sMsg);
-				break;
-			case edrpm::ErrorType::Info:
-				LOGLVL(Debug, sMsg);
-				break;
-			default:
-				LOGWRN("Unknown message type. <" << sMsg << ">");
-			}
-			return;
-#undef CMD_COMPONENT
-#define CMD_COMPONENT "procmon"
-		}
-		if (nRawEventId == edrpm::RawEvent::PROCMON_INJECTION_CONFIG_UPDATE)
-		{
-			if (pAnswerBuf == nullptr || dwAnswerLen < sizeof(variant::lbvs::LbvsHeader))
-				error::InvalidArgument(SL, "Invalid answer buffer for IPC command").throwException();
-
-			std::vector<uint8_t> pLbvs;
-			if (!variant::serializeToLbvs(pThis->m_vInjectionConfig, pThis->m_vConfigSchema, pLbvs))
-				error::InvalidFormat(SL, "Can't serialize injection config to LBVS").throwException();
-
-			memcpy(pAnswerBuf, pLbvs.data(), std::min<size_t>(dwAnswerLen, pLbvs.size()));
-			return;
-		}
-
-		// Drop events if service is stopped
-		if (!pThis->m_fInitialized)
-			return;
-
-		LOGLVL(Trace, "Parse raw event <" << size_t(nRawEventId) <<
-			"> from process <" << getByPath(vEvent, "process.pid", -1) << ">");
-
-		vEvent.put("rawEventId", createRaw(c_nClassId, (uint32_t)nRawEventId));
-		pThis->parseEvent(nRawEventId, vEvent);
-
-		// Send message to receiver
-		if (!pThis->m_pReceiver)
-			error::InvalidArgument(SL, "Receiver interface is undefined").throwException();
-		pThis->m_pReceiver->put(vEvent);
-	}
-	CMD_PREPARE_CATCH
-	catch (error::Exception& e)
-	{
-		e.log(SL, FMT("System monitor fail to parse event <" << uint32_t(nRawEventId) << ">"));
-		LOGLVL(Trace, string::convertToHex((Byte*)pMessageBuf, (Byte*)pMessageBuf + dwMessageLen));
-	}
+	bool fHasAnswer;
+	ipcEventsCallbackInt(pMessageBuf, dwMessageLen, pAnswerBuf, dwAnswerLen, pContext, fHasAnswer);
 }
 
 //
@@ -496,8 +386,9 @@ void ProcessMonitorController::copyInjectionDll(const std::wstring& sDllName, co
 			return;
 
 		// Try to uninject dll from all processes
-		jectAll(false);
-
+#if defined(FEATURE_ENABLE_MADCHOOK)
+		injectAll(false);
+#endif
 		auto sDelFile = sDestFile;
 		sDelFile.replace_extension(std::to_wstring(std::rand()) + L".bak");
 		fs::rename(sDestFile, sDelFile); // Throw exception if fail
@@ -532,8 +423,10 @@ void ProcessMonitorController::removeInjectionDll(const std::wstring& sDllName, 
 	if (!fs::exists(sDestFile) || fs::remove(sDestFile, ec))
 		return;
 	
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	// Try to uninject dll from all processes
-	jectAll(false);
+	injectAll(false);
+#endif
 
 	auto sDelFile = sDestFile;
 	sDelFile.replace_extension(std::to_wstring(std::rand()) + L".bak");
@@ -608,7 +501,7 @@ void ProcessMonitorController::loadState(Variant vState)
 //
 //
 //
-openEdr::Variant ProcessMonitorController::saveState()
+cmd::Variant ProcessMonitorController::saveState()
 {
 	return {};
 }
@@ -639,12 +532,21 @@ bool ProcessMonitorController::start(Variant vParams)
 		error::win::WinApiError(SL, "Fail to set global event").throwException();
 	m_fInitialized = true;
 	m_fAllowInjection = true;
-
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	if (m_fInjectOnStart)
 		m_pInjectionThread = std::thread([this]() 
 		{ 
-			this->jectAll(true);
+			this->injectAll(true);
 		});
+#else
+	Handler handler = [this](HandlerContext& ctxt) -> HRESULT
+	{
+		this->ipcEventsCallbackInt(ctxt.pInData, (unsigned long)ctxt.nInDataSize, ctxt.pOutData, (unsigned long)ctxt.nOutDataSize, this, ctxt.fHasResponce);
+		return S_OK;
+	};
+	m_hFltPortReceiver.Start(handler);
+#endif // FEATURE_ENABLE_MADCHOOK
+
 	LOGLVL(Detailed, "ProcMon controller is started");
 	return true;
 }
@@ -679,6 +581,10 @@ bool ProcessMonitorController::stop(Variant vParams)
 	if (m_pInjectionThread.joinable())
 		m_pInjectionThread.join();
 
+#if !defined(FEATURE_ENABLE_MADCHOOK)
+	m_hFltPortReceiver.Stop();
+#endif
+
 	LOGLVL(Detailed, "ProcMon controller is stopped");
 	return true;
 }
@@ -691,15 +597,21 @@ void ProcessMonitorController::shutdown()
 	LOGLVL(Detailed, "ProcMon controller is being shutdowned");
 	if (m_hGlobalEvent && !::ResetEvent(m_hGlobalEvent))
 		error::win::WinApiError(SL, "Fail to reset global event").log();
+
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	if (m_fUninjectOnExit)
-		jectAll(false);
+		injectAll(false);
+#endif
 
 	LOGLVL(Detailed, "Finalize madCodeHook");
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	// FinalizeMadCHook doesn't close IPC ports
 	DestroyIpcQueue(edrpm::c_sIpcEventsPort);
 	DestroyIpcQueue(edrpm::c_sIpcErrorsPort);
 	FinalizeMadCHook();
-
+#else
+	// TODO: our own IPC implementation
+#endif
 	LOGLVL(Detailed, "ProcMon controller is shutdowned");
 }
 
@@ -772,24 +684,25 @@ Variant ProcessMonitorController::execute(Variant vCommand, Variant vParams)
 	///   * procName [str] - name of processes.
 	/// Returns a status of the operation.
 	///
+#if defined(FEATURE_ENABLE_MADCHOOK) 
 	if (vCommand == "inject" || vCommand == "uninject")
 	{
 		m_fAllowInjection = true;
 		bool fInject = (vCommand == "inject");
 		uint32_t dwPid = vParams.get("pid", UINT_MAX);
 		if (dwPid == UINT_MAX)
-			jectAll(fInject, vParams.get("procName", ""));
+			injectAll(fInject, vParams.get("procName", ""));
 		else
-			jectProcess(fInject, dwPid);
+			injectProcess(fInject, dwPid);
 		return true;
 	}
-
+#endif
 	TRACE_END(FMT("Error during execution of a command <" << vCommand << ">"));
 	error::InvalidArgument(SL, FMT("ProcessMonitorController doesn't support a command <"
 		<< vCommand << ">")).throwException();
 }
 
 } // namespace win
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

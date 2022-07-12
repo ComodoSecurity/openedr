@@ -9,7 +9,7 @@
 ///
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 namespace error {
 namespace dump {
 namespace crashpad_ {
@@ -88,4 +88,4 @@ bool initCrashHandlers(const std::wstring& sHandlerPath, const std::wstring& sDB
 } // namespace crashpad_
 } // namespace dump
 } // namespace error
-} // namespace openEdr
+} // namespace cmd

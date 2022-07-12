@@ -10,7 +10,7 @@
 
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace crypt {
 namespace sha1 {
 namespace detail {
@@ -221,4 +221,4 @@ auto getHash(Args&&... args)
 
 } // namespace sha1
 } // namespace crypt
-} // namespace openEdr
+} // namespace cmd

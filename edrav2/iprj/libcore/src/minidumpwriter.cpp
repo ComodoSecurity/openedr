@@ -15,7 +15,7 @@
 #error You should include this file only into windows-specific code
 #endif // _WIN32
 
-namespace openEdr {
+namespace cmd {
 namespace error {
 namespace dump {
 namespace win {
@@ -197,4 +197,4 @@ void MinidumpWriter::init(const Variant& vConfig)
 } // namespace win
 } // namespace dump
 } // namespace error
-} // namespace openEdr
+} // namespace cmd

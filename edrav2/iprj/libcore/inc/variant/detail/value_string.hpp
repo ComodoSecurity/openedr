@@ -7,7 +7,7 @@
 //
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 namespace detail {
 
@@ -164,4 +164,4 @@ public:
 
 } // namespace detail
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd

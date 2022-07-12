@@ -13,7 +13,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "edr"
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 
 using namespace std::literals;
@@ -352,6 +352,6 @@ std::string LaneOperation::getDescriptionString()
 }
 
 } // namespace edr
-} // namespace openEdr
+} // namespace cmd
 /// @}
 

@@ -4,7 +4,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr::crypt;
+using namespace cmd::crypt;
 
 constexpr size_t c_nHashLen = md5::c_nHashLen;
 
@@ -129,7 +129,7 @@ TEST_CASE("sha1.string")
 
 TEST_CASE("sha1.stream")
 {
-	auto pStream = openEdr::io::createMemoryStream(g_sStr, g_nStrLen);
+	auto pStream = cmd::io::createMemoryStream(g_sStr, g_nStrLen);
 
 	SECTION("readAll")
 	{
@@ -157,6 +157,6 @@ TEST_CASE("sha1.stream")
 		{
 			sha1::Hash pHash = sha1::getHash(pStream, g_nStrLen + 1);
 		};
-		REQUIRE_THROWS_AS(fn(), openEdr::error::NoData);
+		REQUIRE_THROWS_AS(fn(), cmd::error::NoData);
 	}
 }

@@ -15,7 +15,7 @@
 #include "pch.h"
 #include "injection.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 
@@ -104,5 +104,5 @@ void UserBreak(const char* sFn /*= NULL*/)
 }
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd
 

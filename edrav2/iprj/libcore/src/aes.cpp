@@ -10,7 +10,7 @@
 #include "aes.h"
 #include "crypt.hpp"
 
-namespace openEdr {
+namespace cmd {
 namespace crypt {
 
 namespace detail {
@@ -318,4 +318,4 @@ Size AesDecoder::read(void* pBuffer, Size nSize, Size* pProceedSize)
 }
 
 } // namespace crypt
-} // namespace openEdr 
+} // namespace cmd 

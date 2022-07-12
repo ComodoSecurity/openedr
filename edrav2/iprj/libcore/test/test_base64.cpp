@@ -5,7 +5,7 @@
 #include "pch.h"
 #include "test_stream.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 // FIXME: Do we need test strings with "="-end?
 
@@ -137,7 +137,7 @@ TEST_CASE("Base64Encoder.write")
 //
 // FIXME: Refactor
 //
-TEST_CASE("Base64.decoder", "[openEdr::io]")
+TEST_CASE("Base64.decoder", "[cmd::io]")
 {
 	static const Byte sOrig[] = "* Hello world! *";
 	static const Byte sB64[] = "KiBIZWxsbyB3b3JsZCEgKg==";

@@ -10,7 +10,7 @@
 #include <io.hpp>
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 //
@@ -51,4 +51,4 @@ Variant serializeStream(ObjPtr<IReadableStream> pStream)
 }
 
 } // namespace io
-} // namespace openEdr 
+} // namespace cmd 

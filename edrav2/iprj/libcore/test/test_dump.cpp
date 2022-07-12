@@ -14,7 +14,7 @@
 #pragma comment(lib, "util.lib")
 #pragma comment(lib, "base.lib")
 
-using namespace openEdr;
+using namespace cmd;
 
 //
 // CBase and CDerived classes are used when checking handling of pure virtual calls.

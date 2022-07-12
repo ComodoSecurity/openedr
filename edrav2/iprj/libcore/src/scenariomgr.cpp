@@ -14,7 +14,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "scnromgr"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -320,7 +320,7 @@ void ScenarioManager::loadState(Variant vState)
 //
 //
 //
-openEdr::Variant ScenarioManager::saveState()
+cmd::Variant ScenarioManager::saveState()
 {
 	return {};
 }
@@ -543,4 +543,4 @@ Variant ScenarioManager::execute(Variant vCommand, Variant vParams /*= Variant()
 		FMT("ScenarioManager doesn't support command <" << vCommand << ">")).throwException();
 }
 
-} // namespace openEdr 
+} // namespace cmd 

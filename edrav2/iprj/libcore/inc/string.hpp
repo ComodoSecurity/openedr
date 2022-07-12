@@ -25,11 +25,11 @@
 #define FMT(data) ((std::ostringstream() << data).str())
 #define WFMT(data) ((std::wostringstream() << data).str())
 
-namespace openEdr {
+namespace cmd {
 namespace detail {
 
 //
-// openEdr::hex helper
+// cmd::hex helper
 //
 template<typename T>
 struct HexOutputter
@@ -41,7 +41,7 @@ struct HexOutputter
 
 
 //
-// openEdr::hex helper
+// cmd::hex helper
 //
 template<typename T>
 inline std::ostream& operator<<(std::ostream& os, const HexOutputter<T>& value)
@@ -55,7 +55,7 @@ inline std::ostream& operator<<(std::ostream& os, const HexOutputter<T>& value)
 }
 
 //
-// openEdr::hex helper
+// cmd::hex helper
 //
 template<typename T>
 inline std::wostream& operator<<(std::wostream& os, const HexOutputter<T>& value)
@@ -305,5 +305,5 @@ extern std::string convertWildcardToRegex(std::string_view sWildcard);
 extern std::wstring convertWildcardToRegex(std::wstring_view sWildcard);
 
 } // namespace string
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

@@ -12,7 +12,7 @@
 #include <objects.h>
 #include <command.hpp>
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// String cache class
@@ -55,5 +55,5 @@ public:
 	Variant execute(Variant vCommand, Variant vParams) override;
 };
 
-} // namespace openEdr
+} // namespace cmd
 /// @} 

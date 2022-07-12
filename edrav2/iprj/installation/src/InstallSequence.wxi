@@ -21,8 +21,8 @@
 		<!--only on install-->
 		<Custom Action="GetSvcInstallCmdLine" Before="InstallValidate">NOT Installed AND NOT REMOVE</Custom>
 			
-		<Custom Action="RemoveExistingEdrProducts" After="InstallFiles">(NOT Installed AND NOT REMOVE) OR REINSTALL</Custom>
-		<Custom Action="SetRemoveExistingEdrProductsData" Before="RemoveExistingEdrProducts">(NOT Installed AND NOT REMOVE) OR REINSTALL</Custom>
+		<Custom Action="RemoveExistingComodoProducts" After="InstallFiles">(NOT Installed AND NOT REMOVE) OR REINSTALL</Custom>
+		<Custom Action="SetRemoveExistingComodoProductsData" Before="RemoveExistingComodoProducts">(NOT Installed AND NOT REMOVE) OR REINSTALL</Custom>
 			
 		<Custom Action="SetRollbackInstalledEdrServiceData" Before="RollbackInstalledEdrService">(NOT Installed) AND (NOT REMOVE)</Custom>
 		<Custom Action="RollbackInstalledEdrService" Before="StartEdrService">(NOT Installed) AND (NOT REMOVE)</Custom>
@@ -33,11 +33,15 @@
 		<Custom Action="SetEnrollEdrServiceData" Before="EnrollEdrService">(NOT Installed OR REINSTALL) AND (NOT REMOVE) AND NOT (DISABLE=1) AND NOT (UPDATE=1)</Custom>
 		<Custom Action="EnrollEdrService" After="InstallEdrService">(NOT Installed OR REINSTALL) AND (NOT REMOVE) AND NOT (DISABLE=1) AND NOT (UPDATE=1)</Custom>
 
-		<Custom Action="SetStartEdrServiceData" Before="StartEdrService">(NOT Installed OR REINSTALL) AND (NOT REMOVE)</Custom>
-		<Custom Action="StartEdrService" Before="OnSuccessInstallation">(NOT Installed OR REINSTALL) AND (NOT REMOVE)</Custom>
+		<Custom Action="SetStartEdrServiceData" Before="StartEdrService">(NOT Installed OR REINSTALL) AND (NOT REMOVE) AND NOT (DISABLE=1)</Custom>
+		<Custom Action="StartEdrService" Before="OnSuccessInstallation">(NOT Installed OR REINSTALL) AND (NOT REMOVE) AND NOT (DISABLE=1)</Custom>
 
 		<Custom Action="SetOnSuccessInstallationData" Before="OnSuccessInstallation">NOT INTERRUPT_AND_RESTART</Custom>
 		<Custom Action="OnSuccessInstallation" Before="InstallFinalize">NOT INTERRUPT_AND_RESTART</Custom>
+
+		<!--restarting of the service is a workaround to get the proper policies during the update installation mode-->
+		<Custom Action="SetRestartEdrServiceData" Before="RestartEdrService">(UPDATE=1) AND (NOT REMOVE)</Custom>
+		<Custom Action="RestartEdrService" After="StartEdrService">(UPDATE=1) AND (NOT REMOVE)</Custom>
 			
 		<!--only on uninstall-->
 		<Custom Action="SetStopEdrServiceData" Before="StopEdrService">(Installed AND (REMOVE="ALL")) OR REINSTALL</Custom>
@@ -65,8 +69,8 @@
 
 	<CustomAction Id="GetSvcInstallCmdLine" BinaryKey="UtilJs" JScriptCall="GetInstallCmdLine" Return="check" />
 		
-	<CustomAction Id="SetRemoveExistingEdrProductsData" Property="RemoveExistingEdrProducts" Value="[WIX_UPGRADE_DETECTED]*[UILevel]*[OriginalDatabase]*[REINSTALL]*[DISABLE]*[UPDATE]*[TOKEN]*[ROOT_URL]" />
-	<CustomAction Id="RemoveExistingEdrProducts" BinaryKey="UtilJs" JScriptCall="RemoveExistingProducts" Execute="deferred" Impersonate="no" Return="check" />
+	<CustomAction Id="SetRemoveExistingComodoProductsData" Property="RemoveExistingComodoProducts" Value="[WIX_UPGRADE_DETECTED]*[UILevel]*[OriginalDatabase]*[REINSTALL]*[DISABLE]*[UPDATE]*[TOKEN]*[ROOT_URL]" />
+	<CustomAction Id="RemoveExistingComodoProducts" BinaryKey="UtilJs" JScriptCall="RemoveExistingProducts" Execute="deferred" Impersonate="no" Return="check" />
 
 	<CustomAction Id="CheckUninstall" BinaryKey="UtilJs" JScriptCall="CheckUninstall" Execute="deferred" Return="check" />
 		
@@ -107,7 +111,11 @@
 	<!-- StopEdrService -->
 	<CustomAction Id="SetStopEdrServiceData" Property="StopEdrService" Value='"[ACTUALINSTALLDIR]edrsvc.exe" stop' />
 	<CustomAction Id="StopEdrService" BinaryKey="UtilJs" JScriptCall="StopEdrService" Return="ignore" Impersonate="no" Execute="deferred" />
-		
+
+	<!-- RestartEdrService -->
+	<CustomAction Id="SetRestartEdrServiceData" Property="RestartEdrService" Value='"[ACTUALINSTALLDIR]edrsvc.exe" *command*' />
+	<CustomAction Id="RestartEdrService" BinaryKey="UtilJs" JScriptCall="RestartEdrService" Return="ignore" Impersonate="no" Execute="deferred" />
+
 	<!-- DeleteEdrServiceArtefacts -->
 	<CustomAction Id="SetDeleteEdrServiceArtefactsData" Property="DeleteEdrServiceArtefacts" Value='[CommonAppDataFolder]edrsvc' />
 	<CustomAction Id="DeleteEdrServiceArtefacts" BinaryKey="UtilJs" JScriptCall="DeleteEdrServiceArtefacts" Return="ignore" Impersonate="no" Execute="deferred" />

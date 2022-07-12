@@ -8,7 +8,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 static const char c_sGcpRootUrl[] = "https://api.cwatchedr.com/endpoint";
 static const char c_sGcpEndpointId[] = "EndpointIdPlaceholder";
 static const char c_sGcpCompanyId[] = "CompanyIdPlaceholder";

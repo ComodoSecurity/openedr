@@ -16,6 +16,12 @@
     <Filter Include="monitors">
       <UniqueIdentifier>{d47e47b6-d50a-4b70-bac1-bb16dcc755c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kernelinjectlib">
+      <UniqueIdentifier>{2560d795-d3c6-45e5-8b13-122589da0037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="kernelinjectlib\injectengine">
+      <UniqueIdentifier>{d2eaecef-5ae5-4c0d-a974-89e689355010}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\filemon.cpp">
@@ -63,6 +69,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\netmon.cpp">
       <Filter>monitors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kernelinjectlib\injectengine\iatinject.cpp">
+      <Filter>kernelinjectlib\injectengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kernelinjectlib\injectengine\injector.cpp">
+      <Filter>kernelinjectlib\injectengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kernelinjectlib\injectengine\petools.cpp">
+      <Filter>kernelinjectlib\injectengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kernelinjectlib\injectengine\apcqueue.cpp">
+      <Filter>kernelinjectlib\injectengine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\kernelinjectlib\injectengine\apcinjector.cpp">
+      <Filter>kernelinjectlib\injectengine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +173,24 @@
     </ClInclude>
     <ClInclude Include="..\..\src\netmon.h">
       <Filter>monitors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelinjectlib\kernelinjectlib.hpp">
+      <Filter>kernelinjectlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelinjectlib\injectengine\iatinject.hpp">
+      <Filter>kernelinjectlib\injectengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelinjectlib\injectengine\injector.hpp">
+      <Filter>kernelinjectlib\injectengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelinjectlib\injectengine\petools.hpp">
+      <Filter>kernelinjectlib\injectengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelinjectlib\injectengine\apcqueue.hpp">
+      <Filter>kernelinjectlib\injectengine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\kernelinjectlib\injectengine\apcinjector.hpp">
+      <Filter>kernelinjectlib\injectengine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

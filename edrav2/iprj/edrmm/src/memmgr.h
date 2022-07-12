@@ -14,7 +14,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace edrmm {
 
 //
@@ -28,5 +28,5 @@ void startMemoryLeaksMonitoring();
 void saveMemoryLeaks();
 
 } // namespace edrmm
-} // namespace openEdr
+} // namespace cmd
 
