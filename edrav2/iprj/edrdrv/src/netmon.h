@@ -8,7 +8,7 @@
 /// @{
 #pragma once
 
-#define FEATURE_ENABLE_NETMON
+//#define FEATURE_ENABLE_NETMON
 
 #if defined(FEATURE_ENABLE_NETMON)
 #pragma comment(lib, "nfwfpdrv.lib")
