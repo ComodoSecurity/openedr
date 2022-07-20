@@ -9,7 +9,7 @@
 ///
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 
 static inline bool c_fCrtlBreakIsUsed = false;
 static inline bool c_fStopOutput = false;
@@ -846,4 +846,4 @@ std::shared_ptr<IApplicationMode> createAppMode_debug()
 	return std::make_shared<AppMode_debug>();
 }
 
-} // namespace openEdr
+} // namespace cmd

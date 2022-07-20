@@ -17,7 +17,7 @@
 #include "keyboard.h"
 #include "process.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 std::string c_pHookType[] = { "WH_JOURNALRECORD", "WH_JOURNALPLAYBACK",
@@ -315,4 +315,4 @@ REGISTER_PRE_CALLBACK(keybd_event, [](
 });
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd

@@ -14,7 +14,7 @@
 #include "procutils.h"
 #include "osutils.h"
 
-namespace openEdr {
+namespace cmd {
 namespace procmon {
 	
 //
@@ -224,6 +224,7 @@ struct Context
 	volatile LONG _RefCount; ///< Internal data - Don't use
 	LIST_ENTRY _ListEntry; ///< Internal data - Don't use
 	BOOLEAN _fIsFilled; ///< Internal data - Don't use ///< Internal data - Don't use
+	volatile PFLT_PORT ProxyPort; //< Filter proxy port 
 
 	// Context
 	CommonProcessInfo processInfo; 
@@ -249,6 +250,7 @@ struct Context
 
 	NTSTATUS init();
 	void free();
+	void closePort();
 };
 
 //
@@ -554,6 +556,17 @@ NTSTATUS initialize();
 ///
 void finalize();
 
+///
+/// Get context of process.
+///
+NTSTATUS getProcessContext(HANDLE ProcessId, ContextPtr& ProcessContext);
+
+
+///
+/// Close all client proxy ports for all processes.
+///
+void closeAllClientPorts();
+
 } // namespace procmon
-} // namespace openEdr
+} // namespace cmd
 /// @}

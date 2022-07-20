@@ -10,7 +10,7 @@
 #pragma once
 #include "flscommon.h"
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 namespace fls {
 namespace v7 {
@@ -145,4 +145,4 @@ public:
 } // namespace v7
 } // namespace fls
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd

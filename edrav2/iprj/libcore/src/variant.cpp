@@ -10,7 +10,7 @@
 #include "pch.h"
 #include <command.hpp>
 
-namespace openEdr {
+namespace cmd {
 
 // TODO: withError
 // * work like std::optional, but contains error code
@@ -855,4 +855,4 @@ DictKeyStorage g_DictKeyStorage;
 
 } // namespace detail 
 } // namespace variant
-} // namespace openEdr 
+} // namespace cmd 

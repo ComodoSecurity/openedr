@@ -9,8 +9,8 @@
 #include "config.h"
 #include "../src/flsproto4.h"
 
-using namespace openEdr;
-using namespace openEdr::cloud;
+using namespace cmd;
+using namespace cmd::cloud;
 
 //
 //

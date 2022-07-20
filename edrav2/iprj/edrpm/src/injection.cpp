@@ -19,14 +19,19 @@
 #include "disk.h"
 #include "microphone.h"
 #include "screen.h"
+#include <libsysmon\inc\edrdrvapi.hpp>
+#include <fltuser.h>
 
-namespace openEdr {
+#pragma comment (lib, "fltLib.lib")
+
+namespace cmd {
 namespace edrpm {
 
 //
 //
 //
 Injection::Injection()
+	: m_hFltPort(c_sPortName)
 {
 	::InitializeCriticalSection(&m_mtxQueue);
 	::InitializeCriticalSection(&m_mtxThread);
@@ -92,45 +97,53 @@ call, it will not have a chance to return back to the (possibly freed) DLL.
 //
 bool Injection::init()
 {
-	dbgPrint("Start injection");
+	if (m_fInit.exchange(true))
+		return true;
+
+	//dbgPrint("Start injection");
 	// Update config 
 	//m_fUpdateConfig = !updateConfig(true);
 
-/*
-// 	getTrampManager().disableTrampStart(getTrampId("ntdll.dll", "NtReadVirtualMemory"));
-	getTrampManager().disableTrampStart(getTrampId("ntdll.dll", "NtWriteVirtualMemory"));
-	getTrampManager().disableTrampStart(getTrampId("ntdll.dll", "NtCreateFile"));
-	getTrampManager().disableTrampStart(getTrampId("ntdll.dll", "NtCreateSymbolicLinkObject"));
-//	getTrampManager().disableTrampStart(getTrampId("kernel32.dll", "ExitProcess"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "SetWindowsHookExA"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "SetWindowsHookExW"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "GetKeyboardState"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "GetKeyState"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "GetAsyncKeyState"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "RegisterHotKey"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "RegisterRawInputDevices"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "BlockInput"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "EnableWindow"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "GetClipboardData"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "SetClipboardViewer"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "SendInput"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "keybd_event"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "SystemParametersInfoA"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "SystemParametersInfoW"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "ClipCursor"));
-	getTrampManager().disableTrampStart(getTrampId("user32.dll", "mouse_event"));
-	getTrampManager().disableTrampStart(getTrampId("gdi32.dll", "BitBlt"));
-	getTrampManager().disableTrampStart(getTrampId("gdi32.dll", "MaskBlt"));
-	getTrampManager().disableTrampStart(getTrampId("gdi32.dll", "PlgBlt"));
-	getTrampManager().disableTrampStart(getTrampId("gdi32.dll", "StretchBlt"));
-	getTrampManager().disableTrampStart(getTrampId("ole32.dll", "CoCreateInstance"));
-	getTrampManager().disableTrampStart(getTrampId("combase.dll", "CoCreateInstance"));
-	getTrampManager().disableTrampStart(getTrampId("winmm.dll", "waveInOpen"));
-*/
+ //	getTrampManager().disableTrampStart(getTrampId("ntdll.dll", "NtReadVirtualMemory"));
+	//getTrampManager().disableTrampStart(getTrampId("ntdll.dll", "NtWriteVirtualMemory"));
+	//getTrampManager().disableTrampStart(getTrampId("ntdll.dll", "NtCreateFile"));
+	//getTrampManager().disableTrampStart(getTrampId("ntdll.dll", "NtCreateSymbolicLinkObject"));
+	//getTrampManager().disableTrampStart(getTrampId("kernel32.dll", "ExitProcess"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "SetWindowsHookExA"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "SetWindowsHookExW"));
+	//
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "GetKeyboardState"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "GetKeyState"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "GetAsyncKeyState"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "RegisterHotKey"));
+	//// мешает здесь:
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "RegisterRawInputDevices"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "BlockInput"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "EnableWindow"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "GetClipboardData"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "SetClipboardViewer"));
+	//// end
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "SendInput"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "keybd_event"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "SystemParametersInfoA"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "SystemParametersInfoW"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "ClipCursor"));
+	//getTrampManager().disableTrampStart(getTrampId("user32.dll", "mouse_event"));
+	//getTrampManager().disableTrampStart(getTrampId("gdi32.dll", "BitBlt"));
+	//getTrampManager().disableTrampStart(getTrampId("gdi32.dll", "MaskBlt"));
+	//getTrampManager().disableTrampStart(getTrampId("gdi32.dll", "PlgBlt"));
+	//getTrampManager().disableTrampStart(getTrampId("gdi32.dll", "StretchBlt"));
+	//getTrampManager().disableTrampStart(getTrampId("ole32.dll", "CoCreateInstance"));
+	//getTrampManager().disableTrampStart(getTrampId("combase.dll", "CoCreateInstance"));
+	//getTrampManager().disableTrampStart(getTrampId("winmm.dll", "waveInOpen"));
+
+	//getTrampManager().disableTrampStart(getTrampId("advapi32.dll", "ImpersonateNamedPipeClient"));
+	//getTrampManager().disableTrampStart(getTrampId("advapi32.dll", "CreateProcessWithLogonW"));
+	//getTrampManager().disableTrampStart(getTrampId("sspicli.dll", "LsaLogonUser"));
+	//getTrampManager().disableTrampStart(getTrampId("ntdll.dll", "NtSetInformationThread"));
 
 	hookAll();
-	//logError("Injected into process", ErrorType::Info);
-	m_fInit = true;
+	logError("Injected into process", ErrorType::Info);
 	return true;
 }
 
@@ -139,6 +152,9 @@ bool Injection::init()
 //
 bool Injection::finalize()
 {
+	if (!m_fInit)
+		return false;
+
 	// Do not change order
 	getTrampManager().disableTramps();
 	::SetEvent(m_hTerminationEvent);
@@ -146,9 +162,11 @@ bool Injection::finalize()
 	::SetEvent(m_hTimeoutEvent);
 
 	::EnterCriticalSection(&m_mtxQueue);
-	if (m_vEventQueue.size())
+	if (m_vEventQueue.size() > 0)
+	{
 		dbgPrint(std::string("Queue is not empty. ") + std::to_string(m_vEventQueue.size()) + std::string(" events left."));
-	m_vEventQueue.clear();
+		m_vEventQueue.clear();
+	}
 	::LeaveCriticalSection(&m_mtxQueue);
 
 	if (m_hThread)
@@ -177,18 +195,33 @@ bool Injection::updateConfig()
 	bool fStatus = false;
 	TRY
 	{
-		static const size_t nBufferSize = 0x1000;
-		Buffer pBuffer;
-		variant::LbvsDeserializer<ConfigField> deserializer;
+		constexpr size_t bufferSize = 0x2000;
+
+		Buffer buffer;
+		uint8_t retryCount = 0;
+		bool result = false;
+		
 		do
 		{
-			pBuffer.resize(pBuffer.size() + nBufferSize);
-			if (!sendEvent(RawEvent::PROCMON_INJECTION_CONFIG_UPDATE, pBuffer))
+			buffer.resize(buffer.size() + bufferSize);
+			result = sendEvent(RawEvent::PROCMON_INJECTION_CONFIG_UPDATE, buffer);
+			if (result)
+				break;
+			
+			if (++retryCount >= GetMaxRetryCount())
 			{
-				logError("Fail to receive config from service");
+				logError(std::string("Fail to receive config from service, retryCount=<") + std::to_string(retryCount) + ">");
 				return false;
 			}
-		} while (!deserializer.reset(pBuffer.data(), pBuffer.size()));
+		}
+		while (ERROR_MORE_DATA == GetLastError());
+
+		variant::LbvsDeserializer<ConfigField> deserializer;
+		if (!result || !deserializer.reset(buffer.data(), buffer.size()))
+		{
+			logError(std::string("Fail to receive config from service, sendEvent failed, retryCount=<") + std::to_string(retryCount) + ">");
+			return false;
+		}
 
 		Config config;
 		std::vector<std::pair<size_t, uint64_t>> vEvents;
@@ -233,7 +266,11 @@ bool Injection::updateConfig()
 		}
 
 		for (auto event : vEvents)
-			config.pEvents[event.first].nTimeout = event.second;
+		{
+			auto id = event.first;
+			if( id < unsigned(RawEvent::_Max))
+				config.pEvents[id].nTimeout = event.second;
+		}
 
 		::AcquireSRWLockExclusive(&m_srwConfig);
 		m_Config = config;
@@ -256,7 +293,11 @@ void Injection::workerThreadFunction()
 	ScopedHandle hCaptureEvent;
 	for (;;)
 	{
+#if defined(FEATURE_ENABLE_MADCHOOK)
 		hCaptureEvent.reset(OpenGlobalEvent(c_sGlobalCaptureEvent));
+#else
+		hCaptureEvent.reset(::OpenEvent(EVENT_ALL_ACCESS, FALSE, c_sGlobalCaptureEvent));
+#endif // FEATURE_ENABLE_MADCHOOK
 		if (hCaptureEvent)
 			break;
 		if (::WaitForSingleObject(m_hTerminationEvent, m_Config.nWaitTimeout) == WAIT_OBJECT_0)
@@ -265,6 +306,7 @@ void Injection::workerThreadFunction()
 
 	HANDLE pHandles[] = {m_hTerminationEvent, hCaptureEvent};
 	std::vector<uint8_t> pAnswer(m_Config.fWaitAnswer ? m_Config.nAnswerSize : 0);
+	uint8_t updateConfigRetryCount = 0;
 
 	while (hCaptureEvent)
 	{
@@ -283,6 +325,14 @@ void Injection::workerThreadFunction()
 			if (!updateConfig())
 			{
 				::WaitForSingleObject(m_hTimeoutEvent, m_Config.nWaitTimeout);
+				if (++updateConfigRetryCount > GetMaxRetryCountAndWait())
+				{
+					getTrampManager().disableTramps();
+					::SetEvent(m_hThreadEvent);
+					::ExitThread(0);
+					return;
+				}
+
 				continue;
 			}
 
@@ -353,7 +403,7 @@ bool Injection::needToFilter(RawEvent eEvent)
 	if (eEvent >= RawEvent::_Max)
 		return false;
 	::AcquireSRWLockShared(&m_srwConfig);
-	bool fFilter = (m_Config.pEvents[unsigned(eEvent)].nTimeout > 0);
+	bool fFilter = (m_Config.GetEventTimeout(eEvent) > 0);
 	::ReleaseSRWLockShared(&m_srwConfig);
 	return fFilter;
 }
@@ -366,7 +416,7 @@ bool Injection::skipEvent(RawEvent eEvent, EventHash nEventHash)
 	if (eEvent >= RawEvent::_Max)
 		return false;
 	::AcquireSRWLockShared(&m_srwConfig);
-	auto nTimeout = m_Config.pEvents[unsigned(eEvent)].nTimeout;
+	auto nTimeout = m_Config.GetEventTimeout(eEvent);
 	::ReleaseSRWLockShared(&m_srwConfig);
 	if (nTimeout == 0)
 		return false;
@@ -429,11 +479,21 @@ void Injection::freeQueue()
 	while (!m_vEventQueue.empty())
 	{
 		auto& pBuffer = m_vEventQueue.front();
+#if defined(FEATURE_ENABLE_MADCHOOK)
 		if (!SendIpcMessage(c_sIpcEventsPort, pBuffer.data(), DWORD(pBuffer.size()), NULL, 0, m_Config.nSendTimeout))
 		{
 			dbgPrint("Fail to send event at ExitProcess.");
 			break;
 		}
+#else
+		Buffer pAnswer;
+		if (!sendEventToSrv(pBuffer, pAnswer))
+		{
+			dbgPrint("Fail to send event at ExitProcess.");
+			break;
+		}
+
+#endif // FEATURE_ENABLE_MADCHOOK
 		m_vEventQueue.pop_front();
 	}
 	::LeaveCriticalSection(&m_mtxQueue);
@@ -469,8 +529,18 @@ void Injection::addEventToQueue(const Buffer& item)
 //
 bool Injection::sendEventToSrv(const Buffer& item, Buffer& answer)
 {
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	return SendIpcMessage(c_sIpcEventsPort, (void*)item.data(), DWORD(item.size()),
 		answer.data(), DWORD(answer.size()), m_Config.nSendTimeout);
+#else
+	auto hr = m_hFltPort.Send(item, answer);
+	if (FAILED(hr))
+	{
+		SetLastError(HRESULT_CODE(hr));
+		dbgPrint("Sending failed:" + std::to_string(hr));
+	}
+	return SUCCEEDED(hr);
+#endif
 }
 
 //
@@ -478,9 +548,15 @@ bool Injection::sendEventToSrv(const Buffer& item, Buffer& answer)
 //
 void Injection::hookAll()
 {
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	CollectHooks();
 	getTrampManager().startTramps();
 	FlushHooks();
+#else
+	detours::CollectAllHooks();
+	getTrampManager().startTramps();
+	detours::CommitAllHooks();
+#endif
 }
 
 //
@@ -488,9 +564,15 @@ void Injection::hookAll()
 //
 void Injection::unhookAll()
 {
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	getTrampManager().stopTramps();
+#else
+	detours::CollectAllHooks();
+	getTrampManager().stopTramps();
+	detours::CommitAllHooks();
+#endif
 }
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd
 

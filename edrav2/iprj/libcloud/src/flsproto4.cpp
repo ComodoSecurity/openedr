@@ -15,7 +15,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "fls4"
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 namespace fls {
 namespace v4 {
@@ -153,4 +153,4 @@ FileVerdictMap UdpClient::getVendorVerdict(const HashList& hashList)
 } // namespace v4
 } // namespace fls
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd

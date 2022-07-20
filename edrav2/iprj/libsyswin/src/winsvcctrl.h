@@ -12,7 +12,7 @@
 #pragma once
 #include "objects.h"
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 namespace win {
 
@@ -33,6 +33,6 @@ public:
 
 } // namespace win
 } // namespace sys
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @}

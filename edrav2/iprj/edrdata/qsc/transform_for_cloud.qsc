@@ -509,6 +509,12 @@
 						"localPath": "process.cmdLine",
 						"default": "<undefined>"
 					},
+					// Copy 'scriptContent'
+					{
+						"item": "scriptContent",
+						"localPath": "scriptContent",
+						"default": "<undefined>"
+					},
 					// Copy 'creationTime' - creation time of process
 					{
 						"item": "creationTime",

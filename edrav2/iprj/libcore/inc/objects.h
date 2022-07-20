@@ -7,7 +7,7 @@
 //
 // ClassId's declarations
 //
-namespace openEdr {
+namespace cmd {
 
 CMD_DECLARE_LIBRARY_CLSID(CLSID_Log4CPlusSink, 0xE18D3126);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_MemoryStream, 0x8AD7D6FC);
@@ -55,5 +55,5 @@ CMD_DECLARE_LIBRARY_CLSID(CLSID_StringCache, 0x404B416C);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_LocalEventsLogFile, 0xCEFC4455);
 
 
-} // namespace openEdr
+} // namespace cmd
 

@@ -12,7 +12,7 @@
 #include "pch.h"
 #include "console.h"
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 //
@@ -74,6 +74,6 @@ void Console::put(const Variant& vData)
 }
 
 } // namespace io
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

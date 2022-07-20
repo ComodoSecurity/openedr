@@ -7,7 +7,7 @@
 
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 //
 //

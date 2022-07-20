@@ -15,8 +15,11 @@
 #include "fltport.h"
 #include "procmon.h"
 
-namespace openEdr {
+namespace cmd {
 namespace fltport {
+
+using cmd::procmon::ContextPtr;
+using cmd::procmon::getProcessContext;
 
 //
 // RawEvent queue 
@@ -283,6 +286,9 @@ struct PortData
 	// CommunicationPort
 	PFLT_PORT pServerPort; //< Filter server port 
 	PFLT_PORT pClientPort; //< Filter client port 
+	PFLT_PORT SenderServerProxyPort; //< Filter proxy server port, client port objects saved in per-process context when it connected
+	PFLT_PORT ReceiverServerProxyPort; //< Receiver proxy server port
+	PFLT_PORT ReceiverClientProxyPort; //< Receiver proxy client port
 
 	RawEventQueue eventQueue; //< event container
 	SystemThreadWorker workerThread; //< working thread
@@ -352,7 +358,6 @@ NTSTATUS sendRawEventInternal(const RawEvent& rawEvent)
 //
 NTSTATUS sendRawEvent(const void* pRawEvent, size_t nRawEventSize)
 {
-
 	if (!g_pCommonData->fFltPortIsInitialized)
 		return LOGERROR(STATUS_UNSUCCESSFUL);
 
@@ -412,9 +417,6 @@ DoWorkResult sendNextEvent(void* /*pContext*/)
 		}
 	}
 #endif
-
-
-	
 
 	// No event - returns no work
 	RawEvent rawEvent;
@@ -553,6 +555,216 @@ NTSTATUS createServerPort(PFLT_FILTER pFilter, PFLT_PORT *ppServerPort)
 //
 //
 //
+NTSTATUS notifyOnProxyServerConnect(
+	_In_ PFLT_PORT ClientPort,
+	_In_opt_ PVOID ServerPortCookie,
+	_In_ PVOID ConnectionContext,
+	_In_ ULONG SizeOfContext,
+	_Outptr_result_maybenull_ PVOID* ppConnectionCookie)
+{
+	if (ppConnectionCookie != nullptr)
+		*ppConnectionCookie = nullptr;
+
+	UNREFERENCED_PARAMETER(ServerPortCookie);
+	UNREFERENCED_PARAMETER(ConnectionContext);
+	UNREFERENCED_PARAMETER(SizeOfContext);
+
+	ContextPtr processContext;
+	IFERR_RET(getProcessContext(PsGetCurrentProcessId(), processContext));
+
+	PFLT_PORT port = (PFLT_PORT)InterlockedExchangePointer((PVOID*)&processContext->ProxyPort, ClientPort);
+	if (port != nullptr)
+	{
+		FltCloseClientPort(g_pCommonData->pFilter, &port);
+	}
+
+	LOGINFO1("fltProxyPort connected from ProcessId: %Iu\r\n", (ULONG_PTR)PsGetCurrentProcessId());
+	return STATUS_SUCCESS;
+}
+
+//
+//
+//
+VOID notifyOnProxyServerDisconnect(_In_opt_ PVOID ConnectionCookie)
+{
+	UNREFERENCED_PARAMETER(ConnectionCookie);
+
+	ContextPtr processContext;
+	if (!NT_SUCCESS(getProcessContext(PsGetCurrentProcessId(), processContext)))
+		return;
+
+	PFLT_PORT port = (PFLT_PORT)InterlockedExchangePointer((PVOID*)&processContext->ProxyPort, nullptr);
+	if (port != nullptr)
+	{
+		FltCloseClientPort(g_pCommonData->pFilter, &port);
+	}
+
+	LOGINFO1("fltProxyServerPort disconnected from ProcessId: %Iu\r\n", (ULONG_PTR)PsGetCurrentProcessId());
+}
+
+NTSTATUS
+notifyOnProxyServerMessage(
+	_In_opt_ PVOID PortCookie,
+	_In_reads_bytes_opt_(InputBufferLength) PVOID InputBuffer,
+	_In_ ULONG InputBufferLength,
+	_Out_writes_bytes_to_opt_(OutputBufferLength, *ReturnOutputBufferLength) PVOID OutputBuffer,
+	_In_ ULONG OutputBufferLength,
+	_Out_ PULONG ReturnOutputBufferLength
+	)
+{
+	UNREFERENCED_PARAMETER(PortCookie);
+
+	if (nullptr == g_PortData.ReceiverClientProxyPort)
+		return LOGERROR(STATUS_PORT_DISCONNECTED, "Failed to send message, client proxy disconnected\r\n");
+
+	if (nullptr == InputBuffer || 0 == InputBufferLength)
+	{
+		NT_ASSERT(FALSE); // strange behavior
+		return STATUS_SUCCESS;
+	}
+
+	Blob replyBuffer;
+	IFERR_RET(replyBuffer.alloc(OutputBufferLength), "Failed to allocate memory\r\n");
+
+	NT_ASSERT(g_pCommonData->pFilter);
+	NT_ASSERT(g_PortData.ReceiverClientProxyPort);
+
+	NTSTATUS status = STATUS_UNSUCCESSFUL;
+
+	__try
+	{	
+		LARGE_INTEGER liTimeout = {}; // 20sec by default
+		liTimeout.QuadPart = (LONGLONG)g_pCommonData->nFltPortSendMessageTimeout *
+			(LONGLONG)1000 /*micro*/ * (LONGLONG)100 /*100 nano*/ * (LONGLONG)-1/*relative*/;
+
+		ULONG resultLength = OutputBufferLength;
+		status = FltSendMessage(
+			g_pCommonData->pFilter,
+			&g_PortData.ReceiverClientProxyPort,
+			InputBuffer,
+			InputBufferLength,
+			replyBuffer.getData(),
+			&resultLength,
+			&liTimeout);
+
+		if (NT_SUCCESS(status) || (STATUS_BUFFER_OVERFLOW == status) || (STATUS_BUFFER_TOO_SMALL == status) || (STATUS_INFO_LENGTH_MISMATCH == status))
+		{
+			if (ARGUMENT_PRESENT(ReturnOutputBufferLength))
+			{
+				*ReturnOutputBufferLength = resultLength;
+			}
+
+			if (NT_SUCCESS(status) || (STATUS_BUFFER_OVERFLOW == status))
+			{
+				if (ARGUMENT_PRESENT(OutputBuffer) && (OutputBufferLength >= resultLength))
+				{
+					RtlCopyMemory(OutputBuffer, replyBuffer.getData(), resultLength);
+				}
+			}
+		}
+	}
+	__except (EXCEPTION_EXECUTE_HANDLER)
+	{
+		status = GetExceptionCode();
+	}
+
+	IFERR_RET(status, "notifyOnProxyServerMessage failed\r\n");
+	return status;
+}
+
+//
+// 
+//
+NTSTATUS notifyOnProxyClientConnect(
+	_In_ PFLT_PORT ClientPort,
+	_In_opt_ PVOID ServerPortCookie,
+	_In_ PVOID ConnectionContext,
+	_In_ ULONG SizeOfContext,
+	_Outptr_result_maybenull_ PVOID* ppConnectionCookie)
+{
+	if (ppConnectionCookie != nullptr)
+		*ppConnectionCookie = nullptr;
+
+	UNREFERENCED_PARAMETER(ServerPortCookie);
+	UNREFERENCED_PARAMETER(ConnectionContext);
+	UNREFERENCED_PARAMETER(SizeOfContext);
+
+	PFLT_PORT port = (PFLT_PORT)InterlockedExchangePointer((PVOID*)&g_PortData.ReceiverClientProxyPort, ClientPort);
+	if (port != nullptr)
+	{
+		FltCloseClientPort(g_pCommonData->pFilter, &port);
+	}
+
+	LOGINFO1("fltProxyClientPort connected from ProcessId: %Iu\r\n", (ULONG_PTR)PsGetCurrentProcessId());
+	return STATUS_SUCCESS;
+}
+
+//
+//
+//
+VOID notifyOnProxyClientDisconnect(_In_opt_ PVOID ConnectionCookie)
+{
+	UNREFERENCED_PARAMETER(ConnectionCookie);
+
+	g_pCommonData->fProxyShutdown = true;
+
+	PFLT_PORT port = (PFLT_PORT)InterlockedExchangePointer((PVOID*)&g_PortData.ReceiverClientProxyPort, nullptr);
+	if (port != nullptr)
+	{
+		FltCloseClientPort(g_pCommonData->pFilter, &port);
+	}
+
+	LOGINFO1("fltProxyClientPort disconnected from ProcessId: %Iu\r\n", (ULONG_PTR)PsGetCurrentProcessId());
+}
+
+//
+//
+//
+NTSTATUS createProxyPort(PFLT_FILTER Filter, PFLT_PORT* SenderServerProxyPort, PFLT_PORT* ReceiverServerProxyPort)
+{
+	UniquePtr<SECURITY_DESCRIPTOR> securityDescriptor(cmd::createFltPortEveryoneAllAccessAllowMandantorySD());
+	PFLT_PORT portSenderServer = nullptr, portReceiverServer = nullptr;
+	
+	NTSTATUS status = STATUS_UNSUCCESSFUL;
+	__try
+	{
+		PRESET_STATIC_UNICODE_STRING(inPortName, L"" CMD_EDRDRV_FLTPORT_PROCMON_IN_NAME);
+		PRESET_STATIC_UNICODE_STRING(outPortName, L"" CMD_EDRDRV_FLTPORT_PROCMON_OUT_NAME);
+
+		OBJECT_ATTRIBUTES oa = {};
+		InitializeObjectAttributes(&oa, &inPortName, OBJ_CASE_INSENSITIVE | OBJ_KERNEL_HANDLE, NULL, securityDescriptor.get());
+
+		IFERR_RET(FltCreateCommunicationPort(Filter, &portSenderServer, &oa, nullptr,
+			notifyOnProxyServerConnect, notifyOnProxyServerDisconnect, notifyOnProxyServerMessage, MAXLONG));
+
+		InitializeObjectAttributes(&oa, &outPortName, OBJ_CASE_INSENSITIVE | OBJ_KERNEL_HANDLE, NULL, securityDescriptor.get());
+
+		status = FltCreateCommunicationPort(Filter, &portReceiverServer, &oa, nullptr, notifyOnProxyClientConnect, notifyOnProxyClientDisconnect, nullptr, 1);
+		if (!NT_SUCCESS(status))
+			__leave;
+
+		*SenderServerProxyPort = portSenderServer;
+		portSenderServer = nullptr;
+
+		*ReceiverServerProxyPort = portReceiverServer;
+		portReceiverServer = nullptr;
+
+		return STATUS_SUCCESS;
+	}
+	__finally
+	{
+		if (portSenderServer != nullptr)
+			FltCloseCommunicationPort(portSenderServer);
+
+		if (portReceiverServer != nullptr)
+			FltCloseCommunicationPort(portReceiverServer);
+	}
+	return status;
+}
+
+//
+//
+//
 void start()
 {
 	if (!g_pCommonData->fFltPortIsInitialized)
@@ -585,7 +797,8 @@ void reloadConfig()
 //
 NTSTATUS initialize()
 {
-	if (g_pCommonData->fFltPortIsInitialized) return STATUS_SUCCESS;
+	if (g_pCommonData->fFltPortIsInitialized)
+		return STATUS_SUCCESS;
 
 	LOGINFO2("Create a communication port.\r\n");
 
@@ -593,11 +806,10 @@ NTSTATUS initialize()
 
 	bool fQueueIsInitialized = false;
 	bool fWorkerThreadIsReady = false;
+
 	__try
 	{
-		PFLT_PORT pServerPort = nullptr;
-		IFERR_RET(createServerPort(g_pCommonData->pFilter, &pServerPort));
-		g_PortData.pServerPort = pServerPort;
+		IFERR_RET(createServerPort(g_pCommonData->pFilter, &g_PortData.pServerPort));
 
 		g_PortData.eventQueue.initialize();
 		fQueueIsInitialized = true;
@@ -610,7 +822,12 @@ NTSTATUS initialize()
 			return STATUS_UNSUCCESSFUL;
 		}
 
+		NTSTATUS status = createProxyPort(g_pCommonData->pFilter, &g_PortData.SenderServerProxyPort, &g_PortData.ReceiverServerProxyPort);
+		if (!NT_SUCCESS(status))
+			__leave;
+
 		g_pCommonData->fFltPortIsInitialized = true;
+		g_pCommonData->fProxyShutdown = false;
 	}
 	__finally
 	{
@@ -645,6 +862,8 @@ void finalize()
 	if (!g_pCommonData->fFltPortIsInitialized)
 		return;
 
+	g_pCommonData->fProxyShutdown = true;
+
 	g_PortData.workerThread.finalize();
 
 	if (g_PortData.pServerPort != nullptr)
@@ -653,10 +872,24 @@ void finalize()
 		g_PortData.pServerPort = nullptr;
 	}
 
+	if (g_PortData.ReceiverServerProxyPort != nullptr)
+	{
+		FltCloseCommunicationPort(g_PortData.ReceiverServerProxyPort);
+		g_PortData.ReceiverServerProxyPort = nullptr;
+	}
+
+	if (g_PortData.SenderServerProxyPort != nullptr)
+	{
+		FltCloseCommunicationPort(g_PortData.SenderServerProxyPort);
+		g_PortData.SenderServerProxyPort = nullptr;
+	}
+
+	cmd::procmon::closeAllClientPorts();
+
 	g_PortData.eventQueue.finalize();
 	g_pCommonData->fFltPortIsInitialized = false;
 }
 
 }
-} // namespace openEdr
+} // namespace cmd
 /// @}

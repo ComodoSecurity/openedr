@@ -13,7 +13,7 @@
 #include "pch.h"
 #include "stringmatcher.h"
 
-namespace openEdr {
+namespace cmd {
 namespace string {
 
 using namespace variant::operation;
@@ -242,6 +242,6 @@ Variant StringMatcher::execute(Variant vCommand, Variant vParams /*= Variant()*/
 }
 
 } // namespace string
-} // namespace openEdr
+} // namespace cmd
 
 // @}

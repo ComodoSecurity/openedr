@@ -17,7 +17,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "policy2"
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 namespace policy {
 namespace v2 {
@@ -1419,6 +1419,6 @@ void Parser::parse(PolicyPtr pPolicy, Context& ctx)
 } // namespace v2
 } // namespace policy
 } // namespace edr
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

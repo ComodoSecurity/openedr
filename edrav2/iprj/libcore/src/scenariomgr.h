@@ -14,7 +14,7 @@
 #include <objects.h>
 #include <common.hpp>
 
-namespace openEdr {
+namespace cmd {
 	
 //
 //
@@ -128,4 +128,4 @@ public:
 	void registerScenario(ObjPtr<IObject> pScenario);
 };
 
-} // namespace openEdr 
+} // namespace cmd 

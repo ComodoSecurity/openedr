@@ -27,7 +27,6 @@ CMD_IMPORT_LIBRARY_OBJECTS(libsyswin)
 #pragma comment(lib, "wintrust.lib")
 #pragma comment(lib, "crypt32.lib")
 #pragma comment(lib, "shlwapi.lib")
-#pragma comment(lib, "madCHook.lib")
 #else
 #error Declaration of linking dependences is not implemented for this compiler
 #endif // _MSC_VER

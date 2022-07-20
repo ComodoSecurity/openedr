@@ -5,7 +5,7 @@
 #include "pch.h"
 #include "test_stream.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 TEST_CASE("StreamSerializer.createObject")
 {
@@ -338,7 +338,7 @@ TEST_CASE("StreamDeserializer.get")
 }
 
 /***
-TEST_CASE("CacheStream.readRawReadableStreamCache", "[openEdr::io]")
+TEST_CASE("CacheStream.readRawReadableStreamCache", "[cmd::io]")
 {
 	Byte pBuffer[0x10];
 	ObjPtr<io::IRawReadableStream> pStream;
@@ -349,7 +349,7 @@ TEST_CASE("CacheStream.readRawReadableStreamCache", "[openEdr::io]")
 	readRawStream(pStream);
 }
 
-TEST_CASE("CacheStream.readReadableStreamCache", "[openEdr::io]")
+TEST_CASE("CacheStream.readReadableStreamCache", "[cmd::io]")
 {
 	Byte pBuffer[0x10];
 	ObjPtr<io::IReadableStream> pStream;
@@ -360,7 +360,7 @@ TEST_CASE("CacheStream.readReadableStreamCache", "[openEdr::io]")
 	readStream(pStream);
 }
 
-TEST_CASE("CacheStream.readRawReadableStreamConverter", "[openEdr::io]")
+TEST_CASE("CacheStream.readRawReadableStreamConverter", "[cmd::io]")
 {
 	Byte pBuffer[0x10];
 	ObjPtr<io::IReadableStream> pStream;
@@ -372,7 +372,7 @@ TEST_CASE("CacheStream.readRawReadableStreamConverter", "[openEdr::io]")
 }
 
 
-TEST_CASE("CacheStream.positionReadableStreamCache", "[openEdr::io]")
+TEST_CASE("CacheStream.positionReadableStreamCache", "[cmd::io]")
 {
 	Byte pBuffer[0x10];
 	ObjPtr<io::IReadableStream> pStream;
@@ -383,7 +383,7 @@ TEST_CASE("CacheStream.positionReadableStreamCache", "[openEdr::io]")
 	streamPosition(pStream);
 }
 
-TEST_CASE("CacheStream.positionRawReadableStreamConverter", "[openEdr::io]")
+TEST_CASE("CacheStream.positionRawReadableStreamConverter", "[cmd::io]")
 {
 	Byte pBuffer[0x10];
 	ObjPtr<io::IReadableStream> pStream;

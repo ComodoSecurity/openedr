@@ -17,7 +17,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "datagen"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -415,5 +415,5 @@ Variant RandomDataGenerator::execute(Variant vCommand, Variant vParams)
 	TRACE_END(FMT("Error during processing of the command <" << vCommand << ">"));
 }
 
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

@@ -17,7 +17,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "net"
 
-namespace openEdr {
+namespace cmd {
 namespace net {
 
 //
@@ -100,7 +100,7 @@ Sequence getNetworkAdaptorsInfo(bool fOnlyOnline, bool fOnlyWithAssignedIp, bool
 	Sequence seqResult;
 	try
 	{
-		auto pAdData = openEdr::sys::net::getInterfaces(fOnlyOnline, fOnlyWithAssignedIp);
+		auto pAdData = cmd::sys::net::getInterfaces(fOnlyOnline, fOnlyWithAssignedIp);
 		for (auto& adData : *pAdData)
 		{
 			Dictionary vData;
@@ -162,6 +162,6 @@ void setSoketOption(boost::asio::detail::socket_type socket,
 } // namespace detail
 
 } // namespace net
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

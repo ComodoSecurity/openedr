@@ -9,7 +9,7 @@
 #pragma once
 #include "variant_forward.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 //
 // overload of queryInterface for Variant
@@ -832,7 +832,7 @@ inline void Variant::insert(SequenceIndex Id, const Variant& vValue)
 
 
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -845,7 +845,7 @@ inline void Variant::insert(SequenceIndex Id, const Variant& vValue)
 #ifdef CATCH_VERSION_MAJOR
 namespace Catch {
 template<>
-struct is_range<openEdr::variant::Variant> {
+struct is_range<cmd::variant::Variant> {
     static const bool value = false;
 };
 }

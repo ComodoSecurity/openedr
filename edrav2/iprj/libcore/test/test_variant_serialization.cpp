@@ -4,7 +4,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -68,7 +68,7 @@ TEST_CASE("Variant.serializeToJson")
 			});
 
 		std::string sSerialized = variant::serializeToJson(vEthalon);
-		Variant vTest = openEdr::variant::deserializeFromJson(sSerialized);
+		Variant vTest = cmd::variant::deserializeFromJson(sSerialized);
 		REQUIRE(vTest == vEthalon);
 	}
 
@@ -161,7 +161,7 @@ TEST_CASE("Variant.deserializeFromJson")
 			{"h", Sequence({ 1, "a" })}
 			});
 
-		openEdr::Variant vTest = openEdr::variant::deserializeFromJson(sJson);
+		cmd::Variant vTest = cmd::variant::deserializeFromJson(sJson);
 		REQUIRE(vTest == vEthalon);
 	}
 
@@ -190,7 +190,7 @@ TEST_CASE("Variant.deserializeFromJson")
 			{"h", Sequence({ 1, "a" })}
 			});
 
-		openEdr::Variant vTest = openEdr::variant::deserializeFromJson(sJson);
+		cmd::Variant vTest = cmd::variant::deserializeFromJson(sJson);
 		REQUIRE(vTest == vEthalon);
 	}
 

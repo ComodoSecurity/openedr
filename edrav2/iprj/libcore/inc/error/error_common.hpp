@@ -14,7 +14,7 @@
 #include "basic.hpp"
 #include "string.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 // Variant forward declaration
 namespace variant {
@@ -323,7 +323,7 @@ public:
 } // namespace detail
 
 // Generic exception
-using Exception = openEdr::error::detail::ExceptionBase;
+using Exception = cmd::error::detail::ExceptionBase;
 
 // Logic exceptions
 using LogicError = detail::ExceptionBaseTmpl<Exception, ErrorCode::LogicError>;
@@ -595,7 +595,7 @@ inline std::ostream& operator<<(std::ostream& os, const error::SourceLocationFmt
 	return os;
 }
 
-} // namespace openEdr
+} // namespace cmd
 
 ///
 /// Trace scope's begin macro
@@ -620,26 +620,26 @@ struct __TraceMsgHlp
 /// In case of exception, an additional description can be supplied by parameter.
 ///
 #define CMD_TRACE_END(...) } \
-	catch (openEdr::error::Exception& e) \
+	catch (cmd::error::Exception& e) \
 	{ e.addTrace(SL, std::string(__VA_ARGS__)); throw; } \
 	catch (const boost::system::system_error& e) \
-	{ openEdr::error::BoostSystemError(SL, e.code(), std::string(__VA_ARGS__)).throwException(); } \
+	{ cmd::error::BoostSystemError(SL, e.code(), std::string(__VA_ARGS__)).throwException(); } \
 	catch (const std::system_error& e) \
-	{ openEdr::error::StdSystemError(SL, e.code(), std::string(__VA_ARGS__)).throwException(); } \
+	{ cmd::error::StdSystemError(SL, e.code(), std::string(__VA_ARGS__)).throwException(); } \
 	catch (const std::out_of_range& e) \
-	{ openEdr::error::OutOfRange(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
+	{ cmd::error::OutOfRange(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
 	catch (const std::invalid_argument& e) \
-	{ openEdr::error::InvalidArgument(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
+	{ cmd::error::InvalidArgument(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
 	catch (const std::logic_error& e) \
-	{ openEdr::error::LogicError(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
+	{ cmd::error::LogicError(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
 	catch (const std::runtime_error& e) \
-	{ openEdr::error::RuntimeError(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
+	{ cmd::error::RuntimeError(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
 	catch (const std::bad_alloc& e) \
-	{ openEdr::error::BadAlloc(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
+	{ cmd::error::BadAlloc(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
 	catch (const std::exception& e) \
-	{ openEdr::error::Exception(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
+	{ cmd::error::Exception(SL, __TraceMsgHlp(e).get(__VA_ARGS__)).throwException(); } \
 	catch (...) \
-	{ openEdr::error::Exception(SL, std::string(__VA_ARGS__)).throwException(); }
+	{ cmd::error::Exception(SL, std::string(__VA_ARGS__)).throwException(); }
 
 /// @copydoc CMD_TRACE_BEGIN
 #define TRACE_BEGIN CMD_TRACE_BEGIN
@@ -686,17 +686,17 @@ struct __TraceMsgHlp
 ///  * other `std` exception` -> `error::Exception`
 ///
 #define CMD_PREPARE_CATCH \
-	catch (const openEdr::error::Exception&) { throw; } \
+	catch (const cmd::error::Exception&) { throw; } \
 	catch (const boost::system::system_error& ex) \
-		{ openEdr::error::BoostSystemError(SL, ex.code()).throwException(); } \
-	catch (const std::invalid_argument& ex) { openEdr::error::InvalidArgument(SL, ex.what()).throwException(); } \
-	catch (const std::out_of_range& ex) { openEdr::error::OutOfRange(SL, ex.what()).throwException(); } \
-	catch (const std::logic_error& ex) { openEdr::error::LogicError(SL, ex.what()).throwException(); } \
-	catch (const std::system_error& ex) { openEdr::error::StdSystemError(SL, ex.code()).throwException(); } \
-	catch (const std::runtime_error& ex) { openEdr::error::RuntimeError(SL, ex.what()).throwException(); } \
-	catch (const std::bad_alloc& ex) { openEdr::error::BadAlloc(SL, ex.what()).throwException(); } \
-	catch (const std::exception& ex) { openEdr::error::Exception(SL, ex.what()).throwException(); } \
-	catch (...) { openEdr::error::Exception(SL, "Unknown exception").throwException(); } \
+		{ cmd::error::BoostSystemError(SL, ex.code()).throwException(); } \
+	catch (const std::invalid_argument& ex) { cmd::error::InvalidArgument(SL, ex.what()).throwException(); } \
+	catch (const std::out_of_range& ex) { cmd::error::OutOfRange(SL, ex.what()).throwException(); } \
+	catch (const std::logic_error& ex) { cmd::error::LogicError(SL, ex.what()).throwException(); } \
+	catch (const std::system_error& ex) { cmd::error::StdSystemError(SL, ex.code()).throwException(); } \
+	catch (const std::runtime_error& ex) { cmd::error::RuntimeError(SL, ex.what()).throwException(); } \
+	catch (const std::bad_alloc& ex) { cmd::error::BadAlloc(SL, ex.what()).throwException(); } \
+	catch (const std::exception& ex) { cmd::error::Exception(SL, ex.what()).throwException(); } \
+	catch (...) { cmd::error::Exception(SL, "Unknown exception").throwException(); } \
 	}
 
 #define CMD_CATCH(msg) \

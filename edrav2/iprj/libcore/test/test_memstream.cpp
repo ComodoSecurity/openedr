@@ -5,9 +5,9 @@
 #include "pch.h"
 #include "test_stream.h"
 
-using namespace openEdr;
+using namespace cmd;
 
-TEST_CASE("MemoryStream.createObject", "[openEdr::io]")
+TEST_CASE("MemoryStream.createObject", "[cmd::io]")
 {
 	SECTION("CreateObject")
 	{
@@ -18,7 +18,7 @@ TEST_CASE("MemoryStream.createObject", "[openEdr::io]")
 	}
 }
 
-TEST_CASE("MemoryStream.queryInterface", "[openEdr::io]")
+TEST_CASE("MemoryStream.queryInterface", "[cmd::io]")
 {
 	auto pObj = createObject(CLSID_MemoryStream);
 
@@ -58,7 +58,7 @@ TEST_CASE("MemoryStream.queryInterface", "[openEdr::io]")
 	}
 }
 
-TEST_CASE("MemoryStream.read", "[openEdr::io]")
+TEST_CASE("MemoryStream.read", "[cmd::io]")
 {
 	ObjPtr<io::IReadableStream> pStream;
 	REQUIRE_NOTHROW([&]() {
@@ -68,7 +68,7 @@ TEST_CASE("MemoryStream.read", "[openEdr::io]")
 	readStream(pStream);
 }
 
-TEST_CASE("MemoryStream.write", "[openEdr::io]")
+TEST_CASE("MemoryStream.write", "[cmd::io]")
 {
 	ObjPtr<io::IWritableStream> pStream;
 	REQUIRE_NOTHROW([&]() {
@@ -79,7 +79,7 @@ TEST_CASE("MemoryStream.write", "[openEdr::io]")
 	testRawWritableStream(pStream);
 }
 
-TEST_CASE("MemoryStream.position", "[openEdr::io]")
+TEST_CASE("MemoryStream.position", "[cmd::io]")
 {
 	ObjPtr<io::IReadableStream> pStream;
 	REQUIRE_NOTHROW([&]() {
@@ -89,7 +89,7 @@ TEST_CASE("MemoryStream.position", "[openEdr::io]")
 	streamPosition(pStream);
 }
 
-TEST_CASE("MemoryStream.extDataRead", "[openEdr::io]")
+TEST_CASE("MemoryStream.extDataRead", "[cmd::io]")
 {
 	Byte pBuffer[] = { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF };
 	ObjPtr<io::IReadableStream> pStream;
@@ -163,7 +163,7 @@ TEST_CASE("MemoryStream.extDataRead", "[openEdr::io]")
 }
 
 
-TEST_CASE("MemoryStream.extDataWrite", "[openEdr::io]")
+TEST_CASE("MemoryStream.extDataWrite", "[cmd::io]")
 {
 	Byte pBuffer[] = { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF };
 	Byte pMemBuffer[sizeof(pBuffer)];
@@ -195,7 +195,7 @@ TEST_CASE("MemoryStream.extDataWrite", "[openEdr::io]")
 	}
 }
 
-TEST_CASE("MemoryStream.size", "[openEdr::io]")
+TEST_CASE("MemoryStream.size", "[cmd::io]")
 {
 	ObjPtr<io::IWritableStream> pStream;
 	REQUIRE_NOTHROW([&]() {

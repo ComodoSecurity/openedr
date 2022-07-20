@@ -9,7 +9,7 @@
 #include "pch.h"
 #include <libsysmon/inc/edrdrvapi.hpp>
 
-using namespace openEdr;
+using namespace cmd;
 
 //
 // It is not unit test.

@@ -4,7 +4,7 @@
 //
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 
 class Variant;
@@ -59,7 +59,7 @@ inline std::ostream& operator<<(std::ostream& oStrStream, const ValueType eVal)
 
 // TODO: check doxygen generated doc for MergeMode
 ///
-/// @brief Settings (flags) of openEdr::variant::merge()
+/// @brief Settings (flags) of cmd::variant::merge()
 ///
 CMD_DEFINE_ENUM_FLAG(MergeMode)
 {
@@ -249,5 +249,5 @@ typedef std::function<Variant()> DataProxyCalculator;
 
 
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd
 

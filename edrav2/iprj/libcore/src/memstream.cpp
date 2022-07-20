@@ -9,7 +9,7 @@
 #include "memstream.h"
 #include "stream.h"
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 //
@@ -167,4 +167,4 @@ ObjPtr<IReadableStream> createMemoryStream(const void* pBuffer, Size nBufferSize
 }
 
 } // namespace io
-} // namespace openEdr 
+} // namespace cmd 

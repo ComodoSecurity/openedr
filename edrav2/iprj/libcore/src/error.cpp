@@ -9,7 +9,7 @@
 ///
 #include "pch.h"
 
-namespace openEdr {
+namespace cmd {
 namespace error {
 
 //
@@ -578,4 +578,4 @@ std::exception_ptr BoostSystemError::getRealException()
 }
 
 } // namespace error
-} // namespace openEdr
+} // namespace cmd

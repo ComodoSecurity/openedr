@@ -236,7 +236,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Link>
-      <AdditionalLibraryDirectories>$(CmdEPrjDir)\madchook\lib\$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>libcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -263,7 +263,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(CmdEPrjDir)\madchook\lib\$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>libcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -284,7 +284,7 @@
       <AdditionalIncludeDirectories>$(CmdIPrjDir)\libprocmon\inc;$(CmdEPrjDir)\cli;$(CmdIPrjDir)\libsysmon\inc;$(CmdIPrjDir)\libsyswin\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(CmdEPrjDir)\madchook\lib\$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>libcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -305,7 +305,7 @@
       <AdditionalIncludeDirectories>$(CmdIPrjDir)\libprocmon\inc;$(CmdEPrjDir)\cli;$(CmdIPrjDir)\libsysmon\inc;$(CmdIPrjDir)\libsyswin\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(CmdEPrjDir)\madchook\lib\$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>libcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>

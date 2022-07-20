@@ -14,7 +14,7 @@
 #include <queue.hpp>
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 
 namespace io {
 
@@ -179,5 +179,5 @@ public:
 };
 
 } // namespace io
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

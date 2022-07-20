@@ -8,9 +8,8 @@
 #include "pch.h"
 #include "config.h"
 
-using namespace openEdr;
-using namespace openEdr::cloud;
-
+using namespace cmd;
+using namespace cmd::cloud;
 
 // Production
 const char c_sApiKey[] = "75c810a9-1584-4a5b-bcbe-b4deeed521b5";

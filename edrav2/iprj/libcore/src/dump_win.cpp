@@ -10,7 +10,7 @@
 #include "pch_win.h"
 #include <error\dump\minidumpwriter.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace error {
 namespace dump {
 namespace win {
@@ -139,4 +139,4 @@ void initCrashHandlers(const Variant& vConfig)
 } // namespace win
 } // namespace dump
 } // namespace error
-} // namespace openEdr
+} // namespace cmd

@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace regmon {
 
 ///
@@ -36,5 +36,5 @@ NTSTATUS initialize();
 void finalize();
 
 } // namespace regmon
-} // namespace openEdr
+} // namespace cmd
 /// @}

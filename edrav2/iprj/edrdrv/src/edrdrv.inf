@@ -103,10 +103,10 @@ HKR,"Instances\"%Instance1.Name%,"Flags",0x00010001,%Instance1.Flags%
 
 [Strings]
 ManufacturerName        = "Nurd Yazılım A.S."
-ServiceDescription      = "OpenEdr filter driver"
+ServiceDescription      = "Comodo cWatch EDR agent filter driver"
 ServiceName             = "edrdrv"
 DriverName              = "edrdrv"
-DiskId1                 = "OpenEdr Installation"
+DiskId1                 = "Comodo cWatch EDR Installation"
 
 ;Instances specific information.
 DefaultInstance         = "edrdrv Instance"

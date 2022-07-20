@@ -8,7 +8,7 @@
 #include "pch.h"
 #include "../src/dictionarymixer.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 //
 //

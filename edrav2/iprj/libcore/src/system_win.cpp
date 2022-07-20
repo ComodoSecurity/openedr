@@ -16,7 +16,7 @@
 #error "Please exclude this file from your project"
 #endif
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 
 namespace win {
@@ -352,4 +352,4 @@ void setThreadName(const std::string& sName)
 }
 
 } // namespace sys
-} // namespace openEdr
+} // namespace cmd

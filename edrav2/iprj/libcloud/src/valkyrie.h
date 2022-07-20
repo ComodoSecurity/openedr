@@ -14,7 +14,7 @@
 #include <valkyrie.hpp>
 #include <net.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 namespace valkyrie {
 
@@ -108,6 +108,6 @@ public:
 
 } // namespace valkyrie
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd
 
 /// @} 

@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 
 ///
 ///The enum class of additional process flags.
@@ -23,7 +23,6 @@ enum class ProcessInfoFlags : UINT32
 	ThisProductProcess  = 1 << 2, ///< This product process
 };
 
-inline static constexpr ULONG_PTR c_nSystemProcessPid = 4;
 inline static constexpr ULONG_PTR c_nIdleProcessPid = 0;
 
 ///
@@ -90,7 +89,7 @@ struct CommonProcessInfo
 /// @param fPrintDebugInfo[in] - print debug info.
 ///
 _IRQL_requires_max_(PASSIVE_LEVEL)
-void fillProcessInfoByHandle(HANDLE nPid, HANDLE hProcess, CommonProcessInfo* pProcessInfo, bool fPrintDebugInfo);
+void fillProcessInfoByHandle(HANDLE nPid, HANDLE hProcess, CommonProcessInfo* ProcessInfo, bool fPrintDebugInfo);
 
 // +FIXME: Can we use fillProcessInfoByPid() as method of CommonProcessInfo
 ///
@@ -101,7 +100,7 @@ void fillProcessInfoByHandle(HANDLE nPid, HANDLE hProcess, CommonProcessInfo* pP
 /// @param fPrintDebugInfo[in] - print debug info.
 ///
 _IRQL_requires_max_(PASSIVE_LEVEL)
-void fillProcessInfoByPid(HANDLE nPid, CommonProcessInfo* pProcessInfo, bool fPrintDebugInfo);
+void fillProcessInfoByPid(HANDLE nPid, CommonProcessInfo* ProcessInfo, bool fPrintDebugInfo);
 
 ///
 /// Returns times of the process.
@@ -138,5 +137,5 @@ NTSTATUS getProcessToken(PEPROCESS pProcess, HANDLE* phToken);
 ///
 NTSTATUS getProcessToken(HANDLE hProcess, HANDLE* phToken);
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

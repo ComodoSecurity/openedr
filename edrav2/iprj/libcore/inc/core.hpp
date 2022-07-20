@@ -17,7 +17,7 @@
 #include "threadpool.hpp"
 #include "memory.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -58,7 +58,7 @@ public:
 /// Universal objects registration and creation.
 ///
 /// Is is singleton and created at program startup. It is not universal object.
-/// The most of ObjectManager features has global function wrapper (e.g. openEdr::createObject). 
+/// The most of ObjectManager features has global function wrapper (e.g. cmd::createObject). 
 /// Use them instead raw ObjectManager object access.
 /// ObjectManager object pointer should be get with the getObjectManager() function.
 ///
@@ -126,7 +126,7 @@ extern IObjectManager& getObjectManager();
 // It should be used in main header file of library
 //
 #define CMD_IMPORT_LIBRARY_OBJECTS(LibraryName)											\
-namespace openEdr { namespace detail {														\
+namespace cmd { namespace detail {														\
 	bool _InitializeLibrary_##LibraryName();											\
 	const bool _g_fRegisterLibrary_##LibraryName = _InitializeLibrary_##LibraryName();	\
 }} // cmd.detail
@@ -141,7 +141,7 @@ namespace openEdr { namespace detail {														\
 //
 //
 #define CMD_BEGIN_LIBRARY_DEFINITION(LibraryName)				\
-namespace openEdr { namespace detail {								\
+namespace cmd { namespace detail {								\
 	bool _InitializeLibrary_##LibraryName() {return true;}		\
 }}
 
@@ -154,15 +154,15 @@ namespace openEdr { namespace detail {								\
 //
 //
 #define CMD_DEFINE_LIBRARY_CLASS(ClassName)														\
-namespace openEdr { namespace detail {																\
-	static bool CONCAT_ID(_g_fObjectRegistered, __COUNTER__) = openEdr::detail::registerObject<ClassName>();	\
+namespace cmd { namespace detail {																\
+	static bool CONCAT_ID(_g_fObjectRegistered, __COUNTER__) = cmd::detail::registerObject<ClassName>();	\
 }}
 
 //
 // CLSID declaration
 // 
 #define CMD_DECLARE_LIBRARY_CLSID(CLASS_ID_NAME, CLASS_ID)	\
-	static constexpr openEdr::ClassId CLASS_ID_NAME = openEdr::ClassId(CLASS_ID);
+	static constexpr cmd::ClassId CLASS_ID_NAME = cmd::ClassId(CLASS_ID);
 
 
 
@@ -173,7 +173,7 @@ template<ClassId nClassId = c_nInvalidClassId>
 class ObjectBase : OBJECT_INTERFACE
 {
 public:
-	public: static constexpr openEdr::ClassId c_nClassId = nClassId;
+	public: static constexpr cmd::ClassId c_nClassId = nClassId;
 	
 	ObjectBase()
 	{
@@ -277,7 +277,7 @@ inline ObjPtr<ObjectClass> createObjectImpl(Variant vConfig, SourceLocation pos)
 
 	// Separate object allocations from data allocated inside object
 	// Data has classId instead of line
-	openEdr::SourceLocation finalConstructSL{ openEdr::SourceLocationTag(),
+	cmd::SourceLocation finalConstructSL{ cmd::SourceLocationTag(),
 		"finalConstruct", (int)ObjectClass::c_nClassId, pos.sComponent };
 	CHECK_IN_SOURCE_LOCATION(finalConstructSL);
 	callFinalConstruct(pObj, vConfig);
@@ -296,7 +296,7 @@ inline ObjPtr<ObjectClass> createObjectImpl(Variant vConfig, SourceLocation pos)
 template <typename ObjectClass>
 bool registerObject()
 {
-	static_assert(std::is_base_of_v<openEdr::IObject, ObjectClass>, "Registered object must implement `openEdr::IObject` interface");
+	static_assert(std::is_base_of_v<cmd::IObject, ObjectClass>, "Registered object must implement `cmd::IObject` interface");
 	constexpr ClassId c_nClassId = ObjectClass::c_nClassId;
 	static_assert(c_nClassId != c_nInvalidClassId, "Registered object must specify ClassId");
 
@@ -310,7 +310,7 @@ bool registerObject()
 
 		virtual	ObjectClassInfo getClassInfo() override
 		{
-			return ObjectClassInfo{ std::is_base_of_v<openEdr::IService, ObjectClass> };
+			return ObjectClassInfo{ std::is_base_of_v<cmd::IService, ObjectClass> };
 		}
 	};
 
@@ -383,7 +383,7 @@ public:
 //
 // Main macros to create Objects
 //
-#define createObject openEdr::detail::ObjectCreator(SL).callCreateObject
+#define createObject cmd::detail::ObjectCreator(SL).callCreateObject
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -589,5 +589,5 @@ inline ThreadPool::TimerContextPtr runWithDelay(Time nTimeout, Functor&& func,
 	return getCoreThreadPool().runWithDelay(nTimeout, func, std::forward<Args>(args)...);
 }
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

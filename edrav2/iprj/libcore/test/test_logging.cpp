@@ -18,7 +18,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "default" 
@@ -56,7 +56,7 @@ void initDefaultLogging()
 			}
 		})json";
 
-	Variant vConfig(openEdr::variant::deserializeFromJson(sJson));
+	Variant vConfig(cmd::variant::deserializeFromJson(sJson));
 	logging::initLogging(vConfig);
 }
 

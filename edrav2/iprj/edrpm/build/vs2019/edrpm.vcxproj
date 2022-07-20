@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\common.h" />
     <ClInclude Include="..\..\src\disk.h" />
+    <ClInclude Include="..\..\src\FltPort.h" />
+    <ClInclude Include="..\..\src\hookapi.h" />
     <ClInclude Include="..\..\src\injection.h" />
     <ClInclude Include="..\..\src\keyboard.h" />
     <ClInclude Include="..\..\src\microphone.h" />
@@ -34,6 +36,8 @@
     <ClCompile Include="..\..\src\common.cpp" />
     <ClCompile Include="..\..\src\disk.cpp" />
     <ClCompile Include="..\..\src\edrpm.cpp" />
+    <ClCompile Include="..\..\src\FltPort.cpp" />
+    <ClCompile Include="..\..\src\hookapi.cpp" />
     <ClCompile Include="..\..\src\injection.cpp" />
     <ClCompile Include="..\..\src\keyboard.cpp" />
     <ClCompile Include="..\..\src\microphone.cpp" />
@@ -50,6 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\edrpm.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\edrpm.def" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -103,13 +110,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(CmdEPrjDir)\madchook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CmdEPrjDir)\detours;$(CmdEPrjDir)\madchook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
-    </Link>
-    <Link>
       <ImportLibrary>$(CmdILibDir)\$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>$(CmdEPrjDir)\detours\lib\$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>$(CmdIPrjDir)\edrpm\src\edrpm.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>md "$(TargetDir)\tests\"
@@ -120,13 +128,14 @@ copy "$(TargetPath)" "$(TargetDir)\tests\" /Y
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(CmdEPrjDir)\madchook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CmdEPrjDir)\detours;$(CmdEPrjDir)\madchook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
-    </Link>
-    <Link>
       <ImportLibrary>$(CmdILibDir)\$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>$(CmdEPrjDir)\detours\lib\$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>$(CmdIPrjDir)\edrpm\src\edrpm.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>md "$(TargetDir)\tests\"
@@ -137,13 +146,14 @@ copy "$(TargetPath)" "$(TargetDir)\tests\" /Y
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(CmdEPrjDir)\madchook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CmdEPrjDir)\detours;$(CmdEPrjDir)\madchook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
-    </Link>
-    <Link>
       <ImportLibrary>$(CmdILibDir)\$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>$(CmdEPrjDir)\detours\lib\$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>$(CmdIPrjDir)\edrpm\src\edrpm.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>md "$(TargetDir)\tests\"
@@ -154,13 +164,14 @@ copy "$(TargetPath)" "$(TargetDir)\tests\" /Y
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(CmdEPrjDir)\madchook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CmdEPrjDir)\detours;$(CmdEPrjDir)\madchook;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
-    </Link>
-    <Link>
       <ImportLibrary>$(CmdILibDir)\$(TargetName).lib</ImportLibrary>
+      <AdditionalLibraryDirectories>$(CmdEPrjDir)\detours\lib\$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>detours.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>$(CmdIPrjDir)\edrpm\src\edrpm.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command>md "$(TargetDir)\tests\"

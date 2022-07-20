@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\ProtocolFilters\auxutil.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\certimp.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\certimp_nix.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\dbglogger.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\FileStream.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\FTPDataFilter.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\FTPFilter.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\gpkey.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\HTTPDefs.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\HTTPFilter.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\HTTPParser.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\icqdefs.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\ICQFilter.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\IFilterBase.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFCDefs.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFEvents.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFEventsDefault.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFEvents_c.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFFilterDefs.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFHeader.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFHeader_c.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFObject.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFObject_c.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFStream.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\PFStream_c.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\ProtocolFilters.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\include\ProtocolFilters_c.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\IOB.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\MemoryStream.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\MFStream.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\NNTPFilter.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\PFObjectImpl.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\POP3Filter.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\Proxy.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\ProxyFilter.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\ProxySession.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\RawFilter.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\resource.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\Settings.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\SMTPFilter.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\socksdefs.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\SSLDataProvider.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\SSLFilter.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\SSLSessionData.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\stdafx.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\sync.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\thread.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\TSProcessInfoHelper.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\UnzipStream.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\utf8.h" />
+    <ClInclude Include="..\..\src\ProtocolFilters\XMPPFilter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\ProtocolFilters\auxutil.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\certimp.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\certimp_nix.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\FileStream.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\FTPDataFilter.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\FTPFilter.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\HTTPFilter.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\HTTPParser.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\ICQFilter.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\IOB.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\MemoryStream.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\MFStream.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\NNTPFilter.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\PFHeader_c.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\PFObjectImpl.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\PFObjectImpl_c.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\PFStream_c.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\POP3Filter.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\ProtocolFilters.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\ProtocolFilters_c.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\Proxy.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\ProxyFilter.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\ProxySession.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\RawFilter.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\Settings.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\SMTPFilter.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\SSLDataProvider.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\SSLFilter.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\SSLSessionData.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ProtocolFilters\TSProcessInfoHelper.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\UnzipStream.cpp" />
+    <ClCompile Include="..\..\src\ProtocolFilters\XMPPFilter.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{99609BAE-057E-426E-B60E-47FD7A7480A7}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="..\..\..\..\iprj\build\vs2019\consts.props" />
+  <Import Project="$(CmdPropsDir)\lib_gen.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(CmdPropsDir)\lib.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)\..\..\lib\$(CmdOutDirName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectDir)\..\..\lib\$(CmdOutDirName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)\..\..\lib\$(CmdOutDirName)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(ProjectDir)\..\..\lib\$(CmdOutDirName)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src\include;$(ProjectDir)\..\..\src\ProtocolFilters\include;$(CmdEPrjDir)\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_NONSTDC_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_NFAPI_STATIC_LIB;_PF_STATIC_LIB;PF_NO_SSL_FILTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src\include;$(ProjectDir)\..\..\src\ProtocolFilters\include;$(CmdEPrjDir)\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_NONSTDC_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_NFAPI_STATIC_LIB;_PF_STATIC_LIB;PF_NO_SSL_FILTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src\include;$(ProjectDir)\..\..\src\ProtocolFilters\include;$(CmdEPrjDir)\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_NONSTDC_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_NFAPI_STATIC_LIB;_PF_STATIC_LIB;PF_NO_SSL_FILTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\src\include;$(ProjectDir)\..\..\src\ProtocolFilters\include;$(CmdEPrjDir)\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_NONSTDC_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_NFAPI_STATIC_LIB;_PF_STATIC_LIB;PF_NO_SSL_FILTER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

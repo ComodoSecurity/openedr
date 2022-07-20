@@ -13,22 +13,22 @@ int main()
 	// getchar();
 
     std::cout << "Diagnostic information:\n";
-	std::cout << "OS family: " << openEdr::sys::getOsFamilyName() << std::endl;
-	std::cout << "OS name: " << openEdr::sys::getOsFriendlyName() << std::endl;
-	std::cout << "Host name: " << cvt.to_bytes(openEdr::sys::getHostName()) << std::endl;
-	std::cout << "Domain name: " << cvt.to_bytes(openEdr::sys::getDomainName()) << std::endl;
-	std::cout << "User name: " << cvt.to_bytes(openEdr::sys::getUserName()) << std::endl;
-	std::cout << "OS uptime: " << openEdr::sys::getOsUptime() << "ms" << std::endl;
-	std::cout << "Local console user: " << cvt.to_bytes(openEdr::sys::getLocalConsoleUser()) << std::endl;
+	std::cout << "OS family: " << cmd::sys::getOsFamilyName() << std::endl;
+	std::cout << "OS name: " << cmd::sys::getOsFriendlyName() << std::endl;
+	std::cout << "Host name: " << cvt.to_bytes(cmd::sys::getHostName()) << std::endl;
+	std::cout << "Domain name: " << cvt.to_bytes(cmd::sys::getDomainName()) << std::endl;
+	std::cout << "User name: " << cvt.to_bytes(cmd::sys::getUserName()) << std::endl;
+	std::cout << "OS uptime: " << cmd::sys::getOsUptime() << "ms" << std::endl;
+	std::cout << "Local console user: " << cvt.to_bytes(cmd::sys::getLocalConsoleUser()) << std::endl;
 
-	time_t t = openEdr::sys::getOsBootTime() / 1000;
+	time_t t = cmd::sys::getOsBootTime() / 1000;
 	std::cout << "OS last boot time: " << t << "s";
 	std::tm tm = { 0 };
 	if (localtime_s(&tm, &t) == 0)
 		std::cout << " (" << std::put_time(&tm, "%F %T %z") << ")";
 	std::cout << std::endl;
 		
-	auto pSesData = openEdr::sys::getSessionsInfo(false);
+	auto pSesData = cmd::sys::getSessionsInfo(false);
 	for (auto& sesData : *pSesData)
 	{
 		std::cout << "Session [" << sesData.nId << "]:" << std::endl;
@@ -47,7 +47,7 @@ int main()
 		std::cout << std::endl;
 	}
 	
-	auto pAdData = openEdr::sys::net::getInterfaces(false, false);
+	auto pAdData = cmd::sys::net::getInterfaces(false, false);
 	for (auto& adData : *pAdData)
 	{
 		std::cout << "Network adaptor " << adData.sName << ":" << std::endl;

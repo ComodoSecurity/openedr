@@ -15,7 +15,7 @@
 ///
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 typedef std::uintmax_t IoSize;
@@ -439,7 +439,7 @@ ObjPtr<IReadableStream> createFileStream(const std::filesystem::path& pathFile, 
 /// @return The function returns a smart pointer to created stream.
 /// @throw IoException Throw exception if can't open/create file.
 ///
-ObjPtr<openEdr::io::IReadableStream> createFileStream(const HANDLE hFile);
+ObjPtr<cmd::io::IReadableStream> createFileStream(const HANDLE hFile);
 
 ///
 /// Safely creates a stream based on file.
@@ -454,6 +454,6 @@ ObjPtr<IReadableStream> createFileStreamSafe(const std::filesystem::path& pathFi
 
 } // namespace win
 } // namespace io 
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @}

@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 namespace valkyrie {
 
@@ -35,6 +35,6 @@ public:
 
 } // namespace valkyrie
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd
 
 /// @} 

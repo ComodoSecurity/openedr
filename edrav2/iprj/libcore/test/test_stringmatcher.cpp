@@ -7,7 +7,7 @@
 
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 //
 //
@@ -76,7 +76,7 @@ TEST_CASE("StringMatcher.match_string")
 		REQUIRE(fResult == fExpected);
 	};
 
-	using namespace openEdr::variant::operation;
+	using namespace cmd::variant::operation;
 	const std::map<const std::string, std::tuple<Variant, Variant, bool>> mapData{
 		// sName: vConfig, sValue, fExpected
 		{ "plain_begin_true", { Dictionary({ { "schema", Sequence({
@@ -135,7 +135,7 @@ TEST_CASE("StringMatcher.match_wstring")
 		REQUIRE(fResult == fExpected);
 	};
 
-	using namespace openEdr::variant::operation;
+	using namespace cmd::variant::operation;
 	const std::map<const std::string, std::tuple<Variant, std::wstring, bool>> mapData{
 		// sName: vConfig, sValue, fExpected
 		// Do only simple check here because others are already
@@ -168,7 +168,7 @@ TEST_CASE("StringMatcher.replace_string")
 		REQUIRE(sResult == sExpected);
 	};
 
-	using namespace openEdr::variant::operation;
+	using namespace cmd::variant::operation;
 	const std::map<const std::string, std::tuple<Variant, std::string, std::string>> mapData{
 		// sName: vConfig, sValue, sExpected
 		{ "plain_begin", { Dictionary({ { "schema", Sequence({
@@ -235,7 +235,7 @@ TEST_CASE("StringMatcher.replace_wstring")
 		REQUIRE(sResult == sExpected);
 	};
 
-	using namespace openEdr::variant::operation;
+	using namespace cmd::variant::operation;
 	const std::map<const std::string, std::tuple<Variant, std::wstring, std::wstring>> mapData{
 		// sName: vConfig, sValue, sExpected
 		// Do only simple check here because others are already

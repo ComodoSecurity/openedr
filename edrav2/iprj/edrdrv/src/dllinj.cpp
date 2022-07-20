@@ -8,11 +8,18 @@
 #pragma once
 
 #include "common.h"
+#if defined(FEATURE_ENABLE_MADCHOOK)
 #include <madchookdrv.h>
+#endif
 #include "dllinj.h"
 
-namespace openEdr {
+namespace cmd {
 namespace dllinj {
+
+using kernelInjectLib::eInjectorType;
+using kernelInjectLib::IInjector;
+
+#if defined(FEATURE_ENABLE_MADCHOOK)
 
 //
 //
@@ -37,6 +44,7 @@ static void FreeLists()
 	FreeDelayedInjectList();
 	FreeInjectRestoreIatList();
 }
+#endif // #if defined(FEATURE_ENABLE_MADCHOOK)
 
 //
 //
@@ -48,15 +56,37 @@ static PDEVICE_OBJECT g_pDeviceObjectForWorkItem = nullptr;
 //
 static VOID ImageCallback(PUNICODE_STRING FullImageName, HANDLE ProcessId, PIMAGE_INFO ImageInfo)
 {
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	DriverEvent_NewImage(g_pDeviceObjectForWorkItem, ProcessId, FullImageName, ImageInfo);
+#else
+	if (ProcessId != 0 && ProcessId != PsGetProcessId(PsInitialSystemProcess))
+	{
+		g_pCommonData->injector->onImageLoad(g_pDeviceObjectForWorkItem, ProcessId, FullImageName, ImageInfo);
+	}
+#endif // #if defined(FEATURE_ENABLE_MADCHOOK)
 }
 
+#if !defined(FEATURE_ENABLE_MADCHOOK)
+//
+// This callback is called whenever a new thread is created
+//
+static VOID CreateThreadCallback(HANDLE ProcessId, HANDLE ThreadId, BOOLEAN Create)
+{
+	if (0 == ProcessId || (PsGetProcessId(PsInitialSystemProcess) == ProcessId))
+		return;
+
+	g_pCommonData->injector->onCreateThread(ProcessId, ThreadId, Create);
+}
+#endif
+
+#if defined(FEATURE_ENABLE_MADCHOOK)
 //
 // Extracts the public key of the certificate our driver was signed with
 //
 static BOOLEAN ExtractPublicKey(PUNICODE_STRING RegistryPath)
 {
 	BOOLEAN result = FALSE;
+
 	__try
 	{
 		if (InitCrypt())
@@ -260,6 +290,7 @@ BOOLEAN approveDllInject(PDllItem pDll, HANDLE /*hTargetProcessHandle*/,
 		pDll->Name);
 	return TRUE;
 }
+#endif // #if defined(FEATURE_ENABLE_MADCHOOK)
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -271,13 +302,27 @@ BOOLEAN approveDllInject(PDllItem pDll, HANDLE /*hTargetProcessHandle*/,
 //
 NTSTATUS setInjectedDllList(List<DynUnicodeString>& dllList)
 {
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	// Fill DllInfo list
 	DllInfoList dllInfoList;
 	for (const auto& usName : dllList)
+	{
 		IFERR_RET(dllInfoList.pushBack(DllInfo(usName)));
+	}
 
 	IFERR_RET(removeUnspecifiedDlls(dllInfoList));
 	IFERR_RET(addNewDlls(dllInfoList));
+#else
+	if (!g_pCommonData->fDllInjectorIsInitialized)
+		return LOGERROR(STATUS_UNSUCCESSFUL, "DllInjector is not initialized\r\n");
+
+	g_pCommonData->injector->cleanupDllList();
+
+	for (const auto& dllName : dllList)
+	{
+		IFERR_RET(g_pCommonData->injector->addSystemDll(dllName), "Can't add DLL for injection. path: <%wZ>.\r\n", static_cast<PCUNICODE_STRING>(dllName));
+	}
+#endif // #if defined(FEATURE_ENABLE_MADCHOOK)
 
 	return STATUS_SUCCESS;
 }
@@ -287,7 +332,14 @@ NTSTATUS setInjectedDllList(List<DynUnicodeString>& dllList)
 //
 void enableInjectedDllVerification(bool fEnable)
 {
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	enableDllAuthenticodeVerification(fEnable);
+#else
+	if (fEnable)
+	{
+		g_pCommonData->injector->enableDllVerification(SE_SIGNING_LEVEL_AUTHENTICODE);
+	}
+#endif // #if defined(FEATURE_ENABLE_MADCHOOK)
 }
 
 
@@ -296,6 +348,7 @@ void enableInjectedDllVerification(bool fEnable)
 //
 NTSTATUS initialize()
 {
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	SetDriverName(CMD_EDRDRV_FILE_NAME);
 
 	// first init all the stuff that doesn't need finalization
@@ -324,6 +377,23 @@ NTSTATUS initialize()
 	}
 
 	g_pCommonData->fDllInjectorIsInitialized = true;
+#else
+	/// Init IInjector instance
+	g_pCommonData->injector = IInjector::CreateInstance(eInjectorType::ApcInjector);
+	if (!g_pCommonData->injector.get())
+		return LOGERROR(STATUS_INSUFFICIENT_RESOURCES, "Not enough memory to initialize IInjector\r\n");
+
+	if (!g_pCommonData->injector->initialize())
+		return LOGERROR(STATUS_FLT_NOT_INITIALIZED, "Failed to initialize IInjector\r\n");
+
+	/// Init notification about newly loaded images.
+	g_pDeviceObjectForWorkItem = g_pCommonData->pIoctlDeviceObject;
+	
+	IFERR_RET(PsSetLoadImageNotifyRoutine(ImageCallback), "Failed to set LoadImageNotifyRoutine\r\n");
+	IFERR_RET(PsSetCreateThreadNotifyRoutine(CreateThreadCallback), "Failed to set CreateThreadNotifyRoutine\r\n");
+
+	g_pCommonData->fDllInjectorIsInitialized = true;
+#endif // #if defined(FEATURE_ENABLE_MADCHOOK)
 
 	return STATUS_SUCCESS;
 }
@@ -335,13 +405,17 @@ void finalize()
 {
 	if (!g_pCommonData->fDllInjectorIsInitialized)
 		return;
+
 	g_pCommonData->fDllInjectorIsInitialized = false;
 
 	// unregister the notification about images
+	PsRemoveCreateThreadNotifyRoutine(CreateThreadCallback);
 	PsRemoveLoadImageNotifyRoutine(ImageCallback);
 
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	// free everything
 	FreeLists();
+#endif // #if defined(FEATURE_ENABLE_MADCHOOK)
 }
 
 
@@ -361,14 +435,17 @@ void notifyOnProcessCreation(procmon::Context* pNewProcessCtx, procmon::Context*
 	// Injection filtration
 	if (!pNewProcessCtx->fEnableInject)
 	{
-		LOGINFO3("Skip injection of DLL into process. pid: %Iu.\r\n", 
-			(ULONG_PTR)pNewProcessCtx->processInfo.nPid);
+		LOGINFO3("Skip injection of DLL into process. pid: %Iu.\r\n", (ULONG_PTR)pNewProcessCtx->processInfo.nPid);
 		return;
 	}
 
-	LOGINFO3("Try to inject DLL into process. pid: %Iu.\r\n", 
-		(ULONG_PTR)pNewProcessCtx->processInfo.nPid);
+	LOGINFO3("Try to inject DLL into process. pid: %Iu.\r\n", (ULONG_PTR)pNewProcessCtx->processInfo.nPid);
+
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	DriverEvent_NewProcess(pNewProcessCtx->processInfo.nPid, pParentProcessCtx->processInfo.nPid);
+#else
+	g_pCommonData->injector->onProcessCreate(HandleToUlong(pNewProcessCtx->processInfo.nPid), HandleToUlong(pParentProcessCtx->processInfo.nPid));
+#endif // #if defined(FEATURE_ENABLE_MADCHOOK)
 }
 
 //
@@ -379,10 +456,14 @@ void notifyOnProcessTermination(procmon::Context* pProcessCtx)
 	if (!g_pCommonData->fDllInjectorIsInitialized)
 		return;
 
+#if defined(FEATURE_ENABLE_MADCHOOK)
 	DriverEvent_ProcessGone(pProcessCtx->processInfo.nPid);
+#else
+	g_pCommonData->injector->onProcessTerminate(HandleToUlong(pProcessCtx->processInfo.nPid));
+#endif // #if defined(FEATURE_ENABLE_MADCHOOK)
 }
 
 } // namespace detail
 
 } // namespace dllinj
-} // namespace openEdr
+} // namespace cmd

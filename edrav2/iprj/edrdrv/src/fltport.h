@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace fltport {
 
 ///
@@ -69,5 +69,5 @@ void stop(bool fClearQueue);
 void finalize();
 
 } // namespace fltport
-} // namespace openEdr
+} // namespace cmd
 /// @}

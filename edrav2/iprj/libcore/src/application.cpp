@@ -30,7 +30,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "app"
 
-namespace openEdr {
+namespace cmd {
 
 namespace fs = std::filesystem;
 
@@ -744,9 +744,9 @@ void Application::loadConfig()
 	if (!vFullCfg.isEmpty())
 	{
 		if (vFullCfg.has(m_sAppMode))
-			vCfg = openEdr::loadConfig(vFullCfg, m_sAppMode);
+			vCfg = cmd::loadConfig(vFullCfg, m_sAppMode);
 		else if (vFullCfg.has(c_sDefModeName))
-			vCfg = openEdr::loadConfig(vFullCfg, c_sDefModeName);
+			vCfg = cmd::loadConfig(vFullCfg, c_sDefModeName);
 	}
 
 	putCatalogData("app.config", vCfg);

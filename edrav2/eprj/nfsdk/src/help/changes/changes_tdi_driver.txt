@@ -1,0 +1,257 @@
+NFSDK 1.5.8.0
+build 1.4.9.5
+- Fixed the code for comparing IPv6 addresses.
+- Compatibility fixes.
+
+NFSDK 1.5.7.2
+build 1.4.9.3
+- Added NF_RULE_EX support with process name masks.
+
+NFSDK 1.5.5.8
+build 1.4.9.2
+- Fixed a minor bug in function ctrl_create.
+
+NFSDK 1.5.5.1
+build 1.4.9.1
+- Fixed a race condition on premature closing TCP connections.
+- Added support for access control flag seclevel in driver registry key.
+- Added support for nf_setRules function.
+
+NFSDK 1.5.4.5
+build 1.4.8.7
+- Changed the optimization flags in build files to avoid antivirus false positives.
+
+NFSDK 1.5.2.8
+build 1.4.8.6
+- Fixed a security violation of verifier in getProcessName.
+
+NFSDK 1.5.2.1
+build 1.4.8.5
+- The driver disables filtering for TCP connections to ports 445, 135, 137, 139, but blocking rules are able to block them.
+- The filtering for loopback IPv6 TCP connections works only when [::1] address is specified in rules explicitly.
+- Added a workaround for the case when UDP socket closes immediately after sending a datagram.
+
+NFSDK 1.5.1.4
+build 1.4.8.2
+- The driver didn't block TCP sends when a connection is disconnected.
+- Fixed BSOD on indicating TCP receives when several TDI level filters are installed in system.
+
+NFSDK 1.5.1.0 
+build 1.4.8.1
+- Disabled the filtering for local IPv6 connections.
+
+NFSDK 1.4.9.3 
+build 1.4.8.0
+- Fixed an issue in code for processing TCP packets.
+
+build 1.4.7.9
+- Fixed an issue with TCP disconnects on Windows 10.
+
+build 1.4.7.8
+- Fixed a reference counting error for file objects of UDP sockets.
+
+build 1.4.7.7
+- Fixed an issue with object reference counting in TCP filtering code.
+
+build 1.4.7.6
+- Fixed a deadlock in TCP filtering code.
+
+build 1.4.7.5
+- Fixed compatibility issues with latest versions of Avast.
+
+build 1.4.7.4
+- Fixed a race condition in UDP filtering code.
+
+build 1.4.7.3
+- Fixed a memory override bug in nf_packet_alloc.
+
+build 1.4.7.1
+- Fixed an issue with TCP sends.
+- Fixed a reference counting error for file objects of UDP sockets.
+
+build 1.4.6.8
+- The code for preventing issues with closed UDP sockets is changed to avoid hangs of Google Chrome.
+
+build 1.4.6.7
+- Fixed an incompatibility with F5 VPN.
+- Fixed an issue occured when UDP socket closes prematurely.
+
+build 1.4.4.7
+- Added support for function nf_getProcessNameFromKernel.
+
+build 1.4.4.6
+- Added a new flag NF_DISABLE_REDIRECT_PROTECTION, allowing to disable blocking indicating connect requests for outgoing connections of local proxies.
+- Added a function nf_tcpIsProxy to nfapi. It returns TRUE if the specified process acts as a local proxy, accepting the redirected TCP connections.
+
+build 1.4.4.5
+- Implemented more correct handling of cancelled IRPs.
+
+build 1.4.4.4
+- Fixed a bug with blocking some F5 VPN connections.
+- Fixed a random BSOD in case of low memory.
+
+build 1.4.3.1
+- Fixed an issue in nf_init function of nfapi code.
+
+build 1.4.2.8
+- Fixed an issue with filtering OOB packets.
+
+build 1.4.1.2
+- The driver uses shared memory for communications with user, for better performance. 
+The new API (nfapi) doesn't work with older drivers, i.e. it is necessary to replace both API and driver, then reboot.
+
+build 1.4.1.1
+- Fixed an issue with filtering heavy UDP traffic.
+
+build 1.4.1.0
+- Fixed crashes on aborting TCP connections.
+
+build 1.4.0.8
+- Fixed an incompatibility with VIPRE antivirus.
+
+build 1.4.0.7
+- Fixed issues with filtering incoming RDP connections.
+
+build 1.4.0.6
+- Fixed issues with UDP sockets after close of filtering application.
+
+build 1.4.0.5
+- Fixed hangs in nfapi on server family operating systems.
+
+build 1.4.0.3
+- Fixed a race condition occured during closing sockets.
+
+build 1.4.0.2
+- Fixed incompatibility with Kaspersky during handling incoming TCP connections in driver code.
+- Added API function nf_tcpSetSockOpt, allowing to turn off Nagle and set other options for active TCP sockets.
+
+build 1.4.0.1
+- Real local address, assigned after routing, is indicated in tcpConnected event.
+
+build 1.4.0.0
+- Fixed a race condition in event handlers in driver code.
+
+build 1.3.9.8
+- Fixed issues in driver registration code in nfapi.
+
+build 1.3.9.7
+- Optimized IO code to reduce the usage of stack in driver.
+- Fixed issues in the algorithm that disables filtering for TCP and UDP sockets.
+- Added new API function nf_disableFiltering(). If this function is called before nf_free(), the driver tries to detach from filtered connections 
+and avoid breaking them after closing the filtering application. If the packets are filtered asynchronously in a separate thread, make sure that 
+the queue is flushed before a call to nf_disableFiltering().
+
+build 1.3.9.6
+- Bugfixes in nfapi code.
+- nf_getProcessName uses QueryFullProcessImageName on Vista and later versions of Windows.
+
+build 1.3.9.5
+- Fixed a race condition during indicating TCP receives to network applications.
+- Optimized the performance of communications between user mode and kernel mode.
+
+build 1.3.9.4
+- Fixed a deadlock during removing DPC from queue.
+
+build 1.3.9.2
+- Fixed one more incompatibility with AVG. 
+
+build 1.3.9.1
+- Driver blocks TDI_RECEIVE requests issued for aborted connections.
+
+build 1.3.9.0
+- Fixed a race condition in code that executes DPC routines.
+
+build 1.3.8.8
+- Fixed an incompatibility with AVG and possibly some other antiviruses.
+
+build 1.3.8.7
+- Fixes to avoid memory align issues on some x64 systems.
+
+build 1.3.8.5
+- Added an additional parameter to UDP events and functions.
+
+build 1.3.8.3
+- The driver loading order is specified explicitly in nfapi code to avoid conflicts.
+- Fixed an incompatibility with AVG.
+
+build 1.3.7.9
+- The size of internal buffer for UDP IRPs is increased in driver.
+
+build 1.3.7.8
+- Fixed a race condition in UDP filtering code in driver.
+- Fixed a problem in driver with closing some TCP connections due to automatic suspending the data flow.
+- The usage of non-paged memory pool is optimized in driver.
+
+build 1.3.7.4
+- The driver supports the undocumented TDI flags TDI_SEND_AND_DISCONNECT and TDI_RECEIVE_NO_PUSH, and allows filtering server-side sockets with non-standard behavior, e.g. IIS v6.0+.
+- Filtering the packets transmitted by NetBT (Netbios) is disabled on the driver level.
+- Other minor fixes for better compatibility and performance.
+
+build 1.3.3
+- It is possible to detach from the filtered sockets using new API functions nf_tcpDisableFiltering and nf_udpDisableFiltering.
+- Fixed an incompatibility with ZoneAlarm.
+- Added new C++ sample - TrafficShaper.
+- Minor bugfixes and optimization. 
+
+build 1.3.1
+- Several fixes in driver for compatibility with Windows 7.
+
+build 1.2.8
+- The driver detects local proxies and avoids filtering loops by disabling indicating tcpConnectRequest events for proxy process. The protection requires reboot after installing and registering the driver.
+
+build 1.2.7
+- The driver ignores zero length TCP sends.
+
+build 1.2.6
+- Added ETW tracing to driver (use the switch C_DEFINES=-D_WPPTRACE=1 to turn it on in SOURCES).
+- Minor bugfixes.
+
+build 1.2.5
+- Added new event udpConnectRequest to allow redirecting UDP traffic, transmitted via connected UDP sockets. The event is called when NF_INDICATE_CONNECT_REQUESTS flag is specified in an appropriate rule. DnsRedirector sample is updated to demonstrate using the event.
+- Added a parameter for nf_addRule function, allowing to specify where to add new rule in driver rules list.
+- Minor bugfixes.
+- All samples are updated according to API changes. 
+- Added a new Delphi sample NetRedirector.
+
+build 1.2.4
+- Fixed a problem with handling IP masks in rules.
+
+build 1.2.3
+- It is possible to redirect outgoing TCP connections and change the filtering flags for them dynamically in the new event tcpConnectRequest. 
+  The event is called before establishing a new outgoing connection, when NF_INDICATE_CONNECT_REQUESTS flag is specified in an appropriate rule.
+- Added new C++/C# sample TcpRedirector.
+- Several bugs are fixed in driver and nfapi.
+
+build 1.2.1
+- The driver didn't filter some outgoing UDP packets.
+- UDP packets were not blocked by rules.
+- The filtering performance and memory usage are optimized.
+
+build 1.1.9
+- The driver issues own TDI_SEND and TDI_SEND_DATAGRAM requests from PASSIVE IRQL to avoid compatibility problems.
+
+build 1.1.8
+- Filtering UDP outgoing data is optimized.
+- Minor bugfixes and optimization.
+
+build 1.1.7
+- Filtering TCP outgoing data is optimized.
+- Fixed a deadlock occured in some cases during stopping nfapi client.
+
+build 1.1.5
+- Fixed a problem with handling TCP inbound packets in driver.
+- The driver API client attaches/detaches from driver more correctly.
+- Reduced the size of nfapi internal buffers to avoid the delays during sending large amount of TCP data.
+
+build 1.1.3
+- nfapi blocked the filtered UDP packets for the sockets created before API initialization.
+
+build 1.1.2
+- Fixed a problem with handling TCP disconnects.
+
+build 1.1.1
+- In some cases TCP connections didn't close properly.
+
+build 1.1:
+- Fixed a problem in UDP filtering driver code to avoid memory leaks in afd.sys.
+- The memory usage in driver is optimized.

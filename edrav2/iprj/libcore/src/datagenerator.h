@@ -16,7 +16,7 @@
 #include <common.hpp>
 #include <threadpool.hpp>
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// This class can generate data according to specified template.
@@ -128,5 +128,5 @@ public:
 	virtual Variant execute(Variant vCommand, Variant vParams = Variant()) override;
 };
 
-} // namespace openEdr
+} // namespace cmd
 /// @} 

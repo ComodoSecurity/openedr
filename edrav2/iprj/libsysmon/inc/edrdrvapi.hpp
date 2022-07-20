@@ -12,7 +12,7 @@
 // FIXME: Wrong file headers and documentation links!!!
 #include <libcore\inc\variant\lbvs.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace edrdrv {
 
 constexpr uint64_t c_nDefaultEventsFlags = 0xffffffffffffffffui64;
@@ -59,10 +59,16 @@ static_assert(((size_t)SysmonEvent::_Max) < (sizeof(uint64_t) * 8) + 1, "Too man
 ///
 #define CMD_EDRDRV_FLTPORT_NAME "\\{A6F9548E-BE5E-4BE6-A632-18AC626532FE}"
 
+
 ///
 /// Driver service name.
 ///
 #define CMD_EDRDRV_SERVICE_NAME "edrdrv"
+
+///
+/// PCA service name.
+///
+#define CMD_PCA_SERVICE_NAME "PcaSvc"
 
 ///
 /// Driver filename name.
@@ -75,6 +81,12 @@ static_assert(((size_t)SysmonEvent::_Max) < (sizeof(uint64_t) * 8) + 1, "Too man
 ///
 #define CMD_EDRDRV_DISABLE_SP_VALUE_NAME "{D0FF0352-3B0D-4040-A928_038A41AEDB1B}"
 
+
+///
+/// Procmon proxy port names.
+///
+#define CMD_EDRDRV_FLTPORT_PROCMON_IN_NAME	L"\\{362D99EB-5419-463B-B97E-845985416904}"
+#define CMD_EDRDRV_FLTPORT_PROCMON_OUT_NAME L"\\{CCBB4A34-46D2-4875-8D23-8ED3F033151B}"
 
 ///
 /// The enum class of edrdrv.sys raw event fields (lbvs protocol).
@@ -142,8 +154,6 @@ constexpr char c_sEventSchema[] = R"json({
 	{ "name": "target.pid" },
 	{ "name": "accessMask" }
 ]})json";
-
-
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -485,7 +495,7 @@ constexpr uint64_t c_nRegEventRepeatTimeout = 10 /*sec*/ * 1000 /*ms*/;
 constexpr wchar_t c_sAltitudeValue[] = L"368325";
 
 } // namespace edrdrv
-} // namespace openEdr
+} // namespace cmd
 /// @}
 
 

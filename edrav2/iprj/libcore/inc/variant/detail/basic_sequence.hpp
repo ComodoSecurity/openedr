@@ -10,7 +10,7 @@
 
 #include "value.hpp"
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 namespace detail {
 
@@ -329,4 +329,4 @@ public:
 
 } // namespace detail
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd

@@ -54,7 +54,7 @@ _Use_decl_annotations_
 void* __cdecl operator new (size_t nSize, POOL_TYPE ePoolType)
 {
 	nSize = (nSize != 0) ? nSize : 1;
-	PVOID result = ExAllocatePoolWithTag(ePoolType, nSize, openEdr::c_nAllocTag);
+	PVOID result = ExAllocatePoolWithTag(ePoolType, nSize, cmd::c_nAllocTag);
 	if (result)
 		RtlZeroMemory(result, nSize);
 	return result;
@@ -67,7 +67,7 @@ _Use_decl_annotations_
 void* __cdecl operator new[] (size_t nSize, POOL_TYPE ePoolType)
 {
 	nSize = (nSize != 0) ? nSize : 1;
-	PVOID result = ExAllocatePoolWithTag(ePoolType, nSize, openEdr::c_nAllocTag);
+	PVOID result = ExAllocatePoolWithTag(ePoolType, nSize, cmd::c_nAllocTag);
 	if (result)
 		RtlZeroMemory(result, nSize);
 	return result;
@@ -79,7 +79,7 @@ void* __cdecl operator new[] (size_t nSize, POOL_TYPE ePoolType)
 void* __cdecl operator new (size_t nSize, PoolType ePoolType)
 {
 	nSize = (nSize != 0) ? nSize : 1;
-	PVOID result = ExAllocatePoolWithTag(convetrToSystemPoolType(ePoolType), nSize, openEdr::c_nAllocTag);
+	PVOID result = ExAllocatePoolWithTag(convetrToSystemPoolType(ePoolType), nSize, cmd::c_nAllocTag);
 	if (result)
 		RtlZeroMemory(result, nSize);
 	return result;
@@ -91,7 +91,7 @@ void* __cdecl operator new (size_t nSize, PoolType ePoolType)
 void* __cdecl operator new[] (size_t nSize, PoolType ePoolType)
 {
 	nSize = (nSize != 0) ? nSize : 1;
-	PVOID result = ExAllocatePoolWithTag(convetrToSystemPoolType(ePoolType), nSize, openEdr::c_nAllocTag);
+	PVOID result = ExAllocatePoolWithTag(convetrToSystemPoolType(ePoolType), nSize, cmd::c_nAllocTag);
 	if (result)
 		RtlZeroMemory(result, nSize);
 	return result;

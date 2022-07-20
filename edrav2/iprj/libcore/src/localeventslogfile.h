@@ -15,7 +15,7 @@
 #include <io.hpp>
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 ///
 /// Local mode events writer.
@@ -26,6 +26,7 @@ namespace io {
 		public ICommandProcessor
 	{
 		int m_nDaysStore = 3;
+		bool m_bMultiline = false;
 		std::chrono::steady_clock::time_point m_lastCheckTime;
 		int m_currentMonthDay = -1;
 		std::filesystem::path m_sLogPath;
@@ -47,6 +48,6 @@ namespace io {
 		Variant execute(Variant vCommand, Variant vParams) override;
 	};
 } // namespace io
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

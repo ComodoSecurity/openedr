@@ -16,7 +16,7 @@
 #include <service.hpp>
 #include <queue.hpp>
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Queue Manager service.
@@ -171,5 +171,5 @@ public:
 	}
 };
 
-} // namespace openEdr
+} // namespace cmd
 /// @} 

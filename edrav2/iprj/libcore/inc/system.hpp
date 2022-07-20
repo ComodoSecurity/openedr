@@ -11,7 +11,7 @@
 #pragma once
 #include "utilities.hpp"
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 
 //
@@ -159,4 +159,4 @@ std::string getUniqueMachineId();
 void setThreadName(const std::string& sName);
 
 } // namespace sys
-} // namespace openEdr
+} // namespace cmd

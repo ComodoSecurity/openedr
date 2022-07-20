@@ -9,7 +9,7 @@
 #include "pch.h"
 #include "common.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 const Size c_nSampleSeqSize = 5;
 Sequence createSampleSeq()

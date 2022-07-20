@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "locevents"
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 //
@@ -34,6 +34,7 @@ void LocalEventsLogFile::finalConstruct(Variant vConfig)
 
 	m_nDaysStore = vConfig.get("daysStore", m_nDaysStore);
 	m_sLogPath = std::filesystem::path(vConfig["path"]);
+	m_bMultiline = vConfig.get("multiline", m_bMultiline);
 
 	std::string sMode = vConfig.get("mode", "");
 
@@ -65,7 +66,8 @@ bool LocalEventsLogFile::save(const Variant& vData)
 
 	if (m_pWriteStream)
 	{
-		variant::serializeToJson(m_pWriteStream, vData, variant::JsonFormat::Pretty);
+		variant::serializeToJson(m_pWriteStream, vData, m_bMultiline ? variant::JsonFormat::Pretty : variant::JsonFormat::SingleLine);
+		io::write(m_pWriteStream, "\r\n");
 		return true;
 	}
 
@@ -184,6 +186,6 @@ Variant LocalEventsLogFile::execute(Variant vCommand, Variant vParams)
 }
 
 } // namespace io
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

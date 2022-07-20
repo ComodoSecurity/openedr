@@ -3,7 +3,7 @@
 //    Streams.
 //
 
-using namespace openEdr;
+using namespace cmd;
 
 static const Size c_nStreamSize = 0x10;
 

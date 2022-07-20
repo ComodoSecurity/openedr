@@ -1,0 +1,1 @@
+This sample redirects TCP/UDP traffic to the specified SOCKS5 proxy.

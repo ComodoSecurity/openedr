@@ -4,7 +4,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 inline constexpr size_t c_nValueTypeCount = static_cast<size_t>(variant::detail::RawValueType::Max);
 
@@ -47,9 +47,9 @@ public:
 //
 TEST_CASE("VariantValueKeeper. Test type()")
 {
-	using RawValueType = openEdr::variant::detail::RawValueType;
-	typedef openEdr::variant::detail::Value TVariant;
-	using IntKeeper = openEdr::Variant::IntValue;
+	using RawValueType = cmd::variant::detail::RawValueType;
+	typedef cmd::variant::detail::Value TVariant;
+	using IntKeeper = cmd::Variant::IntValue;
 
 	TVariant vTmp;
 	REQUIRE(vTmp.getType() == RawValueType::Null);
@@ -63,7 +63,7 @@ TEST_CASE("VariantValueKeeper. Test type()")
 	vTmp.set(nSrcVal);
 	REQUIRE(vTmp.getType() == RawValueType::Integer);
 
-	auto pStringValue = openEdr::variant::detail::StringValue ::create("asdasd");
+	auto pStringValue = cmd::variant::detail::StringValue ::create("asdasd");
 	vTmp.set(pStringValue);
 	REQUIRE(vTmp.getType() == RawValueType::String);
 
@@ -82,7 +82,7 @@ TEST_CASE("VariantValueKeeper. Test type()")
 //
 TEST_CASE("Variant. Copy/assign/move Variant")
 {
-	using openEdr::Variant;
+	using cmd::Variant;
 
 	SECTION("Copy")
 	{
@@ -721,7 +721,7 @@ TEST_CASE("Variant. Scalar type. Iteration + size + empty (null-type)")
 //
 //
 //
-void testSequenceMethodsForNotsupportedType(openEdr::Variant vOrigValue)
+void testSequenceMethodsForNotsupportedType(cmd::Variant vOrigValue)
 {
 	REQUIRE(vOrigValue.getType() != Variant::ValueType::Sequence);
 
@@ -769,7 +769,7 @@ void testSequenceMethodsForNotsupportedType(openEdr::Variant vOrigValue)
 //
 //
 //
-void testDictionaryMethodsForNotsupportedType(openEdr::Variant vOrigValue)
+void testDictionaryMethodsForNotsupportedType(cmd::Variant vOrigValue)
 {
 	REQUIRE(vOrigValue.getType() != Variant::ValueType::Dictionary);
 
@@ -833,32 +833,32 @@ void testDictionaryMethodsForSupportedType(Fn fnCreate)
 {
 	// getType
 	{
-		DictionaryLikeType vTest = fnCreate(openEdr::Dictionary());
+		DictionaryLikeType vTest = fnCreate(cmd::Dictionary());
 		REQUIRE(Variant(vTest).isDictionaryLike());
 	}
 
 	// isEmpty
 	{
-		REQUIRE(fnCreate(openEdr::Dictionary()).isEmpty());
-		REQUIRE_FALSE(fnCreate(openEdr::Dictionary({ {"a", 1} })).isEmpty());
+		REQUIRE(fnCreate(cmd::Dictionary()).isEmpty());
+		REQUIRE_FALSE(fnCreate(cmd::Dictionary({ {"a", 1} })).isEmpty());
 	}
 
 	// has
 	{
-		DictionaryLikeType vTest = fnCreate(openEdr::Dictionary({ {"a", 1} }));
+		DictionaryLikeType vTest = fnCreate(cmd::Dictionary({ {"a", 1} }));
 		REQUIRE(vTest.has("a"));
 		REQUIRE_FALSE(vTest.has("b"));
 	}
 
 	// size
 	{
-		REQUIRE(fnCreate(openEdr::Dictionary()).getSize() == 0);
-		REQUIRE(fnCreate(openEdr::Dictionary({ {"a", 1}, {"b", 1} })).getSize() == 2);
+		REQUIRE(fnCreate(cmd::Dictionary()).getSize() == 0);
+		REQUIRE(fnCreate(cmd::Dictionary({ {"a", 1}, {"b", 1} })).getSize() == 2);
 	}
 
 	// put
 	{
-		DictionaryLikeType vTest = fnCreate(openEdr::Dictionary());
+		DictionaryLikeType vTest = fnCreate(cmd::Dictionary());
 		vTest.put("a", 200);
 		vTest.put("b", true);
 		vTest.put("b", "str");
@@ -869,7 +869,7 @@ void testDictionaryMethodsForSupportedType(Fn fnCreate)
 
 	// get
 	{
-		DictionaryLikeType vTest = fnCreate(openEdr::Dictionary({ {"a", 1}, {"b", "str"} }));
+		DictionaryLikeType vTest = fnCreate(cmd::Dictionary({ {"a", 1}, {"b", "str"} }));
 
 		REQUIRE_NOTHROW([&]() {
 			REQUIRE(vTest.get("a") == 1);
@@ -885,7 +885,7 @@ void testDictionaryMethodsForSupportedType(Fn fnCreate)
 
 	// get with default
 	{
-		DictionaryLikeType vTest = fnCreate(openEdr::Dictionary({ {"a", 1}, {"b", "str"} }));
+		DictionaryLikeType vTest = fnCreate(cmd::Dictionary({ {"a", 1}, {"b", "str"} }));
 
 		REQUIRE_NOTHROW([&]() {
 			REQUIRE(vTest.get("a", 0) == 1);
@@ -1113,10 +1113,10 @@ void testSequenceIteration(Fn fnCreate)
 		[1,-1,"str",{"a":1},[1, "a"],true,null]
 	)json";
 
-	SequenceLikeType vTest = fnCreate(openEdr::variant::deserializeFromJson(sJson));
+	SequenceLikeType vTest = fnCreate(cmd::variant::deserializeFromJson(sJson));
 	REQUIRE(Variant(vTest).isSequenceLike());
 
-	auto fnChecker = [](const std::vector<openEdr::Variant>& Values)
+	auto fnChecker = [](const std::vector<cmd::Variant>& Values)
 	{
 		REQUIRE(Values.size() == 7);
 
@@ -1130,7 +1130,7 @@ void testSequenceIteration(Fn fnCreate)
 	};
 
 	{
-		std::vector<openEdr::Variant> Values;
+		std::vector<cmd::Variant> Values;
 		for (auto Val : vTest)
 		{
 			Values.push_back(Val);
@@ -1139,7 +1139,7 @@ void testSequenceIteration(Fn fnCreate)
 	}
 
 	{
-		std::vector<openEdr::Variant> Values;
+		std::vector<cmd::Variant> Values;
 		for (auto Iter = vTest.begin(); Iter != vTest.end(); ++Iter)
 		{
 			Values.push_back(*Iter);
@@ -1148,7 +1148,7 @@ void testSequenceIteration(Fn fnCreate)
 	}
 
 	{
-		std::vector<openEdr::Variant> Values;
+		std::vector<cmd::Variant> Values;
 		for (auto Val : vTest.getUnsafeIterable())
 		{
 			Values.push_back(Val);
@@ -1157,7 +1157,7 @@ void testSequenceIteration(Fn fnCreate)
 	}
 
 	{
-		std::vector<openEdr::Variant> Values;
+		std::vector<cmd::Variant> Values;
 		for (auto Iter = vTest.unsafeBegin(); Iter != vTest.unsafeEnd(); ++Iter)
 		{
 			Values.push_back(*Iter);
@@ -1316,12 +1316,12 @@ TEST_CASE("Variant. Clone")
 //
 //
 template <size_t TupleIndex, typename T>
-void CompareValues(T Tuple, const std::vector<openEdr::Variant>& Values, size_t ValuesIndex)
+void CompareValues(T Tuple, const std::vector<cmd::Variant>& Values, size_t ValuesIndex)
 {
 	CAPTURE(TupleIndex, ValuesIndex);
 
 	REQUIRE_NOTHROW([&]() {
-		const openEdr::Variant & Value = Values[ValuesIndex];
+		const cmd::Variant & Value = Values[ValuesIndex];
 		if (TupleIndex == ValuesIndex)
 		{
 			CHECK(Value == std::get<TupleIndex>(Tuple));
@@ -1631,7 +1631,7 @@ TEST_CASE("Dictionary. Default constructor")
 	Dictionary vDict;
 	REQUIRE(vDict.isEmpty());
 
-	openEdr::Variant vTest = vDict;
+	cmd::Variant vTest = vDict;
 	REQUIRE(vTest.getType() == Variant::ValueType::Dictionary);
 	REQUIRE(vTest.isEmpty());
 }
@@ -1746,7 +1746,7 @@ TEST_CASE("Dictionary. Iteration")
 		})json";
 
 
-		Dictionary vTest(openEdr::variant::deserializeFromJson(sJson));
+		Dictionary vTest(cmd::variant::deserializeFromJson(sJson));
 		REQUIRE(Variant(vTest).getType() == Variant::ValueType::Dictionary);
 
 		auto fnChecker = [](const std::vector<size_t>& Counters)
@@ -1799,7 +1799,7 @@ TEST_CASE("Dictionary. Iteration")
 			"g": null
 		})json";
 
-		Dictionary vTest(openEdr::variant::deserializeFromJson(sJson));
+		Dictionary vTest(cmd::variant::deserializeFromJson(sJson));
 		REQUIRE(Variant(vTest).getType() == Variant::ValueType::Dictionary);
 		std::vector<std::string> ExpectedResult = { "a", "b", "c", "d", "e", "f", "g" };
 

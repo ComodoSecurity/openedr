@@ -11,8 +11,10 @@
 /// @{
 #pragma once
 #include "objects.h"
+#include "../../libsysmon/inc/FltPortReceiver.h"
+#include "../../libsysmon/inc/edrdrvapi.hpp"
 
-namespace openEdr {
+namespace cmd {
 namespace win {
 
 ///
@@ -25,7 +27,10 @@ class ProcessMonitorController :
 {
 private:
 	static const Time c_nDefaultTimeout = 2000; // 2 sec
-		
+	inline static const wchar_t c_sPortName[] = L"" CMD_EDRDRV_FLTPORT_PROCMON_OUT_NAME;
+	/// Number of threads to process events from driver.
+	static const size_t c_nTreadsCount = 1;
+
 	ObjPtr<IDataReceiver> m_pReceiver;
 	Time m_nTimeout = c_nDefaultTimeout;
 	bool m_fInjectOnStart = false;
@@ -45,17 +50,22 @@ private:
 	std::atomic_bool m_fInitialized = false;
 	std::atomic_bool m_fAllowInjection = false;
 	std::thread m_pInjectionThread;
+	cmd::win::FltPortReceiver m_hFltPortReceiver;
 
 	// Check if DLL loaded into process
 	bool isDllLoadedIntoProcess(const uint32_t dwPid, const std::wstring_view sDllName);
-	bool jectProcess(bool fInject, const uint32_t nPid);
+
+	// Without Madchook we using injection from our driver, no need to inject from usermode
+#if defined(FEATURE_ENABLE_MADCHOOK)
+	bool injectProcess(bool fInject, const uint32_t nPid);
 	static BOOL WINAPI injectionCallback(PVOID pContext, DWORD dwProcessId, DWORD dwParentId, 
 		DWORD dwSessionId, DWORD dwFlags, LPCWSTR pProcessImagePath, LPCWSTR pProcessCommandLine);
-	void jectAll(const bool fInject, const std::wstring& sIncludeMask = {}, const std::wstring& sExcludeMask = {});
+	void injectAll(const bool fInject, const std::wstring& sIncludeMask = {}, const std::wstring& sExcludeMask = {});
+#endif
 	void copyInjectionDll(const std::wstring& sDllName, const GUID guidFolder);
 	void removeInjectionDll(const std::wstring& sDllName, const GUID guidFolder);
 
-	void parseEvent(edrpm::RawEvent eEvent, Variant vEvent);
+	//void parseEvent(edrpm::RawEvent eEvent, Variant vEvent);
 
 	void install(Variant vParams);
 	void uninstall(Variant vParams);
@@ -67,6 +77,10 @@ protected:
 	virtual ~ProcessMonitorController() override;
 
 public:
+
+	static void WINAPI ipcEventsCallbackInt(const void* pMessageBuf,
+		unsigned long dwMessageLen, void* pAnswerBuf, unsigned long dwAnswerLen,
+		void* pContext, bool& fHasAnswer);
 
 	///
 	/// MadCHook IPC callback. IPC command port.
@@ -108,6 +122,6 @@ public:
 };
 
 } // namespace win
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

@@ -15,7 +15,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "scenario"
 
-namespace openEdr {
+namespace cmd {
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -729,4 +729,4 @@ Variant Scenario::getStatInfo() const
 	return vInfo;
 }
 
-} // namespace openEdr 
+} // namespace cmd 

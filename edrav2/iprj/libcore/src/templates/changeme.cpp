@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "changeme"
 
-namespace openEdr {
+namespace cmd {
 namespace templates {
 
 //
@@ -81,5 +81,5 @@ Variant ChangeMe::execute(Variant vCommand, Variant vParams)
 }
 
 } // namespace templates
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\inc\edrdrvapi.hpp" />
     <ClInclude Include="..\..\inc\extheaders.h" />
+    <ClInclude Include="..\..\inc\FltPortReceiver.h" />
     <ClInclude Include="..\..\inc\libsysmon.h" />
     <ClInclude Include="..\..\inc\objects.h" />
     <ClInclude Include="..\..\src\controller.h" />
@@ -29,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\controller.cpp" />
+    <ClCompile Include="..\..\src\FltPortReceiver.cpp" />
     <ClCompile Include="..\..\src\libsysmon.cpp" />
     <ClCompile Include="..\..\src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

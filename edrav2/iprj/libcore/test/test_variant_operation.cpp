@@ -7,8 +7,8 @@
 
 #include "pch.h"
 
-using namespace openEdr;
-using namespace openEdr::variant::operation;
+using namespace cmd;
+using namespace cmd::variant::operation;
 
 
 //

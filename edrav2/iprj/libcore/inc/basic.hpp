@@ -16,7 +16,7 @@
 /// 
 /// This is the main namespace for COMODO projects.
 ///
-namespace openEdr {
+namespace cmd {
 
 // Detect current platform
 #ifdef _WIN32
@@ -151,7 +151,7 @@ struct SourceLocation
 //
 // Short form macro for current source location
 //
-#define SL openEdr::SourceLocation{openEdr::SourceLocationTag(), __FILE__, __LINE__, CMD_COMPONENT }
+#define SL cmd::SourceLocation{cmd::SourceLocationTag(), __FILE__, __LINE__, CMD_COMPONENT }
 
 ///
 /// Conversion enum to underlying type
@@ -173,13 +173,13 @@ constexpr typename std::underlying_type<E>::type* castToUnderlyingPtr(E* e) noex
 /// Definition of bitwise operators for enum which contains flags.
 ///
 #define CMD_DEFINE_ENUM_FLAG_OPERATORS(EnumType) \
-inline constexpr EnumType operator | (EnumType a, EnumType b) noexcept { return static_cast<EnumType>(openEdr::castToUnderlying(a) | openEdr::castToUnderlying(b)); } \
-inline constexpr EnumType operator & (EnumType a, EnumType b) noexcept { return static_cast<EnumType>(openEdr::castToUnderlying(a) & openEdr::castToUnderlying(b)); } \
-inline constexpr EnumType operator ^ (EnumType a, EnumType b) noexcept { return static_cast<EnumType>(openEdr::castToUnderlying(a) ^ openEdr::castToUnderlying(b)); } \
-inline EnumType& operator |= (EnumType &a, EnumType b) noexcept { (*openEdr::castToUnderlyingPtr(&a) |= openEdr::castToUnderlying(b)); return a; } \
-inline EnumType& operator &= (EnumType &a, EnumType b) noexcept { (*openEdr::castToUnderlyingPtr(&a) &= openEdr::castToUnderlying(b)); return a; } \
-inline EnumType& operator ^= (EnumType &a, EnumType b) noexcept { (*openEdr::castToUnderlyingPtr(&a) ^= openEdr::castToUnderlying(b)); return a; } \
-inline constexpr EnumType operator ~ (EnumType a) noexcept { return static_cast<EnumType>(~openEdr::castToUnderlying(a)); } \
+inline constexpr EnumType operator | (EnumType a, EnumType b) noexcept { return static_cast<EnumType>(cmd::castToUnderlying(a) | cmd::castToUnderlying(b)); } \
+inline constexpr EnumType operator & (EnumType a, EnumType b) noexcept { return static_cast<EnumType>(cmd::castToUnderlying(a) & cmd::castToUnderlying(b)); } \
+inline constexpr EnumType operator ^ (EnumType a, EnumType b) noexcept { return static_cast<EnumType>(cmd::castToUnderlying(a) ^ cmd::castToUnderlying(b)); } \
+inline EnumType& operator |= (EnumType &a, EnumType b) noexcept { (*cmd::castToUnderlyingPtr(&a) |= cmd::castToUnderlying(b)); return a; } \
+inline EnumType& operator &= (EnumType &a, EnumType b) noexcept { (*cmd::castToUnderlyingPtr(&a) &= cmd::castToUnderlying(b)); return a; } \
+inline EnumType& operator ^= (EnumType &a, EnumType b) noexcept { (*cmd::castToUnderlyingPtr(&a) ^= cmd::castToUnderlying(b)); return a; } \
+inline constexpr EnumType operator ~ (EnumType a) noexcept { return static_cast<EnumType>(~cmd::castToUnderlying(a)); } \
 
 ///
 /// Definition of enum which contains flags.
@@ -297,5 +297,5 @@ class ThreadPool;
 extern ThreadPool& getCoreThreadPool();
 extern ThreadPool& getTimerThreadPool();
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

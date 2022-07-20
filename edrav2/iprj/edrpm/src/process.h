@@ -14,11 +14,11 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 std::wstring getModuleFileName(HMODULE hModule);
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd
 

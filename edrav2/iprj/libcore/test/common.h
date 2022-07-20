@@ -3,7 +3,7 @@
 //
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -163,4 +163,4 @@ inline std::string getCurrentISO8601TimeUTC(int nShift = 0)
 	return ss.str();
 }
 
-} // namespace openEdr
+} // namespace cmd

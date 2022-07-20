@@ -12,7 +12,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "eventflt"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -275,5 +275,5 @@ void PerProcessEventFilter::reset()
 	m_mapProcessesInfo.clear();
 }
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

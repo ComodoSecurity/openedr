@@ -9,7 +9,7 @@
 //
 // ClassId's declarations
 //
-namespace openEdr {
+namespace cmd {
 
 CMD_DECLARE_LIBRARY_CLSID(CLSID_AwsCore, 0x1A47EA57);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_AwsFirehoseClient, 0x95BA0E24);
@@ -20,4 +20,4 @@ CMD_DECLARE_LIBRARY_CLSID(CLSID_ValkyrieService, 0x2B758353);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_GcpPubSubClient, 0x51C1CAB6);
 CMD_DECLARE_LIBRARY_CLSID(CLSID_GcpController, 0xEBC0DB8E);
 
-} // namespace openEdr
+} // namespace cmd

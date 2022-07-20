@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace devdisp {
 
 ///
@@ -28,5 +28,5 @@ NTSTATUS initialize();
 void finalize();
 
 } // namespace devdisp
-} // namespace openEdr
+} // namespace cmd
 /// @}

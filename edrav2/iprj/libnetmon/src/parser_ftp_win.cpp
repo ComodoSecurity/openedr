@@ -15,7 +15,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "netmon"
 
-namespace openEdr {
+namespace cmd {
 namespace netmon {
 namespace win {
 
@@ -430,6 +430,6 @@ ITcpParserFactory::ParserInfo FtpParserFactory::createParser(std::shared_ptr<con
 
 } // namespace win
 } // namespace netmon
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

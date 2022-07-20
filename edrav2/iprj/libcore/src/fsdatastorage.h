@@ -14,7 +14,7 @@
 #include <command.hpp>
 #include <common.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 ///
@@ -71,5 +71,5 @@ public:
 };
 
 } // namespace io
-} // namespace openEdr
+} // namespace cmd
 /// @} 

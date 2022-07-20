@@ -35,7 +35,7 @@
 //#pragma alloc_text(INIT, DriverEntry)
 //#endif
 
-namespace openEdr {
+namespace cmd {
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -94,9 +94,9 @@ VOID unloadDriver(_In_ PDRIVER_OBJECT /*pDriverObject*/)
 
 	// Wait writting data
 	{
-		// Sleep 100 ms
+		// Sleep 1 sec
 		LARGE_INTEGER delay;
-		delay.QuadPart = (LONGLONG)100 * -1 /*relative*/ * 1 * 10 * 1000 /*ms*/;
+		delay.QuadPart = (LONGLONG)1000 * -1 /*relative*/ * 1 * 10 * 1000 /*ms*/;
 		KeDelayExecutionThread(KernelMode, FALSE, &delay);
 	}
 	log::finalize();
@@ -117,12 +117,24 @@ NTSTATUS getProceduresAddress()
 	IFERR_RET(getProcAddressAndLog(U_STAT(L"ZwQuerySystemInformation"), false, &g_pCommonData->fnZwQuerySystemInformation));
 	IFERR_RET(getProcAddressAndLog(U_STAT(L"CmCallbackGetKeyObjectIDEx"), true, &g_pCommonData->fnCmCallbackGetKeyObjectIDEx));
 	IFERR_RET(getProcAddressAndLog(U_STAT(L"CmCallbackReleaseKeyObjectIDEx"), true, &g_pCommonData->fnCmCallbackReleaseKeyObjectIDEx));
+	IFERR_RET(getProcAddressAndLog(U_STAT(L"PsGetProcessWow64Process"), true, &g_pCommonData->PsGetProcessWow64Process));
+	IFERR_RET(getProcAddressAndLog(U_STAT(L"PsWrapApcWow64Thread"), true, &g_pCommonData->PsWrapApcWow64Thread));
+
+	//
+	// Signing verification API
+	//
+	IFERR_RET(getProcAddressAndLog(U_STAT(L"PsIsProtectedProcess"), true, &g_pCommonData->PsIsProtectedProcess));
+	IFERR_RET(getProcAddressAndLog(U_STAT(L"PsIsProtectedProcessLight"), true, &g_pCommonData->PsIsProtectedProcessLight));
+	IFERR_RET(getProcAddressAndLog(U_STAT(L"PsGetProcessSignatureLevel"), true, &g_pCommonData->PsGetProcessSignatureLevel));
+	IFERR_RET(getProcAddressAndLog(U_STAT(L"SeGetCachedSigningLevel"), true, &g_pCommonData->SeGetCachedSigningLevel));
+	IFERR_RET(getProcAddressAndLog(U_STAT(L"NtSetCachedSigningLevel"), true, &g_pCommonData->NtSetCachedSigningLevel));
+	
 	return STATUS_SUCCESS;
 }
 
-} // namespace openEdr
+} // namespace cmd
 
-using namespace openEdr;
+using namespace cmd;
 
 //
 // DriverEntry 
@@ -152,14 +164,14 @@ EXTERN_C NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT pDriverObject, _In_ PUNICODE_S
 		g_pCommonData->pDriverObject->DriverUnload = unloadDriver;
 		IFERR_RET(g_pCommonData->usRegistryPath.assign(pusRegistryPath));
 
+		log::initialize();
+
 		LOGINFO1("DriverEntry starts...\r\n");
 
 		// Check minimum OS Version
 		IFERR_RET(checkOSVersionSupport(6, 1), "Unsupported OS version. Need Win7+\r\n");
 		if (NT_SUCCESS(checkOSVersionSupport(6, 2)))
 			g_pCommonData->fIsWin8orHigher = TRUE;
-
-		log::initialize();
 
 		LOGINFO1("Starting edrdrv.sys...\r\n");
 

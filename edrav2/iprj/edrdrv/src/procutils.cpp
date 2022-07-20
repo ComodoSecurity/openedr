@@ -11,8 +11,9 @@
 /// @{
 #include "common.h"
 #include "procutils.h"
+#include "osutils.h"
 
-namespace openEdr {
+namespace cmd {
 
 //
 // Get Current Process ImageName. Allocate buffer
@@ -109,9 +110,9 @@ PUNICODE_STRING CommonProcessInfo::getPrintImageName()
 //
 //
 _IRQL_requires_max_(PASSIVE_LEVEL)
-void fillProcessInfoByHandle(HANDLE nPid, HANDLE hProcess, CommonProcessInfo* pProcessInfo, bool fPrintInfo)
+void fillProcessInfoByHandle(HANDLE nPid, HANDLE hProcess, CommonProcessInfo* ProcessInfo, bool fPrintInfo)
 {
-	pProcessInfo->nPid = nPid;
+	ProcessInfo->nPid = nPid;
 
 	// +FIXME: Do we can continue without it?
 	// Now - no. But it is possible. 
@@ -128,8 +129,8 @@ void fillProcessInfoByHandle(HANDLE nPid, HANDLE hProcess, CommonProcessInfo* pP
 		}
 		else
 		{
-			pProcessInfo->nParentPid = (HANDLE)BasicInfo.InheritedFromUniqueProcessId;
-			pProcessInfo->fIsTerminated = ((ULONG)BasicInfo.ExitStatus) != 259/*STILL_ACTIVE*/;
+			ProcessInfo->nParentPid = (HANDLE)BasicInfo.InheritedFromUniqueProcessId;
+			ProcessInfo->fIsTerminated = ((ULONG)BasicInfo.ExitStatus) != 259/*STILL_ACTIVE*/;
 		}
 	}
 
@@ -145,35 +146,35 @@ void fillProcessInfoByHandle(HANDLE nPid, HANDLE hProcess, CommonProcessInfo* pP
 		}
 		else
 		{
-			pProcessInfo->eProtectedType = (PS_PROTECTED_TYPE)ProtectionInfo.Type;
-			pProcessInfo->eProtectedSigner = (PS_PROTECTED_SIGNER)ProtectionInfo.Signer;
+			ProcessInfo->eProtectedType = (PS_PROTECTED_TYPE)ProtectionInfo.Type;
+			ProcessInfo->eProtectedSigner = (PS_PROTECTED_SIGNER)ProtectionInfo.Signer;
 		}
 	}
 
-	NTSTATUS ns = getProcessImageName(hProcess, &pProcessInfo->pusImageName);
+	NTSTATUS ns = getProcessImageName(hProcess, &ProcessInfo->pusImageName);
 	if (!NT_SUCCESS(ns))
 	{
 		if (fPrintInfo) IFERR_LOG(ns, "Can't getProcessImageName(%Iu)\n", (UINT_PTR)nPid);
 		// +FIXME: Why do we clean uninitialized data?
 		// What a problem? It is habit from external API usage.
-		pProcessInfo->pusImageName = nullptr;
+		ProcessInfo->pusImageName = nullptr;
 	}
 
-	if (pProcessInfo->pusImageName != nullptr)
+	if (ProcessInfo->pusImageName != nullptr)
 	{
-		ns = getProcessFlagsByName(pProcessInfo->pusImageName, &pProcessInfo->nFlags);
+		ns = getProcessFlagsByName(ProcessInfo->pusImageName, &ProcessInfo->nFlags);
 		if (!NT_SUCCESS(ns))
 		{
 			if (fPrintInfo) IFERR_LOG(ns, "Can't getProcessFlagsByName(%Iu)\n", (UINT_PTR)nPid);
-			pProcessInfo->nFlags = 0;
+			ProcessInfo->nFlags = 0;
 		}
 	}
 
 	if (fPrintInfo)
 	{
 		LOGINFO2("Process %wZ(%u), parent=%u, flags=0x%08X\n", 
-			pProcessInfo->getPrintImageName(), pProcessInfo->nPid, 
-			pProcessInfo->nParentPid, pProcessInfo->nFlags);
+			ProcessInfo->getPrintImageName(), ProcessInfo->nPid,
+			ProcessInfo->nParentPid, ProcessInfo->nFlags);
 	}
 
 }
@@ -182,42 +183,37 @@ void fillProcessInfoByHandle(HANDLE nPid, HANDLE hProcess, CommonProcessInfo* pP
 //
 //
 _IRQL_requires_max_(PASSIVE_LEVEL)
-void fillProcessInfoByPid(HANDLE nPid, CommonProcessInfo* pProcessInfo, bool fPrintInfo)
+void fillProcessInfoByPid(HANDLE nPid, CommonProcessInfo* ProcessInfo, bool fPrintInfo)
 {
-	HANDLE hProcess = nullptr;
-
+	HANDLE processHandle = nullptr;
+	
 	__try
 	{
-		pProcessInfo->free();
-		pProcessInfo->nPid = nPid;
+		ProcessInfo->free();
+		ProcessInfo->nPid = nPid;
 
 		// Fills info for SYSTEM(4) process or similar to it
-		if (nPid == (HANDLE)c_nSystemProcessPid || nPid == (HANDLE)c_nIdleProcessPid
-			|| nPid <= (HANDLE)c_nSystemProcessPid)
+		if (PsGetProcessId(PsInitialSystemProcess) == nPid || UlongToHandle(c_nIdleProcessPid) == nPid)
 		{
-			setFlag(pProcessInfo->nFlags, (UINT32)ProcessInfoFlags::SystemLikeProcess);
+			setFlag(ProcessInfo->nFlags, (UINT32)ProcessInfoFlags::SystemLikeProcess);
 			return;
 		}
 
-		// Open process hProcess
-		CLIENT_ID id = {};
-		id.UniqueProcess = nPid;
-		OBJECT_ATTRIBUTES objAttr = {};
-		InitializeObjectAttributes(&objAttr, NULL, OBJ_KERNEL_HANDLE, NULL, NULL);
-		NTSTATUS ns = ZwOpenProcess(&hProcess, PROCESS_ALL_ACCESS, &objAttr, &id);
-		if (!NT_SUCCESS(ns))
+		// Open process
+		processHandle = cmd::openProcess(HandleToUlong(nPid));
+		if (nullptr == processHandle)
 		{
-			IFERR_LOG(ns, "Can't ZwOpenProcess(%Iu)\n", (UINT_PTR)nPid);
+			LOGERROR(STATUS_ACCESS_DENIED, "Can't OpenProcess(%Iu)\n", HandleToUlong(nPid));
 			return;
 		}
 
-		fillProcessInfoByHandle(nPid, hProcess, pProcessInfo, fPrintInfo);
-		pProcessInfo->nPid = nPid;
+		fillProcessInfoByHandle(nPid, processHandle, ProcessInfo, fPrintInfo);
+		ProcessInfo->nPid = nPid;
 	}
 	__finally
 	{
-		if (hProcess != nullptr)
-			ZwClose(hProcess);
+		if (processHandle != nullptr)
+			ZwClose(processHandle);
 	}
 }
 
@@ -375,5 +371,5 @@ NTSTATUS getProcessToken(HANDLE hProcess, HANDLE* phToken)
 	return ZwOpenProcessTokenEx(hProcess, 0, OBJ_KERNEL_HANDLE, phToken);
 }
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

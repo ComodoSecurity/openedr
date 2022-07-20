@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace log {
 
 ///
@@ -64,7 +64,7 @@ inline void logInfo(){ logInfo("\r\n"); };
 void finalize();
 
 } // namespace log
-} // namespace openEdr
+} // namespace cmd
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -72,7 +72,7 @@ void finalize();
 //
 //////////////////////////////////////////////////////////////////////////
 
-#define _LOGINFO_RAW(...) openEdr::log::logInfo(__VA_ARGS__)
+#define _LOGINFO_RAW(...) cmd::log::logInfo(__VA_ARGS__)
 #define _LOGINFON(_MsgLogLevel, ...) ( (g_pCommonData->nLogLevel >= _MsgLogLevel) ?  (_LOGINFO_RAW(__VA_ARGS__), ((int)0)) :  ((int)0) )
 
 ///
@@ -130,6 +130,14 @@ void finalize();
 /// @param ... [opt] - additional message: format + parameters.
 ///
 #define IFERR_LOG(x, ...) {const NTSTATUS _ns = (x); if(!NT_SUCCESS(_ns)) {LOGERROR(_ns, __VA_ARGS__);}}
+
+///
+/// if x (NTSTATUS) is error, logs error.
+///
+/// @param x - expression returned NTSTATUS.
+/// @param ... [opt] - additional message: format + parameters.
+///
+#define IFERR_LOG_RET(x, ...) {const NTSTATUS _ns = (x); if(!NT_SUCCESS(_ns)) {LOGERROR(_ns, __VA_ARGS__);return;}}
 
 ///
 /// if x (NTSTATUS) is error, return this error.

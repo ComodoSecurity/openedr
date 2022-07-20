@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -380,6 +380,6 @@ public:
 	}
 };
 
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

@@ -16,7 +16,7 @@
 #include "pch.h"
 #include "dictionarymixer.h"
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 
 typedef std::string DictionaryKeyType;
@@ -673,5 +673,5 @@ Variant DictionaryMixer::createDictionaryProxy(std::string_view sPath) const
 }
 
 } // namespace variant
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

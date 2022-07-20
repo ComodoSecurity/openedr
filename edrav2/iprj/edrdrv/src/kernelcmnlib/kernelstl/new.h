@@ -84,7 +84,7 @@ void* __cdecl operator new[](size_t nSize, PoolType ePoolType);
 // allocation delete
 void __cdecl operator delete (void* pVoid);
 
-namespace openEdr {
+namespace cmd {
 
 /// Allocation tag
 /// for ExAllocatePoolWithTag

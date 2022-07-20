@@ -13,7 +13,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "core"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -132,4 +132,4 @@ void CommandDataReceiver::put(const Variant& vData)
 	(void)m_pCommand->execute(Dictionary({ {"data", vData} }));
 }
 
-} // namespace openEdr 
+} // namespace cmd 

@@ -13,7 +13,7 @@
 #include <command.hpp>
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace ipc {
 
 // Forward declaration
@@ -75,6 +75,6 @@ public:
 };
 
 } // namespace ipc
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

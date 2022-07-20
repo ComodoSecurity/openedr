@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace filemon {
 
 ///
@@ -44,6 +44,39 @@ NTSTATUS initialize();
 ///
 void finalize();
 
+namespace tools
+{
+
+__drv_maxIRQL(APC_LEVEL)
+__checkReturn
+NTSTATUS
+getInstanceFromFileObject(
+	__in PFILE_OBJECT FileObject,
+	__deref_out PFLT_INSTANCE* Instance
+);
+
+#define FILE_SHARE_ALL (FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE)
+
+__drv_maxIRQL(PASSIVE_LEVEL)
+__checkReturn
+NTSTATUS
+openFile(
+	__in_opt PFLT_INSTANCE Instance,
+	__in const UNICODE_STRING& FilePath,
+	__out UniqueFltHandle& FileHandle,
+	__out FileObjectPtr& FileObject,
+	__in ACCESS_MASK DesiredAccess = FILE_GENERIC_READ,
+	__in ULONG ShareAccess = FILE_SHARE_ALL
+);
+
+__drv_maxIRQL(PASSIVE_LEVEL)
+__checkReturn
+NTSTATUS
+getSystemRootDirectoryPath(
+	__out DynUnicodeString& SystemRootPath
+);
+
+} //namespace tools
 } // namespace filemon
-} // namespace openEdr
+} // namespace cmd
 /// @}

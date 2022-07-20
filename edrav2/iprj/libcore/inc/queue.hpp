@@ -14,7 +14,7 @@
 #include "command.hpp"
 #include "common.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Queue filter interface.
@@ -187,5 +187,5 @@ public:
 	virtual void deleteQueue(std::string_view sName, bool fNoThrow = false) = 0;
 };
 
-} // namespace openEdr
+} // namespace cmd
 /// @}

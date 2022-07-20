@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{D81B396B-69BB-46FD-BA3F-6D2B028A74E7}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PFNetFilterCS", "PFNetFilterCS\PFNetFilterCS.csproj", "{2450B60C-AC2B-4927-9F40-BCCDDC169B10}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Be.Windows.Forms.HexBox", "PFNetFilterCS\Be.HexEditor.130\sources\Be.Windows.Forms.HexBox\Be.Windows.Forms.HexBox.csproj", "{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2450B60C-AC2B-4927-9F40-BCCDDC169B10}.Debug|x64.ActiveCfg = Debug|x64
+		{2450B60C-AC2B-4927-9F40-BCCDDC169B10}.Debug|x64.Build.0 = Debug|x64
+		{2450B60C-AC2B-4927-9F40-BCCDDC169B10}.Debug|x86.ActiveCfg = Debug|Win32
+		{2450B60C-AC2B-4927-9F40-BCCDDC169B10}.Debug|x86.Build.0 = Debug|Win32
+		{2450B60C-AC2B-4927-9F40-BCCDDC169B10}.Release|x64.ActiveCfg = Release|x64
+		{2450B60C-AC2B-4927-9F40-BCCDDC169B10}.Release|x64.Build.0 = Release|x64
+		{2450B60C-AC2B-4927-9F40-BCCDDC169B10}.Release|x86.ActiveCfg = Release|Win32
+		{2450B60C-AC2B-4927-9F40-BCCDDC169B10}.Release|x86.Build.0 = Release|Win32
+		{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}.Debug|x64.ActiveCfg = Debug|x64
+		{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}.Debug|x64.Build.0 = Debug|x64
+		{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}.Debug|x86.ActiveCfg = Debug|x86
+		{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}.Debug|x86.Build.0 = Debug|x86
+		{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}.Release|x64.ActiveCfg = Release|x64
+		{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}.Release|x64.Build.0 = Release|x64
+		{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}.Release|x86.ActiveCfg = Release|x86
+		{26C5F25F-B450-4CAF-AD8B-B8D11AE73457}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2450B60C-AC2B-4927-9F40-BCCDDC169B10} = {D81B396B-69BB-46FD-BA3F-6D2B028A74E7}
+		{26C5F25F-B450-4CAF-AD8B-B8D11AE73457} = {D81B396B-69BB-46FD-BA3F-6D2B028A74E7}
+	EndGlobalSection
+EndGlobal

@@ -23,6 +23,7 @@
     <ClInclude Include="..\..\inc\libprocmon.h" />
     <ClInclude Include="..\..\inc\objects.h" />
     <ClInclude Include="..\..\inc\procmon.hpp" />
+    <ClInclude Include="..\..\inc\procmonevent.h" />
     <ClInclude Include="..\..\src\controller.h" />
     <ClInclude Include="..\..\src\pch.h" />
   </ItemGroup>
@@ -35,6 +36,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\procmonevent.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

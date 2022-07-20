@@ -10,7 +10,7 @@
 #include "pch.h"
 #include "logsink.h"
 
-namespace openEdr {
+namespace cmd {
 namespace logging {
 
 //
@@ -85,4 +85,4 @@ void Log4CPlusSink::fillProperties(const std::string& sPrefix, Dictionary config
 }
 
 } // namespace logging
-} // namespace openEdr 
+} // namespace cmd 

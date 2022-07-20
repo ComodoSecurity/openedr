@@ -8,6 +8,8 @@
 //
 #pragma once
 
+#define FEATURE_ENABLE_NETMON
+
 #include "extheaders.h"
 #include "netmon.hpp"
 
@@ -21,8 +23,10 @@ CMD_IMPORT_LIBRARY_OBJECTS(libnetmon)
 // Declaration of linking dependences (statical libraries)
 #ifdef _MSC_VER
 #pragma comment(lib, "libnetmon.lib")
+#if defined(FEATURE_ENABLE_NETMON)
 #pragma comment(lib, "nfapi.lib")
 #pragma comment(lib, "ProtocolFilters.lib")
+#endif
 #else
 #error Declaration of linking dependences is not implemented for this compiler
 #endif // _MSC_VER

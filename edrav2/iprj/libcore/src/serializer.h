@@ -3,7 +3,7 @@
 #include <io.hpp>
 #include <crypt.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 
 enum Codec : uint8_t
@@ -110,4 +110,4 @@ public:
 };
 
 } // namespace variant
-} // namespace openEdr 
+} // namespace cmd 

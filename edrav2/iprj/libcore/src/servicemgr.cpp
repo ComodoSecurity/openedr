@@ -14,7 +14,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "svcmgr"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -301,4 +301,4 @@ Variant ServiceManager::execute(Variant vCommand, Variant vParams)
 		<< vCommand << ">")).throwException();
 }
 
-} // namespace openEdr 
+} // namespace cmd 

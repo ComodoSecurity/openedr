@@ -16,7 +16,7 @@
 #include "dllinj.h"
 
 
-namespace openEdr {
+namespace cmd {
 
 
 
@@ -534,5 +534,5 @@ void finalize()
 }
 
 } // namespace cfg
-} // namespace openEdr
+} // namespace cmd
 /// @}

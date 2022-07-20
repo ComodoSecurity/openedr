@@ -12,7 +12,7 @@
 #include "pch.h"
 #include "signdataprovider.h"
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 namespace win {
 
@@ -664,7 +664,7 @@ void SignDataProvider::loadState(Variant vState)
 //
 //
 //
-openEdr::Variant SignDataProvider::saveState()
+cmd::Variant SignDataProvider::saveState()
 {
 	Dictionary vState;
 	std::scoped_lock _lock(m_mtxLock);
@@ -804,6 +804,6 @@ Variant SignDataProvider::execute(Variant vCommand, Variant vParams)
 
 } // namespace win
 } // namespace sys
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @}

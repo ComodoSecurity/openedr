@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Load configuration from the registry.
@@ -85,5 +85,5 @@ NTSTATUS initialize();
 void finalize();
 
 } // namespace cfg
-} // namespace openEdr
+} // namespace cmd
 /// @}

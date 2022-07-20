@@ -12,7 +12,7 @@
 #include "pch.h"
 #include "filedataprovider.h"
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 namespace win {
 
@@ -880,7 +880,7 @@ Variant FileDataProvider::getFileInfoByParams(Variant vParams)
 // Q: In this case we can use string_view
 // A: This way we need to split extension manually
 //
-openEdr::Variant FileDataProvider::getFileType(std::filesystem::path sPath)
+cmd::Variant FileDataProvider::getFileType(std::filesystem::path sPath)
 {
 	auto sExt(sPath.extension().u8string());
 	auto format = m_pFormats.find(sExt);
@@ -1341,7 +1341,7 @@ Variant FileDataProvider::getVolumeInfoById_NoLock(FileId sVolId)
 //
 //
 //
-openEdr::Variant FileDataProvider::getVolumeInfoByDevice(const std::wstring& sDevice)
+cmd::Variant FileDataProvider::getVolumeInfoByDevice(const std::wstring& sDevice)
 {
 	{
 		std::scoped_lock _lock(m_mtxVolumeData);
@@ -1602,7 +1602,7 @@ void FileDataProvider::loadState(Variant vState)
 //
 //
 //
-openEdr::Variant FileDataProvider::saveState()
+cmd::Variant FileDataProvider::saveState()
 {
 	return {};
 }
@@ -1685,6 +1685,6 @@ void FileDataProvider::shutdown()
 
 } // namespace win
 } // namespace sys
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @}

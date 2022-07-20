@@ -18,7 +18,7 @@
 #include <objects.h>
 #include "jsonrpc.h"
 
-namespace openEdr {
+namespace cmd {
 namespace ipc {
 
 ///
@@ -101,6 +101,6 @@ public:
 };
 
 } // namespace ipc
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

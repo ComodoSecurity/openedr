@@ -13,7 +13,7 @@
 
 #include "procmon.h"
 
-namespace openEdr {
+namespace cmd {
 namespace objmon {
 
 // Internal interface for notification from procmon.
@@ -44,6 +44,6 @@ NTSTATUS initialize();
 void finalize();
 
 } // namespace objmon
-} // namespace openEdr
+} // namespace cmd
 /// @}
 

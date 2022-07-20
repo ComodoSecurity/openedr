@@ -9,7 +9,7 @@
 #include "config.h"
 #include "common.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 //
 //

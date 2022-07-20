@@ -10,7 +10,7 @@
 #include "pch_win.h"
 #include <error/error_win.hpp>
 
-namespace openEdr {
+namespace cmd {
 namespace error {
 namespace win {
 
@@ -123,4 +123,4 @@ std::exception_ptr WinApiError::getRealException()
 
 } // namespace win
 } // namespace error
-} // namespace openEdr
+} // namespace cmd

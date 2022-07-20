@@ -10,7 +10,7 @@
 #include "pch.h"
 #include "variantproxy.h"
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 
 //////////////////////////////////////////////////////////////////////////////
@@ -327,4 +327,4 @@ Variant createSequenceProxy(Variant vValue,
 }
 
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd

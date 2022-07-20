@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "policyop"
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 namespace policy {
 namespace operation {
@@ -947,6 +947,6 @@ OperationPtr createOperation(Operation operation, Variant vParams, Context& ctx)
 
 } // namespace policy 
 } // namespace edr
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @} 

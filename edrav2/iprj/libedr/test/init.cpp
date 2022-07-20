@@ -8,7 +8,7 @@
 //
 bool initTestFramework()
 {
-	openEdr::logging::initLogging();
-	//openEdr::logging::setRootLogLevel(openEdr::LogLevel::Normal);
+	cmd::logging::initLogging();
+	//cmd::logging::setRootLogLevel(cmd::LogLevel::Normal);
 	return true;
 }

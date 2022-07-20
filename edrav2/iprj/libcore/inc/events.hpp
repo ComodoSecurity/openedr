@@ -11,7 +11,7 @@
 
 // TODO: Move this file to separate EDR-related project
 
-namespace openEdr {
+namespace cmd {
 
 //
 // LLE identifiers
@@ -104,4 +104,4 @@ inline uint64_t createRaw(ClassId eClsid, uint32_t nEvent)
 	return (uint64_t)eClsid << 32 | nEvent;
 }
 
-} // namespace openEdr
+} // namespace cmd

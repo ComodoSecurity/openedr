@@ -12,7 +12,7 @@
 #pragma once
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Output filter.
@@ -59,6 +59,6 @@ public:
 	Variant execute(Variant vCommand, Variant vParams) override;
 };
 
-} // namespace openEdr
+} // namespace cmd
 
 /// @} 

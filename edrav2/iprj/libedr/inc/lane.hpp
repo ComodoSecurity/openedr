@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 
 ///
@@ -188,6 +188,6 @@ namespace error {
 using SlowLaneOperation = edr::SlowLaneOperation;
 } // namespace error
 
-} // namespace openEdr
+} // namespace cmd
 
 /// @} 

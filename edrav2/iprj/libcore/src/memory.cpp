@@ -14,7 +14,7 @@
 #include "pch.h"
 #include "edrmmapi.hpp"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -104,7 +104,7 @@ MemInfo getMemoryInfo()
 	return edrmm::getMemInfo();
 }
 
-} // namespace openEdr 
+} // namespace cmd 
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -116,7 +116,7 @@ MemInfo getMemoryInfo()
 //
 void* operator new(std::size_t nSize)
 {
-	void* ptr = openEdr::detail::allocMem(nSize);
+	void* ptr = cmd::detail::allocMem(nSize);
 	if (ptr == nullptr)
 		throw std::bad_alloc();
 	return ptr;
@@ -127,7 +127,7 @@ void* operator new(std::size_t nSize)
 //
 void* operator new(std::size_t nSize, std::align_val_t nAlign)
 {
-	void* ptr = openEdr::detail::allocAlignedMem((openEdr::Size)nAlign, nSize);
+	void* ptr = cmd::detail::allocAlignedMem((cmd::Size)nAlign, nSize);
 	if (ptr == nullptr)
 		throw std::bad_alloc();
 	return ptr;
@@ -138,7 +138,7 @@ void* operator new(std::size_t nSize, std::align_val_t nAlign)
 //
 void operator delete(void* ptr)
 {
-	openEdr::detail::freeMem(ptr);
+	cmd::detail::freeMem(ptr);
 }
 
 //
@@ -146,7 +146,7 @@ void operator delete(void* ptr)
 //
 void operator delete(void* ptr, std::align_val_t /* al */)
 {
-	openEdr::detail::freeMem(ptr);
+	cmd::detail::freeMem(ptr);
 }
 
 /// @}

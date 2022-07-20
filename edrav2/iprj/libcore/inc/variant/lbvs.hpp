@@ -17,7 +17,7 @@
 #include <stdint.h>
 #endif // CMD_KERNEL_MODE
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 
 namespace lbvs {
@@ -866,5 +866,5 @@ using LbvsDeserializer = BasicLbvsDeserializer<IdType>;
 
 
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd
 /// @}

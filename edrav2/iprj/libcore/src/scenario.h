@@ -14,7 +14,7 @@
 #include <objects.h>
 #include <common.hpp>
 
-namespace openEdr {
+namespace cmd {
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -423,5 +423,5 @@ public:
 	Variant getStatInfo() const;
 };
 
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

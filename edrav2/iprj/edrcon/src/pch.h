@@ -23,4 +23,8 @@
 #include <cli/clifilesession.h>
 #include <cli/cli.h>
 
+#if defined(FEATURE_ENABLE_MADCHOOK)
+#pragma comment(lib, "madchookdrv.lib");
+#endif
+
 #endif //PCH_H

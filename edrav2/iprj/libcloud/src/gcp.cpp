@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "gcp"
 
-namespace openEdr {
+namespace cmd {
 namespace cloud {
 namespace gcp {
 
@@ -675,7 +675,7 @@ void logFunction(gpr_log_func_args* args)
 {
 	if (args->severity == GPR_LOG_SEVERITY_ERROR)
 	{
-		openEdr::SourceLocation srcLoc{ openEdr::SourceLocationTag(), args->file, args->line, CMD_COMPONENT };
+		cmd::SourceLocation srcLoc{ cmd::SourceLocationTag(), args->file, args->line, CMD_COMPONENT };
 		error::RuntimeError(srcLoc, args->message).log();
 	}
 	else if (args->severity == GPR_LOG_SEVERITY_INFO)
@@ -750,5 +750,5 @@ Variant Controller::execute(Variant vCommand, Variant vParams)
 
 } // namespace gcp
 } // namespace cloud
-} // namespace openEdr
+} // namespace cmd
 /// @}

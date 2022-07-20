@@ -11,7 +11,7 @@
 #include "pch.h"
 #include "libsyswin.h"
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 namespace win {
 
@@ -247,6 +247,47 @@ bool setPrivilege(HANDLE hToken, LPCTSTR Privilege, BOOL bEnablePrivilege)
 	return true;
 }
 
+bool enableAllPrivileges()
+{
+	ScopedHandle tokenHandle;
+	if (!::OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &tokenHandle))
+		return false;
+	
+	//
+	// Following privileges is default disabled for service,
+	// skip SE_BACKUP_NAME / SE_RESTORE_NAME and SE_TAKE_OWNERSHIP_NAME
+	//
+	constexpr LPCTSTR privileges[] =
+	{
+		SE_ASSIGNPRIMARYTOKEN_NAME,
+		SE_MANAGE_VOLUME_NAME,
+		SE_ASSIGNPRIMARYTOKEN_NAME,
+		SE_INCREASE_QUOTA_NAME,
+		SE_LOAD_DRIVER_NAME,
+		SE_MANAGE_VOLUME_NAME,
+		SE_SECURITY_NAME,
+		SE_SHUTDOWN_NAME,
+		SE_SYSTEM_ENVIRONMENT_NAME,
+		SE_SYSTEMTIME_NAME,
+		SE_UNDOCK_NAME
+	};
+
+	bool result = false;
+	for (auto& privelege : privileges)
+	{
+		if (!setPrivilege(tokenHandle, privelege, true))
+		{
+			SetLastError(ERROR_NOT_ALL_ASSIGNED);
+		}
+		else
+		{
+			result = true;
+		}
+	}
+
+	return result;
+}
+
 //
 //
 //
@@ -351,4 +392,4 @@ std::wstring getProcessImagePath(const HANDLE hProcess)
 
 } // namespace win
 } // namespace sys
-} // namespace openEdr
+} // namespace cmd

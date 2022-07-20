@@ -14,9 +14,9 @@
 // Common fields
 //
 
-#define CMD_RC_PRODUCT_NAME_STR  "OpenEDR Agent"
-#define CMD_RC_COMPANY_NAME_STR "OpenEDR"
-#define CMD_RC_COPYRIGHT_STR  "2020 OpenEDR. All rights reserved."
+#define CMD_RC_PRODUCT_NAME_STR  "COMODO cWatch EDR Agent"
+#define CMD_RC_COMPANY_NAME_STR "COMODO"
+#define CMD_RC_COPYRIGHT_STR  "2005-2019 COMODO. All rights reserved."
 
 // Name of file
 // CMD_RC_TARGET_FILENAME is passed from compiler via preprocessor

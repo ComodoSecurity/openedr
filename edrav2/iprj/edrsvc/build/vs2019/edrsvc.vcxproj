@@ -26,6 +26,7 @@
     <ClCompile Include="..\..\src\mode_dump.cpp" />
     <ClCompile Include="..\..\src\mode_empty.cpp" />
     <ClCompile Include="..\..\src\mode_install.cpp" />
+    <ClCompile Include="..\..\src\mode_restart.cpp" />
     <ClCompile Include="..\..\src\mode_stop.cpp" />
     <ClCompile Include="..\..\src\mode_wait.cpp" />
     <ClCompile Include="..\..\src\pch.cpp">
@@ -91,7 +92,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Link>
-      <AdditionalLibraryDirectories>$(CmdEPrjDir)\madchook\lib\$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(CmdOutDirName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>libcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -116,6 +117,9 @@
     </Manifest>
     <PostBuildEvent />
     <PostBuildEvent />
+    <ClCompile>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -144,4 +148,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties _1_1_4_1_1_4data_4edrsvc_1cfg__JsonSchema="https://github.com/fbecart/zinoma/releases/latest/download/zinoma-schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

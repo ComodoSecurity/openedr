@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace drvioctl {
 
 ///
@@ -45,5 +45,5 @@ NTSTATUS dispatchIrp(_DEVICE_OBJECT * pDeviceObject, _IRP * pIrp);
 } // namespace detail
 
 } // namespace drvioctl
-} // namespace openEdr
+} // namespace cmd
 /// @}

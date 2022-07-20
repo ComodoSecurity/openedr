@@ -9,7 +9,7 @@
 #include "pch.h"
 #include "trampoline.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 
@@ -119,5 +119,5 @@ ICallbackRegistrator::ICallbackRegistrator()
 }
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd
 

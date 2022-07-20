@@ -7,7 +7,7 @@
 //
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 namespace detail {
 
@@ -187,7 +187,7 @@ public:
 			return iter->second;
 
 		// If hash is not found throw exception
-		error::InvalidArgument(SL, FMT("Hash <" << openEdr::hex(nHash) << "> is not found")).throwException();
+		error::InvalidArgument(SL, FMT("Hash <" << cmd::hex(nHash) << "> is not found")).throwException();
 	}
 };
 
@@ -232,7 +232,7 @@ inline std::string DictKey::convertToStr() const
 
 } // namespace detail
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd
 
 // custom specialization of std::hash for DictKey
 
@@ -242,9 +242,9 @@ namespace std {
 // Custom specialization of std::hash for DictKey
 // For usage inside std::unordered_map
 //
-template<> struct hash<openEdr::variant::detail::DictKey>
+template<> struct hash<cmd::variant::detail::DictKey>
 {
-    typedef openEdr::variant::detail::DictKey argument_type;
+    typedef cmd::variant::detail::DictKey argument_type;
     typedef std::size_t result_type;
     result_type operator()(argument_type const& s) const noexcept
     {

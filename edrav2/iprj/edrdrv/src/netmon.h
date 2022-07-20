@@ -8,7 +8,13 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+//#define FEATURE_ENABLE_NETMON
+
+#if defined(FEATURE_ENABLE_NETMON)
+#pragma comment(lib, "nfwfpdrv.lib")
+#endif //defined(FEATURE_ENABLE_NETMON)
+
+namespace cmd {
 namespace netmon {
 
 // Internal interface for device dispatcher
@@ -39,6 +45,6 @@ NTSTATUS initialize();
 void finalize();
 
 } // namespace netmon
-} // namespace openEdr
+} // namespace cmd
 
 /// @}

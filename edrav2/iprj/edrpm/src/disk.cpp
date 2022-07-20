@@ -16,7 +16,7 @@
 #include "winapi.h"
 #include "disk.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 #define ObjectNameInformation OBJECT_INFORMATION_CLASS(1)
@@ -191,4 +191,4 @@ REGISTER_PRE_CALLBACK(NtCreateSymbolicLinkObject, [](OUT PHANDLE pHandle, IN ACC
 });
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd

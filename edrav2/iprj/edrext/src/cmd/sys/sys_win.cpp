@@ -9,7 +9,7 @@
 ///
 #include "pch_win.h"
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 
 #ifndef _WIN32
@@ -233,7 +233,7 @@ SessionsInfoPtr getSessionsInfo(bool fOnlyActive)
 //
 std::wstring getLocalConsoleUser()
 {
-	auto pSesData = openEdr::sys::getSessionsInfo(true);
+	auto pSesData = cmd::sys::getSessionsInfo(true);
 	std::wstring sUserName;
 	for (auto& sesData : *pSesData)
 	{
@@ -257,5 +257,5 @@ std::wstring getLocalConsoleUser()
 }
 
 } // namespace sys
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

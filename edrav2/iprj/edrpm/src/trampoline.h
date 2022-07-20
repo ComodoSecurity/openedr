@@ -7,8 +7,9 @@
 // Basis of trampolines
 //
 #pragma once
+#include "hookapi.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edrpm {
 
 //////////////////////////////////////////////////////////////////////////
@@ -139,14 +140,20 @@ public:
 		{
 			// Add callbacks into trampolines
 			for (auto& pCallbackRegistrator : m_callbackRegistrators)
+			{
 				pCallbackRegistrator->registerCallbacks();
+			}
 			m_fCallbackRegistered = true;
 		}
 
 		// Start trampolines
-		for (auto&[id, info] : m_tramps)
+		for (auto& [id, info] : m_tramps)
+		{
 			if (info.fAllowStart)
+			{
 				info.pTramp->controlHook(TrampAction::Start);
+			}
+		}
 
 		m_fStarted = true;
 	}
@@ -172,8 +179,10 @@ public:
 			return;
 
 		// Start trampolines
-		for (auto&[id, info] : m_tramps)
-				info.pTramp->controlHook(TrampAction::Stop);
+		for (auto& [id, info] : m_tramps)
+		{
+			info.pTramp->controlHook(TrampAction::Stop);
+		}
 
 		m_fStarted = false;
 	}
@@ -184,18 +193,22 @@ public:
 	void enableTramps()
 	{
 		// Start trampolines
-		for (auto&[id, info] : m_tramps)
+		for (auto& [id, info] : m_tramps)
+		{
 			info.pTramp->controlHook(TrampAction::EnableCallback);
+		}
 	}
 
 	//
-	// Enable all trams
+	// Disable all trams
 	//
 	void disableTramps()
 	{
 		// Start trampolines
-		for (auto&[id, info] : m_tramps)
+		for (auto& [id, info] : m_tramps)
+		{
 			info.pTramp->controlHook(TrampAction::DisableCallback);
+		}
 	}
 };
 
@@ -297,6 +310,7 @@ private:
 
 			// Calls preCallback
 			if (fEnableCallback && !g_data.preCallbacks.empty())
+			{
 				for (auto fnCallback : g_data.preCallbacks)
 				{
 					try
@@ -315,6 +329,7 @@ private:
 							TrampTraits::getDllName() + "!" + TrampTraits::getFnName() + ">");
 					}
 				}
+			}
 
 			// Restore error before original function call
 			::SetLastError(nError);
@@ -331,6 +346,7 @@ private:
 
 			// Calls postCallback
 			if (fEnableCallback && !g_data.postCallbacks.empty())
+			{
 				for (auto fnCallback : g_data.postCallbacks)
 				{
 					try
@@ -352,6 +368,7 @@ private:
 							TrampTraits::getDllName() + "!" + TrampTraits::getFnName() + ">");
 					}
 				}
+			}
 
 			if (!fIsDoubleEnter)
 				markTrampolineAsCalled(false);
@@ -455,7 +472,7 @@ protected:
 				const char* sDllName = TrampTraits::getDllName();
 				const char* sFnName = TrampTraits::getFnName();
 				DWORD nFlags = TrampTraits::c_eHookFlags;
-
+#if defined(FEATURE_ENABLE_MADCHOOK)
 				g_data.fStarted = HookAPI(sDllName, sFnName, &Helper::hookFunction, (LPVOID*)&g_data.fnRaw, nFlags);
 				if (g_data.fStarted)
 				{
@@ -477,6 +494,28 @@ protected:
 						sErr += ", error <Mixture mode disabled>";
 					logError(sErr);
 				}
+#else
+				g_data.fStarted = detours::HookAPI(sDllName, sFnName, &Helper::hookFunction, (LPVOID*)&g_data.fnRaw);
+				if (g_data.fStarted)
+				{
+					dbgPrint(std::string("Hook function <") + sDllName + ":" + sFnName + ">");
+				}
+				else
+				{
+					auto sErr = std::string("Can't hook function <") + sDllName + ":" + sFnName + ">";
+					auto nErr = ::GetLastError();
+					if (ERROR_INVALID_BLOCK == nErr)
+						sErr += ", error <The function referenced is too small to be detoured>";
+					else if (ERROR_INVALID_HANDLE == nErr)
+						sErr += ", error <The Code ppPointer parameter is null or points to a null pointer>";
+					else if (ERROR_INVALID_OPERATION == nErr)
+						sErr += ", error <No pending transaction exists>";
+					else if (ERROR_NOT_ENOUGH_MEMORY == nErr)
+						sErr += ", error <Not enough memory exists to complete the operation>";
+
+					logError(sErr);
+				}
+#endif // FEATURE_ENABLE_MADCHOOK
 
 				return;
 			}
@@ -490,7 +529,7 @@ protected:
 				// For convenient debug
 				const char* sDllName = TrampTraits::getDllName();
 				const char* sFnName = TrampTraits::getFnName();
-
+#if defined(FEATURE_ENABLE_MADCHOOK)
 				if (IsHookInstalled((LPVOID*)&g_data.fnRaw))
 				{
 					if (UnhookAPI((LPVOID*)&g_data.fnRaw))
@@ -499,6 +538,12 @@ protected:
 						logError(std::string("Can't unhook function <") + sDllName + ":" + sFnName +
 							">, in use < " + std::to_string(IsHookInUse((LPVOID*)&g_data.fnRaw)) + ">");
 				}
+#else
+				if (detours::UnhookAPI((LPVOID*)&g_data.fnRaw, &Helper::hookFunction))
+					dbgPrint(std::string("Unhook function <") + sDllName + ":" + sFnName + ">");
+				else
+					logError(std::string("Can't unhook function <") + sDllName + ":" + sFnName + ">");
+#endif
 				return;
 			}
 			case TrampAction::DisableCallback:
@@ -547,6 +592,14 @@ public:
 template<typename TrampTraits>
 typename TrampBase<TrampTraits>::StaticData TrampBase<TrampTraits>::g_data;
 
+#if !defined(FEATURE_ENABLE_MADCHOOK) 
+///
+/// This flags doesn't used in detours
+/// 
+#define NO_SAFE_UNHOOKING	0
+#define FOLLOW_JMP			0
+#define SAFE_HOOKING		0
+#endif
 
 ///
 /// Name Of trampoline for fast declaration
@@ -635,5 +688,5 @@ class CONCAT_ID(CONCAT_ID(PreCallbackRegistrator_, TrampolineId), __LINE__) : pu
 #define REGISTER_POST_CALLBACK(TrampolineId, fnCallback) REGISTER_POST_CALLBACK_IF(TrampolineId, true, fnCallback)
 
 } // namespace edrpm
-} // namespace openEdr
+} // namespace cmd
 

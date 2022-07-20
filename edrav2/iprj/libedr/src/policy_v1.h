@@ -15,7 +15,7 @@
 #include "policy.h"
 #include "policyoperation.h"
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 namespace policy {
 namespace v1 {
@@ -69,6 +69,6 @@ public:
 } // namespace v1
 } // namespace policy
 } // namespace edr
-} // namespace openEdr
+} // namespace cmd
 
 /// @} 

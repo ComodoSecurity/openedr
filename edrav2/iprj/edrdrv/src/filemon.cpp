@@ -20,7 +20,7 @@
 
 #include <Ntddstor.h>
 
-namespace openEdr {
+namespace cmd {
 namespace filemon {
 
 static constexpr USHORT c_nMinSectorSize = 0x200;
@@ -46,11 +46,11 @@ inline const char* convertToString(VolumeDriveType eType)
 {
 	switch (eType)
 	{
-	case openEdr::filemon::VolumeDriveType::Fixed:
+	case cmd::filemon::VolumeDriveType::Fixed:
 		return "FIXED";
-	case openEdr::filemon::VolumeDriveType::Network:
+	case cmd::filemon::VolumeDriveType::Network:
 		return "NETWORK";
-	case openEdr::filemon::VolumeDriveType::Removable:
+	case cmd::filemon::VolumeDriveType::Removable:
 		return "REMOVABLE";
 	default:
 		return "";
@@ -2134,6 +2134,7 @@ NTSTATUS initialize()
 		IFERR_RET(ns);
 		LOGINFO2("FltStartFiltering returns 0x%08X.\r\n", (ULONG)ns);
 
+		IFERR_RET(tools::getSystemRootDirectoryPath(g_pCommonData->systemRootDirectory));
 		fSuccessInit = true;
 	}
 	__finally
@@ -2171,6 +2172,119 @@ NTSTATUS unloadFilter(_In_ FLT_FILTER_UNLOAD_FLAGS /*Flags*/)
 	return STATUS_SUCCESS;
 }
 
+namespace tools
+{
+
+__drv_maxIRQL(APC_LEVEL)
+__checkReturn
+NTSTATUS
+getInstanceFromFileObject(
+	__in PFILE_OBJECT FileObject,
+	__deref_out PFLT_INSTANCE* Instance
+	)
+{
+	if (nullptr == g_pCommonData->pFilter)
+		return STATUS_FLT_NOT_INITIALIZED;
+
+	FltVolumeDeref volume;
+	IFERR_RET_NOLOG(FltGetVolumeFromFileObject(g_pCommonData->pFilter, FileObject, &volume));
+	IFERR_RET_NOLOG(FltGetVolumeInstanceFromName(g_pCommonData->pFilter, volume, nullptr, Instance));
+	return STATUS_SUCCESS;
+}
+
+__drv_maxIRQL(PASSIVE_LEVEL)
+__checkReturn
+NTSTATUS
+openFile(
+	__in_opt PFLT_INSTANCE Instance,
+	__in const UNICODE_STRING& FilePath,
+	__out UniqueFltHandle& FileHandle,
+	__out FileObjectPtr& FileObject,
+	__in ACCESS_MASK DesiredAccess,
+	__in ULONG ShareAccess
+	)
+{
+	if (nullptr == g_pCommonData->pFilter)
+		return STATUS_FLT_NOT_INITIALIZED;
+
+	OBJECT_ATTRIBUTES objectAttributes;
+	InitializeObjectAttributes(
+		&objectAttributes,
+		const_cast<PUNICODE_STRING>(&FilePath),
+		OBJ_CASE_INSENSITIVE | OBJ_KERNEL_HANDLE,
+		nullptr,
+		nullptr);
+
+	IO_STATUS_BLOCK ioStatus;
+	IFERR_RET_NOLOG(FltCreateFileEx(
+		g_pCommonData->pFilter,
+		Instance,
+		&FileHandle,
+		&FileObject,
+		DesiredAccess,
+		&objectAttributes,
+		&ioStatus,
+		NULL,
+		FILE_ATTRIBUTE_NORMAL,
+		ShareAccess,
+		FILE_OPEN,
+		FILE_SYNCHRONOUS_IO_NONALERT,
+		NULL,
+		0,
+		IO_IGNORE_SHARE_ACCESS_CHECK));
+
+	return STATUS_SUCCESS;
+}
+
+//
+//
+//
+__drv_maxIRQL(PASSIVE_LEVEL)
+__checkReturn
+NTSTATUS
+getSystemRootDirectoryPath(
+	__out DynUnicodeString& SystemRootPath
+	)
+{
+	if (nullptr == cmd::g_pCommonData->pFilter)
+		return STATUS_FLT_NOT_INITIALIZED;
+
+	DECLARE_CONST_UNICODE_STRING(rootLink, L"\\SystemRoot");
+
+	OBJECT_ATTRIBUTES objectAttributes;
+	InitializeObjectAttributes(&objectAttributes, const_cast<PUNICODE_STRING>(&rootLink), OBJ_KERNEL_HANDLE | OBJ_CASE_INSENSITIVE, nullptr, nullptr);
+	IO_STATUS_BLOCK ioStatus = { 0 };
+
+	FileObjectPtr fileObject;
+	UniqueFltHandle fileHandle;
+
+	IFERR_RET_NOLOG(FltCreateFileEx(cmd::g_pCommonData->pFilter,
+		nullptr,
+		&fileHandle,
+		&fileObject,
+		FILE_TRAVERSE | SYNCHRONIZE,
+		&objectAttributes,
+		&ioStatus,
+		nullptr,
+		FILE_ATTRIBUTE_DIRECTORY,
+		FILE_SHARE_ALL,
+		FILE_OPEN,
+		FILE_DIRECTORY_FILE | FILE_SYNCHRONOUS_IO_NONALERT,
+		nullptr,
+		0,
+		IO_IGNORE_SHARE_ACCESS_CHECK | IO_NO_PARAMETER_CHECKING));
+
+	FltInstanceDeref instance;
+	IFERR_RET_NOLOG(filemon::tools::getInstanceFromFileObject(fileObject, &instance));
+
+	FltFileNameInfoDeref fileNameInfo;
+	IFERR_RET_NOLOG(FltGetFileNameInformationUnsafe(fileObject, instance, FLT_FILE_NAME_NORMALIZED | FLT_FILE_NAME_QUERY_ALWAYS_ALLOW_CACHE_LOOKUP, &fileNameInfo));
+	IFERR_RET_NOLOG(SystemRootPath.assign(&fileNameInfo->Name));
+
+	return STATUS_SUCCESS;
+}
+
+} // namespace tools
 } // namespace filemon
-} // namespace openEdr
+} // namespace cmd
 /// @}

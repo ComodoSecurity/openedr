@@ -17,7 +17,7 @@
 #include "variant.hpp"
 #include "error.hpp"
 
-namespace openEdr {
+namespace cmd {
 namespace logging {
 
 ///
@@ -149,7 +149,7 @@ void setComponentLogLevel(const std::string& sName, LogLevel logLevel);
 // Bring log levels to cmd namespace
 using logging::LogLevel;
 
-} // namespace openEdr
+} // namespace cmd
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -174,11 +174,11 @@ using logging::LogLevel;
 	LOG4CPLUS_RESTORE_DOWHILE_WARNING()
 
 #define _LOG2(logger, logLevel, logEvent) \
-	_LOG4CPLUS_MACRO_BODY(openEdr::logging::detail::LogController::getInstance().getLogger(logger), \
+	_LOG4CPLUS_MACRO_BODY(cmd::logging::detail::LogController::getInstance().getLogger(logger), \
 		static_cast<log4cplus::LogLevel>(logLevel), logEvent)
 
 #define _LOG(logger, logLevel, logEvent) \
-	_LOG2(logger, openEdr::LogLevel::logLevel, logEvent)
+	_LOG2(logger, cmd::LogLevel::logLevel, logEvent)
 
 ///
 /// @def LOGERR([component,] exception [, logEvent])
@@ -208,22 +208,22 @@ using logging::LogLevel;
 //											   main.cpp:28
 
 #define _LOG_ERR(logger, errCodeOrException, logEvent) \
-	_LOG(logger, Critical, "[ERR] " << openEdr::error::ErrorCodeFmt(errCodeOrException) << std::endl \
+	_LOG(logger, Critical, "[ERR] " << cmd::error::ErrorCodeFmt(errCodeOrException) << std::endl \
 		logEvent \
-		openEdr::error::StackTraceFmt(SL, errCodeOrException, openEdr::logging::detail::c_sLogIndent))
+		cmd::error::StackTraceFmt(SL, errCodeOrException, cmd::logging::detail::c_sLogIndent))
 
 #define _LOG_ERR1(errCodeOrException) \
 	_LOG_ERR(CMD_COMPONENT, errCodeOrException, <<)
 
 #define _LOG_ERR2(errCodeOrException, logEvent) \
 	_LOG_ERR(CMD_COMPONENT, errCodeOrException, \
-		<< openEdr::logging::detail::c_sLogIndent \
-		<< openEdr::error::SourceLocationFmt(SL) << " (" << logEvent << ")" << std::endl <<)
+		<< cmd::logging::detail::c_sLogIndent \
+		<< cmd::error::SourceLocationFmt(SL) << " (" << logEvent << ")" << std::endl <<)
 
 #define _LOG_ERR3(logger, errCodeOrException, logEvent) \
 	_LOG_ERR(logger, errCodeOrException, \
-		<< openEdr::logging::detail::c_sLogIndent \
-		<< openEdr::error::SourceLocationFmt(SL) << " (" << logEvent << ")" << std::endl <<)
+		<< cmd::logging::detail::c_sLogIndent \
+		<< cmd::error::SourceLocationFmt(SL) << " (" << logEvent << ")" << std::endl <<)
 
 ///
 /// Output error without logging of source location.
@@ -234,9 +234,9 @@ using logging::LogLevel;
 	_MSVC_VA_ARGS_WORKAROUND(_GET_MACRO, (__VA_ARGS__, _4, _LOG_ERRNOSL3, _LOG_ERRNOSL2, _LOG_ERRNOSL1))(__VA_ARGS__)
 
 #define _LOG_ERRNOSL(logger, errCodeOrException, logEvent) \
-	_LOG(logger, Critical, "[ERR] " << openEdr::error::ErrorCodeFmt(errCodeOrException) << std::endl \
+	_LOG(logger, Critical, "[ERR] " << cmd::error::ErrorCodeFmt(errCodeOrException) << std::endl \
 		logEvent \
-		openEdr::error::StackTraceFmt(SL, errCodeOrException, openEdr::logging::detail::c_sLogIndent))
+		cmd::error::StackTraceFmt(SL, errCodeOrException, cmd::logging::detail::c_sLogIndent))
 
 #define _LOG_ERRNOSL1(errCodeOrException) \
 	_LOG_ERRNOSL(CMD_COMPONENT, errCodeOrException, << )
@@ -246,7 +246,7 @@ using logging::LogLevel;
 
 #define _LOG_ERRNOSL3(logger, errCodeOrException, logEvent) \
 	_LOG_ERRNOSL(logger, errCodeOrException, \
-		<< openEdr::logging::detail::c_sLogIndent << logEvent << std::endl <<)
+		<< cmd::logging::detail::c_sLogIndent << logEvent << std::endl <<)
 
 
 ///

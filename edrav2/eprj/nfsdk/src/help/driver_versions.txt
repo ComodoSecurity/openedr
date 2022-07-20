@@ -1,0 +1,12 @@
+Differences between driver versions.
+================================================================
+
+- TDI driver works on Windows XP, Windows Vista and Windows 7.
+
+- WFP driver works on Windows 7 and higher. It is required on Windows 8 and higher to filter Metro applications and other processes in AppContainers, because Microsoft has disabled TDI interface for this kind of applications.
+
+Windows 7 build can be used instead of TDI driver on Windows 2008 R2. Some applications (e.g. Exchange Server) on this server version of Windows cannot be filtered with TDI driver.
+
+Windows  8 build of WFP driver uses additional API functions, allowing to  avoid  blocking TCP connections redirected to local proxy. If your project doesn't use redirection, it is possible to use Windows 7 build on Windows 8/8.1, Windows 10 and their server analogues.
+
+Windows 10 build of WFP driver is Windows 8 build, signed with EV certificate via Microsoft Dev Portal. Starting from Windows 10 build 1607 the drivers signed with generic non-EV certificates don't work when secure boot is enabled.

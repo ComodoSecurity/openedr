@@ -18,7 +18,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "thrdpool"
 
-namespace openEdr {
+namespace cmd {
 
 ///////////////////////////////////////////////////////////////////////
 //
@@ -506,5 +506,5 @@ ObjPtr<ITaskContext> convertToTask(ThreadPool::TimerContextPtr pTimerContext)
 	return pCtx;
 }
 
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

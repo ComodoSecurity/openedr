@@ -13,7 +13,7 @@
 #include <io.hpp>
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 
 
@@ -124,7 +124,7 @@ using nljson = nlohmann::json;
 //
 // serializeToJson
 //
-nljson saveVariantToJson(const openEdr::Variant& vElement)
+nljson saveVariantToJson(const cmd::Variant& vElement)
 {
 	using ValueType = Variant::ValueType;
 	switch (vElement.getType())
@@ -177,7 +177,7 @@ nljson saveVariantToJson(const openEdr::Variant& vElement)
 //
 //
 //
-std::string saveToJson(const openEdr::Variant& vValue)
+std::string saveToJson(const cmd::Variant& vValue)
 {
 	try
 	{
@@ -193,30 +193,30 @@ std::string saveToJson(const openEdr::Variant& vValue)
 //
 // deserializeFromJson
 //
-openEdr::Variant saveJsonToVariant(nljson& element)
+cmd::Variant saveJsonToVariant(nljson& element)
 {
 	switch (element.type())
 	{
 		case nljson::value_t::null:
 		{
-			return openEdr::Variant(nullptr);
+			return cmd::Variant(nullptr);
 		}
 		case nljson::value_t::boolean:
 		{
-			return openEdr::Variant((bool)element);
+			return cmd::Variant((bool)element);
 		}
 		case nljson::value_t::number_integer:
 		{
-			return openEdr::Variant((int64_t)element);
+			return cmd::Variant((int64_t)element);
 		}
 		case nljson::value_t::number_unsigned:
 		{
-			return openEdr::Variant((uint64_t)element);
+			return cmd::Variant((uint64_t)element);
 		}
 		case nljson::value_t::string:
 		{
 			std::string sUtf8Val = element;
-			return openEdr::Variant(sUtf8Val);
+			return cmd::Variant(sUtf8Val);
 		}
 		case nljson::value_t::array:
 		{
@@ -263,7 +263,7 @@ namespace json_jsoncpp {
 //
 // deserializeFromJson
 //
-openEdr::Variant saveJsonToVariant(const Json::Value& value)
+cmd::Variant saveJsonToVariant(const Json::Value& value)
 {
 	switch (value.type())
 	{
@@ -311,7 +311,7 @@ openEdr::Variant saveJsonToVariant(const Json::Value& value)
 //
 // serializeToJson
 //
-Json::Value saveVariantToJson(const openEdr::Variant& vValue)
+Json::Value saveVariantToJson(const cmd::Variant& vValue)
 {
 	using ValueType = Variant::ValueType;
 	switch (vValue.getType())
@@ -356,7 +356,7 @@ Json::Value saveVariantToJson(const openEdr::Variant& vValue)
 //
 //
 //
-std::string saveToJson(const openEdr::Variant& vValue, JsonFormat fmt)
+std::string saveToJson(const cmd::Variant& vValue, JsonFormat fmt)
 {
 	try
 	{
@@ -518,5 +518,5 @@ Variant deserialize(ObjPtr<io::IRawReadableStream> pStream)
 }
 
 } // namespace variant
-} // namespace openEdr 
+} // namespace cmd 
 

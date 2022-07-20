@@ -4,7 +4,7 @@
 //
 #include "pch.h"
 
-using namespace openEdr;
+using namespace cmd;
 
 TEST_CASE("ErrorCode.Enum")
 {
@@ -419,7 +419,7 @@ TEST_CASE("WinAPIError.log")
 //
 TEST_CASE("getWinApiErrorString._")
 {
-	using openEdr::error::win::getWinApiErrorString;
+	using cmd::error::win::getWinApiErrorString;
 	CHECK(getWinApiErrorString(ERROR_INVALID_FUNCTION).find("0x00000001") == 0);
 	CHECK(getWinApiErrorString(ERROR_FILE_NOT_FOUND).find("0x00000002") == 0);
 	CHECK(getWinApiErrorString(ERROR_INVALID_HANDLE).find("0x00000006") == 0);
@@ -430,7 +430,7 @@ TEST_CASE("getWinApiErrorString._")
 //
 TEST_CASE("Exception.WinAPIError")
 {
-	using openEdr::error::win::getWinApiErrorString;
+	using cmd::error::win::getWinApiErrorString;
 	SECTION("knownError")
 	{
 		error::win::WinApiError e(ERROR_FILE_NOT_FOUND);

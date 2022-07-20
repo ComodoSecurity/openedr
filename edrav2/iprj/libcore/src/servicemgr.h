@@ -11,7 +11,7 @@
 #include <command.hpp>
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 
 /// 
 /// Manager of global named object and services
@@ -54,5 +54,5 @@ public:
 	Variant execute(Variant vCommand, Variant vParams) override;
 };
 
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

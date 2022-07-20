@@ -15,7 +15,7 @@
 #include <common.hpp>
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 namespace operation {
 
@@ -404,5 +404,5 @@ Variant transform(Variant vData, Variant vSchema, TransformSourceMode eMode)
 
 } // namespace operation
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd
 // @}

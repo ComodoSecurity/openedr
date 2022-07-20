@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "serializer.h"
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 
 static const char g_sKey[] = "{57E31810-04AD-40E9-9E2A-8D511CAD8621}";
@@ -260,4 +260,4 @@ std::optional<Variant> StreamDeserializer::get()
 }
 
 } // namespace variant
-} // namespace openEdr 
+} // namespace cmd 

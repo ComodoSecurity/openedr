@@ -16,7 +16,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "cache"
 
-namespace openEdr {
+namespace cmd {
 
 //
 //
@@ -95,5 +95,5 @@ Variant StringCache::execute(Variant vCommand, Variant vParams)
 	error::OperationNotSupported(SL, FMT("Unsupported command <" << vCommand << ">")).throwException();
 }
 
-} // namespace openEdr 
+} // namespace cmd 
 /// @}

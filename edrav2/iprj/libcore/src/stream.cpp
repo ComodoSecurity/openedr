@@ -10,7 +10,7 @@
 #include "service.hpp"
 #include "common.hpp"
 
-namespace openEdr {
+namespace cmd {
 namespace io {
 
 //
@@ -356,4 +356,4 @@ ObjPtr<IReadableStream> createNullStream(Size nSize)
 }
 
 } // namespace io
-} // namespace openEdr 
+} // namespace cmd 

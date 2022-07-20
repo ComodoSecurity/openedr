@@ -13,7 +13,7 @@
 #undef CMD_COMPONENT
 #define CMD_COMPONENT "service" 
 
-namespace openEdr {
+namespace cmd {
 
 
 bool g_fCrtlBreakIsUsed = false;
@@ -75,4 +75,4 @@ std::shared_ptr<IApplicationMode> createAppMode_default()
 	return std::make_shared<AppMode_default>();
 }
 
-} // namespace openEdr
+} // namespace cmd

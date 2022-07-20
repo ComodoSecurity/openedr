@@ -11,7 +11,7 @@
 /// @{
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace edr {
 namespace policy {
 
@@ -149,15 +149,15 @@ namespace error {
 using CompileError = edr::policy::CompileError;
 } // namespace error
 
-} // namespace openEdr
+} // namespace cmd
 
 ///
 /// Compile block begin macro
 ///
 #define CMD_CATCH_COMPILE(location) \
-	catch (const openEdr::error::CompileError&) { throw; } \
-	catch (const openEdr::error::Exception& e) { \
-		openEdr::error::CompileError(SL, location, e.what()).throwException(); \
+	catch (const cmd::error::CompileError&) { throw; } \
+	catch (const cmd::error::Exception& e) { \
+		cmd::error::CompileError(SL, location, e.what()).throwException(); \
 	}
 
 /// @} 

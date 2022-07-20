@@ -1,0 +1,28 @@
+TARGETNAME=netfilter2
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(DDK_LIB_PATH)\tdi.lib 
+
+INCLUDES=$(DDK_INC_PATH);..\..\include;
+
+SOURCES=..\hashtable.c \
+	..\mempools.c \
+	..\devctrl.c \
+	..\devtcp.c \
+	..\devudp.c \
+	..\addr.c \
+	..\tcpconn.c \
+	..\tcprecv.c \
+	..\tcpsend.c \
+	..\udpconn.c \
+	..\udprecv.c \
+	..\udpsend.c \
+	..\packet.c \
+	..\gvars.c \
+	..\tdiutil.c \
+	..\ctrlio.c \
+	..\rules.c \
+	..\drventry.c \
+	..\netfilter2.rc
+

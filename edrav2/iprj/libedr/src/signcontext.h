@@ -14,7 +14,7 @@
 #pragma once
 #include <objects.h>
 
-namespace openEdr {
+namespace cmd {
 
 ///
 /// Events Pattern Searcher.
@@ -136,6 +136,6 @@ public:
 	/// @copydoc ICommandProcessor::execute()
 	virtual Variant execute(Variant vCommand, Variant vParams) override;
 };
-} // namespace openEdr 
+} // namespace cmd 
 
 /// @} 

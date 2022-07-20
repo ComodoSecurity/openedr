@@ -9,7 +9,7 @@
 ///
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace sys {
 
 ///
@@ -110,5 +110,5 @@ SessionsInfoPtr getSessionsInfo(bool fOnlyActive);
 std::wstring getLocalConsoleUser();
 
 } // namespace sys
-} // namespace openEdr
+} // namespace cmd
 /// @} 

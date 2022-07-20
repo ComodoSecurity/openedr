@@ -1,0 +1,66 @@
+-------------------------------------------------------------------------------------------
+Q: Is there any way I can get the signed driver?
+
+A: Each developer must sign the driver with own code signing certificate. 
+
+
+-------------------------------------------------------------------------------------------
+Q: How to sign the driver for using it on 64-bit Windows?
+
+A: The drivers must be signed by two certificates:
+
+- Code signing certificate from one of the supported authorities:
+http://www.microsoft.com/whdc/winlogo/drvsign/crosscert.mspx
+
+- Cross-certificate from Microsoft, which can be downloaded from the
+same page.
+
+-  signtool.exe  utility  must  be used with /ac option specifying the
+appropriate  cross-certificate. The utility is included in Windows SDK and
+WDK.
+
+The  latest version of Windows 10 requires signing with EV certificate
+using Microsoft Dev Portal:
+https://blogs.msdn.microsoft.com/windows_hardware_certification/2016/07/26/driver-signing-changes-in-windows-10-version-1607/
+
+So to make WFP driver work on a clean installation of Windows 10 build
+1607 it is necessary to get a EV code signing certificate, register on
+Dev Portal, prepare .cab archive with the driver and some inf file and
+sign the driver on the portal.
+
+For  previous  versions  of  Windows  it  is  possible  to use the old
+approach,  signing  the driver with signtool and cross-certificate. It
+is   easier,   because  the binaries signed via Dev Portal work only on
+Windows 10, and don't work on Windows 7/8 without HLK test:
+https://msdn.microsoft.com/en-us/library/windows/hardware/hh801887.aspx
+
+
+-------------------------------------------------------------------------------------------
+Q: Unable to link with the static build of nfapi.lib, the linker shows "unresolved external symbol" errors.
+
+A: Define a symbol _NFAPI_STATIC_LIB in project configuration or insert the following string before including nfapi.h:
+#define _NFAPI_STATIC_LIB 1
+
+
+
+-------------------------------------------------------------------------------------------
+Q: Unable to programmatically install the driver from 32-bit process on Vista\7 x64. 
+The driver is always saved to windows\SysWOW64\drivers instead of windows\system32\drivers and can't start.
+
+A: This is a feature of 64-bit Windows called "virtualization".
+It  is  applied  to 32-bit applications. Windows redirects file system
+and  registry  calls to different locations, used as an alternate view
+of the standard folders and registry keys:
+http://msdn.microsoft.com/en-us/library/aa384249%28VS.85%29.aspx
+
+The following ways can be used to install the driver properly on x64:
+
+- Call API function Wow64DisableWow64FsRedirection from 32-bit
+installer before saving the driver to windows\system32\drivers:
+http://msdn.microsoft.com/en-us/library/aa365743(VS.85).aspx
+It is possible to do this using System plug-in in NSIS, and using
+direct API call in other installers.
+
+-  Use  64-bit  installer  on x64. For example Windows Installer (MSI)
+allows to avoid all compatibility problems.
+

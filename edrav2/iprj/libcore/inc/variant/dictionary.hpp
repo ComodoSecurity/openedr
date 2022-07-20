@@ -8,7 +8,7 @@
 //
 #pragma once
 
-namespace openEdr {
+namespace cmd {
 namespace variant {
 
 //
@@ -249,7 +249,7 @@ inline std::ostream& operator<<(std::ostream& oStrStream, const Dictionary& vVal
 
 
 } // namespace variant
-} // namespace openEdr
+} // namespace cmd
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -262,7 +262,7 @@ inline std::ostream& operator<<(std::ostream& oStrStream, const Dictionary& vVal
 #ifdef CATCH_VERSION_MAJOR
 namespace Catch {
 template<>
-struct is_range<openEdr::variant::Dictionary> {
+struct is_range<cmd::variant::Dictionary> {
 	static const bool value = false;
 };
 }
