@@ -88,9 +88,9 @@ OpenEDR is a single agent that can be installed on Windows endpoints. It generat
 The telemetry data is stored locally on the endpoint itself. You can use any log streaming solution and analysis platform. Here we will present, how can you do remote streaming and analysis via open source tools like Elasticsearch ELK and Filebeat.
 
 ## OpenEDR:
-OpenEDR project will release installer MSI’s signed by Comodo Security Solutions, The default installation folder is C:\Program Files\OpenEdr\EdrAgentV2, currently, we don’t have many options to edit/configure the rule set, alerts, etc.  Those will be coming with upcoming releases. 
+OpenEDR project will release installer MSI’s signed by Comodo Security Solutions, The default installation folder is C:\Program Files\OpenEdr\EdrAgentV2
 
-The agent outputs to C:\ProgramData\edrsvc\log\output_events by default, there you will see the EDR telemetry data where you should point this to Filebeat or other log streaming solutions you want.
+The agent outputs to C:\ProgramData\edrsvc\log\output_events by default, there you will see the EDR telemetry data where you should point this to Filebeat or other log streaming solutions you want. Please check following sections for details
 
 ## Docker and Docker Compose:
 Docker is widely known virtualizon method for almost all environments you can use use docker for installing Elasticsearch and Log-stash to parse and more visibiltiy we used Docker to virtualize and make an easy setup process for monitoring our openedr agent. You can visit and look for more details and configure from https://github.com/docker
@@ -107,9 +107,14 @@ Another option is using Docker, this will also enable a quick start for PoC and 
 Filebeat is a very good option to transfer OpenEDR outputs to Elasticsearch, you need to install Filebeat on each system you want to monitor. Overall instructions for it can be found here: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation-configuration.html 
 
 We don’t have OpenEDR Filebeat modules yet so you need to configure a custom input option for filebeat https://www.elastic.co/guide/en/beats/filebeat/current/configuration-filebeat-options.html
-## Policy Format
+
+## Editing Alerting Policies 
 The agent uses network driver, file driver, and DLL injection to capture events that occur on the endpoint. It enriches the event data with various information, then filters these events according to the policy rules and sends them to the server. 
+
 You can customize your policy with your own policy. Within the installation folder which is "C:\Program Files\Comodo\EdrAgentV2" policy file called   "evm.local.src"
+
+For Comodo suggested rules please check the rule repo https://github.com/ComodoSecurity/OpenEDRRules
+
 You can edit this file with any text editor and customize your own policy accordingly with the given information below.
 ```console
 {
