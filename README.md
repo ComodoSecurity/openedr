@@ -2,6 +2,7 @@
 [![OpenEDR](https://techtalk.comodo.com/wp-content/uploads/2020/09/logo_small.jpg)](https://openedr.com/)
 [![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://openedr.com/register/) [![Email](https://img.shields.io/badge/email-join-blue.svg)](mailto:register@openedr.com)
 
+
 We at OpenEDR believe in creating a cybersecurity platform with its source code openly available to the public,  where products and services can be provisioned and managed together. EDR is our starting point.
 OpenEDR is a full-blown EDR capability. It is one of the most sophisticated, effective EDR code base in the world and with the community’s help, it will become even better.
 
@@ -11,6 +12,7 @@ OpenEDR’s security architecture simplifies *breach detection, protection, and 
 
 ## Quick Start
 The community response to OpenEDR has been absolutely amazing! Thank you. We had a lot of requests from people who want to deploy and use OpenEDR easily and quickly. We have a roadmap to achieve all these. However in the meanwhile, we have decided to use the Comodo Dragon Enterprise platform with OpenEDR to achieve that. By simply opening an account, you will be able to use OpenEDR. No custom installation, no log forwarding configuration, or worrying about storing telemetry data. All of that is handled by the Comodo Dragon Platform. This is only a short-term solution until all the easy-to-use packages for OpenEDR is finalized. In the meanwhile do take advantage of this by emailing quick-start@openedr.com to get you up and running!
+
 
 ## Components
 The Open EDR consists of the following components:
@@ -74,6 +76,9 @@ needs checking
 * xxhash_cpp: xxHash library to C++17. (https://cyan4973.github.io/xxHash/)
 * Zlib: Compression Libraries (https://zlib.net/)
 ```
+# Roadmap
+Please refer here for project roadmap : https://github.com/ComodoSecurity/openedr_roadmap/projects/1
+
 # Roadmap
 Please refer here for project roadmap : https://github.com/ComodoSecurity/openedr_roadmap/projects/1
 
@@ -372,6 +377,7 @@ Process Timeline
 
 Process Treeview
 [![OpenEDR](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/Screenshot_5.jpg)](https://enterprise.comodo.com/dragon/)
+
 
 Event Search
 [![OpenEDR](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/Screenshot_6.jpg)](https://enterprise.comodo.com/dragon/)

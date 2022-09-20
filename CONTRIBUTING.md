@@ -11,7 +11,9 @@ Open an issue label it question, also please help us to answer the question as w
 Improve our rules, correct it if necessary, please use similiar as bug/feature request, 
 
 ## Work on open issues
-We love pull requests from everyone. Either bug/feature requests, Take a task Fork, clone the repo and submit a pull request
+We love pull requests from everyone. Either bug/feature requests, Take a task Fork, clone the repo and submit a pull request.
+Please do PR to the ‘develop’ branch only. 
+The 'main' branch stores flat history of all released versions. A tip of the 'main' branch points to the current version. Any direct commits to the main branch by developers are prohibited.
 
 ## Testing
 We need extensive testing since we might introduce some bugs to make it open source in hurry, please test it in various platforms and report your findings as issues
