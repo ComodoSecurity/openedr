@@ -10,11 +10,11 @@
 
 using namespace cmd;
 
-const std::string_view c_sCustomerId = "CustomerIdPlaceholder";
+const std::string_view c_sCustomerId = "CustomerIdPlaceholder"; 
 const std::string_view c_sEndpointId = "EndpointIdPlaceholder"; // UT_LIBCLOUD
 
 const std::string_view c_sPubSubTopic = "edr-prod-raw-evt-ps";
-const std::string_view c_sSaCredentials = "SaCredentialsPlaceholder";
+const std::string_view c_sSaCredentials = "SaCredentialsPlaceholder"; 
 
 
 const std::string_view c_sSaCredentialsBad = "SaCredentialsBadPlaceholder";

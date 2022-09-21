@@ -255,9 +255,8 @@ Variant CloudService::doHeartbeat()
 
 	checkCredentials();
 
-	//FIXME: REMOVED: heartbit request
+	//REMOVED: heartbit request
 	Variant vResult;
-
 	LOGLVL(Detailed, "Receive heartbeat response (command <" << vResult.get("command", Variant()) << ">)");
 
 	if (vResult.isNull())
@@ -388,7 +387,7 @@ void CloudService::confirmCommand(std::string_view sCommandId)
 
 	checkCredentials();
 
-	//FIXME: REMOVED: command/ack request
+	//REMOVED: command/ack request
 
 	TRACE_END("Error during request to acknowledge service");
 
@@ -411,7 +410,7 @@ Variant CloudService::getConfig(Variant vParams)
 	if (!vCurrParams.has("tryTimeout"))
 		vCurrParams.put("tryTimeout", 5000);
 
-	//FIXME: REMOVED: config retrieval from cloud
+	//REMOVED: config retrieval from cloud
 	Variant vResult;
 
 	if (vResult.has("gcpPubSubTopic"))
@@ -466,9 +465,8 @@ Variant CloudService::getPolicy(Variant vParams)
 	if (!vCurrParams.has("tryTimeout"))
 		vCurrParams.put("tryTimeout", 5000);
 
-	//FIXME: REMOVED: policy retrieval from cloud
+	//REMOVED: policy retrieval from cloud
 	Variant vResult;
-
 	// Update EVM source policy in the catalog
 	auto vEvmPolicy = getCatalogData(m_sPolicyCatalogPath + ".groups.eventsMatching.source.evmCloud");
 	if (vResult.has("policy"))
@@ -517,7 +515,7 @@ Variant CloudService::getToken(Variant vParams)
 		{"x-api-key", vParams["apiKey"]}
 	}));
 
-	//FIXME: REMOVED: token retrieval from cloud
+	//REMOVED: token retrieval from cloud
 	Variant vResult;
 
 	if (!vResult.has("token"))
@@ -544,12 +542,12 @@ Variant CloudService::enroll(Variant vParams)
 	if (sEndpointId.empty())
 		throw error::InvalidArgument(SL, "The <endpointId> is not specifed");
 
+	
 	std::string sCustomerId = vParams.get("customerId", "");
 	std::string sClientId = vParams.get("clientId", "");
-
-	//FIXME: REMOVED: enroll procedure
+	
+	//REMOVED: enroll procedure
 	Variant vResult;
-
 	// enrollment service had an error then returns customerID instead companyID
 	if (!vResult.has("companyID"))
 		vResult.put("companyID", variant::convert<variant::ValueType::String>(vResult["customerID"]));
@@ -590,8 +588,8 @@ Variant CloudService::getIdentity(Variant vParams)
 	std::string sMachineId = vParams.get("machineId", "");
 	if (sMachineId.empty())
 		throw error::InvalidArgument(SL, "The <machineId> parameter is not specifed");
-
-	//FIXME: REMOVED: identity retrieval from cloud
+	
+	//REMOVED: identity retrieval from cloud
 	Variant vResult;
 
 	if (!vResult.has("endpointID"))
@@ -655,7 +653,7 @@ Variant CloudService::reportEndpointInfo(bool fFull)
 
 	LOGLVL(Detailed, "Send <info_update> report");
 
-	//FIXME: REMOVED: status/update request
+	//REMOVED: status/update request
 
 	return vData;
 	TRACE_END("Error during request to info_update service");
@@ -675,8 +673,7 @@ void CloudService::reportOffline()
 	{
 		checkCredentials();
 
-	//FIXME: REMOVED: status/update request
-
+		//REMOVED: status/update request
 	}
 	CMD_PREPARE_CATCH
 	catch (error::OperationCancelled& e)
@@ -712,9 +709,8 @@ void CloudService::reportUninstall(bool fFailSafe)
 			confirmCommand(sUninstallCommandId);
 			putCatalogData("app.config.extern.endpoint.uninstall.commandId", nullptr);
 		}
-
-		//FIXME: REMOVED: status/update request
-
+		//REMOVED: status/update request
+		
 	}
 	catch (...)
 	{

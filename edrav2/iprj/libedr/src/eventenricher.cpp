@@ -17,7 +17,13 @@ namespace cmd {
 namespace {
 	bool containsInterpetatorCmd(const std::wstring& cmdLine)
 	{
-		return (cmdLine.find(L"cmd.exe") != std::string::npos)
+		return (cmdLine.find(L"cmd ") != std::string::npos)
+			|| (cmdLine.find(L"python ") != std::string::npos)
+			|| (cmdLine.find(L"py3 ") != std::string::npos)
+			|| (cmdLine.find(L"py ") != std::string::npos)
+			|| (cmdLine.find(L"powershell ") != std::string::npos)
+			|| (cmdLine.find(L"powershell_ise ") != std::string::npos)
+			|| (cmdLine.find(L"cmd.exe") != std::string::npos)
 			|| (cmdLine.find(L"python.exe") != std::string::npos)
 			|| (cmdLine.find(L"py3.exe") != std::string::npos)
 			|| (cmdLine.find(L"py.exe") != std::string::npos)
@@ -25,32 +31,126 @@ namespace {
 			|| (cmdLine.find(L"powershell_ise.exe") != std::string::npos);
 	}
 
-	std::wstring getFilePath(std::wstring str)
+	std::wstring getScriptLocation(const Variant& procInfo)
 	{
-		const std::wstring executableExt(L".exe");
-		auto commandEnd = str.find(executableExt);
+		std::vector<std::wstring> cmdLines { 
+			procInfo["parent"]["cmdLine"],
+			procInfo["parent"]["parent"]["cmdLine"] }; // here it seems like we have a problem in the processes tree.
+		std::vector<std::wstring> cdCommands{ L"cd ", L"-literalPath '" };
 
-		if (commandEnd == std::wstring::npos)
+		for (const auto& cmdLine : cmdLines)
+		{
+			for (const auto& item : cdCommands)
+			{
+				auto result = cmdLine.find(item);
+				if (result != std::wstring::npos)
+				{
+					std::wstring scriptLocation = cmdLine.substr(result + item.length());
+					scriptLocation = scriptLocation.substr(0, scriptLocation.length() - 1); //strip the last " symbol which is not needed.
+					return scriptLocation;
+				}
+			}
+		}
+
+		
+		return L"";
+	}
+
+	std::wstring getScriptName(const Variant& procInfo)
+	{
+		std::wstring cmdLine = procInfo["cmdLine"];
+		auto firstSpace = cmdLine.find(L" ");
+
+		if (firstSpace != std::wstring::npos)
+		{
+			cmdLine = cmdLine.substr(firstSpace + 2);
+			auto lastSlashIndex = cmdLine.find_last_of(L"\\");
+
+			if (lastSlashIndex != std::wstring::npos)
+			{
+				cmdLine = cmdLine.substr(lastSlashIndex + 1);
+			}
+
+			return cmdLine;
+		}
+		
+
+		return L"";
+	}
+
+	std::wstring getFilePath(const Variant& procInfo)
+	{
+#define NT_SUCCESS(Status) (((NTSTATUS)(Status)) >= 0)
+
+		if (!procInfo.has("pid"))
+		{
 			return L"";
+		}
 
-		str.erase(str.begin(), str.begin() + commandEnd + executableExt.length());
+		// Try to find existing process by PID
+		int32_t nPid = procInfo["pid"];
+		sys::win::ScopedHandle hProcess(::OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, nPid));
+		if (!hProcess)
+		{
+			return L"";
+		}
 
-		const std::wregex filePathRegex(L"[A-za-z]:.*(\.cmd|\.bat|\.ps1|\.py)");
+		std::wstring currentpath;
+		if (!NT_SUCCESS(getProcessCurrentDirectory(hProcess,currentpath)))
+		{
+			return L"";
+		}
 
-		str.erase(remove_if(str.begin(), str.end(), [](const wchar_t& sym) {return sym == L'\"'; }), str.end());
+		std::wstring imageFullPath;
+		if (!NT_SUCCESS(getProcessImageFullPath(hProcess, imageFullPath)))
+		{
+			return L"";
+		}
 
-		std::wsmatch match;
+		// trying to get it from the current process command line:
+		std::wstring cmdLine = procInfo["cmdLine"];
+		const std::wstring executableExt(L".exe");
+		auto commandEnd = cmdLine.find(executableExt);
 
-		const std::wstring& str2 = str;
+		std::wstring lpScriptPath;
+		if (cmd::sys::win::getFullScriptPath(imageFullPath.c_str(), cmdLine.data(), currentpath.c_str(), lpScriptPath))
+		{
+			if (std::filesystem::exists(lpScriptPath))
+			{
+				return lpScriptPath;
+			}
+		}
 
-		if (std::regex_search(str2.begin(), str2.end(), match, filePathRegex))
-			return match[0];
+		if (commandEnd != std::wstring::npos)
+		{
+			cmdLine.erase(cmdLine.begin(), cmdLine.begin() + commandEnd + executableExt.length());
+			const std::wregex filePathRegex(L"[A-za-z]:.*(\.cmd|\.bat|\.ps1|\.py)");
+			cmdLine.erase(remove_if(cmdLine.begin(), cmdLine.end(), [](const wchar_t& sym) {return sym == L'\"'; }), cmdLine.end());
+			std::wsmatch match;
+			const std::wstring& str2 = cmdLine;
+
+			if (std::regex_search(str2.begin(), str2.end(), match, filePathRegex))
+				return match[0];
+		}
+
+		// possibly script was called with a local path, so here I try to get current location from the parent process command line:
+		std::wstring scriptLocation = getScriptLocation(procInfo);
+		std::wstring scriptName = getScriptName(procInfo);
+
+		//trim the script name
+		scriptName.erase(std::remove(scriptName.begin(), scriptName.end(), L'\\'), scriptName.end());
+
+		if(!scriptLocation.empty() && !scriptName.empty())
+			return scriptLocation + L"\\" + scriptName;
 
 		return L"";
 	}
 
 	Variant readContent(const std::wstring& filePath)
 	{
+		if (!std::filesystem::exists(filePath))
+			return Variant{};
+
 		std::ifstream fileStream(filePath);
 
 		const uintmax_t fileContentLimit = 100000;
@@ -376,7 +476,7 @@ void EventEnricher::put(const Variant& vEventRef)
 		const std::wstring cmdLine = enrichedProcessInfo["cmdLine"];
 		if (containsInterpetatorCmd(cmdLine))
 		{
-			const std::wstring scriptPath = getFilePath(cmdLine);
+			const std::wstring scriptPath = getFilePath(enrichedProcessInfo);
 			const Variant scriptContent = !scriptPath.empty() ? readContent(scriptPath) : Variant();
 
 			if (!scriptContent.isEmpty())

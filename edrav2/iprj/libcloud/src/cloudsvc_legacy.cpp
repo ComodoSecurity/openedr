@@ -115,8 +115,7 @@ Variant CloudService::getConfig()
 {
 	std::string sToken = getCatalogData("app.config.license.token");
 	std::string sMachineId = getCatalogData("app.config.license.machineId");
-
-	//FIXME: REMOVED: config request
+	//REMOVED: config request
 	Variant vResult;
 	
 	// First start
@@ -210,7 +209,7 @@ Variant CloudService::doHeartbeat2(bool fFastTrack)
 		{"policyHash", getCatalogData(m_sPolicyCatalogPath + ".source.hash", "00000000000000000000000000000000")},
 	});
 			
-	//FIXME: REMOVED: heartbit request
+	//REMOVED: heartbit request
 	Variant vResult;
 
 	LOGLVL(Detailed, "Receive heartbeat response (status <" <<
@@ -242,9 +241,9 @@ Variant CloudService::doHeartbeat2(bool fFastTrack)
 	{
 		LOGLVL(Detailed, "Process application update signal");
 		LOGLVL(Detailed, "Send version-details request");
-		//FIXME: REMOVED: Do version request
+		//REMOVED: Do version request
 		Variant vVerInfo;
-
+		
 		if (!vVerInfo.has("version") || !vVerInfo.has("download_url"))
 			error::InvalidFormat("Response shall have <version> and <download_url> fields").throwException();
 		auto vHead = m_httpClient.head(vVerInfo["download_url"]);
