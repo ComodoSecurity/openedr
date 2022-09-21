@@ -221,11 +221,11 @@ When an event is captured, the conditions in the adaptive events are checked seq
 ## Example on the go
 We used these given technologies for an even simpler solution for example and you can use these methods and configure them for your own need even use different technologies depending on your needs.
 
-    > Install docker on the device
-    > Clone pre-prepared ELK package
-    > Run docker-compose.yaml with docker-compose
-    > Install openedr and filebeat on the client device
-    > Configure filebeat to your elastic search and logstash
+> Install docker on the device
+> Clone pre-prepared ELK package
+> Run docker-compose.yaml with docker-compose
+> Install openedr and filebeat on the client device
+> Configure filebeat to your elastic search and logstash
 
  All configure and installation documents are can be found within explanation paragraphs for our example you can follow the steps given below
 ### Docker installation
@@ -246,21 +246,21 @@ We used these given technologies for an even simpler solution for example and yo
 
  ![git clone](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/git-clone-elk.png)
 
-    Clone or download the repository
-    Open Terminal inside repo and run
-    ```console
-    $ sudo docker-compose up -d
-    ```
+   Clone or download the repository
+   Open Terminal inside repo and run
+```console
+$ sudo docker-compose up -d
+```
    -d is for running at the background and if permissions are asked please re-run with sudo privileges
 
  ![Docker compose up](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/docker-compose-allup.png)
 
    You should be able to see docker containers.
     
-     check with
-       ```console
-       sudo docker ps
-       ```
+check with
+```console
+sudo docker ps
+```
 ![Docker ps](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/docker-ps-list.png)
 
    keep in mind kibana is the log ui in this setup  we gonna use kibanas port later on
@@ -277,12 +277,12 @@ We used these given technologies for an even simpler solution for example and yo
     >Open Powershell as administrator
     >Change directory to within Powershell "C:\Program Files\Elastic\Beats\8.4.1\filebeat"
     > run this command
-    ```console
-     .\filebeat.exe modules enable logstash --path.config "C:\ProgramData\Elastic\Beats\filebeat"
-    ```
-    ![Filebeat module](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/filebeat-enable-module-logstash.png)
+```console
+.\filebeat.exe modules enable logstash --path.config"C:\ProgramData\Elastic\Beats\filebeat"
+```
+![Filebeat module](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/filebeat-enable-module-logstash.png)
 
-    This command will enable logstash feature and choose your configuration path
+This command will enable logstash feature and choose your configuration path
 
  * For filebeat configuration first go to C:\ProgramData\Elastic\Beats\filebeat
    You can check out the filebeat.example.yaml and edit that for your needs.
