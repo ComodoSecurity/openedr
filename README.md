@@ -152,8 +152,9 @@ Boolean operators are supported. The following also is a condition:
 Equal",
     "Value": 1
 }
+```
 Boolean operators are supported. The following is also a condition:
-
+```console
 {
     "BooleanOperator": "Or",
     "Conditions": [
@@ -169,8 +170,9 @@ Boolean operators are supported. The following is also a condition:
         }
     ]
 }
+```
 Nesting with Boolean operators are supported. The following is also a condition:
-
+```console
 {
     "BooleanOperator": "And",
     "Conditions": [
@@ -201,6 +203,7 @@ Nesting with Boolean operators are supported. The following is also a condition:
 The BooleanOperator field can be one of the following:
 
 >and
+
 >or
 
 The Operator field can be one of the following:
@@ -248,11 +251,11 @@ We used these given technologies for an even simpler solution for example and yo
     ```console
     $ sudo docker-compose up -d
     ```
-     -d is for running at the background and if permissions are asked please re-run with sudo privileges
+   -d is for running at the background and if permissions are asked please re-run with sudo privileges
 
  ![Docker compose up](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/docker-compose-allup.png)
 
-     You should be able to see docker containers.
+   You should be able to see docker containers.
     
      check with
        ```console
@@ -260,7 +263,7 @@ We used these given technologies for an even simpler solution for example and yo
        ```
 ![Docker ps](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/docker-ps-list.png)
 
-       keep in mind kibana is the log ui in this setup  we gonna use kibanas port later on
+   keep in mind kibana is the log ui in this setup  we gonna use kibanas port later on
     by now your monitoring tools are up and running
     Reminder default password and user would be 
      Username : elsatic
@@ -370,7 +373,7 @@ module: logstash
  > Create a new Dashboard Configure for your requirements with coming filed abd graphs and example of time and log count
  ![Dashboard config](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/elastic%20ui6.png)
 
-    You can create more dash boards as you like
+  You can create more dash boards as you like
     
  > You can find your metrics with in dashboard 
  ![Metrics](https://github.com/ComodoSecurity/openedr/blob/main/docs/screenshots/elastic%20ui7.png)
