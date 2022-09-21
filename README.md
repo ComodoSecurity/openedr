@@ -52,7 +52,7 @@ You should have Microsoft Visual Studio 2019 to build the code
 * Open installation.wixproj
 * Compile installer.
 ```
-needs checking
+As a default You should have these libraries in you Visual Studio 2019 but these are needed for build
 ## Libraries Used:
 * AWS SDK AWS SDK for C++ : (https://aws.amazon.com/sdk-for-cpp/)
 * Boost C++ Libraries (http://www.boost.org/)
