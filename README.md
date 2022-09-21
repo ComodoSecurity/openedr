@@ -33,7 +33,9 @@ The Open EDR consists of the following components:
 * Installer
 
 Generic high-level interaction diagram for runtime components
+
 ![](https://techtalk.comodo.com/wp-content/uploads/2020/09/image.png)
+
 For details, you can refer here: https://techtalk.comodo.com/2020/09/19/open-edr-components/
 
 # Community
