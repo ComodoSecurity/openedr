@@ -435,7 +435,21 @@ public:
 	//
 	virtual Variant execute(Application* pApp, Variant vCmd, Variant vParams)
 	{
-		error::OperationNotSupported(SL, "The object doesn't support any commands").throwException();
+		///
+		/// @fn Variant WinService::execute()
+		///
+		/// ##### dummyUpdateLocalPolicy()
+		/// Command adds a dummy data to the local policy storage and removes it,
+		/// that will be a cause of serialization of the local policy info
+		///
+		if (vCmd == "dummyUpdateLocalPolicy")
+		{
+			auto vEvmLocalPolicy = getCatalogData("app.config.policy.groups.eventsMatching.source.evmLocal");
+			vEvmLocalPolicy.put("dummy", " ");
+			vEvmLocalPolicy.erase("dummy");
+			return {};
+		}
+
 		return {};
 	}
 

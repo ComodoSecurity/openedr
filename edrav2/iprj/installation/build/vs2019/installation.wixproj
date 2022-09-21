@@ -89,17 +89,19 @@
     <Exec Command="rd $(CmdRootDir)\out\srcBinInstall\$(CmdOutDirName) /S /Q" />
     <Exec Command="md $(CmdRootDir)\out\srcBinInstall\$(CmdOutDirName)" />
     <Exec Command="xcopy $(CmdRootDir)\out\bin\$(CmdOutDirName) $(CmdRootDir)\out\srcBinInstall\$(CmdOutDirName) /Q /E /I /Exclude:$(ProjectDir)..\..\src\exclude.list" />
-	<Exec Command='FOR /r "$(CmdRootDir)\out\srcBinInstall\$(CmdOutDirName)" %%i in (*.cfg, *.qsc, *.src, *.act) do $(CmdRootDir)\out\bin\$(CmdOutDirName)\edrcon.exe file encrypt -f "%%~i" -o "%%~i.new" -e aes' />
-	<Exec Command='FOR /r "$(CmdRootDir)\out\srcBinInstall\$(CmdOutDirName)" %%i in (*.new) do del "%%~dpni" /F /Q &amp; ren "%%~i" "%%~ni"' />
-	  <!-- Enumerate all files to collect into installation -->
+    <Exec Command='FOR /r "$(CmdRootDir)\out\srcBinInstall\$(CmdOutDirName)" %%i in (*.cfg, *.qsc, *.src, *.act) do $(CmdRootDir)\out\bin\$(CmdOutDirName)\edrcon.exe file encrypt -f "%%~i" -o "%%~i.new" -e aes' />
+    <!-- The list of files that won't be encrypted -->
+    <Exec Command='FOR /r "$(CmdRootDir)\out\srcBinInstall\$(CmdOutDirName)" %%i in (*evm.cloud.src, *evm.local.src) do copy %%~i %%~i.new'  />
+    <Exec Command='FOR /r "$(CmdRootDir)\out\srcBinInstall\$(CmdOutDirName)" %%i in (*.new) do del "%%~dpni" /F /Q &amp; ren "%%~i" "%%~ni"' />
+    <!-- Enumerate all files to collect into installation -->
     <HeatDirectory ToolPath="$(WixToolPath)" Directory="$(CmdRootDir)\out\srcBinInstall\$(CmdOutDirName)" OutputFile="$(ProjectDir)..\..\src\FilesList.wxs" GenerateGuidsNow="true" SuppressFragments="true" SuppressRegistry="true" ComponentGroupName="BinaryFiles" PreprocessorVariable="var.SourceBinDir" SuppressRootDirectory="true" DirectoryRefId="INSTALLDIR" />
   </Target>
   <!--
-	To modify your build process, add your task inside one of the targets below and uncomment it.
-	Other similar extension points exist, see Wix.targets.
-	<Target Name="BeforeBuild">
-	</Target>
-	<Target Name="AfterBuild">
-	</Target>
-	-->
+    To modify your build process, add your task inside one of the targets below and uncomment it.
+    Other similar extension points exist, see Wix.targets.
+    <Target Name="BeforeBuild">
+    </Target>
+    <Target Name="AfterBuild">
+    </Target>
+    -->
 </Project>
