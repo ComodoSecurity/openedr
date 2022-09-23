@@ -23,3 +23,14 @@ Another option is using Docker, this will also enable a quick start for PoC and 
 Filebeat is a very good option to transfer OpenEDR outputs to Elasticsearch, you need to install Filebeat on each system you want to monitor. Overall instructions for it can be found here: https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation-configuration.html 
 
 We don’t have OpenEDR Filebeat modules yet so you need to configure a custom input option for filebeat https://www.elastic.co/guide/en/beats/filebeat/current/configuration-filebeat-options.html
+
+## Example on the go
+We used these given technologies for an even simpler solution for example and you can use these methods and configure them for your own need even use different technologies depending on your needs.
+
+> Install docker on the device
+> Clone pre-prepared ELK package
+> Run docker-compose.yaml with docker-compose
+> Install openedr and filebeat on the client device
+> Configure filebeat to your elastic search and logstash
+
+ All configure and installation documents are can be found in Getting Started sections
