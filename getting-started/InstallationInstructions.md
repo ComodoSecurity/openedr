@@ -34,3 +34,11 @@ We used these given technologies for an even simpler solution for example and yo
 > Configure filebeat to your elastic search and logstash
 
  All configure and installation documents are can be found in Getting Started sections
+ 
+
+[Build Instructions](getting-started/BuildInstructions.md)
+[Docker Installation](getting-started/DockerInstallation.md)
+[Setting up Elasticsearch Kibana and Logstash](getting-started/SettingELK.md)
+[Setting up Openedr and File beat](getting-started/SettingFileBeat.md)
+[Editing Alerting Policies](getting-started/EditingAlertingPolicies.md)
+[Setting Up Kibana](getting-started/SettingKibana.md)
