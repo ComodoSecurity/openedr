@@ -43,8 +43,6 @@ For details, you can refer here: https://techtalk.comodo.com/2020/09/19/open-edr
 * Join Slack [![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://openedr.com/register/)
 * Registration [![Email](https://img.shields.io/badge/email-join-blue.svg)](mailto:register@openedr.com)
 
-
-```
 # Roadmap
 Please refer here for project roadmap : https://github.com/ComodoSecurity/openedr_roadmap/projects/1
 
