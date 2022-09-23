@@ -37,8 +37,14 @@ We used these given technologies for an even simpler solution for example and yo
  
 
 [Build Instructions](getting-started/BuildInstructions.md)
+
 [Docker Installation](getting-started/DockerInstallation.md)
+
 [Setting up Elasticsearch Kibana and Logstash](getting-started/SettingELK.md)
+
 [Setting up Openedr and File beat](getting-started/SettingFileBeat.md)
+
 [Editing Alerting Policies](getting-started/EditingAlertingPolicies.md)
+
 [Setting Up Kibana](getting-started/SettingKibana.md)
+
