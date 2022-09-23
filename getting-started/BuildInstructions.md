@@ -23,8 +23,6 @@ As a default You should have these libraries in you Visual Studio 2019 but these
 * libjson-rpc-cpp: cross platform JSON-RPC (remote procedure call) support for C++  (https://github.com/cinemast/libjson-rpc-cpp)
 * libmicrohttpd : C library that provides a compact API and implementation of an HTTP 1.1 web server (https://www.gnu.org/software/libmicrohttpd/)
 * log4cplus: C++17 logging API (https://github.com/log4cplus/log4cplus)
-* MadcHook, MadcHookDrv : Hooking http://madshi.net/
-* NetFilter SDK & ProtocolFilter: Network filtering toolkit (https://netfiltersdk.com/)
 * nlohmann JSON: JSON library for C++: (https://github.com/nlohmann/json)
 * OpenSSL Toolkit (http://www.openssl.org/)
 * Tiny AES in C: implementation of the AES ECB, CTR and CBC encryption algorithms written in C. (https://github.com/kokke/tiny-AES-c)
