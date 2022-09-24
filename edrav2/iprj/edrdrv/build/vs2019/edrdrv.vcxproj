@@ -161,7 +161,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
-      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;nfwfpdrv.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);ksecdd.lib;fltmgr.lib;FwpKClnt.lib;NetIO.lib;NDIS.lib;WDMSec.lib;UUID.lib</AdditionalDependencies>
     </Link>
     <ClCompile />
     <ClCompile>

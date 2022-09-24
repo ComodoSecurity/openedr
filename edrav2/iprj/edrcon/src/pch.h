@@ -12,7 +12,7 @@
 #include <libcore/inc/libcore.h>
 #include <libprocmon/inc/libprocmon.h>
 #include <libsysmon/inc/libsysmon.h>
-#include <libnetmon/inc/libnetmon.h>
+//#include <libnetmon/inc/libnetmon.h>
 #include <libsyswin/inc/libsyswin.h>
 #include <libcloud/inc/libcloud.h>
 #include <libedr/inc/libedr.h>
