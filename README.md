@@ -75,6 +75,7 @@ needs checking
 * UTF8-CPP: UTF-8 with C++ (http://utfcpp.sourceforge.net/)
 * xxhash_cpp: xxHash library to C++17. (https://cyan4973.github.io/xxHash/)
 * Zlib: Compression Libraries (https://zlib.net/)
+* WixToolset: Installer Libraries (https://wixtoolset.org/releases/)
 ```
 # Roadmap
 Please refer here for project roadmap : https://github.com/ComodoSecurity/openedr_roadmap/projects/1
