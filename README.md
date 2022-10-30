@@ -2,7 +2,7 @@
 [![OpenEDR](https://techtalk.comodo.com/wp-content/uploads/2020/09/logo_small.jpg)](https://openedr.com/)
 [![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://openedr.com/register/) [![Email](https://img.shields.io/badge/email-join-blue.svg)](mailto:register@openedr.com)
 
-[![OpenEDR - Getting Started](https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg)](https://www.youtube.com/watch?v=lfo_fyinvYs "OpenEDR - Getting Started")    
+[![OpenEDR - Getting Started](https://techtalk.comodo.com/wp-content/uploads/2022/10/openedr_img.jpg)](https://www.youtube.com/watch?v=lfo_fyinvYs "OpenEDR - Getting Started")    
 
 We at OpenEDR believe in creating a cybersecurity platform with its source code openly available to the public,  where products and services can be provisioned and managed together. EDR is our starting point.
 OpenEDR is a full-blown EDR capability. It is one of the most sophisticated, effective EDR code base in the world and with the community’s help, it will become even better.
