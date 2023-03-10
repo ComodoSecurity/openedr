@@ -36,15 +36,15 @@ We used these given technologies for an even simpler solution for example and yo
  All configure and installation documents are can be found in Getting Started sections
  
 
-[Build Instructions](getting-started/BuildInstructions.md)
+[Build Instructions](BuildInstructions.md)
 
-[Docker Installation](getting-started/DockerInstallation.md)
+[Docker Installation](DockerInstallation.md)
 
-[Setting up Elasticsearch Kibana and Logstash](getting-started/SettingELK.md)
+[Setting up Elasticsearch Kibana and Logstash](SettingELK.md)
 
-[Setting up Openedr and File beat](getting-started/SettingFileBeat.md)
+[Setting up Openedr and File beat](SettingFileBeat.md)
 
-[Editing Alerting Policies](getting-started/EditingAlertingPolicies.md)
+[Editing Alerting Policies](EditingAlertingPolicies.md)
 
-[Setting Up Kibana](getting-started/SettingKibana.md)
+[Setting Up Kibana](SettingKibana.md)
 
