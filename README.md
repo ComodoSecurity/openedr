@@ -61,7 +61,7 @@ Please take a look at the following documents.
 
  
  # Releases
-https://github.com/ComodoSecurity/openedr/releases/tag/2.5.0.0
+https://github.com/ComodoSecurity/openedr/releases/tag/release-2.5.1
 # Screenshots
 How OpenEDR integration with a platform looks like and also a showcase for openedr capabilities
 
