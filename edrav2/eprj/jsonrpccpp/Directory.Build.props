@@ -1,5 +1,0 @@
-<Project>
-  <PropertyGroup Label="Configuration">
-    <SpectreMitigation>false</SpectreMitigation>
-  </PropertyGroup>
-</Project>

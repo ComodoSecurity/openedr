@@ -1,1 +1,0 @@
-set(BOOST_VERSION 1.70.0)
