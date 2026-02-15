@@ -1,1 +1,0 @@
-log4cplus_add_test(propertyconfig_test main.cxx)

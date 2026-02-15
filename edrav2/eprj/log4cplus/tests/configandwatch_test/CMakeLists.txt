@@ -1,1 +1,0 @@
-log4cplus_add_test(configandwatch_test main.cxx)

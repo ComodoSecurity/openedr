@@ -1,3 +1,0 @@
-help
-hello
-exit
